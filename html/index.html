@@ -163,8 +163,8 @@
     <!-- END: bloque_ready -->
 
     <script>
-        <!-- BEGIN: validate_login -->
         "use strict";
+        <!-- BEGIN: validate_login -->
         document.addEventListener("DOMContentLoaded", function() {
             var loginForm = document.getElementById("frmLogin");
             var validation = loginForm.addEventListener("submit", function (event) {
@@ -176,15 +176,6 @@
                 }
                 loginForm.classList.add("was-validated");
             }, false);
-            // add data-toggle="validator" to your form tag
-            $('form[data-toggle="validator"]').on('submit', function (e) {
-                window.setTimeout(function () {
-                    var errors = $('.form-control:invalid');
-                    if (errors.length) {
-                        $('html, body').animate({ scrollTop: errors.offset().top - 50 }, 500);
-                    }
-                }, 0);
-            });
         });
         <!-- END: validate_login -->
 
@@ -276,7 +267,6 @@
         <!-- END: formulario_reiniciar_clave -->
 
         <!-- BEGIN: validate_membership_form -->
-        'use strict';
         //Validate password matching on key up
         function checkPass() {
             var pass = $("#txtPasswd");
@@ -359,11 +349,22 @@
                         $("#chkPrivacyMessage").html("To submit the form, you must accept MET's privacy policy");
                         $("#containerPrivacyCheck").addClass("errorBackgroundColor");
                     }
+                    //without scroll animation
+                    //$(".form-control:invalid").first().get(0).scrollIntoView();
+
+                    //with scroll animation
+                    $("html, body").animate({
+                        scrollTop: $(".form-control:invalid").first().offset().top
+                    }, 1000);
                     event.preventDefault();
                     event.stopPropagation();
                 } else if (profActs < 1) {
                     $("#profActsMessage").html("Please select at least one activity");
                     $("#containerProfActs").addClass("errorBackgroundColor");
+                    //with scroll animation
+                    $('html, body').animate({
+                        scrollTop: $("#profInfo").offset().top
+                    }, 1000);
                     event.preventDefault();
                     event.stopPropagation();
                 }
@@ -490,7 +491,6 @@
         <!-- END: validate_renew_membership_form -->
 
         <!-- BEGIN: validate_workshop_registration_form -->
-        'use strict';
         //ON CLICK, calculate total price when workshop clicked
         function calculatePriceWorkshops() {
             var thisWorkshopPrice;
@@ -593,6 +593,10 @@
 
                 //Run standard HTML5 validation
                 if (form.checkValidity() === false) {
+                    //with scroll animation
+                    $('html, body').animate({
+                        scrollTop: $(".form-control:invalid").first().offset().top
+                    }, 1000);
                     event.preventDefault();
                     event.stopPropagation();
                 } else {
@@ -673,7 +677,6 @@
         <!-- END: validate_workshop_registration_form -->
 
         <!-- BEGIN: validate_conference_registration_form -->
-        "use strict";
         //Used in save_inscription_conference.php for sending price to Paypal
         function finalPrice() {
             var totalPayable = document.getElementById("totalPayable").innerHTML;
@@ -851,11 +854,20 @@
                         $("#chkPrivacyMessage").html("To submit the form, you must accept MET's privacy policy");
                         $("#containerPrivacyCheck").addClass("errorBackgroundColor");
                     }
+                    //with scroll animation
+                    $('html, body').animate({
+                        scrollTop: $(".form-control:invalid").first().offset().top
+                    }, 1000);
                     event.preventDefault();
                     event.stopPropagation();
                 } else if (workshops < 1 && minisessions < 1) {
+                    var container = $("#containerWorkshop");
                     $("#workshopsMessage").html("Registration for one workshop or two minisessions is included in the conference fee. If you do not wish to register for any of the workshops, please check the appropriate box before submitting the form");
-                    $("#containerWorkshop").addClass("errorBackgroundColor");
+                    container.addClass("errorBackgroundColor");
+                    //with scroll animation
+                    $("html, body").animate({
+                        scrollTop: container.offset().top
+                    }, 1000);
                     event.preventDefault();
                     event.stopPropagation();
                 } else if (minisessions > 2) {
@@ -863,6 +875,10 @@
                         var miniDate = this.name.split("_")[1];
                         if ($(".minisessionChoice_" + miniDate + ":checked").length > 2) {
                             $("#containerWorkshop").addClass("errorBackgroundColor");
+                            //with scroll animation
+                            $("html, body").animate({
+                                scrollTop: container.offset().top
+                            }, 1000);
                             event.preventDefault();
                             event.stopPropagation();
                         }
@@ -1054,7 +1070,6 @@
         <!-- END: validar_offer_interesed -->
 
         <!-- BEGIN: validate_edit_profile -->
-        'use strict';
         //ON PAGE LOAD, validate password matching continuously on key up
         function checkPwds() {
             var newP = $("#txtNewPassword");
@@ -1108,6 +1123,10 @@
                 var profActs = $(".professionalActivity:checked").length;
                 if (this.checkValidity() === false) {
                     //A required field is empty
+                    //with scroll animation
+                    $("html, body").animate({
+                        scrollTop: $(".form-control:invalid").first().offset().top
+                    }, 1000);
                     event.preventDefault();
                     event.stopPropagation();
                 } else if ((country.val() < 0) || (profActs < 1)) {
@@ -1116,11 +1135,18 @@
                         //document.getElementById("cmbPais").classList.add("errorBorderColor");
                         country.css("border-color", "#dc3545");
                         $("#chkCountryMessage").html("Please select a country");
+                        $("html, body").animate({
+                            scrollTop: country.offset().top
+                        }, 1000);
                     }
                     if (profActs < 1) {
+                        var profContainer = $("#containerProfActs");
                         //No professional activity selected
                         $("#profActsMessage").html("Please select at least one activity");
-                        $("#containerProfActs").addClass("errorBackgroundColor");
+                        profContainer.addClass("errorBackgroundColor");
+                        $("html, body").animate({
+                            scrollTop: profContainer.offset().top
+                        }, 1000);
                     }
                     event.preventDefault();
                     event.stopPropagation();
@@ -1272,13 +1298,13 @@
         function validateExpenseForm() {
             $("#frmExpense").on("submit", function (event) {
                 if (this.checkValidity() === false) {
+                    $(".form-control:invalid").first().get(0).scrollIntoView();
                     event.preventDefault();
                     event.stopPropagation();
                 }
                 this.classList.add("was-validated");
             });
         }
-
         //ON PAGE LOAD, call functions
         $( document ).ready(function() {
             $(".datepicker").attr("required","").addClass("required");
