@@ -1,0 +1,78 @@
+<!-- BEGIN: contenido_principal -->
+<div id="textExplication">
+	<h2>{STATIC_GLOBAL_WELCOME_EASYGESTOR}</h2>
+</div>
+<ul id="controlModButtons">
+	<li>
+		<a href="main_app.php?section=thematic&action=create{PARAMETRO_ID_PADRE}" class="OptionAdd cufon">{STATIC_GLOBAL_BUTTON_CREATE} </a>
+		<img src="images/pictures/icons/tematica.icon.png" />
+	</li>
+	<li><a href="javascript:editarElemento('thematic')" class="OptionEdit cufon">{STATIC_GLOBAL_BUTTON_EDIT} </a><img src="images/pictures/icons/tematica.icon.png" /></li>
+	<li><a href="javascript:eliminarElemento('{STATIC_DELETE_THEMATIC_TITLE}','{STATIC_DELETE_THEMATIC_BODY}','{STATIC_GLOBAL_BUTTON_YES}','{STATIC_GLOBAL_BUTTON_NO}','frmListaTematica','tblListItem')"" class="OptionDelete cufon">{STATIC_GLOBAL_BUTTON_DELETE} </a><img src="images/pictures/icons/tematica.icon.png" /></li>
+</ul>
+<div class="catbox">
+	<div class="leftBorder"></div>
+	{PAGINADOR_INFORMACION}
+	<div class="left">
+	<span class="Nbuoyancy">{STATIC_FILTER_SHOW}:</span>
+	{COMBO_NUMERO_REGISTROS}
+	</div>
+	<div class="left">
+	<span class="Nbuoyancy">{STATIC_FILTER_ORDER_BY_FIELD}:</span>
+	{COMBO_ORDEN}
+	</div>
+   	{PAGINADOR_NAVEGACION_SUPERIOR}
+   	{PAGINADOR}
+</div>
+<div class="streamsbox" style="display:block; height:auto; width:637px;">
+	<div class="resultscontainer">
+		<form name="frmListaTematica" id="frmListaTematica">
+			<input type="hidden" name="section" id="section" value="thematic">
+			<input type="hidden" name="action" id="action" value="view">
+			<input type="hidden" name="pagina" id="pagina" value="{PAGINA_ACTUAL}">
+			<input type="hidden" name="hdnOrden" id="hdnOrden" value="{ORDEN_SELECCIONADO}">
+			<input type="hidden" name="hdnRegistros" id="hdnRegistros" value="{NUMERO_REGISTROS_SELECCIONADOS}">
+			<input type="hidden" name="id_padre" id="id_padre" value="{TEMATICA_ID_PADRE}">
+			<input type="hidden" name="hdnId" id="hdnId">
+		</form>
+		<table border="0" cellspacing="0" cellpadding="0" style="width:100%;" id="tblList" class="streamsbox-results">
+			<thead>
+				<tr class="streamsbox-header nodrag">
+					<td id="checkAll" class="unCheckAll" onclick="seleccionarTodo(this)"></td>
+					<td><h2><strong>{STATIC_VIEW_THEMATIC_NAME}</strong></h2></td>
+				</tr>
+			</thead>
+			<tbody class="real-results" id="tblListItem">
+			<!-- BEGIN: item_tematica -->
+				<tr id="fila_{TEMATICA.ID}" {TR_STYLE} onclick="seleccionarFila(this)" ondblclick="window.location='main_app.php?section=thematic&action=edit&id_tematica={TEMATICA.ID}'">
+					<td id="icon_{TEMATICA.ID}" class="unChecked"></td>
+					<td>
+						{TEMATICA.NAME}
+					</td>
+					<td style="display:none;"><input type="hidden" name="hdnSeleccionado_{TIPO_AREA.ID}" id="hdnSeleccionado_{TEMATICA.ID}" value="0"></td>
+				</tr>
+			<!-- END: item_tematica -->
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="combar">
+	<div class="cb1">
+    	<div class="cb2">
+    		<span>{PAGINADOR_INFORMACION}</span>
+      		<div class="left">
+				<span class="Nbuoyancy">{STATIC_FILTER_SHOW}:</span>
+				{COMBO_NUMERO_REGISTROS}
+			</div>
+			<div class="left">
+				<span class="Nbuoyancy">{STATIC_FILTER_ORDER_BY_FIELD}:</span>
+				{COMBO_ORDEN}
+			</div>
+			
+			{PAGINADOR_NAVEGACION_INFERIOR}
+			{PAGINADOR}
+	      	<span class="streams-up"></span>
+    	</div>
+  	</div>
+</div>
+<!-- END: contenido_principal -->

@@ -1,0 +1,28 @@
+@CHARSET "UTF-8";
+
+#directory { padding:9px 9px 10px 10px; }
+
+h2.titleSection { color:#8B1513; font:700 24px/24px 'Advent Pro', sans-serif; margin:0px 0px 15px; }
+
+h3.subTitleSection { color:#348A88; font:400 20px/16px 'Advent Pro', sans-serif; margin:15px 0px; }
+/* ## list members ## */
+#lstResultsMemberDirectory { width:610px; margin:20px auto 10px; }
+#lstResultsMemberDirectory tr td { padding:0px 10px 15px 0px; }
+#lstResultsMemberDirectory tr td table tr td { padding:0px; }
+#lstResultsMemberDirectory .itemMember { position:relative; width:298px; border:1px solid #B2B2B2; border-radius:8px; }
+#lstResultsMemberDirectory .itemMember .more { position:absolute; display:block; top:0px; right:0px; padding:4px 6px; color:#8B1513; font-size:20px; border-left:1px solid #8B1513; border-bottom:1px solid #8B1513; border-bottom-left-radius:8px; border-top-right-radius:8px; }
+#lstResultsMemberDirectory .itemMember .more:hover { color:#0097A8; }
+#lstResultsMemberDirectory .itemMember .moreAdmin { position:relative; float:right; display:block; top:0px; right:0px; padding:4px 6px; color:#8B1513; font-size:20px;}
+#lstResultsMemberDirectory .itemMember .moreAdmin { color:#0097A8; }
+#lstResultsMemberDirectory .headshot { border-right:1px solid #B2B2B2; border-top-left-radius:8px; border-bottom-left-radius:8px; height:83px;}
+#lstResultsMemberDirectory .description { padding:10px; }
+#lstResultsMemberDirectory .description label { display:block; }
+#lstResultsMemberDirectory .description a { color:#0097A8; }
+#lstResultsMemberDirectory .nameMember a { display:block; padding-right:20px; margin-bottom:6px; font-weight:normal; font-size:20px; color:#8B1513; font-family:'Advent Pro',sans-serif; }
+#lstResultsMemberDirectory .mailMember,
+#lstResultsMemberDirectory .webMember { padding:2px 0px 2px 20px; }
+#lstResultsMemberDirectory .mailMember { background:transparent url('../../images/pictures/icons/icon.mail.png') no-repeat scroll 0 50%; }
+#lstResultsMemberDirectory .webMember { background:transparent url('../../images/pictures/icons/icon.web.png') no-repeat scroll 0 50%; }
+
+	/* form */
+	#form #btnSendForm { padding:4px 10px; margin:4px 10px; }

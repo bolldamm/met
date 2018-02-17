@@ -1,0 +1,83 @@
+@CHARSET "UTF-8";
+
+/* ## table for Home Page content ## */
+.titleHomePage { background:#58585a; font-size:14px; color:#ffffff; font-weight:bold; text-transform:uppercase; padding: 4px 10px; margin:0px; }
+.titleHomePage a { float:right; color:#ffffff; text-transform:none; font-size:13px; font-style:italic; }
+.titleHomePage a:hover { color:#ffc4c3; }
+.contentHomePage { padding:10px 10px; color:#58585a; }
+.contentHomePage a { color:#8B1513; }
+.contentHomePage a:hover { color:#348A88; }
+.contentHomePageNews ul { margin-top: 10px; }
+.contentHomePageNews a { color:#8B1513; }
+.contentHomePageNews a:hover { color:#348A88; }
+#tblHomePage h3 a { font-size:14px; color:#000000; text-transform:uppercase; }
+#listHomePageNews li { margin-bottom:15px; }
+.contentHomePageHive { padding-top:10px; }
+
+.home_page_header_image {
+	margin:8px 0px;
+}
+
+#image_carousel {
+    border: none;
+    margin: 0px auto 6px auto;
+    overflow: hidden;
+    position: relative;
+}
+#image_carousel > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 9999px;
+}
+#image_carousel > ul li {
+    display: inline-block;
+    float: left;
+    margin: 0;
+    transition: margin-left 1.0s ease;
+}
+#feedback_carousel {
+    border: 1px solid darkgreen;
+    background-color: #f3ffdc;
+    height: 50px;
+    margin: 2px 20px 10px 20px;
+    overflow: hidden;
+    position: relative;
+}
+#feedback_carousel > ul {
+    height: 50px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 9999px;
+}
+#feedback_carousel > ul li {
+    display: inline-block;
+    float: left;
+    margin: 10px 80px 10px 0px;
+    padding: 0px 0px 0px 10px;
+    transition: margin-left 1.0s ease;
+}
+.js-Carousel .js-Carousel-dots {
+    display: inline-block;
+    height: 1.25em;
+    margin: 0;
+    position: absolute;
+    bottom: 1em;
+    right: 1em;
+    width: auto;
+}
+
+#feedback {
+    border: 0px solid darkgreen;
+    background-color: #f8f9fa;
+    color: cornflowerblue;
+    width:90%;
+    height: 100%;
+    padding: 6px 12px;
+    margin: 0px auto 20px;
+    text-align: center;
+}
+.carousel-inner {
+    height: 48px;
+}

@@ -1,0 +1,28 @@
+<!-- BEGIN: contenido_principal -->
+<form name="frmLogin" id="frmLogin" method="post" action="authentication.php" autocomplete="off">
+	<div id="boxNotify">
+		<div id="containerEasyNotify" class="layoutNotify"></div>
+	</div>
+	<table border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td id="inputUser">
+				<input type="text" value="{STATIC_LOGIN_USERNAME}" onfocus="limpiarInputValue(this,'{STATIC_LOGIN_USERNAME}')" onblur="restaurarInputValue(this,'{STATIC_LOGIN_USERNAME}')" name="txtUsuario" tabindex="1"/>
+			</td>
+		</tr>
+		<tr><td class="spacerTD"></td></tr>
+		<tr>
+			<td id="inputPass">
+				<input type="text" value="{STATIC_LOGIN_PASSWORD}" onfocus="limpiarInputPassword(this,'txtPassword')"  name="txtPasswordAux" id="txtPasswordAux" tabindex="2" />
+				<input type="password"  id="txtPassword" name="txtPassword" tabindex="2" onblur="restaurarInputPassword(this,'txtPasswordAux','{STATIC_LOGIN_PASSWORD}')" style="display:none;" />
+			
+			</td>
+		</tr>
+		<tr><td><a href="remember_password.php" id="rememberPass" tabindex="4">{STATIC_LOGIN_REMEMBER_PASSWORD_LINK}</a></td></tr>
+		<tr>
+			<td>
+				<input type="submit" value="{STATIC_LOGIN_ENTER_BUTTON}" tabindex="3" />
+			</td>
+		</tr>
+	</table>
+</form>
+<!-- END: contenido_principal -->

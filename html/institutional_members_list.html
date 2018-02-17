@@ -1,0 +1,64 @@
+<!-- BEGIN: contenido_principal -->
+<div id="institutionalMembers">
+	<table>
+		
+		 <tr>
+			<td>
+				<h2 class="titleSection">{STATIC_LIST_INTITUTIONAL_MEMBERS}</h2>
+				<!--
+				<div id="form" style="width:auto;">
+					<form name="frmSearchNew" id="frmSearchNew" action="institutional_members_list.php" method="get">
+						<input type="hidden" value="{MENU_ID}" name="menu">
+						<div class="boxForm">
+	 						<label class="textBoxForm">{STATIC_SEARCH_INTITUTIONAL_MEMBER}</label>
+							<input type="text" class="inputText left" value="{QUERY_VALUE}" name="q" style="width:296px;" onblur="restaurarInputValue(this,'{STATIC_FORM_INSTITUTIONAL_MEMBER_SEARCH_TITLE_CONTENT}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_INSTITUTIONAL_MEMBER_SEARCH_TITLE_CONTENT}')">
+							<input type="submit" id="btnSendForm" class="left" value="{STATIC_FORM_NEW_SEARCH}">
+							<div class="clear"></div>
+						</div>
+					</form>
+				</div>
+				-->
+			</td>
+		</tr>
+		 
+		<tr>
+			<td id="lstInstitutionalsMembers">
+				<!-- BEGIN: no_miembros -->
+				<p>{STATIC_NO_INSTITUTIONAL_MEMBERS}</p>
+				<!-- END: no_miembros -->
+				<!-- BEGIN: listado_miembros_institucionales -->
+				<ul>
+					<!-- BEGIN: item_miembro_institucional -->
+					<li class="itemInstitutional">
+						<table>
+							<tr>
+								<!-- BEGIN: imagen_derecha -->
+								<td>
+									<img src="{ITEM_MIEMBRO_INSTITUCIONAL_IMAGEN}">
+								</td>
+								<!-- END: imagen_derecha -->
+								<td style="vertical-align:middle;">
+									<h3><a href="{ITEM_MIEMBRO_INSTITUCIONAL_URL}" class="title">{ITEM_MIEMBRO_INSTITUCIONAL_TITULO}</a></h3>
+									<p>
+										{ITEM_MIEMBRO_INSTITUCIONAL_DESCRIPCION}
+										<a class="seeMore" href="{ITEM_MIEMBRO_INSTITUCIONAL_URL}">(+)</a>
+									</p>
+								</td>
+								<!-- BEGIN: imagen_izquierda -->
+								<td>
+									<img src="{ITEM_MIEMBRO_INSTITUCIONAL_IMAGEN}">
+								</td>
+								<!-- END: imagen_izquierda -->
+							</tr>
+						</table>
+					</li>
+					<!-- END: item_miembro_institucional -->
+				</ul>
+				<!-- END: listado_miembros_institucionales -->
+				
+				{PAGINADOR}
+			</td>
+		</tr>
+	</table>
+</div>
+<!-- END: contenido_principal -->

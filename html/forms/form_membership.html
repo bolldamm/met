@@ -1,0 +1,302 @@
+<!-- BEGIN: contenido_principal -->
+<form class="needs-validation" novalidate name="frmMembership" id="frmMembership" action="" method="post">
+    <input type="hidden" name="hdnIdModalidad" id="hdnIdModalidad" value="{USUARIO_MODALIDAD}">
+    <input type="hidden" name="hdnIdActividadProfesional" id="hdnIdActividadProfesional">
+    <input type="hidden" name="hdnIdSituacionLaboral" id="hdnIdSituacionLaboral">
+
+    <fieldset>
+        <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_ACCOUNT_DETAILS}</legend>
+        <input type="email" class="form-control" name="txtEmailUser" placeholder="{STATIC_FORM_MEMBERSHIP_EMAIL_USER}*" required>
+        <div class="invalid-feedback">
+            Please enter a valid email address
+        </div>
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+                <input type="password" class="form-control" name="txtPasswd" id="txtPasswd"  placeholder="{STATIC_FORM_MEMBERSHIP_PASSWORD_USER}*" autocomplete="new-password" required>
+                <div class="invalid-feedback">
+                    Please enter password.
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <input type="password" class="form-control" name="txtRePasswd" id="txtRePasswd"  placeholder="{STATIC_FORM_MEMBERSHIP_CONFIRM_PASSWORD_USER}*" autocomplete="new-password" required>
+                <span id="pwdMessage" class="validationMessage"></span>
+                <div class="invalid-feedback">
+                    Please confirm password
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_PERSONAL_DETAILS}</legend>
+        <div class="form-row">
+            <div class="col-12 col-md-2">
+                {COMBO_TITULOS}
+            </div>
+            <div class="col-12 col-md-5">
+                <input type="text" class="form-control" name="txtNombre" placeholder="{STATIC_FORM_MEMBERSHIP_FIRST_NAME}*" required>
+                <div class="invalid-feedback">
+                    Please enter your first name
+                </div>
+            </div>
+            <div class="col-12 col-md-5">
+                <input type="text" class="form-control" name="txtApellidos" placeholder="{STATIC_FORM_MEMBERSHIP_LAST_NAMES}*" required>
+                <div class="invalid-feedback">
+                    Please enter your last name
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtNacionalidad" placeholder="{STATIC_FORM_MEMBERSHIP_NATIONALITY}">
+            </div>
+            <div class="col-12 col-md-6">
+                {COMBO_PAIS}
+                <span id="chkCountryMessage" class="validationMessage"></span>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_ADDRESS}</legend>
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtDireccion1" placeholder="{STATIC_FORM_MEMBERSHIP_STREET_1}">
+            </div>
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtDireccion2" placeholder="{STATIC_FORM_MEMBERSHIP_STREET_2}">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-12 col-md-5">
+                <input type="text" class="form-control" name="txtCiudad" placeholder="{STATIC_FORM_MEMBERSHIP_TOWN_CITY}">
+            </div>
+            <div class="col-12 col-md-5">
+                <input type="text" class="form-control" name="txtProvincia" placeholder="{STATIC_FORM_MEMBERSHIP_PROVINCE}">
+            </div>
+            <div class="col-12 col-md-2">
+                <input type="text" class="form-control" name="txtCp" placeholder="{STATIC_FORM_MEMBERSHIP_POSTCODE}">
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_CONTACT_DETAILS}</legend>
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+                <input type="email" class="form-control" name="txtEmail" placeholder="{STATIC_FORM_MEMBERSHIP_EMAIL}">
+            </div>
+            <div class="col-12 col-md-6">
+                <input type="email" class="form-control" name="txtEmailAlternativo" placeholder="{STATIC_FORM_MEMBERSHIP_ALTERNATIVE_EMAIL}">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+                <input type="tel" class="form-control" name="txtTelefonoCasa" placeholder="{STATIC_FORM_MEMBERSHIP_HOME_PHONE}">
+            </div>
+            <div class="col-12 col-md-6">
+                <input type="tel" class="form-control" name="txtTelefonoTrabajo" placeholder="{STATIC_FORM_MEMBERSHIP_WORK_PHONE}">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+                <input type="tel" class="form-control" name="txtTelefonoMobil" placeholder="{STATIC_FORM_MEMBERSHIP_MOBILE_PHONE}">
+            </div>
+            <div class="col-12 col-md-6">
+                <input type="tel" class="form-control" name="txtFax" placeholder="{STATIC_FORM_MEMBERSHIP_FAX}">
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>{STATIC_FORM_RENEW_MEMBERSHIP_LEGEND_PROFESSIONAL_INFORMATION}</legend>
+        <b>{STATIC_FORM_MEMBERSHIP_YOUR_PROFESSION}</b>*
+        <div class="form-group" id="containerProfActs">
+            <!-- BEGIN: item_actividad_profesional -->
+            <div class="form-check form-check-inline prof-activity">
+                <input type="checkbox" class="form-check-input professionalActivities" name="chk{ITEM_ACTIVIDAD_PROFESIONAL_NOMBRE_ELEMENTO}" id="chk{ITEM_ACTIVIDAD_PROFESIONAL_NOMBRE_ELEMENTO}" value="{ITEM_ACTIVIDAD_PROFESIONAL_ID}">
+                <label class="form-check-label" for="chk{ITEM_ACTIVIDAD_PROFESIONAL_NOMBRE_ELEMENTO}">
+                    {ITEM_ACTIVIDAD_PROFESIONAL_NOMBRE}
+                </label>
+            </div>
+            <!-- END: item_actividad_profesional -->
+            <span id="profActsMessage" class="validationMessage"></span>
+        </div>
+        <div class="form-row">
+            <div class="col-12 col-md-4 form-group">
+                <label class="d-none d-md-block d-xl-none small" for="txtSpecifyOther">If Other, please specify</label>
+                <input type="text" class="form-control" id="txtSpecifyOther" name="txtOtherSpecification" placeholder="{STATIC_FORM_MEMBERSHIP_IF_OTHER_SPECIFY}">
+            </div>
+            <div class="col-12 col-md-4 form-group">
+                <label class="d-none d-md-block d-xl-none small" for="txtSpecifyStudy">If a student, your subject</label>
+                <input type="text" class="form-control" id="txtSpecifyStudy" name="txtStudySpecification" placeholder="{STATIC_FORM_MEMBERSHIP_IF_STUDENT_SUBJECT}">
+            </div>
+            <div class="col-12 col-md-4 form-group">
+                <label class="d-none d-md-block d-xl-none small" for="txtProfesionQualificacion">Degrees/ qualifications</label>
+                <input type="text" class="form-control" id="txtProfesionQualificacion" name="txtProfesionQualificacion" placeholder="{STATIC_FORM_MEMBERSHIP_DEGREES_QUALIFICATIONS}">
+            </div>
+        </div>
+        <b>{STATIC_FORM_MEMBERSHIP_WORK_SITUATION}</b>
+        <div class="form-row">
+            <!-- BEGIN: item_situacion_laboral -->
+            <div class="col-12 col-md-3 form-check form-check-inline">
+                <input type="checkbox" class="form-check-input" name="chkSituacion_{SITUACION_LABORAL_ID}" id="chkSituacion_{SITUACION_LABORAL_ID}" value="{SITUACION_LABORAL_ID}">
+                <label class="form-check-label" for="chkSituacion_{SITUACION_LABORAL_ID}">
+                    {SITUACION_LABORAL_NOMBRE}
+                </label>
+            </div>
+            <!-- END: item_situacion_laboral -->
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_ADDITIONAL_INFORMATION}</legend>
+        <div class="form-row">
+            <div class="col-4">
+                {COMBO_ANYOS}
+            </div>
+            <div class="col-12 col-md-8">
+                {STATIC_FORM_MEMBERSHIP_SEX}
+                <div class="form-row">
+                    <div class="form-check form-check-inline">
+                        <input type="radio" class="form-check-input" id="chkSex1" name="chkSex" value="1">
+                        <label class="form-check-label" for="chkSex1">
+                            {STATIC_FORM_MEMBERSHIP_MALE}
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" class="form-check-input" id="chkSex2" name="chkSex" value="2">
+                        <label class="form-check-label" for="chkSex2">
+                            {STATIC_FORM_MEMBERSHIP_FEMALE}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <textarea class="form-control" name="txtSobreMet" placeholder="{STATIC_FORM_MEMBERSHIP_HOW_DID_YOU_HEAR_ABOUT_MET}"></textarea>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_BILLING_INFORMATION}</legend>
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtFacturacionNifCliente" placeholder="{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}*" required>
+                <div class="invalid-feedback">
+                    Please enter your tax ID or VAT number
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtFacturacionNombreCliente" placeholder="{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}*" required>
+                <div class="invalid-feedback">
+                    Please enter your name for billing purposes
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtFacturacionNombreEmpresa" placeholder="{STATIC_FORM_PROFILE_BILLING_NAME_COMPANY}">
+            </div>
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtFacturacionDireccion" placeholder="{STATIC_FORM_PROFILE_BILLING_ADDRESS}*" required>
+                <div class="invalid-feedback">
+                    Please enter your address
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtFacturacionCodigoPostal" placeholder="{STATIC_FORM_PROFILE_BILLING_ZIPCODE}*" required>
+                <div class="invalid-feedback">
+                    Please enter your postal code
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtFacturacionCiudad" placeholder="{STATIC_FORM_PROFILE_BILLING_CITY}*" required>
+                <div class="invalid-feedback">
+                    Please enter your town or city
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtFacturacionProvincia" placeholder="{STATIC_FORM_PROFILE_BILLING_PROVINCE}">
+            </div>
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtFacturacionPais" placeholder="{STATIC_FORM_PROFILE_BILLING_COUNTRY}*" required>
+                <div class="invalid-feedback">
+                    Please enter your country
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_PREFERRED_METHOD_OF_PAYMENT}</legend>
+        <div class="form-text">
+            {STATIC_FORM_MEMBERSHIP_MEMBERSHIP_COSTS_30}
+        </div>
+        <div class="form-row form-group" style="align-items:center">
+            <div class="col-12 col-md-8 form-text">
+                {STATIC_FORM_MEMBERSHIP_SPECIAL_FEE}
+            </div>
+            <div class="col-12 col-md-4">
+                {COMBO_SITUACION_ADICIONAL}
+            </div>
+        </div>
+        <b>{STATIC_FORM_MEMBERSHIP_PAYMENT_METHOD}*</b>
+        <div class="form-row" id="containerPaymentMethod">
+            <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input paymentMethod" id="transfer" name="rdMetodoPago" value="1"">
+                <label class="form-check-label" for="transfer">
+                    {STATIC_FORM_MEMBERSHIP_BANK_TRANSFER}
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input paymentMethod" id="paypal" name="rdMetodoPago" value="2">
+                <label class="form-check-label" for="paypal">
+                    {STATIC_FORM_MEMBERSHIP_PAYPAL}
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input paymentMethod" id="debit" name="rdMetodoPago" value="4">
+                <label class="form-check-label" for="debit">
+                    {STATIC_FORM_MEMBERSHIP_DIRECT_DEBIT_SPAIN}
+                </label>
+            </div>
+            <span id="paymentMethodMessage" class="validationMessage"></span>
+            <!--<div class="invalid-feedback">
+                Please select a payment method
+            </div>-->
+
+        </div>
+        <div class="form-text">
+            {STATIC_FORM_MEMBERSHIP_PAYMENT_METHOD_TXT_1}
+        </div>
+        <div class="form-text">
+            {STATIC_FORM_MEMBERSHIP_PAYMENT_METHOD_TXT_2}
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_PRIVACY}</legend>
+        <div id="containerPrivacyCheck">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" name="chkPrivacy" id="chkPrivacy">
+                <label class="form-check-label" for="chkPrivacy">
+                    {STATIC_FORM_MEMBERSHIP_PRIVACY_NOTE}
+                </label>
+                <span id="chkPrivacyMessage" class="validationMessage"></span>
+            </div>
+        </div>
+    </fieldset>
+
+    <div>
+        <button class="btn btn-primary float-right" type="submit" id="btnSendForm">{STATIC_FORM_MEMBERSHIP_REGISTER}</button>
+    </div>
+</form>
+
+<div id="resultadoInscripcion" style="display:none;"></div>
+
+<!-- END: contenido_principal -->

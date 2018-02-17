@@ -1,0 +1,78 @@
+<!-- BEGIN: contenido_principal -->
+<script type="text/javascript">
+	function validarInvoice(){
+		document.frmInvoice.submit();
+	}
+</script>
+<div id="textExplication">
+	<h2>{STATIC_GLOBAL_WELCOME_EASYGESTOR}</h2>
+</div>
+<ul id="controlModButtons">
+	<li><a href="javascript:validarInvoice();" class="OptionAdd cufon">{STATIC_GLOBAL_BUTTON_SEND} </a><img src="images/pictures/icons/temas.icon.png" /></li>
+	<li>
+		<a href="main_app.php?section=invoice&action=view" class="OptionEdit cufon">{STATIC_GLOBAL_BUTTON_RETURN} </a>
+		<img src="images/pictures/icons/temas.icon.png" />
+	</li>
+</ul>
+<form name="frmInvoice" id="frmInvoice" method="post" enctype="multipart/form-data">
+	<div class="boxFormEasyNotify"><div id="containerEasyNotify" class="layoutFormEasyNotify"></div></div>
+	<input type="hidden" name="section" id="section" value="invoice">
+	<input type="hidden" name="action" id="action" value="{ACTION}">
+	<input type="hidden" name="hdnIdElemento" id="hdnIdElemento" value="{ID_ELEMENTO}" />
+	<input type="hidden" name="hdnSection" id="hdnSection" value="{SECCION_PREVIA}" />
+	<input type="hidden" name="hdnUsuariosSeleccionados" id="hdnUsuariosSeleccionados" value="">
+	<div class="headerSectionForm" onclick="expandirSeccion('generalIcon','generalContent');">
+		<div class="leftBorder"></div>
+		<div class="titleSectionForm">{STATIC_GLOBAL_GENERAL_SECTION}</div>
+		<div id="generalIcon" class="iconExpand"></div>
+		<div class="rightBorder"></div>
+	</div>
+	<div class="containerSection" id="generalContent">
+		<div class="contentSectionForm">
+			<table border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td>{STATIC_SEND_INVOICE_TO} ({STATIC_SEND_INVOICE_TO_INSTRUCTION})</td>
+				</tr>
+				<tr>
+					<td><input type="text" name="txtPara" id="txtPara" value="{INVOICE_PARA}"></td>
+				</tr>
+				<tr>
+					<td>{STATIC_SEND_INVOICE_SUBJECT}</td>
+				</tr>
+				<tr>
+					<td><input type="text" maxlength="255" name="txtNombre" value="{INVOICE_ASUNTO}"></td>
+				</tr>
+				<tr>
+					<td>{STATIC_SEND_INVOICE_DESCRIPTION}</td>
+				</tr>
+				<tr>
+					<td><textarea name="txtaDescripcion" id="txtaDescripcion">
+							<table border="0" cellpadding="0" cellspacing="0" style="width:1000px;background-color:#a7a7a7;" align="center">
+								<tr>
+									<td style="padding:10px 10px 10px 100px;"><a href="https://www.metmeetings.org"><img src="https://www.metmeetings.org/images/pictures/met.mail.logo.png" border="0" /></a></td>
+								</tr>
+								<tr>
+									<td>
+										<table border="0" cellspacing="0" cellpadding="0" style="width:800px;background-color:#ffffff;" align="center">
+											<tr>
+												<td style="border:1px solid #858585;padding:10px;color:#58595B;"><span style="color:#58595B;font-family:Arial;">{INVOICE_DESCRIPCION}</span></td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align:center;padding:10px;"><span style="color:#ffffff;"><a style="color:#fff;" href="https://www.metmeetings.org">© Mediterranean Editors and Translators</a></span></td>
+								</tr>
+							</table>
+					</textarea></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="footerSection">
+		<div class="footerSectionLeft">
+			<div class="footerSectionRight"></div>
+		</div>
+	</div>
+</form>
+<!-- END: contenido_principal -->

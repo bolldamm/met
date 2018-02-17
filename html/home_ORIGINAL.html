@@ -1,0 +1,59 @@
+<!-- BEGIN: contenido_principal -->
+<table id="tblResumeNews">
+	<tr>
+		<!-- BEGIN: item_submenu -->
+		<td>
+			<div class="contentResume" {ID_CONTENT}>
+				<div class="colorCorner"></div>
+				<strong>{SUBMENU_HOME_TITLE}</strong>
+				<p>{SUBMENU_HOME_CONTENT}</p>
+			</div>
+		</td>
+		<!-- END: item_submenu -->
+	</tr>
+</table>
+<table id="tblResumeAbout">
+	<tr>
+		<td class="titleResumeAbout">{SUBMENU_HOME_TITLE}</td>
+		<td style="padding:0px; width:9px;"></td>
+		<td class="titleResumeAbout">
+			{STATIC_NEWS}
+			<a href="{NOTICIAS_ENLACE_VER_TODOS}">{STATIC_SEE_ALL}</a>	
+		</td>
+	</tr>
+	<tr>
+		<td class="contentAbout" id="contentAbout" rowspan="3">
+			{SUBMENU_HOME_CONTENT}
+		</td>
+		<td style="padding:0px;"></td>
+		<td class="contentAbout">
+			<!-- BEGIN: lst_noticias -->
+			<ul id="lstResumeNews">
+				<!-- BEGIN: item_noticia -->
+				<li>
+					<h3><a href="{ITEM_NOTICIA_URL}">{ITEM_NOTICIA_TITULO}</a></h3>
+					{ITEM_NOTICIA_DESCRIPCION} <a href="{ITEM_NOTICIA_URL}" class="seeMore">(+)</a>
+				</li>
+				<!-- END: item_noticia -->
+			</ul>
+			<!-- END: lst_noticias -->
+			<!-- BEGIN: no_noticias -->
+			<p>{STATIC_NO_NEWS}</p>
+			<!-- END: no_noticias -->
+		</td>
+	</tr>
+	<tr>
+		<td style="padding:0px;"></td>
+		<td class="titleResumeAbout">
+			THE HIVE
+		</td>
+	</tr>
+	<tr>
+		<td style="padding:0px;"></td>
+		<td class="contentAbout">
+			<a href="https://www.metmeetings.org/en/the-hive:1026"><img src="files/sections/lavendar_60.png" alt="Hive image" style="float:left; margin-right: 9px;"></a>{STATIC_HIVE_HOME_PAGE_TEXT}
+		</td>
+	</tr>
+
+</table>
+<!-- END: contenido_principal -->

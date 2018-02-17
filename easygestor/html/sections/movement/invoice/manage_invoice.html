@@ -1,0 +1,135 @@
+<!-- BEGIN: contenido_principal -->
+<script type="text/javascript">
+	function validarFactura(){
+		//Por el momento no hay validaciones
+		esValido=true;
+		var importe=document.frmFactura.txtImporte;
+		if(importe.value!=""){
+			importe.value=importe.value.replace(",",".");
+			if(isNaN(parseFloat(importe.value,10))){
+				loadEasyNotify("{STATIC_MANAGE_INVOICE_IMPORT_WRONG}",1);
+				esValido=false;
+			}else{
+				importe.value=parseFloat(importe.value,10);
+			}
+		}
+		
+		if(esValido){
+			document.frmFactura.submit();
+		}
+	}
+</script>
+<div id="textExplication">
+	<h2>{STATIC_GLOBAL_WELCOME_EASYGESTOR}</h2>
+</div>
+<ul id="controlModButtons">
+	<li><a href="javascript:validarFactura();" class="OptionAdd cufon">{STATIC_GLOBAL_BUTTON_SAVE} </a><img src="images/pictures/icons/news.icon.png" /></li>
+	<!-- BEGIN: boton_pdf_factura -->
+	<li>
+		<a href="main_app.php?section=invoice&action=generate&id_factura={ID_INVOICE}" class="OptionEdit cufon">{STATIC_MANAGE_INVOICE_PDF_GENERATE_BUTTON} </a>
+		<img src="images/pictures/icons/news.icon.png" />
+	</li>
+	<!-- END: boton_pdf_factura -->
+	<!-- BEGIN: boton_download_factura -->
+	<li>
+		<a href="main_app.php?section=invoice&action=download&hash={HASH_FACTURA}" class="OptionEdit cufon">{STATIC_MANAGE_INVOICE_PDF_DOWNLOAD_BUTTON} </a>
+		<img src="images/pictures/icons/news.icon.png" />
+	</li>
+	<!-- END: boton_download_factura -->
+</ul>
+<form name="frmFactura" method="post" enctype="multipart/form-data">
+	<div class="boxFormEasyNotify"><div id="containerEasyNotify" class="layoutFormEasyNotify"></div></div>
+	<input type="hidden" name="section" id="section" value="invoice">
+	<input type="hidden" name="action" id="action" value="{ACTION}">
+	<input type="hidden" name="hdnIdMovimiento" id="hdnIdMovimiento" value="{ID_MOVIMIENTO}" />
+	<div class="headerSectionForm" onclick="expandirSeccion('generalIcon','generalContent');">
+		<div class="leftBorder"></div>
+		<div class="titleSectionForm">{STATIC_GLOBAL_GENERAL_SECTION}</div>
+		<div id="generalIcon" class="iconExpand"></div>
+		<div class="rightBorder"></div>
+	</div>
+	<div class="containerSection" id="generalContent">
+		<div class="contentSectionForm">
+			<table border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td>{STATIC_MANAGE_INVOICE_IMPORT}</td>
+				</tr>
+				<tr>
+					<td><input type="text" style="width:80px;" name="txtImporte" id="txtImporte" value="{FACTURA_IMPORTE}"></td>
+				</tr>
+				<tr>
+					<td>{STATIC_MANAGE_INVOICE_DATE}</td>
+				</tr>
+				<tr>
+					<td><input type="text" style="width:100px;" class="dateArea" name="txtFechaFactura" id="txtFechaFactura" value="{FACTURA_FECHA}"></td>
+				</tr>
+				<tr>
+					<td>{STATIC_MANAGE_INVOICE_PAYMENT_DATE}</td>
+				</tr>
+				<tr>
+					<td><input type="text" style="width:100px;" class="dateArea" name="txtFechaPagoFactura" id="txtFechaPagoFactura" value="{FACTURA_FECHA_PAGO}"></td>
+				</tr>
+				<tr>
+					<td>{STATIC_MANAGE_INVOICE_NUMBER}</td>
+				</tr>
+				<tr>
+					<td><input type="text" style="width:140px;" name="txtNumeroFactura" id="txtNumeroFactura" value="{FACTURA_NUMERO_FACTURA}"></td>
+				</tr>
+				<tr>
+					<td>{STATIC_MANAGE_INVOICE_CUSTOMER_NIF}</td>
+				</tr>
+				<tr>
+					<td><input type="text"  name="txtNif" id="txtNif" value="{FACTURA_NIF_CLIENTE}"></td>
+				</tr>
+				<tr>
+					<td>{STATIC_MANAGE_INVOICE_NAME_CUSTOMER}</td>
+				</tr>
+				<tr>
+					<td><input type="text" name="txtNombreCliente" id="txtNombreCliente" value="{FACTURA_NOMBRE_CLIENTE}"></td>
+				</tr>
+				<tr>
+					<td>{STATIC_MANAGE_INVOICE_NAME_COMPANY}</td>
+				</tr>
+				<tr>
+					<td><input type="text" name="txtNombreEmpresa" id="txtNombreEmpresa" value="{FACTURA_NOMBRE_EMPRESA}"></td>
+				</tr>
+				<tr>
+					<td>{STATIC_MANAGE_INVOICE_ADDRESS}</td>
+				</tr>
+				<tr>
+					<td><input type="text" name="txtDireccion" id="txtDireccion" value="{FACTURA_DIRECCION}"></td>
+				</tr>
+				<tr>
+					<td>{STATIC_MANAGE_INVOICE_ZIPCODE}</td>
+				</tr>
+				<tr>
+					<td><input type="text" name="txtCodigoPostal" id="txtCodigoPostal" value="{FACTURA_CODIGO_POSTAL}"></td>
+				</tr>
+				<tr>
+					<td>{STATIC_MANAGE_INVOICE_CITY}</td>
+				</tr>
+				<tr>
+					<td><input type="text" name="txtCiudad" id="txtCiudad" value="{FACTURA_CIUDAD}"></td>
+				</tr>
+				<tr>
+					<td>{STATIC_MANAGE_INVOICE_PROVINCE}</td>
+				</tr>
+				<tr>
+					<td><input type="text" name="txtProvincia" id="txtProvincia" value="{FACTURA_PROVINCIA}"></td>
+				</tr>
+				<tr>
+					<td>{STATIC_MANAGE_INVOICE_COUNTRY}</td>
+				</tr>
+				<tr>
+					<td><input type="text" name="txtPais" id="txtPais" value="{FACTURA_PAIS}"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="footerSection">
+		<div class="footerSectionLeft">
+			<div class="footerSectionRight"></div>
+		</div>
+	</div>
+</form>
+<!-- END: contenido_principal -->

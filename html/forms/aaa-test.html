@@ -1,0 +1,34 @@
+<script>        //ON CLICK, clear country alert when a country is selected
+function clearCountryAlert() {
+    $("#cmbPais").on("click", function () {
+        if ($(this).val() > 0) {
+            $(this).css("border-color", "");
+            $("#chkCountryMessage").html("");
+        }
+    });
+}
+
+//ON CLICK, clear payment method alert when a button is selected
+function clearPaymentMethodAlert() {
+    $(".paymentMethod").on("click", function () {
+        if ($(".paymentMethod:checked")) {
+            $("#paymentMethodMessage").html("");
+            $("#containerPaymentMethod").removeClass("errorBackgroundColor");
+        }
+    });
+}
+
+//ON CLICK, clear/re-display error message when privacy checkbox is checked/unchecked
+function setPrivacyAlert() {
+    $("#chkPrivacy").on("click", function () {
+        //ON CLICK,
+        if (this.checked === true) {
+            $("#chkPrivacyMessage").html("");
+            $("#containerPrivacyCheck").removeClass("errorBackgroundColor");
+        } else {
+            $("#chkPrivacyMessage").html("To submit the form, you must accept MET's privacy policy");
+            $("#containerPrivacyCheck").addClass("errorBackgroundColor");
+        }
+    });
+}
+

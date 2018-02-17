@@ -1,0 +1,171 @@
+<!-- BEGIN: contenido_principal -->
+<div id="directory">
+	<table>
+		<tr>
+			<td id="detailDirectory">
+				<img src="{ITEM_MIEMBRO_IMAGEN}" id="headshot" class="left">
+				<h2 class="titleSection">{ITEM_MIEMBRO_NOMBRE}</h2>
+				<table id="contactDetails" class="left">
+					<tr>
+						<td colspan="2" class="titleDetail">{STATIC_MEMBER_CONTACT_DETAILS}</td>
+					</tr>
+					<tr>
+						<td width="50%">
+							<!-- BEGIN: telefono -->
+							<p class="telephone">
+								<label>
+									<!-- BEGIN: telefono1 -->
+									<span>{ITEM_MIEMBRO_TELEFONO1}</span>
+									<!-- END: telefono1 -->
+									<!-- BEGIN: telefono2 -->
+									<span>{ITEM_MIEMBRO_TELEFONO2}</span>
+									<!-- END: telefono2 -->
+									<!-- BEGIN: fax -->
+									<span>{STATIC_FORM_MEMBERSHIP_FAX}: {ITEM_MIEMBRO_FAX}</span>
+									<!-- END: fax -->
+								</label>
+							</p>
+							<!-- END: telefono -->
+							<!-- BEGIN: mail -->
+							<p class="mail">
+								<!-- BEGIN: mail1 -->
+								<a href="mailto:{ITEM_MIEMBRO_MAIL}">{ITEM_MIEMBRO_MAIL}</a>
+								<!-- END: mail1 -->
+								<!-- BEGIN: mail2 -->
+								<a href="mailto:{ITEM_MIEMBRO_MAIL}">{ITEM_MIEMBRO_MAIL}</a>
+								<!-- END: mail2 -->
+							</p>
+							<!-- END: mail -->
+							<!-- BEGIN: web -->
+							<p class="web">
+								<a href="{ITEM_MIEMBRO_WEB}" target="_blank" >{ITEM_MIEMBRO_WEB}</a>
+							</p>
+							<!-- END: web -->
+						</td>
+						<td>
+							<!-- BEGIN: direccion -->
+							<p class="address">
+								<label>{ITEM_MIEMBRO_DIRECCION}
+									<!-- BEGIN: direccion2 -->
+									<br>{ITEM_MIEMBRO_DIRECCION2}
+									<!-- END: direccion2 -->
+									<!-- BEGIN: ciudad -->
+									<br>{ITEM_MIEMBRO_CIUDAD}
+									<!-- END: ciudad -->
+									<!-- BEGIN: provincia -->
+									<br>{ITEM_MIEMBRO_PROVINCIA}
+									<!-- END: provincia -->
+									<!-- BEGIN: codigo_postal -->
+									<br>{ITEM_MIEMBRO_CODIGO_POSTAL}
+									<!-- END: codigo_postal -->
+									<!-- BEGIN: pais -->
+									<br>{ITEM_MIEMBRO_PAIS}
+									<!-- END: pais -->
+									</label>
+							</p>
+							<!-- END: direccion -->
+						</td>
+					</tr>
+				</table>
+				<div class="clear"></div>
+				<table width="100%" style="margin-top:10px;">
+					<tr>
+						<td class="titleDetail">{STATIC_MEMBER_PREFESSIONAL_DETAIL}</td>
+					</tr>
+					<tr>
+						<td class="subTitleDescription">{STATIC_MEMBER_ACTIVITIES}</td>
+					</tr>
+					<tr>
+						<td class="spaceTD">
+							{ITEM_MIEMBRO_ACTIVIDAD_PROFESIONAL}
+						</td>
+					</tr>
+					<!-- BEGIN: language_pairs -->
+					<tr>
+						<td class="subTitleDescription">{STATIC_MEMBER_LANGUAGE_PAIRS}</td>
+					</tr>
+					<tr>
+						<td class="spaceTD">
+							{ITEM_MIEMBRO_LANGUAGE_PAIRS}
+						</td>
+					</tr>
+					<!-- END: language_pairs -->
+					<!-- BEGIN: areas_of_expertise -->
+					<tr>
+						<td class="subTitleDescription">{STATIC_MEMBER_AREAS_OF_EXPERTISE}</td>
+					</tr>
+					<tr>
+						<td class="spaceTD">
+							{ITEM_MIEMBRO_AREAS_OF_EXPERTISE}
+						</td>
+					</tr>
+					<!-- END: areas_of_expertise -->
+					<!-- BEGIN: descripcion -->
+					<tr>
+						<td class="subTitleDescription">{STATIC_MEMBER_DESCRIPTION}</td>
+					</tr>
+					<tr>
+						<td class="spaceTD">
+							{ITEM_MIEMBRO_DESCRIPCION}
+						</td>
+					</tr>
+					<!-- END: descripcion -->
+					<!-- BEGIN: publicacion -->
+					<tr>
+						<td class="subTitleDescription">{STATIC_MEMBER_PUBLICATIONS}</td>
+					</tr>
+					<tr>
+						<td class="spaceTD">
+							{ITEM_MIEMBRO_PUBLICACION}
+						</td>
+					</tr>
+					<!-- END: publicacion -->
+				</table>
+				<table width="100%" style="margin-top:10px;">
+					<!-- BEGIN: bloque_formacion_continua -->
+					<tr>
+						<td class="titleDetail">{STATIC_MEMBER_CONTINUING_PROFESSIONAL_DEVELOPMENT}</td>
+					</tr>
+					<!-- END: bloque_formacion_continua -->
+					<!-- BEGIN: conferencias -->
+					<tr>
+						<td class="subTitleDescription">
+							METMs
+						</td>
+					</tr>
+					<tr>
+						<td class="spaceTD containerConferences">
+							{ITEM_MIEMBRO_CONFERENCIA}
+						</td>
+					</tr>
+					<!-- END: conferencias -->
+					<!-- BEGIN: talleres -->
+					<tr>
+						<td class="subTitleDescription">{STATIC_MEMBER_WORKSHOPS}</td>
+					</tr>
+					<tr>
+						<td class="spaceTD">
+							<ul class="lstList">
+								<!-- BEGIN: item_taller -->
+								<li>{ITEM_MIEMBRO_TALLER}</li>
+								<!-- END: item_taller -->
+							</ul>
+						</td>
+					</tr>
+					<!-- END: talleres -->
+					<!-- BEGIN: otros -->
+					<tr>
+						<td class="subTitleDescription">{STATIC_FORM_MEMBERSHIP_OTHER}</td>
+					</tr>
+					<tr>
+						<td class="spaceTD">
+							{ITEM_MIEMBRO_OTROS}
+						</td>
+					</tr>
+					<!-- END: otros -->
+				</table>
+			</td>
+		</tr>
+	</table>
+</div>
+<!-- END: contenido_principal -->

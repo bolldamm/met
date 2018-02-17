@@ -1,0 +1,145 @@
+<!-- BEGIN: contenido_principal -->
+<script type="text/javascript">
+	function validarMovimiento(volver){
+		if(document.frmMovimiento.cmbConcepto.value=="0"){
+			loadEasyNotify("{STATIC_MANAGE_MOVEMENT_CONCEPT_EMPTY}",1);
+		}else if(document.frmMovimiento.cmbSubConcepto.value=="0"){
+			loadEasyNotify("{STATIC_MANAGE_MOVEMENT_SUB_CONCEPT_EMPTY}",1);
+		}else if(document.frmMovimiento.cmbTipoPago.value=="0"){
+			loadEasyNotify("{STATIC_MANAGE_MOVEMENT_PAYMENT_TYPE_EMPTY}",1);
+		}else{
+			esValido=true;
+			var importe=document.frmMovimiento.txtImporte;
+			if(importe.value!=""){
+				importe.value=importe.value.replace(",",".");
+				if(isNaN(parseFloat(importe.value,10))){
+					loadEasyNotify("{STATIC_MANAGE_MOVEMENT_IMPORT_WRONG}",1);
+					esValido=false;
+				}else{
+					importe.value=parseFloat(importe.value,10);
+				}
+			}
+			
+			if(esValido){
+				document.frmMovimiento.hdnVolver.value=volver;
+				document.frmMovimiento.submit();
+			}
+		}
+		
+	}
+</script>
+<div id="textExplication">
+	<h2>{STATIC_GLOBAL_WELCOME_EASYGESTOR}</h2>
+</div>
+<ul id="controlModButtons">
+	<li><a href="javascript:validarMovimiento(1);" class="OptionAdd cufon">{STATIC_GLOBAL_BUTTON_SAVE} </a><img src="images/pictures/icons/news.icon.png" /></li>
+	<!-- BEGIN: item_button_close -->
+	<li><a href="javascript:validarMovimiento(0);" class="OptionAdd cufon">{STATIC_GLOBAL_BUTTON_SAVE_AND_CLOSE} </a><img src="images/pictures/icons/baner.icon.png" /></li>
+	<!-- END: item_button_close -->
+	<li>
+		<a href="main_app.php?section=movement&action=view" class="OptionEdit cufon">{STATIC_GLOBAL_BUTTON_RETURN} </a>
+		<img src="images/pictures/icons/news.icon.png" />
+	</li>
+</ul>
+<form name="frmMovimiento" method="post" enctype="multipart/form-data">
+	<div class="boxFormEasyNotify"><div id="containerEasyNotify" class="layoutFormEasyNotify"></div></div>
+	<input type="hidden" name="hdnVolver" id="hdnVolver">
+	<input type="hidden" name="section" id="section" value="movement">
+	<input type="hidden" name="action" id="action" value="{ACTION}">
+	<input type="hidden" name="hdnIdMovimiento" id="hdnIdMovimiento" value="{ID_MOVIMIENTO}" />
+	<div class="headerSectionForm" onclick="expandirSeccion('generalIcon','generalContent');">
+		<div class="leftBorder"></div>
+		<div class="titleSectionForm">{STATIC_GLOBAL_GENERAL_SECTION}</div>
+		<div id="generalIcon" class="iconExpand"></div>
+		<div class="rightBorder"></div>
+	</div>
+	<div class="containerSection" id="generalContent">
+		<div class="contentSectionForm">
+			<table border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td>{STATIC_MANAGE_MOVEMENT_DATE}</td>
+				</tr>
+				<tr>
+					<td><input type="text" style="width:80px;" class="dateArea" name="txtFecha" id="txtFecha" value="{MOVIMIENTO_FECHA}"></td>
+				</tr>
+				<tr>
+					<td>{STATIC_MANAGE_MOVEMENT_TYPE}</td>
+				</tr>
+				<tr>
+					<td>{COMBO_TIPO}</td>
+				</tr>
+                <tr>
+					<td>{STATIC_MANAGE_MOVEMENT_TAXABLE}</td>
+				</tr>
+				<tr>
+					<td class="unChecked" onclick="activarCheck(this,'hdnNonTaxable')">
+						<input type="hidden" name="hdnNonTaxable" id="hdnNonTaxable" value="0">
+					</td>
+				</tr>
+				<tr>
+					<td>{STATIC_MANAGE_MOVEMENT_CONCEPT}</td>
+				</tr>
+                
+				<tr>
+					<td>{COMBO_CONCEPTO}</td>
+				</tr>
+				<tr class="contenedorSubConcepto" {DISPLAY_SUBCONCEPTO}>
+					<td>{STATIC_MANAGE_MOVEMENT_SUB_CONCEPT}</td>
+				</tr>
+				<tr class="contenedorSubConcepto" {DISPLAY_SUBCONCEPTO}>
+					<td id="comboConcepto">{COMBO_SUBCONCEPTO}</td>
+				</tr>
+				<tr>
+					<td>{STATIC_MANAGE_MOVEMENT_PAYMENT_TYPE}</td>
+				</tr>
+				<tr>
+					<td>{COMBO_TIPO_PAGO}</td>
+				</tr>
+				<tr>
+					<td>{STATIC_MANAGE_MOVEMENT_CUSTOM_CONCEPT}</td>
+				</tr>
+				<tr>
+					<td><input type="text" maxlength="255" name="txtConceptoPersonalizado" id="txtConceptoPersonalizado" value="{MOVIMIENTO_CONCEPTO_PERSONALIZADO}"></td>
+				</tr>
+				<tr>
+					<td>{STATIC_MANAGE_MOVEMENT_PERSON}</td>
+				</tr>
+				<tr>
+					<td><input type="text" maxlength="255" name="txtPersona" id="txtPersona" value="{MOVIMIENTO_PERSONA}"></td>
+				</tr>
+				<tr>
+					<td>{STATIC_MANAGE_MOVEMENT_IMPORT}</td>
+				</tr>
+				<tr>
+					<td><input type="text" style="width:80px;" name="txtImporte" id="txtImporte" value="{MOVIMIENTO_IMPORTE}"></td>
+				</tr>
+				<tr>
+					<td>Comment</td>
+				</tr>
+				<tr>
+					<td><textarea name="txtaComment" id="txtaComment" style="width:100%;height:80px">{MOVIMIENTO_COMMENT}</textarea></td>
+				</tr>
+				<tr>
+					<td>{STATIC_MANAGE_MOVEMENT_DESCRIPTION}</td>
+				</tr>
+				<tr>
+					<td><textarea name="txtaDescripcion" id="txtaDescripcion">{MOVIMIENTO_DESCRIPCION}</textarea></td>
+				</tr>
+				<tr>
+					<td>{STATIC_MANAGE_MOVEMENT_PAYED}</td>
+				</tr>
+				<tr>
+					<td class="{PAGADO_CLASE}" onclick="activarCheck(this,'hdnPagado')">
+						<input type="hidden" name="hdnPagado" id="hdnPagado" value="{MOVIMIENTO_PAGADO}">
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="footerSection">
+		<div class="footerSectionLeft">
+			<div class="footerSectionRight"></div>
+		</div>
+	</div>
+</form>
+<!-- END: contenido_principal -->

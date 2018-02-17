@@ -1,0 +1,20 @@
+@CHARSET "UTF-8";
+
+#institutionalMembers { padding:9px 9px 10px 10px; }
+
+h2.titleSection { color:#8B1513; font:700 24px/24px 'Advent Pro', sans-serif; margin:0px 0px 15px; }
+
+/* form */
+#form #btnSendForm { padding:4px 10px; margin:4px 10px; }
+.boxForm { width:439px; }
+
+/* list institutions */
+/* #lstInstitutionalsMembers ul { margin:0px 40px 20px; } */
+#lstInstitutionalsMembers ul li { margin:0px 0px 25px; }
+#lstInstitutionalsMembers ul li table tr td { padding:0px 5px; }
+#lstInstitutionalsMembers ul li a { color:#8B1513; }
+#lstInstitutionalsMembers ul li a:hover { color:#0097A8; }
+h3 a.title { color:#000000; font-weight:bold; text-transform:uppercase; }
+
+/* pager */
+#pager ul { margin:0px 25px 0px 0px; }

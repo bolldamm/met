@@ -1,0 +1,42 @@
+<!-- BEGIN: contenido_principal -->
+<div id="form">
+    <p id="msgAlert" class="{MENSAJE_ACCION_CLASS}" style="{MENSAJE_ACCION_DISPLAY}">{MENSAJE_ACCION_PERFIL}</p>
+    <a name="anclaExito"></a>
+    <form name="frmExpense" id="frmExpense" action="" method="post">
+        <div class="boxForm">
+            <label class="textBoxForm">{TITLE_FORM}</label>
+            <table>
+                <tr>
+                    <td>
+                        <input type="text" class="inputText left required" name="txtNombre" value="{EXPENSE_FORM_NAME}" onblur="restaurarInputValue(this,'{STATIC_EXPENSE_FORM_NAME}')" onfocus="limpiarInputValue(this,'{STATIC_EXPENSE_FORM_NAME}')" style="width:225px;">
+                    </td>
+                    <td><input type="text" class="inputText datepicker left" value="{STATIC_EXPENSE_FORM_DATE_INCURRED}" name="txtFecha"></td>
+                </tr>
+                <tr>
+                    <td >
+                        {COMBO_CONCEPTO}
+                    </td>
+                    <td id="comboConcepto" class="contenedorSubConcepto" style="width:300px;"><span id="comboConcepto" style="{DISPLAY_SUBCONCEPTO}">{COMBO_SUBCONCEPTO}</span></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <textarea class="inputText required" name="txtContenido" onblur="restaurarTextAreaValue(this,'{STATIC_EXPENSE_FORM_DESCRIPTION}')" onfocus="limpiarTextAreaValue(this,'{STATIC_EXPENSE_FORM_DESCRIPTION}')">{STATIC_EXPENSE_FORM_DESCRIPTION}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="text" class="inputText left required" name="txtImporte" value="{STATIC_EXPENSE_FORM_AMOUNT}" onblur="restaurarInputValue(this,'{STATIC_EXPENSE_FORM_AMOUNT}')" onfocus="limpiarInputValue(this,'{STATIC_EXPENSE_FORM_AMOUNT}')" style="width:225px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        {COMBO_TIPO_PAGO}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <input type="button" id="btnSendForm" class="right" value="{STATIC_EXPENSE_FORM_SUBMIT}" onclick="validarFormularioExpense()">
+        <div class="clear"></div>
+    </form>
+</div>
+<!-- END: contenido_principal -->

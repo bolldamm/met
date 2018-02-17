@@ -1,0 +1,32 @@
+RewriteEngine On
+#if host is not www.metmeetings.org (e.g. if www has been omitted)
+#rewrite URL to https://www.metmeetings.org, with a 301 redirect
+#RewriteCond %{HTTP_HOST} !^test.metmeetings.org$ [NC]
+#RewriteRule ^(.*)$ http://test.metmeetings.org/$1 [R=301,L]
+
+#if https is not on, rewrite URL to https, with a 301 redirect
+#RewriteCond %{HTTPS} !=on
+#RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+#alternative rewrite rule supplied by ICDSoft
+#RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
+
+#INICIO: WEB
+#menu
+RewriteRule ^(.*)/detail/.*:([0-9]+)-([0-9]+)$ controller_menu.php?idioma=$1&menu=$2&elemento=$3&detalle=1 [NC,L]
+RewriteRule ^(.*)/.*:([0-9]+)-?([0-9]+)?-?q?=?(.*)?$ controller_menu.php?idioma=$1&menu=$2&pagina=$3&filtro=$4&detalle=0 [NC,L]
+
+
+#idiomas
+RewriteRule ^(es|en|ca)/$ index.php?idioma=$1 [NC,L]
+
+  
+#image tracking
+RewriteRule ^(.*)/detail/.*:([0-9]+)-([0-9]+)$ tracker.php?idioma=$1&menu=$2&elemento=$3&detalle=1 [NC,L]
+
+#FIN: WEB
+
+ErrorDocument 404 /error404.php
+
+
+Options -Indexes

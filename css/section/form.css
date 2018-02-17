@@ -1,0 +1,73 @@
+@CHARSET "UTF-8";
+
+/*
+#form { margin:25px auto 15px; width:612px; }
+#form table, #form table th, #form table td { border:none; border-radius:0px; box-shadow:none; padding:0px; }
+*/
+
+#form input.required,
+#form textarea.required,
+#form select.required,
+.groupChk .required { background:transparent url('../../images/pictures/icons/icon.required.png') no-repeat scroll 3px 5px; }
+#form select.required { padding-left:8px; }
+#form .groupChk .required { padding-left:15px; }
+
+
+.boxForm { position:relative; border:1px solid #b2b2b2; padding:10px 0px 6px; margin-top:25px; border-radius:8px; }
+.boxBlueForm { position:relative; color:#6872A8; border:1px solid #6872A8; padding:10px 0px 6px; margin-top:25px; border-radius:8px; }
+#form .boxBlueForm .inputText { border:1px solid #6872A8; }
+.textBoxForm { position:absolute; background:#ffffff; top:-10px; left:7px; padding:0px 5px; font:20px/16px 'Advent Pro',sans-serif; color:#8B1513; }
+
+#btnSendForm, #btnOpenFile, #subirimagen { background:#6872a8; color:#ffffff; padding:5px 10px; margin-top:10px; margin-right:5px; font-weight:bold; border:none; border-radius:6px; cursor:pointer; }
+#btnSendForm:hover, #btnOpenFile:hover { background:#8991bf; }
+#btnOpenFile { margin-top:2px; margin-left:10px; }
+
+
+#openbox a.specialTarget { background:#6872a8; color:#ffffff; padding:5px 10px; margin-top:10px; margin-right:5px; font-weight:bold; border:none; border-radius:6px; cursor:pointer; }
+#openbox a.specialTarget:hover { background:#8991bf; }
+
+span.highlight { color:#8B1513;font-weight:bold; }
+
+#form .boxForm table tr td .errorInput,
+#form #captchaBox .errorInput { background:#F9EBEA; color:#8B1513; border:1px solid #8B1513; }
+
+#publicProfile { margin:0px 15px 0px 338px; }
+#publicProfile input { position:absolute; left:-22px; top:-3px; }
+.recomendedSize { display:block; font-size:11px; line-height:12px; padding-top:3px; }
+#openbox .groupChk table.tblConference { width:194px; margin-bottom:20px; }
+table.tblConference .inputChk { width:172px; }
+table.tblConference .spacingWorkShop label { padding-left:20px; color:#898989; }
+
+/* messages */
+#msgAlert, #msgAlertStatic { padding:4px 12px 4px 12px; border-radius:6px; }
+#form p.msgKO { background:#f9ebea; color:#8B1513; border:1px solid #8B1513; }
+#form p.msgOK { background:#ebfafa; color:#348A88; border:1px solid #348A88; }
+
+/* checkbox */
+.groupChk { margin:4px 12px; }
+.groupChk .inputChk { display:block; width:194px; }
+
+/* textarea */
+#form textarea.inputText { width:562px; height:70px; resize:none; }
+
+/* datapicker */
+#form .datepicker { background:#ffffff url('../../images/pictures/icons/icon.calendar.png') no-repeat scroll 90px 50%; width:90px; }
+
+/* captcha */
+
+#txtCaptcha { float:left; margin-left: 1em; text-transform:uppercase;}
+#imageCaptcha { border:1px solid #B2B2B2; border-radius:6px; float:right; }
+.captchaText { font-size:80%; }
+.captchaImage { padding-top: 1em; }
+
+div.sex {
+    padding-left: 1em;
+    margin-bottom: .5em;
+}
+#viewProfileButton {
+    margin-bottom: .5em;
+}
+#frmExpense input.datepicker {
+    width: 150px;
+    /*background-position: 120px;*/
+}

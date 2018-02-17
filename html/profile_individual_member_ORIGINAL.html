@@ -1,0 +1,224 @@
+<!-- BEGIN: contenido_principal -->
+<div id="openbox">
+    {CONTENIDO_DESCRIPCION}
+    <div id="form">
+        <p id="msgAlert" class="{MENSAJE_ACCION_CLASS}" style="{MENSAJE_ACCION_DISPLAY}">{MENSAJE_ACCION_PERFIL}</p>
+        <form name="frmMembership" id="frmMembership" autocomplete="off" action="profile_edit.php" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="hdnIdMenu" id="hdnIdMenu" value="{ID_MENU}">
+            <input type="hidden" name="hdnIdActividadProfesional" id="hdnIdActividadProfesional">
+            <input type="hidden" name="hdnIdSituacionLaboral" id="hdnIdSituacionLaboral">
+            {PERFIL_DATOS_USUARIO}
+            <div class="boxForm">
+                <label class="textBoxForm">{STATIC_FORM_MEMBERSHIP_LEGEND_PERSONAL_DETAILS}</label>
+                <table>
+                    <tr>
+                        <td>
+                            {COMBO_TITULOS}
+                            <input type="text" class="inputText left required" name="txtNombre" value="{MIEMBRO_NOMBRE}" onblur="restaurarInputValue(this, '{STATIC_FORM_MEMBERSHIP_FIRST_NAME}')" onfocus="limpiarInputValue(this, '{STATIC_FORM_MEMBERSHIP_FIRST_NAME}')" style="width:176px;">
+                            <input type="text" class="inputText left required" name="txtApellidos" value="{MIEMBRO_APELLIDOS}" onblur="restaurarInputValue(this, '{STATIC_FORM_MEMBERSHIP_LAST_NAMES}')" onfocus="limpiarInputValue(this, '{STATIC_FORM_MEMBERSHIP_LAST_NAMES}')">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="inputText left" name="txtNacionalidad" value="{MIEMBRO_NACIONALIDAD}" onblur="restaurarInputValue(this, '{STATIC_FORM_MEMBERSHIP_NATIONALITY}')" onfocus="limpiarInputValue(this, '{STATIC_FORM_MEMBERSHIP_NATIONALITY}')" style="width:260px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {COMBO_ANYOS}
+                            <div class="groupChk" style="margin-left:314px;">
+                                {STATIC_FORM_MEMBERSHIP_SEX}<br>
+                                <label class="inputChk left" style="width:90px;"><input type="radio" name="chkSex" value="1" {CHECKED_SEXO_1}> {STATIC_FORM_MEMBERSHIP_MALE}</label>
+                                <label class="inputChk left" style="width:90px;"><input type="radio" name="chkSex" value="2"  {CHECKED_SEXO_0}> {STATIC_FORM_MEMBERSHIP_FEMALE}</label>
+                                <div class="clear"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:15px 15px 0px 15px;">{STATIC_DIRECTORY_MEMBER_IMAGE}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="file" class="inputText left" name="fileImagenPerfil"  onblur="restaurarInputValue(this, '{STATIC_FORM_MEMBERSHIP_FIRST_NAME}')" onfocus="limpiarInputValue(this, '{STATIC_FORM_MEMBERSHIP_FIRST_NAME}')">
+                            <!-- BEGIN: imagen_controles -->
+                            <input type="hidden" name="hdnFileImagenPerfil" id="hdnFileImagenPerfil" value="{PERFIL_IMAGEN_NOMBRE}">
+                            <input type="hidden" name="hdnEliminarFileImagenPerfil" id="hdnEliminarFileImagenPerfil" value="0">
+                            <table class="left" style="width:40px; margin:8px 0px 0px 5px;">
+                                <tr>
+                                    <td width="20"><img src="images/pictures/icons/icon.picturePreview.png" style="cursor:pointer;" onclick="$.colorbox({href: 'files/members/{PERFIL_IMAGEN_NOMBRE}'});" title="{STATIC_FORM_PROFILE_VIEW_IMAGE}"></td>
+                                    <td width="20">
+                                        <img src="images/pictures/icons/icon.pictureDelete.png" id="imgEliminar" style="cursor:pointer;" onclick="eliminarElementoGuardar(this, 'hdnEliminarFileImagenPerfil', 'imgNoEliminar', 1)" title="{STATIC_FORM_PROFILE_DELETE_IMAGE}">
+                                        <img src="images/pictures/icons/icon.pictureRecycle.png" class="deleteImage" style="display:none; cursor:pointer;" id="imgNoEliminar"  onclick="eliminarElementoGuardar(this, 'hdnEliminarFileImagenPerfil', 'imgEliminar', 0)" title="{STATIC_FORM_PROFILE_RECYCLE_IMAGE}" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- END: imagen_controles -->
+                            <label class="recomendedSize">{RECOMMENDED_SIZE}<br>{STATIC_GLOBAL_IMAGE_ALLOW_EXTENSION}</label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="boxForm">
+                <label class="textBoxForm">{STATIC_FORM_MEMBERSHIP_LEGEND_ADDRESS}</label>
+                <table>
+                    <tr>
+                        <td>
+                            <input type="text" class="inputText left" name="txtDireccion1" value="{MIEMBRO_CALLE1}" onblur="restaurarInputValue(this, '{STATIC_FORM_MEMBERSHIP_STREET_1}')" onfocus="limpiarInputValue(this, '{STATIC_FORM_MEMBERSHIP_STREET_1}')">
+                            <input type="text" class="inputText left" name="txtDireccion2" value="{MIEMBRO_CALLE2}" onblur="restaurarInputValue(this, '{STATIC_FORM_MEMBERSHIP_STREET_2}')" onfocus="limpiarInputValue(this, '{STATIC_FORM_MEMBERSHIP_STREET_2}')">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="inputText left required" name="txtCiudad" value="{MIEMBRO_CIUDAD}" onblur="restaurarInputValue(this, '{STATIC_FORM_MEMBERSHIP_TOWN_CITY}')" onfocus="limpiarInputValue(this, '{STATIC_FORM_MEMBERSHIP_TOWN_CITY}')">
+                            <input type="text" class="inputText left" name="txtProvincia" value="{MIEMBRO_PROVINCIA}" onblur="restaurarInputValue(this, '{STATIC_FORM_MEMBERSHIP_PROVINCE}')" onfocus="limpiarInputValue(this, '{STATIC_FORM_MEMBERSHIP_PROVINCE}')">
+                            <input type="text" class="inputText left" name="txtCp" value="{MIEMBRO_CODIGO_POSTAL}" onblur="restaurarInputValue(this, '{STATIC_FORM_MEMBERSHIP_POSTCODE}')" onfocus="limpiarInputValue(this, '{STATIC_FORM_MEMBERSHIP_POSTCODE}')" style="width:80px;">
+                            <div style="margin-left:304px;">{COMBO_PAIS}</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="boxForm">
+                <label class="textBoxForm">{STATIC_FORM_MEMBERSHIP_LEGEND_CONTACT_DETAILS}</label>
+                <table>
+                    <tr>
+                        <td>
+                            <input type="text" class="inputText left required" name="txtEmail" value="{MIEMBRO_CORREO_ELECTRONICO}" onblur="restaurarInputValue(this, '{STATIC_FORM_MEMBERSHIP_EMAIL}')" onfocus="limpiarInputValue(this, '{STATIC_FORM_MEMBERSHIP_EMAIL}')">
+                            <input type="text" class="inputText left" name="txtTelefonoCasa" value="{MIEMBRO_TELEFONO_CASA}" onblur="restaurarInputValue(this, '{STATIC_FORM_MEMBERSHIP_HOME_PHONE}')" onfocus="limpiarInputValue(this, '{STATIC_FORM_MEMBERSHIP_HOME_PHONE}')">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="inputText left" name="txtEmailAlternativo" value="{MIEMBRO_CORREO_ELECTRONICO_ALTERNATIVO}" onblur="restaurarInputValue(this, '{STATIC_FORM_MEMBERSHIP_ALTERNATIVE_EMAIL}')" onfocus="limpiarInputValue(this, '{STATIC_FORM_MEMBERSHIP_ALTERNATIVE_EMAIL}')">
+                            <input type="text" class="inputText left" name="txtTelefonoTrabajo" value="{MIEMBRO_TELEFONO}" onblur="restaurarInputValue(this, '{STATIC_FORM_MEMBERSHIP_WORK_PHONE}')" onfocus="limpiarInputValue(this, '{STATIC_FORM_MEMBERSHIP_WORK_PHONE}')">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="inputText left" name="txtFax" value="{MIEMBRO_FAX}" onblur="restaurarInputValue(this, '{STATIC_FORM_MEMBERSHIP_FAX}')" onfocus="limpiarInputValue(this, '{STATIC_FORM_MEMBERSHIP_FAX}')">
+                            <input type="text" class="inputText left" name="txtTelefonoMobil" value="{MIEMBRO_TELEFONO_MOVIL}" onblur="restaurarInputValue(this, '{STATIC_FORM_MEMBERSHIP_MOBILE_PHONE}')" onfocus="limpiarInputValue(this, '{STATIC_FORM_MEMBERSHIP_MOBILE_PHONE}')">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="inputText left" name="txtWeb" value="{PERFIL_VALOR_WEB}" onblur="restaurarInputValue(this, '{STATIC_FORM_PROFILE_CHANGE_WEB}')" onfocus="limpiarInputValue(this, '{STATIC_FORM_PROFILE_CHANGE_WEB}')">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="boxForm">
+                <label class="textBoxForm">{STATIC_FORM_PROFILE_LEGEND_LANGUAGE_PAIRS}</label>
+                <table><tbody>
+                <tr>
+                    <td style="width:200px;padding:14px 0px 0px 20px;"><b>{STATIC_FORM_PROFILE_SOURCE_LANGUAGES_HEADING}</b></td>
+                    <td style="width:200px;padding:14px 0px 0px 20px;"><b>{STATIC_FORM_PROFILE_TARGET_LANGUAGES_HEADING}</b></td>
+                </tr>
+                <tr><td style="vertical-align:top;">
+                    {COMBO_SOURCE_LANGUAGES}
+                    <td style="vertical-align:top;">
+                        {COMBO_TARGET_LANGUAGES}
+                    </td>
+                </tr>
+                <tr><td colspan="2" style="width:500px;padding:14px 0px 0px 20px;">{STATIC_FORM_PROFILE_WORKING_LANGUAGES_TEXT}</td></tr>
+                </tbody></table>
+            </div>
+            <div class="boxForm">
+                <label class="textBoxForm">{STATIC_FORM_PROFILE_LEGEND_AREAS_OF_EXPERTISE}</label>
+                <table><tbody>
+                <tr>
+                    <td style="width:200px;padding:14px 0px 0px 20px;"><b>{STATIC_FORM_PROFILE_AREAS_OF_EXPERTISE_HEADING}</b></td>
+                </tr>
+                <tr><td style="vertical-align:top;">
+                    {COMBO_AREAS_OF_EXPERTISE}
+                </td>
+                </tr>
+                </tbody></table>
+            </div>
+            <div class="boxForm">
+                <label class="textBoxForm">{STATIC_FORM_RENEW_MEMBERSHIP_LEGEND_PROFESSIONAL_INFORMATION}</label>
+
+                <table>
+                    <tr>
+                        <td>
+                            <div class="groupChk" id="containerProfessionalActivity">
+                                <img style="float:left;" src="images/pictures/icons/icon.required.png"> &nbsp;{STATIC_FORM_MEMBERSHIP_YOUR_PREFESSION}<br>
+                                <!-- BEGIN: item_actividad_profesional -->
+                                <label class="inputChk left"><input type="checkbox" name="chk{ITEM_ACTIVIDAD_PROFESIONAL_NOMBRE_ELEMENTO}" value="{ITEM_ACTIVIDAD_PROFESIONAL_ID}" {CHECKED_ACTIVIDAD_PROFESIONAL}> {ITEM_ACTIVIDAD_PROFESIONAL_NOMBRE}</label>
+                                <!-- END: item_actividad_profesional -->
+                                <div class="clear"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="inputText" id="txtSpecifyOther" name="txtOtherSpecification" value="{MIEMBRO_ESPECIFICACION_OTROS}" onblur="restaurarInputValue(this, '{STATIC_FORM_MEMBERSHIP_IF_OTHER_SPECIFY}')" onfocus="limpiarInputValue(this, '{STATIC_FORM_MEMBERSHIP_IF_OTHER_SPECIFY}')" style="width:155px;">
+                            <input type="text" class="inputText" id="txtSpecifyStudy" name="txtStudySpecification" value="{MIEMBRO_ESPECIFICACION_ESTUDIOS}" onblur="restaurarInputValue(this, '{STATIC_FORM_MEMBERSHIP_IF_STUDENT_SUBJECT}')" onfocus="limpiarInputValue(this, '{STATIC_FORM_MEMBERSHIP_IF_STUDENT_SUBJECT}')" style="width:155px;">
+                            <input type="text" class="inputText" name="txtProfesionQualificacion" value="{MIEMBRO_PROFESION_CUALIFICACION}" onblur="restaurarInputValue(this, '{STATIC_FORM_MEMBERSHIP_DEGREES_QUALIFICATIONS}')" onfocus="limpiarInputValue(this, '{STATIC_FORM_MEMBERSHIP_DEGREES_QUALIFICATIONS}')" style="width:155px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="groupChk" id="containerLaboralSituation">
+                                {STATIC_FORM_MEMBERSHIP_WORK_SITUATION}<br>
+                                <!-- BEGIN: item_situacion_laboral -->
+                                <label class="inputChk left"><input type="checkbox" name="chkSituacion_{SITUACION_LABORAL_ID}" value="{SITUACION_LABORAL_ID}" {CHECKED_SITUACION_LABORAL}> {SITUACION_LABORAL_NOMBRE}</label>
+                                <!-- END: item_situacion_laboral -->
+                                <div class="clear"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px;">
+                            {STATIC_MEMBER_DESCRIPTION}
+                            <textarea class="inputText" name="txtOtrasDescripciones" id="txtOtrasDescripciones">{PERFIL_VALOR_OTRAS_DESCRIPCION}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:10px;">
+                            {STATIC_MEMBER_PUBLICATIONS}
+                            <textarea class="inputText" name="txtOtrasPublicaciones" id="txtOtrasPublicaciones">{PERFIL_VALOR_OTRAS_PUBLICACIONES}</textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="boxForm">
+                <label class="textBoxForm">{STATIC_FORM_MEMBERSHIP_LEGEND_ADDITIONAL_INFORMATION}</label>
+                <table>
+                    {PERFIL_MAS_INFORMACION}
+                </table>
+            </div>
+            <div class="boxForm">
+                <label class="textBoxForm">{STATIC_FORM_MEMBERSHIP_LEGEND_BILLING_INFORMATION}</label>
+                <table>
+                    {PERFIL_FACTURACION}
+                </table>
+            </div>
+            <input type="button" id="btnSendForm" class="right" value="{STATIC_FORM_PROFILE_CHANGE_APPLY_CHANGES}" onclick="validarFormularioEditarUsuario()">
+            <div class="clear"></div>
+        </form>
+    </div>
+
+    <div id="resultadoInscripcion">
+        <table border="0" cellspacing="0" cellpadding="0">
+            <caption style="font-weight:bold;font-size: 130%;padding:10px 0px 10px 0px;">{STATIC_FORM_PROFILE_INSCRIPTIONS_HISTORY_TITLE}</caption>
+            <tr>
+                <td><strong>{STATIC_FORM_PROFILE_INSCRIPTIONS_HISTORY_NUMBER}</strong></td>
+                <td><strong>{STATIC_FORM_PROFILE_INSCRIPTIONS_HISTORY_START_DATE}</strong></td>
+                <td><strong>{STATIC_FORM_PROFILE_INSCRIPTIONS_HISTORY_END_DATE}</strong></td>
+                <td><strong>{STATIC_FORM_PROFILE_INSCRIPTIONS_HISTORY_PAYMENT_TYPE}</strong></td>
+                <td><strong>{STATIC_FORM_PROFILE_INSCRIPTIONS_HISTORY_AMOUNT}</strong></td>
+            </tr>
+            <!-- BEGIN: item_inscripcion -->
+            <tr>
+                <td>{INSCRIPTIONS_HISTORY_NUMBER}</td>
+                <td>{INSCRIPTIONS_HISTORY_START_DATE}</td>
+                <td>{INSCRIPTIONS_HISTORY_END_DATE}</td>
+                <td>{INSCRIPTIONS_HISTORY_PAYMENT_TYPE}</td>
+                <td>{INSCRIPTIONS_HISTORY_AMOUNT}</td>
+            </tr>
+
+            <!-- END: item_inscripcion -->
+        </table>
+    </div>
+
+</div>
+<!-- END: contenido_principal -->

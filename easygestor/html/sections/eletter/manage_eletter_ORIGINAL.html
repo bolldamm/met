@@ -1,0 +1,89 @@
+<!-- BEGIN: contenido_principal -->
+<script type="text/javascript">
+	function validarEletter(volver){
+		document.frmEletter.hdnVolver.value=volver;
+		document.frmEletter.submit();
+	}
+</script>
+<div id="textExplication">
+	<h2>{STATIC_GLOBAL_WELCOME_EASYGESTOR}</h2>
+</div>
+<ul id="controlModButtons">
+	<li><a href="javascript:validarEletter(1);" class="OptionAdd cufon">{STATIC_GLOBAL_BUTTON_SAVE} </a><img src="images/pictures/icons/temas.icon.png" /></li>
+	<!-- BEGIN: item_button_close -->
+	<li><a href="javascript:validarEletter(0);" class="OptionAdd cufon">{STATIC_GLOBAL_BUTTON_SAVE_AND_CLOSE} </a><img src="images/pictures/icons/baner.icon.png" /></li>
+	<!-- END: item_button_close -->
+	<li>
+		<a href="main_app.php?section=eletter&action=view" class="OptionEdit cufon">{STATIC_GLOBAL_BUTTON_RETURN} </a>
+		<img src="images/pictures/icons/temas.icon.png" />
+	</li>
+	<!-- BEGIN: boton_historial -->
+	<li>
+		<a href="main_app.php?section=history_eletter&action=view&id_eletter={ID_ELETTER}" class="OptionDisable cufon">{STATIC_MANAGE_ELETTER_HISTORY_BUTTON} </a>
+		<img src="images/pictures/icons/temas.icon.png" />
+	</li>
+	<!-- END: boton_historial -->
+</ul>
+<form name="frmEletter" id="frmEletter" method="post" enctype="multipart/form-data">
+	<div class="boxFormEasyNotify"><div id="containerEasyNotify" class="layoutFormEasyNotify"></div></div>
+	<input type="hidden" name="hdnVolver" id="hdnVolver">
+	<input type="hidden" name="section" id="section" value="eletter">
+	<input type="hidden" name="action" id="action" value="{ACTION}">
+	<input type="hidden" name="hdnIdEletter" id="hdnIdEletter" value="{ID_ELETTER}" />
+	<div class="headerSectionForm" onclick="expandirSeccion('generalIcon','generalContent');">
+		<div class="leftBorder"></div>
+		<div class="titleSectionForm">{STATIC_GLOBAL_GENERAL_SECTION}</div>
+		<div id="generalIcon" class="iconExpand"></div>
+		<div class="rightBorder"></div>
+	</div>
+	<div class="containerSection" id="generalContent">
+		<div class="contentSectionForm">
+			<table border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td>{STATIC_MANAGE_ELETTER_NAME}</td>
+				</tr>
+				<tr>
+					<td><input type="text" maxlength="255" name="txtNombre" value="{ELETTER_ASUNTO}"></td>
+				</tr>
+				<tr>
+					<td>{STATIC_MANAGE_ELETTER_DESCRIPTION}</td>
+				</tr>
+				<tr>
+					<td>
+						<textarea name="txtaDescripcion" id="txtaDescripcion">
+							<!-- BEGIN: bloque_maquetacion_descripcion -->
+							<table border="0" cellpadding="0" cellspacing="0" style="width:1000px;background-color:#a7a7a7;" align="center">
+								<tr>
+									<td style="padding:10px 10px 10px 100px;"><a href="http://www.metmeetings.org"><img src="images/pictures/met.mail.logo.png" border="0" /></a></td>
+								</tr>
+								<tr>
+									<td>
+										<table border="0" cellspacing="0" cellpadding="0" style="width:800px;background-color:#ffffff;" align="center">
+											<tr>
+												<td style="border:1px solid #858585;padding:10px;color:#58595B;"><span style="color:#58595B;font-family:Arial;">{ELETTER_DESCRIPCION}</span></td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td style="text-align:center;padding:10px;"><span style="color:#ffffff;"><a style="color:#fff;" href="http://www.metmeetings.org">© Mediterranean Editors and Translators</a></span></td>
+								</tr>
+							</table>
+							
+							<!-- END: bloque_maquetacion_descripcion -->
+							<!-- BEGIN: bloque_descripcion_existente -->
+							{ELETTER_DESCRIPCION}
+							<!-- END: bloque_descripcion_existente -->
+						</textarea>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="footerSection">
+		<div class="footerSectionLeft">
+			<div class="footerSectionRight"></div>
+		</div>
+	</div>
+</form>
+<!-- END: contenido_principal -->

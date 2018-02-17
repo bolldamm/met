@@ -1,0 +1,273 @@
+<!-- BEGIN: contenido_principal -->
+<p id="msgAlert" class="msgKO" style="display:none;"></p>
+<form name="frmMembership" id="frmMembership" action="" method="post">
+    <input type="hidden" name="hdnIdModalidad" id="hdnIdModalidad" value="{USUARIO_MODALIDAD}">
+    <input type="hidden" name="hdnIdActividadProfesional" id="hdnIdActividadProfesional">
+    <input type="hidden" name="hdnIdSituacionLaboral" id="hdnIdSituacionLaboral">
+
+    <fieldset>
+        <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_ACCOUNT_DETAILS}</legend>
+        <input type="text" class="form-control" name="txtEmailUser" value="{STATIC_FORM_MEMBERSHIP_EMAIL_USER}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_EMAIL_USER}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_EMAIL_USER}')">
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtPasswordText" id="txtPasswordText"  value="{STATIC_FORM_MEMBERSHIP_PASSWORD_USER}" onfocus="limpiarInputPassword(this,'txtPassword')">
+                <input type="password" class="form-control"  id="txtPassword" name="txtPassword" onblur="restaurarInputPassword(this,'txtPasswordText','{STATIC_FORM_MEMBERSHIP_PASSWORD_USER}')" style="display:none;" />
+            </div>
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtRePasswordText" id="txtRePasswordText"  value="{STATIC_FORM_MEMBERSHIP_CONFIRM_PASSWORD_USER}" onfocus="limpiarInputPassword(this,'txtRePassword')">
+                <input type="password" class="form-control"  id="txtRePassword" name="txtRePassword"  onblur="restaurarInputPassword(this,'txtRePasswordText','{STATIC_FORM_MEMBERSHIP_CONFIRM_PASSWORD_USER}')"  style="display:none;" />
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_PERSONAL_DETAILS}</legend>
+        <div class="form-row">
+            <div class="col-12 col-md-2">
+                {COMBO_TITULOS}
+            </div>
+            <div class="col-12 col-md-5">
+            <input type="text" class="form-control" name="txtNombre" value="{STATIC_FORM_MEMBERSHIP_FIRST_NAME}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_FIRST_NAME}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_FIRST_NAME}')">
+            </div>
+            <div class="invalid-feedback">
+                Please enter first name.
+            </div>
+            <div class="col-12 col-md-5">
+            <input type="text" class="form-control" name="txtApellidos" value="{STATIC_FORM_MEMBERSHIP_LAST_NAMES}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_LAST_NAMES}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_LAST_NAMES}')">
+            </div>
+            <div class="invalid-feedback">
+                Please enter last name.
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+            <input type="text" class="form-control" name="txtNacionalidad" value="{STATIC_FORM_MEMBERSHIP_NATIONALITY}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_NATIONALITY}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_NATIONALITY}')">
+            </div>
+            <div class="col-12 col-md-6">
+            {COMBO_PAIS}
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_ADDRESS}</legend>
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtDireccion1" value="{STATIC_FORM_MEMBERSHIP_STREET_1}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_STREET_1}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_STREET_1}')">
+            </div>
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtDireccion2" value="{STATIC_FORM_MEMBERSHIP_STREET_2}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_STREET_2}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_STREET_2}')">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-12 col-md-5">
+                <input type="text" class="form-control" name="txtCiudad" value="{STATIC_FORM_MEMBERSHIP_TOWN_CITY}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_TOWN_CITY}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_TOWN_CITY}')">
+            </div>
+            <div class="col-12 col-md-5">
+                <input type="text" class="form-control" name="txtProvincia" value="{STATIC_FORM_MEMBERSHIP_PROVINCE}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_PROVINCE}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_PROVINCE}')">
+            </div>
+            <div class="col-12 col-md-2">
+            <input type="text" class="form-control" name="txtCp" value="{STATIC_FORM_MEMBERSHIP_POSTCODE}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_POSTCODE}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_POSTCODE}')">
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_CONTACT_DETAILS}</legend>
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtEmail" value="{STATIC_FORM_MEMBERSHIP_EMAIL}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_EMAIL}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_EMAIL}')">
+            </div>
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtEmailAlternativo" value="{STATIC_FORM_MEMBERSHIP_ALTERNATIVE_EMAIL}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_ALTERNATIVE_EMAIL}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_ALTERNATIVE_EMAIL}')">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtTelefonoCasa" value="{STATIC_FORM_MEMBERSHIP_HOME_PHONE}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_HOME_PHONE}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_HOME_PHONE}')">
+            </div>
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtTelefonoTrabajo" value="{STATIC_FORM_MEMBERSHIP_WORK_PHONE}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_WORK_PHONE}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_WORK_PHONE}')">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtTelefonoMobil" value="{STATIC_FORM_MEMBERSHIP_MOBILE_PHONE}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_MOBILE_PHONE}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_MOBILE_PHONE}')">
+            </div>
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtFax" value="{STATIC_FORM_MEMBERSHIP_FAX}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_FAX}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_FAX}')">
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>{STATIC_FORM_RENEW_MEMBERSHIP_LEGEND_PROFESSIONAL_INFORMATION}</legend>
+        <div class="form-row" id="containerProfessionalActivity">
+            <div class="col-12">
+            {STATIC_FORM_MEMBERSHIP_YOUR_PROFESSION}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-12 form-group">
+                <!-- BEGIN: item_actividad_profesional -->
+                <div class="col-12 col-sm-6 col-md-4 form-check form-check-inline">
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" name="chk{ITEM_ACTIVIDAD_PROFESIONAL_NOMBRE_ELEMENTO}" value="{ITEM_ACTIVIDAD_PROFESIONAL_ID}"> {ITEM_ACTIVIDAD_PROFESIONAL_NOMBRE}
+                </label>
+                </div>
+                <!-- END: item_actividad_profesional -->
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-12 col-md-4">
+            <input type="text" class="form-control " id="txtSpecifyOther" name="txtOtherSpecification" value="{STATIC_FORM_MEMBERSHIP_IF_OTHER_SPECIFY}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_IF_OTHER_SPECIFY}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_IF_OTHER_SPECIFY}')">
+            </div>
+            <div class="col-12 col-md-4">
+            <input type="text" class="form-control " id="txtSpecifyStudy" name="txtStudySpecification" value="{STATIC_FORM_MEMBERSHIP_IF_STUDENT_SUBJECT}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_IF_STUDENT_SUBJECT}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_IF_STUDENT_SUBJECT}')">
+            </div>
+            <div class="col-12 col-md-4">
+            <input type="text" class="form-control " name="txtProfesionQualificacion" value="{STATIC_FORM_MEMBERSHIP_DEGREES_QUALIFICATIONS}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_DEGREES_QUALIFICATIONS}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_DEGREES_QUALIFICATIONS}')">
+            </div>
+        </div>
+        {STATIC_FORM_MEMBERSHIP_WORK_SITUATION}
+        <div class="form-row">
+            <!-- BEGIN: item_situacion_laboral -->
+            <div class="col-12 col-md-3 form-check form-check-inline form-group">
+                <input type="checkbox" class="form-check-input" name="chkSituacion_{SITUACION_LABORAL_ID}" value="{SITUACION_LABORAL_ID}">
+                <label class="form-check-label">
+                    {SITUACION_LABORAL_NOMBRE}
+                </label>
+            </div>
+            <!-- END: item_situacion_laboral -->
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_ADDITIONAL_INFORMATION}</legend>
+        <div class="form-row">
+            <div class="col-4">
+                {COMBO_ANYOS}
+            </div>
+            <div class="col-12 col-md-8">
+                {STATIC_FORM_MEMBERSHIP_SEX}
+                <div class="form-row">
+                    <div class="form-check form-check-inline">
+                        <input type="radio" class="form-check-input" id="chkSex1" name="chkSex" value="1">
+                        <label class="form-check-label" for="chkSex1">
+                                {STATIC_FORM_MEMBERSHIP_MALE}
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" class="form-check-input" id="chkSex2" name="chkSex" value="2">
+                        <label class="form-check-label" for="chkSex2">
+                                {STATIC_FORM_MEMBERSHIP_FEMALE}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <textarea class="form-control " name="txtSobreMet" onblur="restaurarTextAreaValue(this,'{STATIC_FORM_MEMBERSHIP_HOW_DID_YOU_HEAR_ABOUT_MET}')" onfocus="limpiarTextAreaValue(this,'{STATIC_FORM_MEMBERSHIP_HOW_DID_YOU_HEAR_ABOUT_MET}')">{STATIC_FORM_MEMBERSHIP_HOW_DID_YOU_HEAR_ABOUT_MET}</textarea>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_BILLING_INFORMATION}</legend>
+        <div class="d-none">
+            <input type="checkbox" class="form-check-input" checked="checked" name="chkInvoice" id="chkInvoice" onclick="gestionarBloqueInvoice(this)"> {STATIC_FORM_MEMBERSHIP_NEED_INVOICE}
+        </div>
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtFacturacionNifCliente" value="{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}')">
+            </div>
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtFacturacionNombreCliente" value="{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}')">
+            </div>
+        </div>
+        <div class="form-row">
+        <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtFacturacionNombreEmpresa" value="{STATIC_FORM_PROFILE_BILLING_NAME_COMPANY}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_NAME_COMPANY}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_NAME_COMPANY}')">
+            </div>
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtFacturacionDireccion" value="{STATIC_FORM_PROFILE_BILLING_ADDRESS}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_ADDRESS}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_ADDRESS}')">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtFacturacionCodigoPostal" value="{STATIC_FORM_PROFILE_BILLING_ZIPCODE}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_ZIPCODE}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_ZIPCODE}')">
+            </div>
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtFacturacionCiudad" value="{STATIC_FORM_PROFILE_BILLING_CITY}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_CITY}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_CITY}')">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtFacturacionProvincia" value="{STATIC_FORM_PROFILE_BILLING_PROVINCE}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_PROVINCE}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_PROVINCE}')">
+            </div>
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtFacturacionPais" value="{STATIC_FORM_PROFILE_BILLING_COUNTRY}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_COUNTRY}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_COUNTRY}')">
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_PREFERRED_METHOD_OF_PAYMENT}</legend>
+        <div class="form-text">
+            {STATIC_FORM_MEMBERSHIP_MEMBERSHIP_COSTS_30}
+        </div>
+        <div class="form-row form-group" style="align-items:center;">
+            <div class="col-12 col-md-8 form-text">
+                {STATIC_FORM_MEMBERSHIP_SPECIAL_FEE}
+            </div>
+            <div class="col-12 col-md-4">
+                {COMBO_SITUACION_ADICIONAL}
+            </div>
+        </div>
+        {STATIC_FORM_MEMBERSHIP_PAYMENT_METHOD}
+        <div class="form-row">
+            <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="radioPaymentMethod1" name="rdMetodoPago" value="1">
+                <label class="form-check-label" for="radioPaymentMethod1">
+                    {STATIC_FORM_MEMBERSHIP_BANK_TRANSFER}
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="radioPaymentMethod2" name="rdMetodoPago" value="2">
+                <label class="form-check-label" for="radioPaymentMethod2">
+                    {STATIC_FORM_MEMBERSHIP_PAYPAL}
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input" id="radioPaymentMethod3" name="rdMetodoPago" value="4">
+                <label class="form-check-label" for="radioPaymentMethod3">
+                    {STATIC_FORM_MEMBERSHIP_DIRECT_DEBIT_SPAIN}
+                </label>
+            </div>
+        </div>
+        <div class="form-text">
+            {STATIC_FORM_MEMBERSHIP_PAYMENT_METHOD_TXT_1}
+        </div>
+        <div class="form-text">
+            {STATIC_FORM_MEMBERSHIP_PAYMENT_METHOD_TXT_2}
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_PRIVACY}</legend>
+        <div class="form-group">
+            <input type="checkbox" name="chkPrivacy" id="chkPrivacy" class="required">
+            <label for="chkPrivacy">
+                {STATIC_FORM_MEMBERSHIP_PRIVACY_NOTE}
+            </label>
+        </div>
+    </fieldset>
+
+    <div>
+        <input type="button" id="btnSendForm" class="right" value="{STATIC_FORM_MEMBERSHIP_REGISTER}" onclick="validarFormularioMembership()">
+        <!-- <button class="btn btn-primary right" id="btnSendForm" onclick="validarFormularioMembership()">{STATIC_FORM_MEMBERSHIP_REGISTER}</button> -->
+    </div>
+</form>
+
+<div id="resultadoInscripcion" style="display:none;"></div>
+
+<!-- END: contenido_principal -->

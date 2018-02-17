@@ -1,0 +1,41 @@
+<!-- BEGIN: contenido_principal -->
+<div id="form">
+	<p id="msgAlert" class="{MENSAJE_ACCION_CLASS}" style="{MENSAJE_ACCION_DISPLAY}">{MENSAJE_ACCION_PERFIL}</p>
+	<a name="anclaExito"></a>
+	<form name="frmSubmitEvent" id="frmSubmitEvent" action="" method="post">
+		<div class="boxForm">
+			<label class="textBoxForm">{TITLE_FORM}</label>
+			<table>
+				<tr>
+					<td>
+						<input type="text" class="inputText left required" name="txtTitulo" value="{STATIC_FORM_MEMBERSHIP_TITLE}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_TITLE}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_TITLE}')" style="width:425px;">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="text" class="inputText left" name="txtEmail" value="{STATIC_FORM_MEMBERSHIP_EMAIL}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_EMAIL}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_EMAIL}')">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						{COMBO_TEMATICA}
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="text" class="inputText left required" name="txtResumen" value="{STATIC_FORM_EVENT_SUBMIT_SUMMARY}" onblur="restaurarInputValue(this,'{STATIC_FORM_EVENT_SUBMIT_SUMMARY}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_EVENT_SUBMIT_SUMMARY}')" style="width:562px;" maxlength="230">
+					</td>
+				</tr>
+				<tr>
+					<td style="padding:10px;">
+						{STATIC_FORM_EVENT_SUBMIT_CONTENT}
+						<textarea class="inputText required" name="txtContenido"></textarea>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<input type="button" id="btnSendForm" class="right" value="{TITLE_BUTTON_FORM}" onclick="validarFormularioSubmitEvent()">
+		<div class="clear"></div>
+	</form>
+</div>
+<!-- END: contenido_principal -->

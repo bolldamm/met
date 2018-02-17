@@ -1,0 +1,168 @@
+<!-- BEGIN: contenido_principal -->
+<div id="form">
+	<p id="msgAlert" class="msgKO" style="display:none;"></p>
+	<form name="frmWorkshopRegister" id="frmWorkshopRegister" action="" method="post">
+		<input type="hidden" name="hdnIdTaller" id="hdnIdTaller">
+		<!-- BEGIN: input_logueado -->
+		<input type="hidden" name="hdnIdLogin" id="hdnIdLogin">
+		<!-- END: input_logueado -->
+		<div class="boxForm">
+			<label class="textBoxForm">{STATIC_FORM_MEMBERSHIP_LEGEND_PERSONAL_DETAILS}</label>
+			<table>
+				<tr>
+					<td>
+						{COMBO_TITULOS}
+						<input type="text" class="inputText left required" name="txtNombre" value="{FORM_MEMBERSHIP_FIRST_NAME}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_FIRST_NAME}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_FIRST_NAME}')" style="width:176px;">
+						<input type="text" class="inputText left required" name="txtApellidos" value="{FORM_MEMBERSHIP_LAST_NAMES}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_LAST_NAMES}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_LAST_NAMES}')">
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="boxForm">
+			<label class="textBoxForm">{STATIC_FORM_MEMBERSHIP_LEGEND_CONTACT_DETAILS}</label>
+			<table>
+				<tr>
+					<td>
+						<input type="text" class="inputText left required" name="txtEmail" value="{FORM_MEMBERSHIP_EMAIL}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_EMAIL}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_EMAIL}')">
+						<input type="text" class="inputText left" name="txtTelefono" value="{FORM_WORKSHOP_REGISTER_CONTACT_PHONE_NO}" onblur="restaurarInputValue(this,'{STATIC_FORM_WORKSHOP_REGISTER_CONTACT_PHONE_NO}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_WORKSHOP_REGISTER_CONTACT_PHONE_NO}')">
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="boxForm" style="{IFMEMBER}">
+			<label class="textBoxForm">{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_SISTER_ASSOCIATION_MEMBERSHIP}</label>
+			<table>
+				<tr>
+					<td style="padding-left:12px;">
+						{STATIC_FORM_WORKSHOP_REGISTER_SISTER_ASSOCIATION_MEMBERSHIP_TEXT_1}
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<br>
+						{COMBO_ASOCIACIONES}
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="boxForm" style="padding-left:12px;"  id="containerWorkshop">
+			<label class="textBoxForm">{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_WORKSHOPS}</label>
+			<table border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td style="width:250px;"><strong>{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_WORKSHOPS_NAME}</strong></td>
+					<td style="padding-right:10px;"><strong>{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_WORKSHOPS_DATE}</strong></td>
+					<td style="text-align:right;padding-right:10px;"><strong title="{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_WORKSHOPS_PRICE}">{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_WORKSHOPS_PRICE_SHORT}</strong></td>
+					<td style="text-align:right;padding-right:10px;"><strong title="{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_WORKSHOPS_PRICE_SISTER}">{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_WORKSHOPS_PRICE_SISTER_SHORT}</strong></td>
+					<td style="text-align:right;padding-right:10px;"><strong title="{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_WORKSHOPS_PRICE_NON_MEMBER}">{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_WORKSHOPS_PRICE_NON_MEMBER_SHORT}</strong></td>
+				</tr>
+				<!-- BEGIN: item_taller -->
+				<tr>
+					<td><input type="checkbox" name="chkProfesion_{ITEM_TALLER_ID}" value="{ITEM_TALLER_ID}" onclick="calcularTotalTaller(this)" {ITEM_TALLER_DISABLED}> {ITEM_TALLER_DESCRIPCION} </td>
+					<td style="padding-right:10px;">{ITEM_TALLER_FECHA}</td>
+					<td style="text-align:right;padding-right:10px;">&euro;<span id="precioTaller_{ITEM_TALLER_ID}">{ITEM_TALLER_PRECIO}</span></td>
+					<td style="text-align:right;padding-right:10px;">&euro;<span id="precioTallerSister_{ITEM_TALLER_ID}">{ITEM_TALLER_PRECIO_SISTER}</span></td>
+					<td style="text-align:right;padding-right:10px;">&euro;<span id="precioTallerNoMiembro_{ITEM_TALLER_ID}">{ITEM_TALLER_PRECIO_NON_MEMBER}</span></td>
+				</tr>
+				<!-- END: item_taller -->
+			</table>
+		</div>
+		<div class="boxForm" style="text-align:right;padding-top:10px;padding-right:10px;">
+			<label class="textBoxForm">{STATIC_FORM_WORKSHOP_REGISTER_TOTAL_AMOUNT}</label>
+			<label style="font-weight:bold;font-size:13px;">&euro;<span id="totalPayable">0</span></label>
+		</div>
+		<div class="clear"></div>
+		<div class="boxForm">
+			<label class="textBoxForm">{STATIC_FORM_MEMBERSHIP_LEGEND_BILLING_INFORMATION}</label>
+			<table>
+				<tr>
+					<td colspan="2" style="display:none;padding-left:10px;"><input type="checkbox" checked="checked" name="chkInvoice" id="chkInvoice" onclick="gestionarBloqueInvoice(this)"> {STATIC_FORM_MEMBERSHIP_NEED_INVOICE}</td>
+				</tr>
+				<tr class="bloqueInvoice">
+					<td>
+						<input type="text" class="inputText required left" name="txtFacturacionNifCliente" value="{FORM_PROFILE_BILLING_CUSTOMER_NIF}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}')">
+					</td>
+					<td>
+						<input type="text" class="inputText required left" name="txtFacturacionNombreCliente" value="{FORM_PROFILE_BILLING_NAME_CUSTOMER}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}')">
+					</td>
+				</tr>
+				<tr class="bloqueInvoice">
+					<td>
+						<input type="text" class="inputText left" name="txtFacturacionNombreEmpresa" value="{FORM_PROFILE_BILLING_NAME_COMPANY}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_NAME_COMPANY}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_NAME_COMPANY}')">
+					</td>
+					<td>
+						<input type="text" class="inputText required left" name="txtFacturacionDireccion" value="{FORM_PROFILE_BILLING_ADDRESS}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_ADDRESS}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_ADDRESS}')">
+					</td>
+				</tr>
+				<tr class="bloqueInvoice">
+					<td>
+						<input type="text" class="inputText required left" name="txtFacturacionCodigoPostal" value="{FORM_PROFILE_BILLING_ZIPCODE}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_ZIPCODE}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_ZIPCODE}')">
+					</td>
+					<td>
+						<input type="text" class="inputText required left" name="txtFacturacionCiudad" value="{FORM_PROFILE_BILLING_CITY}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_CITY}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_CITY}')">
+					</td>
+				</tr>
+				<tr class="bloqueInvoice">
+					<td>
+						<input type="text" class="inputText left" name="txtFacturacionProvincia" value="{FORM_PROFILE_BILLING_PROVINCE}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_PROVINCE}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_PROVINCE}')">
+					</td>
+					<td>
+						<input type="text" class="inputText required left" name="txtFacturacionPais" value="{FORM_PROFILE_BILLING_COUNTRY}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_COUNTRY}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_COUNTRY}')">
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="boxForm">
+			<label class="textBoxForm">{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_METHOD_OF_PAYMENT}</label>
+			<table>
+				<tr>
+					<td style="padding-left:12px;">
+						{STATIC_FORM_WORKSHOP_REGISTER_METHOD_OF_PAYMENT_TEXT_1}<br>
+						{STATIC_FORM_WORKSHOP_REGISTER_METHOD_OF_PAYMENT_TEXT_2}<br>
+						<br>						
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="groupChk">
+							<img src="../../images/pictures/icons/icon.required.png" style="vertical-align:text-top;">&nbsp;<label>{STATIC_FORM_MEMBERSHIP_PAYMENT_METHOD}</label><br>
+							<label class="inputChk left"><input type="radio" name="rdMetodoPago" value="1"> {STATIC_FORM_MEMBERSHIP_BANK_TRANSFER}</label>
+							<label class="inputChk left"><input type="radio" name="rdMetodoPago" value="2"> {STATIC_FORM_MEMBERSHIP_PAYPAL}</label>
+							<div class="clear"></div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="boxForm">
+			<label class="textBoxForm">{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_COMMENTS}</label>
+			<table>
+				<tr>
+					<td>
+						<textarea class="inputText" name="txtaComentarios" onblur="restaurarTextAreaValue(this,'{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_COMMENTS}')" onfocus="limpiarTextAreaValue(this,'{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_COMMENTS}')">{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_COMMENTS}</textarea>
+					</td>
+				</tr>
+			</table>
+		</div>
+        <div class="boxForm">
+			<label class="textBoxForm">{STATIC_FORM_MEMBERSHIP_LEGEND_PRIVACY}</label>
+			<table>
+				<tr>
+					<td style="padding-left:20px;">
+						<img src="../../images/pictures/icons/icon.required.png" style="vertical-align:top;"><input type="checkbox" name="chkPrivacy">&nbsp;{STATIC_FORM_MEMBERSHIP_PRIVACY_NOTE}
+					</td>
+				</tr>
+			</table>
+        </div>
+		<input type="button" id="btnSendForm" class="right" value="{STATIC_GLOBAL_REGISTER}" onclick="validarFormularioWorkshopRegister()">
+		<div id="captchaBox" class="right">
+			<label class="left">{STATIC_CAPTCHA_ENTER_LETTERS_NUMBERS_IMAGE}</label>
+			<img id="imageCaptcha" class="left" src="classes/secureimage/securimage_show.php?sid={SESSION_ID}">
+			<img id="reloadCaptcha" class="left" src="images/pictures/icons/icon.reloadCaptcha.png" title="{STATIC_CAPTCHA_RELOAD}" onclick="refrescarCaptcha();">
+			<input type="text" class="inputText left" id="txtCaptcha" name="txtCaptcha" maxlength="5">
+		</div>
+		<div class="clear"></div>
+		
+	</form>
+	<div id="resultadoInscripcion" style="display:none;"></div>
+</div>
+<!-- END: contenido_principal -->

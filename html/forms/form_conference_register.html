@@ -1,0 +1,396 @@
+<!-- BEGIN: contenido_principal -->
+<form class="needs-validation frmConferenceRegister" novalidate name="frmConferenceRegister" id="frmConferenceRegister" action="" method="post"
+      enctype="multipart/form-data">
+    <input type="hidden" name="hdnPriceMemberSpeaker" id="hdnPriceMemberSpeaker"
+           value="{CONFERENCE_PRICE_MEMBER_SPEAKER}">
+    <input type="hidden" name="hdnPriceSisterSpeaker" id="hdnPriceSisterSpeaker"
+           value="{CONFERENCE_PRICE_SISTER_SPEAKER}">
+    <input type="hidden" name="hdnPriceNonMemberSpeaker" id="hdnPriceNonMemberSpeaker"
+           value="{CONFERENCE_PRICE_NON_MEMBER_SPEAKER}">
+    <input type="hidden" name="hdnPriceMemberEarly" id="hdnPriceMemberEarly"
+           value="{CONFERENCE_PRICE_MEMBER_EARLY}">
+    <input type="hidden" name="hdnPriceSisterEarly" id="hdnPriceSisterEarly"
+           value="{CONFERENCE_PRICE_SISTER_EARLY}">
+    <input type="hidden" name="hdnPriceNonMemberEarly" id="hdnPriceNonMemberEarly"
+           value="{CONFERENCE_PRICE_NON_MEMBER_EARLY}">
+    <input type="hidden" name="hdnPriceMemberLate" id="hdnPriceMemberLate" value="{CONFERENCE_PRICE_MEMBER_LATE}">
+    <input type="hidden" name="hdnPriceSisterLate" id="hdnPriceSisterLate" value="{CONFERENCE_PRICE_SISTER_LATE}">
+    <input type="hidden" name="hdnPriceNonMemberLate" id="hdnPriceNonMemberLate"
+           value="{CONFERENCE_PRICE_NON_MEMBER_LATE}">
+    <input type="hidden" name="hdnPriceExtraWorkshop" id="hdnPriceExtraWorkshop"
+           value="{CONFERENCE_PRICE_EXTRA_WORKSHOP}">
+    <input type="hidden" name="hdnPriceExtraMinisession" id="hdnPriceExtraMinisession"
+           value="{CONFERENCE_PRICE_EXTRA_MINISESSION}">
+    <input type="hidden" name="hdnPriceDinnerGuest" id="hdnPriceDinnerGuest"
+           value="{CONFERENCE_PRICE_DINNER_GUEST}">
+    <input type="hidden" name="hdnPriceDinnerOptoutDiscount" id="hdnPriceDinnerOptoutDiscount"
+           value="{CONFERENCE_PRICE_DINNER_OPTOUT_DISCOUNT}">
+    <input type="hidden" name="hdnPriceWineReceptionGuest" id="hdnPriceWineReceptionGuest"
+           value="{CONFERENCE_PRICE_WINE_RECEPTION_GUEST}">
+    <input type="hidden" name="hdnBasePrice" id="hdnBasePrice" value="{FORM_CONFERENCE_PRECIO_TOTAL}">
+    <input type="hidden" name="finalPrice" id="finalPrice" value="">
+    <input type="hidden" name="hdnIdTaller" id="hdnIdTaller">
+    <!-- BEGIN: input_logueado -->
+    <input type="hidden" name="hdnIdLogin" id="hdnIdLogin">
+    <!-- END: input_logueado -->
+    <!-- BEGIN: early_bird -->
+    <input type="hidden" name="hdnEarlyBird" id="hdnEarlyBird">
+    <!-- END: early_bird -->
+
+    <fieldset>
+        <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_PERSONAL_DETAILS}</legend>
+        <div class="form-row">
+            <div class="col-12 col-md-2">
+                {COMBO_TITULOS}
+            </div>
+            <div class="col-12 col-md-5">
+                <input type="text" class="form-control" name="txtNombre"
+                       value="{FORM_MEMBERSHIP_FIRST_NAME}"
+                       placeholder="{STATIC_FORM_MEMBERSHIP_FIRST_NAME}" required>
+                <div class="invalid-feedback">
+                    Please enter your first name
+                </div>
+            </div>
+            <div class="col-12 col-md-5">
+                <input type="text" class="form-control" name="txtApellidos"
+                       value="{FORM_MEMBERSHIP_LAST_NAMES}"
+                       placeholder="{STATIC_FORM_MEMBERSHIP_LAST_NAMES}" required>
+                <div class="invalid-feedback">
+                    Please enter your last name
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtEmail"
+                       value="{FORM_MEMBERSHIP_EMAIL}"
+                       placeholder="{STATIC_FORM_MEMBERSHIP_EMAIL}" required>
+                <div class="invalid-feedback">
+                    Please enter a valid email address
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtTelefono"
+                       value="{FORM_WORKSHOP_REGISTER_CONTACT_PHONE_NO}"
+                       placeholder="{STATIC_FORM_WORKSHOP_REGISTER_CONTACT_PHONE_NO}">
+            </div>
+        </div>
+        <!-- BEGIN: bloque_pais -->
+            {COMBO_PAIS}
+        <!-- END: bloque_pais -->
+        <span id="chkCountryMessage" class="validationMessage"></span>
+    </fieldset>
+
+    <div style="{IFMEMBER}">
+        <!-- BEGIN: bloque_sister_association -->
+        <fieldset>
+            <legend>{STATIC_FORM_CONFERENCE_REGISTER_LEGEND_SISTER_ASSOCIATION_MEMBERSHIP}</legend>
+            <p class="form-text text-muted">{STATIC_FORM_CONFERENCE_REGISTER_SISTER_ASSOCIATION_MEMBERSHIP_TEXT_1}</p>
+            {COMBO_ASOCIACIONES}
+        </fieldset>
+    <!-- END: bloque_sister_association -->
+    </div>
+
+    <fieldset>
+        <legend>{STATIC_FORM_CONFERENCE_REGISTER_LEGEND_SPEAKER_HELPER}</legend>
+        <div class="form-check" id="Speakers">
+                <input class="form-check-input" type="checkbox" name="chkSpeaker" id="chkSpeaker" onclick="reinicializarPrecioTotal()">
+                <label class="form-check-label" for="chkSpeaker">
+                    {STATIC_FORM_CONFERENCE_REGISTER_SPEAKER_HELPER}
+                </label>
+        </div>
+    </fieldset>
+
+    
+    <br><div id="debug" style="font-size:200%; font-weight:bold;"></div><br>
+    
+
+    <fieldset>
+        <legend>WORKSHOPS</legend>
+        <div class="form-text">{STATIC_FORM_CONFERENCE_REGISTER_WORKSHOP_EXPLAIN}</div>
+        <div id="containerWorkshop">
+            <div class="form-row">
+
+                <!-- BEGIN: bloque_fecha_taller -->
+                <div class="col-12 col-md-6" id="container_workMini_{CONFERENCIA_FECHA}">
+                    <div id="container_workshop_{CONFERENCIA_FECHA}">
+                        <span class=" workshopBlockHeader">{CONFERENCIA_TALLER_FECHA_BLOQUE}</span>
+                        <input type="hidden" name="hdnFecha_{CONFERENCIA_FECHA}" class="hiddenDate"
+                               id="hdnFecha_{CONFERENCIA_FECHA}" value>
+                        <!-- BEGIN: fila_conferencia_taller -->
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input rdnWorkshop workshopChoice_{CONFERENCIA_FECHA}"
+                                   name="rdnFecha_{CONFERENCIA_FECHA}"
+                                   id="rdnFecha_{CONFERENCIA_FECHA}_{CONFERENCIA_ID_TALLER_FECHA}"
+                                   value="{CONFERENCIA_ID_TALLER_FECHA}">
+                            <label class="form-check-label"
+                                   for="rdnFecha_{CONFERENCIA_FECHA}_{CONFERENCIA_ID_TALLER_FECHA}">
+                                {CONFERENCIA_TALLER}
+                            </label>
+                        </div>
+                        <!-- END: fila_conferencia_taller -->
+                    </div>
+                    <!-- BEGIN: bloque_taller_mini -->
+                    <div id="container_mini_session_{CONFERENCIA_FECHA}" class="containerMini">
+                        <span class=" minisessionBlockHeader">{STATIC_FORM_CONFERENCE_REGISTER_MINI_SESSION}:</span>
+                        <!-- BEGIN: fila_conferencia_taller_mini -->
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input chkMinisession minisessionChoice_{CONFERENCIA_FECHA}"
+                                   name="chkFechaMini_{CONFERENCIA_FECHA}_{CONFERENCIA_ID_TALLER_FECHA}"
+                                   id="chkFechaMini_{CONFERENCIA_FECHA}_{CONFERENCIA_ID_TALLER_FECHA}"
+                                   value="{CONFERENCIA_ID_TALLER_FECHA}">
+                            <label class="form-check-label"
+                                   for="chkFechaMini_{CONFERENCIA_FECHA}_{CONFERENCIA_ID_TALLER_FECHA}">
+                                {CONFERENCIA_TALLER}
+                            </label>
+                        </div>
+                        <!-- END: fila_conferencia_taller_mini -->
+                    </div>
+                    <!-- END: bloque_taller_mini-->
+                </div>
+                <!-- END: bloque_fecha_taller -->
+            </div>
+            <span id="chkMaxMinisessions" class="validationMessage"></span>
+            <div class="form-check">
+                <input class="form-check-input workshopChoice" type="checkbox"
+                       name="chkNotWorkshop" id="chkNotWorkshop"
+                       style="margin-top:1.4em;">
+                <label class="form-check-label" for="chkNotWorkshop" style="margin-top:1em;">
+                    {STATIC_FORM_CONFERENCE_REGISTER_CHECKBOX_NOT_REQUIRED}
+                </label>
+            </div>
+        </div>
+        <span id="workshopsMessage" class="validationMessage"></span>
+    </fieldset>
+                
+    <fieldset>
+        <legend>{STATIC_FORM_CONFERENCE_REGISTER_BADGE_TITLE}</legend>
+        <p class="form-text">{STATIC_FORM_CONFERENCE_REGISTER_BADGE_BODY}</p>
+        <div class="form-row">
+            <div class="col-12 col-md-6 form-text">
+                <p>{STATIC_FORM_CONFERENCE_REGISTER_BADGE_BODY_EXAMPLE_2}</p>
+            </div>
+            <div class="col-12 col-md-6 form-text">
+                <p>{STATIC_FORM_CONFERENCE_REGISTER_BADGE_BODY_EXAMPLE_3}</p>
+            </div>
+        </div>
+        <p class="form-text">{STATIC_FORM_CONFERENCE_REGISTER_BADGE_BODY_ACLARATION}</p>
+        <textarea class="form-control"
+                  name="txtaBadge"
+                  id="txtaBadge"
+                  placeholder="Write your badge text here*"
+                  rows="3" required></textarea>
+        <span id="badgeMessage" class="validationMessage"></span>
+    </fieldset>
+
+    <fieldset>
+        <legend>{STATIC_FORM_CONFERENCE_REGISTER_DINNER_TITLE}</legend>
+        <p class="form-text">{STATIC_FORM_CONFERENCE_REGISTER_GUEST_DINNER_BODY}</p>
+        <p class="form-text">{STATIC_FORM_CONFERENCE_REGISTER_CONFERENCE_GUEST_1}&nbsp;{COMBO_GUEST}&nbsp;{STATIC_FORM_CONFERENCE_REGISTER_CONFERENCE_GUEST_2}</p>
+        <p class="form-text">{STATIC_FORM_CONFERENCE_REGISTER_DINNER_BODY}</p>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="chkDinner" id="chkDinner" onclick="reinicializarPrecioTotal()">
+            <label class="form-check-label" for="chkDinner">
+                {STATIC_FORM_CONFERENCE_REGISTER_DINNER_AGREE}
+            </label>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>{STATIC_FORM_CONFERENCE_REGISTER_EMAIL_PERMISSION_TITLE} / {STATIC_FORM_CONFERENCE_REGISTER_CERTIFICATES_TITLE}</legend>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="chkEmailPermission" id="chkEmailPermission">
+            <label class="form-check-label" for="chkEmailPermission">
+            {STATIC_FORM_CONFERENCE_REGISTER_EMAIL_PERMISSION_BODY}
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="chkCertificado" id="chkCertificado">
+            <label class="form-check-label" for="chkCertificado">
+            {STATIC_FORM_CONFERENCE_REGISTER_CERTIFICATES_NAME}
+            </label>
+        </div>
+    </fieldset>
+
+    <div id="total-payable">
+        <p style="font-weight:bold;font-size:1.2em; text-align:right;">
+            <span style="float:left">{STATIC_FORM_WORKSHOP_REGISTER_TOTAL_AMOUNT}</span>
+            &euro;<span id="totalPayable">{FORM_CONFERENCE_PRECIO_TOTAL}</span></p>
+    </div>
+
+    <fieldset>
+        <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_BILLING_INFORMATION}</legend>
+        <p class="form-text">{STATIC_FORM_MEMBERSHIP_BILLING_EXPLANATORY_TEXT}</p>
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+                <input type="text" class="form-control" name="txtFacturacionNifCliente" id="txtFacturacionNifCliente"
+                       value="{FORM_PROFILE_BILLING_CUSTOMER_NIF}"
+                       placeholder="{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}" required>
+                <div class="invalid-feedback">
+                    Please enter your tax ID or VAT number
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <label class="sr-only" for="txtFacturacionNombreCliente"></label>
+                <input type="text" class="form-control" name="txtFacturacionNombreCliente" id="txtFacturacionNombreCliente"
+                       value="{FORM_PROFILE_BILLING_NAME_CUSTOMER}"
+                       placeholder="{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}" required>
+                <div class="invalid-feedback">
+                    Please enter your name for billing purposes
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+                <label class="sr-only" for="txtFacturacionNombreEmpresa"></label>
+                <input type="text" class="form-control" name="txtFacturacionNombreEmpresa" id="txtFacturacionNombreEmpresa"
+                       value="{FORM_PROFILE_BILLING_NAME_COMPANY}"
+                       placeholder="{STATIC_FORM_PROFILE_BILLING_NAME_COMPANY}">
+            </div>
+            <div class="col-12 col-md-6">
+                <label class="sr-only" for="txtFacturacionDireccion"></label>
+                <input type="text" class="form-control" name="txtFacturacionDireccion" id="txtFacturacionDireccion"
+                       value="{FORM_PROFILE_BILLING_ADDRESS}"
+                       placeholder="{STATIC_FORM_PROFILE_BILLING_ADDRESS}" required>
+                <div class="invalid-feedback">
+                    Please enter your address
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+                <label class="sr-only" for="txtFacturacionCodigoPostal"></label>
+                <input type="text" class="form-control" name="txtFacturacionCodigoPostal" id="txtFacturacionCodigoPostal"
+                       value="{FORM_PROFILE_BILLING_ZIPCODE}"
+                       placeholder="{STATIC_FORM_PROFILE_BILLING_ZIPCODE}" required>
+                <div class="invalid-feedback">
+                    Please enter your postal code
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <label class="sr-only" for="txtFacturacionCiudad"></label>
+                <input type="text" class="form-control" name="txtFacturacionCiudad" id="txtFacturacionCiudad"
+                       value="{FORM_PROFILE_BILLING_CITY}"
+                       placeholder="{STATIC_FORM_PROFILE_BILLING_CITY}" required>
+                <div class="invalid-feedback">
+                    Please enter your town or city
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+                <label class="sr-only" for="txtFacturacionProvincia"></label>
+                <input type="text" class="form-control" name="txtFacturacionProvincia" id="txtFacturacionProvincia"
+                       value="{FORM_PROFILE_BILLING_PROVINCE}"
+                       placeholder="{STATIC_FORM_PROFILE_BILLING_PROVINCE}">
+            </div>
+            <div class="col-12 col-md-6">
+                <label class="sr-only" for="txtFacturacionPais"></label>
+                <input type="text" class="form-control" name="txtFacturacionPais" id="txtFacturacionPais"
+                       value="{FORM_PROFILE_BILLING_COUNTRY}"
+                       placeholder="{STATIC_FORM_PROFILE_BILLING_COUNTRY}" required>
+                <div class="invalid-feedback">
+                    Please enter your country
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset class="form-group">
+        <legend>{STATIC_FORM_CONFERENCE_REGISTER_LEGEND_METHOD_OF_PAYMENT}</legend>
+        <p class="form-text">{STATIC_FORM_CONFERENCE_REGISTER_METHOD_OF_PAYMENT_TEXT}</p>
+        <b>{STATIC_FORM_MEMBERSHIP_PAYMENT_METHOD}*</b>
+        <div class="form-row" id="containerPaymentMethod">
+            <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input paymentMethod" id="transfer" name="rdMetodoPago" value="1" required>
+                <label class="form-check-label" for="transfer">
+                    {STATIC_FORM_MEMBERSHIP_BANK_TRANSFER}
+                </label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input type="radio" class="form-check-input paymentMethod" id="paypal" name="rdMetodoPago" value="2" required>
+                <label class="form-check-label" for="paypal">
+                    {STATIC_FORM_MEMBERSHIP_PAYPAL}
+                </label>
+            </div>
+        </div>
+        <span id="paymentMethodMessage" class="validationMessage"></span>
+    </fieldset>
+    <fieldset class="form-group">
+        <legend>{STATIC_FORM_CONFERENCE_REGISTER_ATTENDEE_LIST_PICTURE}</legend>
+        <p class="form-text">{STATIC_FORM_CONFERENCE_REGISTER_ATTENDEE_TEXT1}</p>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" class="form-check-input" name="chkAttendeeList" id="chkAttendeeList">
+            <label class="form-check-label" for="chkAttendeeList">
+                {STATIC_FORM_CONFERENCE_REGISTER_ATTENDEE_LIST_PERMISSION}
+            </label>
+        </div>
+        <p class="form-text">{STATIC_FORM_CONFERENCE_REGISTER_ATTENDEE_TEXT2}</p>
+        <div class="form-row">
+            <div class="col-12 col-md-6">
+                <input type="file" class="form-control-file" id="fileimagen" name="fileImagen">
+                <div class="info1">{STATIC_GLOBAL_IMAGE_ALLOW_EXTENSION}</div>
+                <div class="info2">{STATIC_GLOBAL_IMAGE_ALLOW_SIZE}</div>
+                <div class="info3">{STATIC_GLOBAL_IMAGE_UPLOAD}</div>
+            </div>
+            <div class="col-12 col-md-6">
+                <img id="img_destino" src="{FORM_MEMBERSHIP_IMAGE}" alt="Your photo" style="width:100px; margin-top:10px;">
+                <!--div para visualizar en el caso de imagen-->
+                <div class="showImage"></div>
+                <input type="button" style="display:none;" class="btn btn-primary" value="Upload" name="subirimagen"
+                       id="subirimagen">
+                <input type="hidden" name="valorimagen" id="valorimagen">
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>{STATIC_FORM_CONFERENCE_REGISTER_LEGEND_COMMENTS}</legend>
+        <p class="form-text">{STATIC_FORM_CONFERENCE_REGISTER_COMMENTS_EXPLAIN}</p>
+        <textarea class="form-control" name="txtaComentarios" id="txtaComentarios"
+                  rows="3"
+                  placeholder="{STATIC_FORM_CONFERENCE_REGISTER_LEGEND_COMMENTS}"></textarea>
+    </fieldset>
+
+    <fieldset>
+        <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_PRIVACY}</legend>
+        <div id="containerPrivacyCheck">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" name="chkPrivacy" id="chkPrivacy" required>
+                <label class="form-check-label" for="chkPrivacy">
+                    {STATIC_FORM_MEMBERSHIP_PRIVACY_NOTE}
+                </label>
+            </div>
+        </div>
+        <span id="chkPrivacyMessage" class="validationMessage"></span>
+    </fieldset>
+
+    <div class="form-row">
+        <div class="col-12 col-lg-4 captchaText">
+            {STATIC_CAPTCHA_ENTER_LETTERS_NUMBERS_IMAGE}
+        </div>
+        <div class="col-12 col-lg-6" id="captchaBox">
+          <div class="form-row captchaImage">
+            <div class="col-5">
+            	<img id="imageCaptcha" src="classes/secureimage/securimage_show.php?sid={SESSION_ID}">
+            </div>
+            <div class="col-1">
+            	<img id="reloadCaptcha" 
+                 src="images/pictures/icons/icon.reloadCaptcha.png"
+                 title="{STATIC_CAPTCHA_RELOAD}">&nbsp;
+            </div>
+            <div class="col-6">
+            	<input type="text" class="form-control" id="txtCaptcha" name="txtCaptcha" maxlength="5" style="width:100px;">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-2">
+            <button class="btn btn-primary float-right" type="submit" id="btnSend">{STATIC_GLOBAL_REGISTER}</button>
+        </div>
+    </div>
+
+</form>
+
+<div id="resultadoInscripcion" style="display:none;"></div>
+<!-- END: contenido_principal -->

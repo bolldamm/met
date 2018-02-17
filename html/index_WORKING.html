@@ -1,0 +1,1607 @@
+<!-- BEGIN: contenido_principal -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta property="og:url" content="http://test.metmeetings.org" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{TITULO_WEB}, MET</title>
+    <base href="{CURRENT_DOMAIN}/">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <!-- BEGIN: metatags_opcionales -->
+    <!-- BEGIN: metatag_canonical -->
+    <link rel="canonical" href="{METATAG_OPCIONAL_CANONICAL}">
+    <!-- END: metatag_canonical -->
+    <!-- END: metatags_opcionales -->
+    <!-- BEGIN: metatag_concreto -->
+    <meta name="{METATAG_TITULO}" content="{METATAG_DESCRIPCION}">
+    <!-- END: metatag_concreto -->
+
+    <!-- Bootstrap CSS framework -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+
+    <!-- Original MET website framework CSS -->
+    <link rel="stylesheet" href="css/style/reset.css" type="text/css" media="screen, projection">
+
+    <!-- Personal MET website CSS -->
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
+
+    <!-- Section CSS -->
+    <link rel="stylesheet" href="css/section/{SECTION_FILE_CSS}" type="text/css" media="screen">
+
+    <!-- JS Carousel CSS
+    <link rel="stylesheet" href="css/vanilla-js-carousel.css">
+ 	-->
+
+    <!-- Jquery libraries -->
+    <!-- <script src="scripts/js/jquery-1.9.1.min.js"></script> -->
+    <script src="scripts/js/jquery-3.2.1.min.js"></script>
+    <!-- <script src="scripts/js/jquery.min.js" ></script> -->
+    <script src="scripts/js/jquery-migrate-1.4.1.min.js"></script>
+	<script type="text/javascript" src="scripts/js/jquery.blockUI.js" ></script>
+    <script type="text/javascript" src="scripts/js/chosen.jquery.js" ></script>
+  
+    <!-- BEGIN: css_form -->
+    <link rel="stylesheet" href="css/section/form.css" type="text/css" media="screen">
+    <!-- END: css_form -->
+
+    <!-- chosen multiselect CSS -->
+    <link rel="stylesheet" href="css/chosen/chosen.css" type="text/css" media="screen">
+
+    <!-- Personal Javascript -->
+    <script type="text/javascript" src="scripts/js/functions.js{HASH}" ></script>
+
+    <!-- Google Web Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Advent+Pro:400,700' rel='stylesheet' type='text/css'>
+
+    <!-- BEGIN: script_gmaps -->
+    <!-- googleMaps Javascript -->
+    <script src="//maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+    <!-- END: script_gmaps -->
+
+    <!-- BEGIN: script_nivoslider -->
+    <!-- slider Javascript -->
+	<link rel="stylesheet" href="css/slider/nivo-slider.css" type="text/css" media="screen" />
+	<!--<script type="text/javascript" src="scripts/js/jquery.nivo.slider.js" ></script>-->
+    <script type="text/javascript" src="scripts/js/jquery.slider.min.js" ></script>
+    <!-- END: script_nivoslider -->
+
+    <!-- BEGIN: script_colorbox -->
+    <!-- modal box Javascript -->
+    <link rel="stylesheet" href="/css/colorbox/colorbox.css" type="text/css">
+    <script type="text/javascript" src="scripts/js/jquery.colorbox-min.js" ></script>
+    <!-- END: script_colorbox -->
+
+    <!-- BEGIN: script_calendar -->
+    <!-- datapicker Javascript -->
+    <link rel="stylesheet" href="css/datepicker/datepicker.css" type="text/css" media="screen">
+    <script type="text/javascript" src="scripts/js/jquery-ui.js" ></script>
+    <script type="text/javascript" src="scripts/js/jquery.datepicker.js" ></script>
+    <!-- END: script_calendar -->
+
+    <!-- BEGIN: editor_script -->
+    <script src="/editor_ORIGINAL/ckeditor.js"></script>
+    <!-- END: editor_script -->
+
+    <!-- BEGIN: script_multiselect -->
+    <script type="text/javascript">
+        $( document ).ready(function() {
+            $("select#cmbSource").chosen(function(){placeholder_text_multiple: "Select your source languages"
+            });
+            $("select#cmbTarget").chosen(function(){
+            });
+            $("select#cmbAreas").chosen(function(){
+            });
+        });
+    </script>
+    <!-- END: script_multiselect -->
+
+    <!-- BEGIN: bloque_ready -->
+    <script type="text/javascript">
+        window.onload = function() {
+            <!-- BEGIN: bloque_anclar_elemento -->
+            anclarElemento("{ELEMENTO_ANCLAR}");
+            <!-- END: bloque_anclar_elemento -->
+
+            <!-- BEGIN: inicializar_ckeditor -->
+            var editor=CKEDITOR.replace('{TEXTAREA_ID}',{ toolbar : '{TEXTAREA_TOOLBAR}' });
+            editor.config.width="100%";
+            editor.config.height="150";
+            <!-- BEGIN: config_params -->
+            editor.config.width="{TEXTAREA_WIDTH}";
+            editor.config.height="{TEXTAREA_HEIGHT}";
+            <!-- END: config_params -->
+
+
+            editor.config.enterMode = CKEDITOR.ENTER_BR;
+
+
+            <!-- END: inicializar_ckeditor -->
+
+
+            <!-- BEGIN: javascript_gmaps_location -->
+            var geocoder;
+            var map;
+            var contentMarker;
+            var imagenMarcador = new google.maps.MarkerImage('images/pictures/icons/icon.map.png',
+                // El marcador es 25x21 pixels.
+                new google.maps.Size(49,16),
+                // El origen para esta imagen es 0,0.
+                new google.maps.Point(0,0),
+                // The anchor for this image is the base of the flagpole at 0,32.
+                new google.maps.Point(8,-4));
+
+            geocoder = new google.maps.Geocoder();
+            var myOptions = {
+                scrollwheel: false,
+                draggable: true,
+                disableDoubleClickZoom: true,
+                streetViewControl: false,
+                mapTypeControl: false,
+                scaleControl: false,
+                navigationControl: false,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            map = new google.maps.Map(document.getElementById("mapAddress"), myOptions);
+            contentMarker = "<table><tr><td><img src='/images/pictures/logos/logo.mapImage.png'></td><td><img src='/images/pictures/logos/logo.mapText.png'><br>Carrer Indústria 331, àtic 2ª,<br>08027 Barcelona, Spain<br><a href='mailto:contact@metmeetings.org' style='color:#8B1513;'>contact@metmeetings.org</a><br><a href='https://www.metmeetings.org' style='color:#8B1513;'>https://www.metmeetings.org</a><td></td></tr></table>";
+            centrarMapa("Calle Indústria 331, 08027 Barcelona, España", 15, map, geocoder);
+            anyadirMarcador("Calle Indústria 331, 08027 Barcelona, España", contentMarker, true, 15,imagenMarcador, map, geocoder);
+            <!-- END: javascript_gmaps_location -->
+
+            <!-- BEGIN: javascript_nivoslider -->
+            $('#slider').nivoSlider({
+                effect: 'fade',
+                pauseTime: 8000,
+                directionNav: false,
+                controlNav: false
+            });
+            <!-- END: javascript_nivoslider -->
+
+            <!-- BEGIN: calendario -->
+            $(".datepicker").datepicker({
+                dateFormat:"dd-mm-yy",
+                changeMonth: true,
+                changeYear: true
+            });
+            <!-- END: calendario -->
+
+            $('#nav ul > li').hover(
+                function() {
+                    $(this).find('ul').slideDown("slow");
+                },
+                function () {
+                    $(this).find('ul').stop(true, true).slideUp("slow");
+                }
+            );
+        };
+    </script>
+    <!-- END: bloque_ready -->
+
+    <script type="text/javascript">
+        <!-- BEGIN: validar_login -->
+        function validarLogin() {
+            var btnSubmit = document.frmLogin.btnLogin;
+            var panelErrorLogin = document.getElementById("msgLoginError");
+            var blError = false;
+            var txtErrors = "";
+
+            btnSubmit.disabled = true;
+
+            if(document.frmLogin.txtLoginUsuario.value === "{STATIC_USERNAME}") {
+                txtErrors = "{STATIC_FORM_LOGIN_ERROR_USERNAME}";
+                blError = true;
+            }else if(document.frmLogin.txtLoginContrasena.value === "{STATIC_PASSWORD}") {
+                blError = true;
+                txtErrors = "{STATIC_FORM_LOGIN_ERROR_PASSWORD}";
+            }
+
+            if(blError) {
+                panelErrorLogin.innerHTML = txtErrors;
+                panelErrorLogin.style.display = "block";
+                btnSubmit.disabled = false;
+            }else{
+                panelErrorLogin.style.display = "none";
+                document.frmLogin.submit();
+            }
+        }
+        <!-- END: validar_login -->
+        <!-- BEGIN: validar_login_page -->
+        function validarLogin_page() {
+            var btnSubmit_page = document.frmLogin_page.btnLogin_page;
+            var panelErrorLogin_page = document.getElementById("msgLoginError_page");
+            var blError = false;
+            var txtErrors = "";
+
+            btnSubmit_page.disabled = true;
+
+            if(document.frmLogin_page.txtLoginUsuario_page.value === "{STATIC_USERNAME}") {
+                txtErrors = "{STATIC_FORM_LOGIN_ERROR_USERNAME}";
+                blError = true;
+            }else if(document.frmLogin_page.txtLoginContrasena_page.value === "{STATIC_PASSWORD}") {
+                blError = true;
+                txtErrors = "{STATIC_FORM_LOGIN_ERROR_PASSWORD}";
+            }
+
+            if(blError) {
+                panelErrorLogin_page.innerHTML = txtErrors;
+                panelErrorLogin_page.style.display = "block";
+                btnSubmit_page.disabled = false;
+            }else{
+                panelErrorLogin_page.style.display = "none";
+                document.frmLogin_page.submit();
+            }
+        }
+        <!-- END: validar_login_page -->
+
+
+        <!-- BEGIN: validar_remember_password-->
+        function validarEnvioClave() {
+            var btnSubmit = document.frmRecordarClave.btnLogin;
+            var panelErrorLogin = document.getElementById("msgError");
+            panelErrorLogin.className = "";
+            var blError = false;
+            var txtErrors = "";
+
+            btnSubmit.disabled = true;
+            mensajeCargando("{STATIC_GLOBAL_SENDING}...");
+
+
+            if(!validarEmail(document.frmRecordarClave.txtEmail.value)) {
+                txtErrors = "{STATIC_REMEMBER_PASSWORD_ERROR_EMAIL}";
+                blError = true;
+            }
+
+            if(blError) {
+                panelErrorLogin.innerHTML = txtErrors;
+                panelErrorLogin.style.display = "block";
+                btnSubmit.disabled = false;
+                $.unblockUI();
+            }else{
+                panelErrorLogin.style.display = "none";
+                var ajax=nuevoAjax();
+                var respuesta;
+                ajax.open("GET","ajax/send_remember_password.php?mail="+document.frmRecordarClave.txtEmail.value+"&captcha="+document.frmRecordarClave.txtCaptcha.value);
+                ajax.onreadystatechange = function() {
+                    if(ajax.readyState === 4) {
+                        respuesta = parseInt(ajax.responseText);
+                        txtErrors = "<span>";
+                        switch(respuesta){
+                            case 1:
+                                panelErrorLogin.className = "msgOK";
+                                txtErrors += "{STATIC_REMEMBER_PASSWORD_OK}";
+                                refrescarCaptcha();
+                                break;
+                            case 2:
+                                txtErrors += "{STATIC_REMEMBER_PASSWORD_NO_SENDED}";
+                                break;
+                            case 3:
+                                txtErrors += "{STATIC_REMEMBER_PASSWORD_MAIL_NO_EXISTS}";
+                                break;
+                            case 4:
+                                txtErrors += "{STATIC_REMEMBER_PASSWORD_CAPTCHA_KO}";
+                                break;
+                        }
+                        txtErrors += "</span>";
+                        panelErrorLogin.innerHTML = txtErrors;
+                        panelErrorLogin.style.display = "block";
+                        btnSubmit.disabled = false;
+                        $.unblockUI();
+                    }
+                };
+                ajax.send(null);
+            }
+        }
+        <!-- END: validar_remember_password -->
+
+        <!-- BEGIN: formulario_reiniciar_clave -->
+        function validarResetClave() {
+            var btnSubmit = document.frmResetClave.btnLogin;
+            var panelErrorLogin = document.getElementById("msgError");
+            var blError = false;
+            var txtErrors = "<span>";
+
+            btnSubmit.disabled = true;
+
+            if(document.frmResetClave.txtPassword.value === "") {
+                blError = true;
+                txtErrors += "{STATIC_RESET_PASSWORD_ERROR_PASS_EMPTY}";
+            }else if(document.frmResetClave.txtPassword.value !== document.frmResetClave.txtRePassword.value) {
+                blError = true;
+                txtErrors += "{STATIC_RESET_PASSWORD_ERROR_PASS_EQUAL}";
+            }
+
+            if(blError) {
+                txtErrors += "</span>";
+                panelErrorLogin.innerHTML = txtErrors;
+                panelErrorLogin.style.display = "block";
+                btnSubmit.disabled = false;
+            }else{
+                document.frmResetClave.submit();
+            }
+        }
+        <!-- END: formulario_reiniciar_clave -->
+
+        <!-- BEGIN: validar_membership -->
+        function validarFormularioMembership() {
+            var btn = document.getElementById("btnSendForm");
+            var msgContenido = document.getElementById("msgAlert");
+            var blError = true;
+            var txtError = "";
+            var profesionalesSeleccionadas=$("#containerProfessionalActivity input:checked");
+
+            //Obtenemos situaciones laborales
+            var situacionesLaborales=$("#containerLaboralSituation input:checked");
+
+            btn.disabled = true;
+            limpiarErrores();
+
+            if(!validarEmail(document.frmMembership.txtEmailUser.value)) {
+                blError = false;
+                destacarError(document.frmMembership.txtEmailUser);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_EMAIL_USER}";
+            }else if(trim(document.frmMembership.txtPassword.value) === "" || document.frmMembership.txtPassword.value === "{STATIC_FORM_MEMBERSHIP_PASSWORD_USER}"){
+                blError = false;
+                destacarError(document.frmMembership.txtPasswordText);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_PASSWORD}";
+            }else if(document.frmMembership.txtPassword.value!=="" && document.frmMembership.txtPassword.value!==document.frmMembership.txtRePassword.value){
+                blError = false;
+                destacarError(document.frmMembership.txtRePasswordText);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_CONFIRM_PASSWORD}";
+            }else if(trim(document.frmMembership.txtNombre.value) === "" || document.frmMembership.txtNombre.value === "{STATIC_FORM_MEMBERSHIP_FIRST_NAME}") {
+                blError = false;
+                destacarError(document.frmMembership.txtNombre);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_FIRST_NAME}";
+            }else if(trim(document.frmMembership.txtApellidos.value) === "" || document.frmMembership.txtApellidos.value === "{STATIC_FORM_MEMBERSHIP_LAST_NAMES}") {
+                blError = false;
+                destacarError(document.frmMembership.txtApellidos);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_LAST_NAME}";
+            }else if(document.frmMembership.cmbPais.value < 0 ) {
+                blError = false;
+                destacarError(document.frmMembership.cmbPais);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_COUNTRY_RESIDENCE}";
+            }else if(trim(document.frmMembership.txtCiudad.value) === "" || document.frmMembership.txtCiudad.value === "{STATIC_FORM_MEMBERSHIP_TOWN_CITY}") {
+                blError = false;
+                destacarError(document.frmMembership.txtCiudad);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_TOWN_CITY}";
+            }else if(!validarEmail(document.frmMembership.txtEmail.value)) {
+                blError = false;
+                destacarError(document.frmMembership.txtEmail);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_EMAIL}";
+            }else if(profesionalesSeleccionadas.length===0){
+                blError = false;
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_PROFESSION}";
+            }else if(radioButtonValorSeleccionado(document.frmMembership.rdMetodoPago) < 0) {
+                blError = false;
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_PAYMENT_METHOD}";
+            }else if(document.frmMembership.chkInvoice.checked){
+                if(trim(document.frmMembership.txtFacturacionNifCliente.value) === "" || document.frmMembership.txtFacturacionNifCliente.value === "{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}"){
+                    blError = false;
+                    destacarError(document.frmMembership.txtFacturacionNifCliente);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_NIF}";
+                }else if(trim(document.frmMembership.txtFacturacionNombreCliente.value) === "" || document.frmMembership.txtFacturacionNombreCliente.value === "{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}"){
+                    blError = false;
+                    destacarError(document.frmMembership.txtFacturacionNombreCliente);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_NAME}";
+                }else if(trim(document.frmMembership.txtFacturacionDireccion.value) === "" || document.frmMembership.txtFacturacionDireccion.value === "{STATIC_FORM_PROFILE_BILLING_ADDRESS}"){
+                    blError = false;
+                    destacarError(document.frmMembership.txtFacturacionDireccion);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_ADDRESS}";
+                }else if(trim(document.frmMembership.txtFacturacionCodigoPostal.value) === "" || document.frmMembership.txtFacturacionCodigoPostal.value === "{STATIC_FORM_PROFILE_BILLING_ZIPCODE}"){
+                    blError = false;
+                    destacarError(document.frmMembership.txtFacturacionCodigoPostal);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_ZIPCODE}";
+                }else if(trim(document.frmMembership.txtFacturacionCiudad.value) === "" || document.frmMembership.txtFacturacionCiudad.value === "{STATIC_FORM_PROFILE_BILLING_CITY}"){
+                    blError = false;
+                    destacarError(document.frmMembership.txtFacturacionCiudad);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_CITY}";
+                }else if(trim(document.frmMembership.txtFacturacionPais.value) === "" || document.frmMembership.txtFacturacionPais.value === "{STATIC_FORM_PROFILE_BILLING_COUNTRY}"){
+                    blError = false;
+                    destacarError(document.frmMembership.txtFacturacionPais);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_COUNTRY}";
+                }
+            }
+
+            if(blError) {
+                var cadenaActividades="";
+                var actividadesSeleccionadas=$("#containerProfessionalActivity input:checked");
+                actividadesSeleccionadas.each(function(index,valor){
+                    cadenaActividades+=valor.value+",";
+                });
+
+                cadenaActividades=cadenaActividades.substring(0,cadenaActividades.length-1);
+                document.frmMembership.hdnIdActividadProfesional.value=cadenaActividades;
+
+                var cadenaSituacionesLaborales="";
+                situacionesLaborales.each(function(index,valor){
+                    cadenaSituacionesLaborales+=valor.value+",";
+                });
+
+                cadenaSituacionesLaborales=cadenaSituacionesLaborales.substring(0,cadenaSituacionesLaborales.length-1);
+                document.frmMembership.hdnIdSituacionLaboral.value=cadenaSituacionesLaborales;
+
+
+                mensajeCargando("{STATIC_GLOBAL_SENDING}...");
+                generarInscripcion();
+            }else{
+                msgContenido.innerHTML = txtError;
+                msgContenido.setAttribute("class", "msgKO alert alert-danger");
+                msgContenido.style.display = "block";
+                moverWeb();
+            }
+
+            btn.disabled = false;
+        }
+        <!-- END: validar_membership -->
+
+        <!-- BEGIN: validar_membership_institucion -->
+        function validarFormularioMembershipInstitutions() {
+            var btn = document.getElementById("btnSendForm");
+            var msgContenido = document.getElementById("msgAlert");
+            var blError = true;
+            var txtError = "";
+
+            btn.disabled = true;
+            limpiarErrores();
+
+
+            if(!validarEmail(document.frmMembershipInstitutional.txtEmailUser.value)) {
+                blError = false;
+                destacarError(document.frmMembershipInstitutional.txtEmailUser);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_EMAIL_USER}";
+            }else if(trim(document.frmMembershipInstitutional.txtPassword.value) === "" || document.frmMembershipInstitutional.txtPassword.value === "{STATIC_FORM_MEMBERSHIP_PASSWORD_USER}"){
+                blError = false;
+                destacarError(document.frmMembershipInstitutional.txtPasswordText);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_PASSWORD}";
+            }else if(document.frmMembershipInstitutional.txtPassword.value!=="" && document.frmMembershipInstitutional.txtPassword.value!==document.frmMembershipInstitutional.txtRePassword.value){
+                blError = false;
+                destacarError(document.frmMembershipInstitutional.txtRePasswordText);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_CONFIRM_PASSWORD}";
+            }else if(trim(document.frmMembershipInstitutional.txtNombreInstitucion.value) === "" || document.frmMembershipInstitutional.txtNombreInstitucion.value === "{STATIC_FORM_MEMBERSHIP_INSTIT_NAME_INSTITUTION}") {
+                blError = false;
+                destacarError(document.frmMembershipInstitutional.txtNombreInstitucion);
+                txtError = "{STATIC_FORM_MEMBERSHIP_INSTIT_ERROR_NAME_INSTITUTION}";
+            }else if(trim(document.frmMembershipInstitutional.txtCiudad.value) === "" || document.frmMembershipInstitutional.txtCiudad.value === "{STATIC_FORM_MEMBERSHIP_TOWN_CITY}") {
+                blError = false;
+                destacarError(document.frmMembershipInstitutional.txtCiudad);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_TOWN_CITY}";
+            }else if(document.frmMembershipInstitutional.cmbPais.value < 0 ) {
+                blError = false;
+                destacarError(document.frmMembershipInstitutional.cmbPais);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_COUNTRY_RESIDENCE}";
+            }else if(trim(document.frmMembershipInstitutional.txtNombre.value) === "" || document.frmMembershipInstitutional.txtNombre.value === "{STATIC_FORM_MEMBERSHIP_FIRST_NAME}") {
+                blError = false;
+                destacarError(document.frmMembershipInstitutional.txtNombre);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_FIRST_NAME}";
+            }else if(trim(document.frmMembershipInstitutional.txtApellidos.value) === "" || document.frmMembershipInstitutional.txtApellidos.value === "{STATIC_FORM_MEMBERSHIP_LAST_NAMES}") {
+                blError = false;
+                destacarError(document.frmMembershipInstitutional.txtApellidos);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_LAST_NAME}";
+            }else if(trim(document.frmMembershipInstitutional.txtApellidos.value) === "" || document.frmMembershipInstitutional.txtApellidos.value === "{STATIC_FORM_MEMBERSHIP_LAST_NAMES}") {
+                blError = false;
+                destacarError(document.frmMembershipInstitutional.txtApellidos);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_LAST_NAME}";
+            }else if(radioButtonValorSeleccionado(document.frmMembershipInstitutional.rdMetodoPago) < 0) {
+                blError = false;
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_PAYMENT_METHOD}";
+            }
+
+            if(blError) {
+                mensajeCargando("{STATIC_GLOBAL_SENDING}...");
+                generarInscripcion();
+                //document.frmMembershipInstitutional.submit();
+            }else{
+                msgContenido.innerHTML = txtError;
+                msgContenido.setAttribute("class", "msgKO alert alert-danger");
+                msgContenido.style.display = "block";
+                moverWeb();
+            }
+
+            btn.disabled = false;
+        }
+        <!-- END: validar_membership_institucion -->
+
+        <!-- BEGIN: validar_membership_renew -->
+        function validarFormularioMembershipRenew() {
+            var btn = document.getElementById("btnSendForm");
+            var msgContenido = document.getElementById("msgAlert");
+            var blError = true;
+            var txtError = "";
+
+            btn.disabled = true;
+            limpiarErrores();
+            if(radioButtonValorSeleccionado(document.frmMembershipRenew.rdMetodoPago) < 0) {
+                blError = false;
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_PAYMENT_METHOD}";
+                msgContenido.innerHTML = txtError;
+            }else if(document.frmMembershipRenew.chkInvoice.checked){
+                if(trim(document.frmMembershipRenew.txtFacturacionNifCliente.value) === "" || document.frmMembershipRenew.txtFacturacionNifCliente.value === "{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}"){
+                    blError = false;
+                    destacarError(document.frmMembershipRenew.txtFacturacionNifCliente);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_NIF}";
+                }else if(trim(document.frmMembershipRenew.txtFacturacionNombreCliente.value) === "" || document.frmMembershipRenew.txtFacturacionNombreCliente.value === "{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}"){
+                    blError = false;
+                    destacarError(document.frmMembershipRenew.txtFacturacionNombreCliente);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_NAME}";
+                }else if(trim(document.frmMembershipRenew.txtFacturacionDireccion.value) === "" || document.frmMembershipRenew.txtFacturacionDireccion.value === "{STATIC_FORM_PROFILE_BILLING_ADDRESS}"){
+                    blError = false;
+                    destacarError(document.frmMembershipRenew.txtFacturacionDireccion);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_ADDRESS}";
+                }else if(trim(document.frmMembershipRenew.txtFacturacionCodigoPostal.value) === "" || document.frmMembershipRenew.txtFacturacionCodigoPostal.value === "{STATIC_FORM_PROFILE_BILLING_ZIPCODE}"){
+                    blError = false;
+                    destacarError(document.frmMembershipRenew.txtFacturacionCodigoPostal);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_ZIPCODE}";
+                }else if(trim(document.frmMembershipRenew.txtFacturacionCiudad.value) === "" || document.frmMembershipRenew.txtFacturacionCiudad.value === "{STATIC_FORM_PROFILE_BILLING_CITY}"){
+                    blError = false;
+                    destacarError(document.frmMembershipRenew.txtFacturacionCiudad);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_CITY}";
+                }else if(trim(document.frmMembershipRenew.txtFacturacionPais.value) === "" || document.frmMembershipRenew.txtFacturacionPais.value === "{STATIC_FORM_PROFILE_BILLING_COUNTRY}"){
+                    blError = false;
+                    destacarError(document.frmMembershipRenew.txtFacturacionPais);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_COUNTRY}";
+                }
+            }
+
+            if(blError){
+                mensajeCargando("{STATIC_GLOBAL_SENDING}...");
+                generarRenovacion();
+            }else{
+                msgContenido.innerHTML = txtError;
+                msgContenido.setAttribute("class", "msgKO alert alert-danger");
+                msgContenido.style.display = "block";
+                moverWeb();
+            }
+            btn.disabled = false;
+        }
+
+
+        function validarFormularioMembershipRenewAux() {
+            var btn = document.getElementById("btnSendForm");
+            var msgContenido = document.getElementById("msgAlert");
+            var blError = true;
+            var txtError = "";
+
+            btn.disabled = true;
+            limpiarErrores();
+            if(radioButtonValorSeleccionado(document.frmMembershipRenew.rdMetodoPago) < 0) {
+                blError = false;
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_PAYMENT_METHOD}";
+                msgContenido.innerHTML = txtError;
+            }else if(document.frmMembershipRenew.chkInvoice.checked){
+                if(trim(document.frmMembershipRenew.txtFacturacionNifCliente.value) === "" || document.frmMembershipRenew.txtFacturacionNifCliente.value === "{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}"){
+                    blError = false;
+                    destacarError(document.frmMembershipRenew.txtFacturacionNifCliente);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_NIF}";
+                }else if(trim(document.frmMembershipRenew.txtFacturacionNombreCliente.value) === "" || document.frmMembershipRenew.txtFacturacionNombreCliente.value === "{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}"){
+                    blError = false;
+                    destacarError(document.frmMembershipRenew.txtFacturacionNombreCliente);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_NAME}";
+                }else if(trim(document.frmMembershipRenew.txtFacturacionDireccion.value) === "" || document.frmMembershipRenew.txtFacturacionDireccion.value === "{STATIC_FORM_PROFILE_BILLING_ADDRESS}"){
+                    blError = false;
+                    destacarError(document.frmMembershipRenew.txtFacturacionDireccion);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_ADDRESS}";
+                }else if(trim(document.frmMembershipRenew.txtFacturacionCodigoPostal.value) === "" || document.frmMembershipRenew.txtFacturacionCodigoPostal.value === "{STATIC_FORM_PROFILE_BILLING_ZIPCODE}"){
+                    blError = false;
+                    destacarError(document.frmMembershipRenew.txtFacturacionCodigoPostal);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_ZIPCODE}";
+                }else if(trim(document.frmMembershipRenew.txtFacturacionCiudad.value) === "" || document.frmMembershipRenew.txtFacturacionCiudad.value === "{STATIC_FORM_PROFILE_BILLING_CITY}"){
+                    blError = false;
+                    destacarError(document.frmMembershipRenew.txtFacturacionCiudad);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_CITY}";
+                }else if(trim(document.frmMembershipRenew.txtFacturacionPais.value) === "" || document.frmMembershipRenew.txtFacturacionPais.value === "{STATIC_FORM_PROFILE_BILLING_COUNTRY}"){
+                    blError = false;
+                    destacarError(document.frmMembershipRenew.txtFacturacionPais);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_COUNTRY}";
+                }
+            }
+
+            if(blError){
+                mensajeCargando("{STATIC_GLOBAL_SENDING}...");
+                generarRenovacionAux();
+            }else{
+                msgContenido.innerHTML = txtError;
+                msgContenido.setAttribute("class", "msgKO alert alert-danger");
+                msgContenido.style.display = "block";
+                moverWeb();
+            }
+            btn.disabled = false;
+        }
+
+
+        <!-- END: validar_membership_renew -->
+
+        <!-- BEGIN: validar_workshop_register -->
+        function validarFormularioWorkshopRegister() {
+            var btn = document.getElementById("btnSendForm");
+            var msgContenido = document.getElementById("msgAlert");
+            var blError = true;
+            var txtError = "";
+
+            btn.disabled = true;
+            limpiarErrores();
+
+            if(trim(document.frmWorkshopRegister.txtNombre.value) === "" || document.frmWorkshopRegister.txtNombre.value === "{STATIC_FORM_MEMBERSHIP_FIRST_NAME}") {
+                blError = false;
+                destacarError(document.frmWorkshopRegister.txtNombre);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_FIRST_NAME}";
+            }else if(trim(document.frmWorkshopRegister.txtApellidos.value) === "" || document.frmWorkshopRegister.txtApellidos.value === "{STATIC_FORM_MEMBERSHIP_LAST_NAMES}") {
+                blError = false;
+                destacarError(document.frmWorkshopRegister.txtApellidos);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_LAST_NAME}";
+            }else if(!validarEmail(document.frmWorkshopRegister.txtEmail.value)) {
+                blError = false;
+                destacarError(document.frmWorkshopRegister.txtEmail);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_EMAIL}";
+            }else if(radioButtonValorSeleccionado(document.frmWorkshopRegister.rdMetodoPago) < 0) {
+                blError = false;
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_PAYMENT_METHOD}";
+            }else if(document.frmWorkshopRegister.chkInvoice.checked){
+                if(trim(document.frmWorkshopRegister.txtFacturacionNifCliente.value) === "" || document.frmWorkshopRegister.txtFacturacionNifCliente.value === "{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}"){
+                    blError = false;
+                    destacarError(document.frmWorkshopRegister.txtFacturacionNifCliente);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_NIF}";
+                }else if(trim(document.frmWorkshopRegister.txtFacturacionNombreCliente.value) === "" || document.frmWorkshopRegister.txtFacturacionNombreCliente.value === "{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}"){
+                    blError = false;
+                    destacarError(document.frmWorkshopRegister.txtFacturacionNombreCliente);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_NAME}";
+                }else if(trim(document.frmWorkshopRegister.txtFacturacionDireccion.value) === "" || document.frmWorkshopRegister.txtFacturacionDireccion.value === "{STATIC_FORM_PROFILE_BILLING_ADDRESS}"){
+                    blError = false;
+                    destacarError(document.frmWorkshopRegister.txtFacturacionDireccion);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_ADDRESS}";
+                }else if(trim(document.frmWorkshopRegister.txtFacturacionCodigoPostal.value) === "" || document.frmWorkshopRegister.txtFacturacionCodigoPostal.value === "{STATIC_FORM_PROFILE_BILLING_ZIPCODE}"){
+                    blError = false;
+                    destacarError(document.frmWorkshopRegister.txtFacturacionCodigoPostal);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_ZIPCODE}";
+                }else if(trim(document.frmWorkshopRegister.txtFacturacionCiudad.value) === "" || document.frmWorkshopRegister.txtFacturacionCiudad.value === "{STATIC_FORM_PROFILE_BILLING_CITY}"){
+                    blError = false;
+                    destacarError(document.frmWorkshopRegister.txtFacturacionCiudad);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_CITY}";
+                }else if(trim(document.frmWorkshopRegister.txtFacturacionPais.value) === "" || document.frmWorkshopRegister.txtFacturacionPais.value === "{STATIC_FORM_PROFILE_BILLING_COUNTRY}"){
+                    blError = false;
+                    destacarError(document.frmWorkshopRegister.txtFacturacionPais);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_COUNTRY}";
+                }
+            }else if(!document.frmWorkshopRegister.chkPrivacy.checked) {
+                blError = false;
+                destacarError(document.frmWorkshopRegister.chkPrivacy);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_PRIVACY}";
+            }
+
+            if(blError) {
+
+                var cadenaTalleres="";
+                var talleresSeleccionados=$("#containerWorkshop input:checked");
+                talleresSeleccionados.each(function(index,valor){
+                    cadenaTalleres+=valor.value+",";
+                });
+
+                cadenaTalleres=cadenaTalleres.substring(0,cadenaTalleres.length-1);
+                document.frmWorkshopRegister.hdnIdTaller.value=cadenaTalleres;
+
+
+
+                mensajeCargando("{STATIC_GLOBAL_SENDING}...");
+                generarInscripcionWorkshop();
+            }else{
+                msgContenido.innerHTML = txtError;
+                msgContenido.setAttribute("class", "msgKO alert alert-danger");
+                msgContenido.style.display = "block";
+                moverWeb();
+            }
+
+            btn.disabled = false;
+        }
+        <!-- END: validar_workshop_register -->
+
+        <!-- BEGIN: validar_conference_register -->
+        function finalPrice(){
+            var finalPrice = document.getElementById("finalPrice").innerHTML;
+            var totalPayable = document.getElementById("totalPayable").innerHTML;
+            finalPrice = totalPayable;
+        }
+        function validarFormularioConferenceRegister() {
+            var btn = document.getElementById("btnSendForm");
+            var msgContenido = document.getElementById("msgAlert");
+            var blError = true;
+            var txtError = "";
+
+            btn.disabled = true;
+            limpiarErrores();
+
+            if(trim(document.frmConferenceRegister.txtNombre.value) === "" || document.frmConferenceRegister.txtNombre.value === "{STATIC_FORM_MEMBERSHIP_FIRST_NAME}") {
+                blError = false;
+                destacarError(document.frmConferenceRegister.txtNombre);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_FIRST_NAME}";
+            }else if(trim(document.frmConferenceRegister.txtApellidos.value) === "" || document.frmConferenceRegister.txtApellidos.value === "{STATIC_FORM_MEMBERSHIP_LAST_NAMES}") {
+                blError = false;
+                destacarError(document.frmConferenceRegister.txtApellidos);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_LAST_NAME}";
+            }else if(!validarEmail(document.frmConferenceRegister.txtEmail.value)) {
+                blError = false;
+                destacarError(document.frmConferenceRegister.txtEmail);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_EMAIL}";
+                <!-- BEGIN: validacion_pais -->
+            }else if(document.frmConferenceRegister.cmbPais.value < 0 ) {
+                blError = false;
+                destacarError(document.frmConferenceRegister.cmbPais);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_COUNTRY_RESIDENCE}";
+                <!-- END: validacion_pais -->
+            }else if(document.frmConferenceRegister.txtaBadge.value===""){
+                blError = false;
+                destacarError(document.frmConferenceRegister.txtaBadge);
+                txtError = "{STATIC_FORM_CONFERENCE_REGISTER_CONFERENCE_BADGE_EMPTY}";
+            }else if(radioButtonValorSeleccionado(document.frmConferenceRegister.rdMetodoPago) < 0) {
+                blError = false;
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_PAYMENT_METHOD}";
+            }else if(document.frmConferenceRegister.chkPrivacy.checked !== true) {
+                blError = false;
+                destacarError(document.frmConferenceRegister.chkPrivacy);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_PRIVACY}";
+            }else if(document.frmConferenceRegister.chkInvoice.checked){
+                if(trim(document.frmConferenceRegister.txtFacturacionNifCliente.value) === "" || document.frmConferenceRegister.txtFacturacionNifCliente.value === "{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}"){
+                    blError = false;
+                    destacarError(document.frmConferenceRegister.txtFacturacionNifCliente);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_NIF}";
+                }else if(trim(document.frmConferenceRegister.txtFacturacionNombreCliente.value) === "" || document.frmConferenceRegister.txtFacturacionNombreCliente.value === "{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}"){
+                    blError = false;
+                    destacarError(document.frmConferenceRegister.txtFacturacionNombreCliente);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_NAME}";
+                }else if(trim(document.frmConferenceRegister.txtFacturacionDireccion.value) === "" || document.frmConferenceRegister.txtFacturacionDireccion.value === "{STATIC_FORM_PROFILE_BILLING_ADDRESS}"){
+                    blError = false;
+                    destacarError(document.frmConferenceRegister.txtFacturacionDireccion);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_ADDRESS}";
+                }else if(trim(document.frmConferenceRegister.txtFacturacionCodigoPostal.value) === "" || document.frmConferenceRegister.txtFacturacionCodigoPostal.value === "{STATIC_FORM_PROFILE_BILLING_ZIPCODE}"){
+                    blError = false;
+                    destacarError(document.frmConferenceRegister.txtFacturacionCodigoPostal);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_ZIPCODE}";
+                }else if(trim(document.frmConferenceRegister.txtFacturacionCiudad.value) === "" || document.frmConferenceRegister.txtFacturacionCiudad.value === "{STATIC_FORM_PROFILE_BILLING_CITY}"){
+                    blError = false;
+                    destacarError(document.frmConferenceRegister.txtFacturacionCiudad);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_CITY}";
+                }else if(trim(document.frmConferenceRegister.txtFacturacionPais.value) === "" || document.frmConferenceRegister.txtFacturacionPais.value === "{STATIC_FORM_PROFILE_BILLING_COUNTRY}"){
+                    blError = false;
+                    destacarError(document.frmConferenceRegister.txtFacturacionPais);
+                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_COUNTRY}";
+                }
+            }
+
+            if(blError) {
+                mensajeCargando("{STATIC_GLOBAL_SENDING}...");
+                finalPrice();
+                generarInscripcionConference();
+            }else{
+                msgContenido.innerHTML = txtError;
+                msgContenido.setAttribute("class", "msgKO alert alert-danger");
+                msgContenido.style.display = "block";
+                moverWeb();
+            }
+
+            btn.disabled = false;
+        }
+        <!-- END: validar_conference_register -->
+
+
+        <!-- BEGIN: validar_metm_register_member -->
+        function validarFormularioMetmRegisterMember() {
+            var btn = document.getElementById("btnSendForm");
+            var msgContenido = document.getElementById("msgAlert");
+            var blError = true;
+            var txtError = "";
+
+            btn.disabled = true;
+            limpiarErrores();
+
+            if(trim(document.frmMetmRegisterMember.txtNombre.value) === "" || document.frmMetmRegisterMember.txtNombre.value === "{STATIC_FORM_MEMBERSHIP_FIRST_NAME}") {
+                blError = false;
+                destacarError(document.frmMetmRegisterMember.txtNombre);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_FIRST_NAME}";
+            }else if(trim(document.frmMetmRegisterMember.txtApellidos.value) === "" || document.frmMetmRegisterMember.txtApellidos.value === "{STATIC_FORM_MEMBERSHIP_LAST_NAMES}") {
+                blError = false;
+                destacarError(document.frmMetmRegisterMember.txtApellidos);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_LAST_NAME}";
+            }else if(document.frmMetmRegisterMember.cmbPais.value < 0 ) {
+                blError = false;
+                destacarError(document.frmMetmRegisterMember.cmbPais);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_COUNTRY_RESIDENCE}";
+            }else if(!validarEmail(document.frmMetmRegisterMember.txtEmail.value)) {
+                blError = false;
+                destacarError(document.frmMetmRegisterMember.txtEmail);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_EMAIL}";
+            }else if(document.frmMetmRegisterMember.chkMiembroInvitadoVERTICE.checked && (trim(document.frmMetmRegisterMember.txtMiembroInvitadoVertice.value) === "" || document.frmMetmRegisterMember.txtMiembroInvitadoVertice.value === "{STATIC_FORM_MEMT_REGISTER_MEMBER_IF_YOU_ARE_MEMBER_VERTICE}")) {
+                blError = false;
+                destacarError(document.frmMetmRegisterMember.txtMiembroInvitadoVertice);
+                txtError = "{STATIC_FORM_MEMT_REGISTER_MEMBER_IF_YOU_ARE_MEMBER_VERTICE}";
+            }else if(radioButtonValorSeleccionado(document.frmMetmRegisterMember.rdMetodoPago) < 0) {
+                blError = false;
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_PAYMENT_METHOD}";
+            }
+
+
+            if(blError) {
+                document.frmMetmRegisterMember.submit();
+            }else{
+                msgContenido.innerHTML = txtError;
+                msgContenido.setAttribute("class", "msgKO alert alert-danger");
+                msgContenido.style.display = "block";
+                moverWeb();
+            }
+
+            btn.disabled = false;
+        }
+        <!-- END: validar_metm_register_member -->
+
+        <!-- BEGIN: validar_metm_join_member -->
+        function validarFormularioMetmJoinMember() {
+            var btn = document.getElementById("btnSendForm");
+            var msgContenido = document.getElementById("msgAlert");
+            var blError = true;
+            var txtError = "";
+
+            btn.disabled = true;
+            limpiarErrores();
+
+            if(trim(document.frmMetmJoinMember.txtNombre.value) === "" || document.frmMetmJoinMember.txtNombre.value === "{STATIC_FORM_MEMBERSHIP_FIRST_NAME}") {
+                blError = false;
+                destacarError(document.frmMetmJoinMember.txtNombre);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_FIRST_NAME}";
+            }else if(trim(document.frmMetmJoinMember.txtApellidos.value) === "" || document.frmMetmJoinMember.txtApellidos.value === "{STATIC_FORM_MEMBERSHIP_LAST_NAMES}") {
+                blError = false;
+                destacarError(document.frmMetmJoinMember.txtApellidos);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_LAST_NAME}";
+            }else if(document.frmMetmJoinMember.cmbPais.value < 0 ) {
+                blError = false;
+                destacarError(document.frmMetmJoinMember.cmbPais);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_COUNTRY_RESIDENCE}";
+            }else if(trim(document.frmMetmJoinMember.txtCiudad.value) === "" || document.frmMetmJoinMember.txtCiudad.value === "{STATIC_FORM_MEMBERSHIP_TOWN_CITY}") {
+                blError = false;
+                destacarError(document.frmMetmJoinMember.txtCiudad);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_TOWN_CITY}";
+            }else if(trim(document.frmMetmJoinMember.txtCiudad.value) === "" || document.frmMetmJoinMember.txtCiudad.value === "{STATIC_FORM_MEMBERSHIP_TOWN_CITY}") {
+                blError = false;
+                destacarError(document.frmMetmJoinMember.txtCiudad);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_TOWN_CITY}";
+            }else if(!validarEmail(document.frmMetmJoinMember.txtEmail.value)) {
+                blError = false;
+                destacarError(document.frmMetmJoinMember.txtEmail);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_EMAIL}";
+            }else if({VALIDACION_CHECKS}) {
+                blError = false;
+                txtError = "{STATIC_FORM_RENEW_MEMBERSHIP_ERROR_PROFESSION}";
+            }else if((document.frmMetmJoinMember.txtOtherSpecification.style.display === "block" && trim(document.frmMetmJoinMember.txtOtherSpecification.value) === "") || (document.frmMetmJoinMember.txtOtherSpecification.style.display === "block" && document.frmMetmJoinMember.txtOtherSpecification.value === "{STATIC_FORM_MEMBERSHIP_IF_OTHER_SPECIFY}")) {
+                blError = false;
+                destacarError(document.frmMetmJoinMember.txtOtherSpecification);
+                txtError = "{STATIC_FORM_MEMBERSHIP_IF_OTHER_SPECIFY}";
+            }else if((document.frmMetmJoinMember.txtStudySpecification.style.display === "block" && trim(document.frmMetmJoinMember.txtStudySpecification.value) === "") || (document.frmMetmJoinMember.txtStudySpecification.style.display === "block" && document.frmMetmJoinMember.txtStudySpecification.value === "{STATIC_FORM_MEMBERSHIP_IF_STUDENT_SUBJECT}")) {
+                blError = false;
+                destacarError(document.frmMetmJoinMember.txtStudySpecification);
+                txtError = "{STATIC_FORM_MEMBERSHIP_IF_STUDENT_SUBJECT}";
+            }else if(!document.frmMetmJoinMember.chkSituacionLaboralFreelance.checked && !document.frmMetmJoinMember.chkSituacionLaboralInHouse.checked && !document.frmMetmJoinMember.chkSituacionLaboralEstudiante.checked) {
+                blError = false;
+                txtError = "{STATIC_FORM_RENEW_MEMBERSHIP_ERROR_SITUATION_WORK}";
+            }else if(radioButtonValorSeleccionado(document.frmMetmJoinMember.rdMetodoPago) < 0) {
+                blError = false;
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_PAYMENT_METHOD}";
+            }
+
+            if(blError) {
+                document.frmMetmJoinMember.submit();
+            }else{
+                msgContenido.innerHTML = txtError;
+                msgContenido.setAttribute("class", "msgKO alert alert-danger");
+                msgContenido.style.display = "block";
+                moverWeb();
+            }
+
+            btn.disabled = false;
+        }
+        <!-- END: validar_metm_join_member -->
+
+        <!-- BEGIN: validar_offer_interesed -->
+        function validarFormularioOfertaInteresado() {
+            var btn = document.getElementById("btnSendForm");
+            var msgContenido = document.getElementById("msgAlert");
+            var blError = true;
+            var txtError = "";
+
+            btn.disabled = true;
+            limpiarErrores();
+
+            if(trim(document.frmJobOffer.txtNombre.value) === "" || document.frmJobOffer.txtNombre.value === "{STATIC_FORM_MEMBERSHIP_FIRST_NAME}") {
+                blError = false;
+                destacarError(document.frmJobOffer.txtNombre);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_FIRST_NAME}";
+            }else if(trim(document.frmJobOffer.txtApellidos.value) === "" || document.frmJobOffer.txtApellidos.value === "{STATIC_FORM_MEMBERSHIP_LAST_NAMES}") {
+                blError = false;
+                destacarError(document.frmJobOffer.txtApellidos);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_LAST_NAME}";
+            }else if(!validarEmail(document.frmJobOffer.txtEmail.value)) {
+                blError = false;
+                destacarError(document.frmJobOffer.txtEmail);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_EMAIL}";
+            }
+
+            if(blError) {
+                document.frmJobOffer.submit();
+            }else{
+                msgContenido.innerHTML = txtError;
+                msgContenido.setAttribute("class", "msgKO alert alert-danger");
+                msgContenido.style.display = "block";
+            }
+
+            btn.disabled = false;
+        }
+        <!-- END: validar_offer_interesed -->
+
+        <!-- BEGIN: validar_usuario_web_editar -->
+        function validarFormularioEditarUsuario() {
+            var btn = document.getElementById("btnSendForm");
+            var msgContenido = document.getElementById("msgAlert");
+            var blError = true;
+            var txtError = "";
+
+            //Obtenemos situaciones laborales
+            var situacionesLaborales=$("#containerLaboralSituation input:checked");
+
+            var profesionalesSeleccionadas=$("#containerProfessionalActivity input:checked");
+
+            btn.disabled = true;
+            limpiarErrores();
+
+            if(trim(document.frmMembership.txtNombre.value) === "" || document.frmMembership.txtNombre.value === "{STATIC_FORM_MEMBERSHIP_FIRST_NAME}") {
+                blError = false;
+                destacarError(document.frmMembership.txtNombre);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_FIRST_NAME}";
+            }else if(trim(document.frmMembership.txtApellidos.value) === "" || document.frmMembership.txtApellidos.value === "{STATIC_FORM_MEMBERSHIP_LAST_NAMES}") {
+                blError = false;
+                destacarError(document.frmMembership.txtApellidos);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_LAST_NAME}";
+            }else if(document.frmMembership.cmbPais.value < 0 ) {
+                blError = false;
+                destacarError(document.frmMembership.cmbPais);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_COUNTRY_RESIDENCE}";
+            }else if(trim(document.frmMembership.txtCiudad.value) === "" || document.frmMembership.txtCiudad.value === "{STATIC_FORM_MEMBERSHIP_TOWN_CITY}") {
+                blError = false;
+                destacarError(document.frmMembership.txtCiudad);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_TOWN_CITY}";
+            }else if(!validarEmail(document.frmMembership.txtEmail.value)) {
+                blError = false;
+                destacarError(document.frmMembership.txtEmail);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_EMAIL}";
+            }else if(profesionalesSeleccionadas.length===0){
+                blError = false;
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_PROFESSION}";
+            }else if(document.frmMembership.txtCurrentPassword.value!=="" && document.frmMembership.txtPassword.value !== document.frmMembership.txtRePassword.value){
+                blError = false;
+                destacarError(document.frmMembership.txtPassword);
+                destacarError(document.frmMembership.txtRePassword);
+                txtError = "{STATIC_FORM_PROFILE_CHANGE_PASS_NO_EQUAL}";
+            }
+
+            if(blError) {
+                var cadenaActividades="";
+                var actividadesSeleccionadas=$("#containerProfessionalActivity input:checked");
+                actividadesSeleccionadas.each(function(index,valor){
+                    cadenaActividades+=valor.value+",";
+                });
+
+                cadenaActividades=cadenaActividades.substring(0,cadenaActividades.length-1);
+                document.frmMembership.hdnIdActividadProfesional.value=cadenaActividades;
+
+                var cadenaSituacionesLaborales="";
+                situacionesLaborales.each(function(index,valor){
+                    cadenaSituacionesLaborales+=valor.value+",";
+                });
+
+                cadenaSituacionesLaborales=cadenaSituacionesLaborales.substring(0,cadenaSituacionesLaborales.length-1);
+                document.frmMembership.hdnIdSituacionLaboral.value=cadenaSituacionesLaborales;
+
+
+                mensajeCargando("{STATIC_GLOBAL_SENDING}...");
+                document.frmMembership.submit();
+            }else{
+                msgContenido.innerHTML = txtError;
+                msgContenido.setAttribute("class", "msgKO alert alert-danger");
+                msgContenido.style.display = "block";
+                moverWeb();
+            }
+
+            btn.disabled = false;
+        }
+        <!-- END: validar_usuario_web_editar -->
+
+        <!-- BEGIN: validar_institucion_web_editar -->
+        function validarFormularioEditarInstitucion() {
+            var btn = document.getElementById("btnSendForm");
+            var msgContenido = document.getElementById("msgAlert");
+            var blError = true;
+            var txtError = "";
+
+            btn.disabled = true;
+            limpiarErrores();
+
+
+            if(trim(document.frmMembership.txtNombreInstitucion.value) === "" || document.frmMembership.txtNombreInstitucion.value === "{STATIC_FORM_MEMBERSHIP_INSTIT_NAME_INSTITUTION}") {
+                blError = false;
+                destacarError(document.frmMembership.txtNombreInstitucion);
+                txtError = "{STATIC_FORM_MEMBERSHIP_INSTIT_ERROR_NAME_INSTITUTION}";
+            }else if(trim(document.frmMembership.txtCiudad.value) === "" || document.frmMembership.txtCiudad.value === "{STATIC_FORM_MEMBERSHIP_TOWN_CITY}") {
+                blError = false;
+                destacarError(document.frmMembership.txtCiudad);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_TOWN_CITY}";
+            }else if(document.frmMembership.cmbPais.value < 0 ) {
+                blError = false;
+                destacarError(document.frmMembership.cmbPais);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_COUNTRY_RESIDENCE}";
+            }else if(trim(document.frmMembership.txtNombre.value) === "" || document.frmMembership.txtNombre.value === "{STATIC_FORM_MEMBERSHIP_FIRST_NAME}") {
+                blError = false;
+                destacarError(document.frmMembership.txtNombre);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_FIRST_NAME}";
+            }else if(trim(document.frmMembership.txtApellidos.value) === "" || document.frmMembership.txtApellidos.value === "{STATIC_FORM_MEMBERSHIP_LAST_NAMES}") {
+                blError = false;
+                destacarError(document.frmMembership.txtApellidos);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_LAST_NAME}";
+            }else if(trim(document.frmMembership.txtApellidos.value) === "" || document.frmMembership.txtApellidos.value === "{STATIC_FORM_MEMBERSHIP_LAST_NAMES}") {
+                blError = false;
+                destacarError(document.frmMembership.txtApellidos);
+                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_LAST_NAME}";
+            }else if(document.frmMembership.txtCurrentPassword.value!=="" && document.frmMembership.txtPassword.value !== document.frmMembership.txtRePassword.value){
+                blError = false;
+                destacarError(document.frmMembership.txtPassword);
+                destacarError(document.frmMembership.txtRePassword);
+                txtError = "{STATIC_FORM_PROFILE_CHANGE_PASS_NO_EQUAL}";
+            }
+
+            if(blError) {
+                mensajeCargando("{STATIC_GLOBAL_SENDING}...");
+                document.frmMembership.submit();
+            }else{
+                msgContenido.innerHTML = txtError;
+                msgContenido.setAttribute("class", "msgKO alert alert-danger");
+                msgContenido.style.display = "block";
+                moverWeb();
+            }
+
+            btn.disabled = false;
+        }
+        <!-- END: validar_institucion_web_editar -->
+
+        <!-- BEGIN: validar_submit_event -->
+        function validarFormularioSubmitEvent() {
+            var btn = document.getElementById("btnSendForm");
+            var msgContenido = document.getElementById("msgAlert");
+            var blError = true;
+            var txtError = "";
+
+            btn.disabled = true;
+            limpiarErrores();
+
+            if(trim(document.frmSubmitEvent.txtTitulo.value) === "" || document.frmSubmitEvent.txtTitulo.value === "{STATIC_FORM_MEMBERSHIP_TITLE}") {
+                blError = false;
+                destacarError(document.frmSubmitEvent.txtTitulo);
+                txtError = "{STATIC_FORM_EVENT_SUBMIT_TITLE_EMPTY}";
+            }else if(document.frmSubmitEvent.cmbTematica.value < 0) {
+                blError = false;
+                destacarError(document.frmSubmitEvent.cmbTematica);
+                txtError = "{STATIC_FORM_EVENT_SUBMIT_THEME}";
+            }else if(trim(document.frmSubmitEvent.txtResumen.value) === "" || document.frmSubmitEvent.txtResumen.value === "{STATIC_FORM_EVENT_SUBMIT_SUMMARY}") {
+                blError = false;
+                destacarError(document.frmSubmitEvent.txtResumen);
+                txtError = "{STATIC_FORM_EVENT_SUBMIT_SUMMARY_ERROR}";
+            }
+
+            if(blError) {
+                document.frmSubmitEvent.submit();
+            }else{
+                msgContenido.innerHTML = txtError;
+                msgContenido.setAttribute("class", "msgKO alert alert-danger");
+                msgContenido.style.display = "block";
+            }
+
+            btn.disabled = false;
+        }
+        <!-- END: validar_submit_event -->
+
+        <!-- BEGIN: validar_submit_job -->
+        function validarFormularioSubmitJob() {
+            var btn = document.getElementById("btnSendForm");
+            var msgContenido = document.getElementById("msgAlert");
+            var blError = true;
+            var txtError = "";
+
+            btn.disabled = true;
+            limpiarErrores();
+
+            if(trim(document.frmSubmitJob.txtTitulo.value) === "" || document.frmSubmitJob.txtTitulo.value === "{STATIC_FORM_MEMBERSHIP_TITLE}") {
+                blError = false;
+                destacarError(document.frmSubmitJob.txtTitulo);
+                txtError = "{STATIC_FORM_EVENT_SUBMIT_TITLE_EMPTY}";
+            }else if(trim(document.frmSubmitJob.txtEmail.value) !== "" && document.frmSubmitJob.txtEmail.value !== "{STATIC_FORM_MEMBERSHIP_EMAIL}" && !validarEmail(document.frmSubmitJob.txtEmail.value)) {
+                blError = false;
+                destacarError(document.frmSubmitJob.txtEmail);
+                txtError = "{STATIC_FORM_JOB_SUBMIT_MAIL_ERROR}";
+            }else if(trim(document.frmSubmitJob.txtResumen.value) === "" || document.frmSubmitJob.txtResumen.value === "{STATIC_FORM_EVENT_SUBMIT_SUMMARY}") {
+                blError = false;
+                destacarError(document.frmSubmitJob.txtResumen);
+                txtError = "{STATIC_FORM_EVENT_SUBMIT_SUMMARY_ERROR}";
+            }
+
+            if(blError) {
+                document.frmSubmitJob.submit();
+            }else{
+                msgContenido.innerHTML = txtError;
+                msgContenido.setAttribute("class", "msgKO alert alert-danger");
+                msgContenido.style.display = "block";
+            }
+
+            btn.disabled = false;
+        }
+        <!-- END: validar_submit_job -->
+
+        <!-- BEGIN: validar_submit_alojamiento -->
+        function validarFormularioAlojamiento(){
+            var btn = document.getElementById("btnSendForm");
+            var msgContenido = document.getElementById("msgAlert");
+            var blError = true;
+            var txtError = "";
+
+            btn.disabled = true;
+            limpiarErrores();
+
+            if(trim(document.frmSubmitAccommodation.txtNombre.value) === "" || document.frmSubmitAccommodation.txtNombre.value === "{STATIC_FORM_ACCOMMODATION_NAME}") {
+                blError = false;
+                destacarError(document.frmSubmitAccommodation.txtNombre);
+                txtError = "{STATIC_FORM_ACCOMMODATION_NAME_EMPTY}";
+            }else if(!validarEmail(document.frmSubmitAccommodation.txtEmail.value)) {
+                blError = false;
+                destacarError(document.frmSubmitAccommodation.txtEmail);
+                txtError = "{STATIC_FORM_ACCOMMODATION_MAIL_ERROR}";
+            }else if(typeof $("input[name=rdHotelOption]:checked").val()==="undefined"){
+                blError = false;
+                txtError = "{STATIC_FORM_ACCOMMODATION_OPTION_ERROR}";
+            }else if(document.frmSubmitAccommodation.txtFechaLlegada.value===""){
+                blError = false;
+                destacarError(document.frmSubmitAccommodation.txtFechaLlegada);
+                txtError = "{STATIC_FORM_ACCOMMODATION_DATE_ERROR}";
+            }else if(document.frmSubmitAccommodation.txtFechaSalida.value===""){
+                blError = false;
+                destacarError(document.frmSubmitAccommodation.txtFechaSalida);
+                txtError = "{STATIC_FORM_ACCOMMODATION_DATE_ERROR}";
+            }
+
+
+            if(blError) {
+                mensajeCargando("{STATIC_GLOBAL_SENDING}...");
+                var formulario=$("#frmSubmitAccommodation");
+                var resultadoProceso;
+                $.ajax({
+                    type: "POST",
+                    url: "ajax/send_accommodation.php",
+                    data: formulario.serialize(),
+                    success: function(data){
+                        //Si encontramos la variable
+                        resultadoProceso=data;
+                        if(resultadoProceso===1){
+                            msgContenido.innerHTML = "{STATIC_FORM_ACCOMMODATION_MAIL_SENDED}";
+                            msgContenido.setAttribute("class", "msgOK");
+                            document.frmSubmitAccommodation.reset();
+                            refrescarCaptcha();
+                        }else if(resultadoProceso===2){
+                            msgContenido.innerHTML = "{STATIC_CAPTCHA_ENTER_LETTERS_NUMBERS_IMAGE}";
+                            msgContenido.setAttribute("class", "msgKO alert alert-danger");
+                            msgContenido.style.display = "block";
+                        }else{
+                            msgContenido.innerHTML = "{STATIC_FORM_ACCOMMODATION_NO_SENDED}";
+                            msgContenido.setAttribute("class", "msgKO alert alert-danger");
+                            msgContenido.style.display = "block";
+                        }
+
+
+                        $.unblockUI();
+                        btn.disabled = false;
+                        centrarPantallaElemento(msgContenido);
+                    }
+                });
+            }else{
+                msgContenido.innerHTML = txtError;
+                msgContenido.setAttribute("class", "msgKO alert alert-danger");
+                msgContenido.style.display = "block";
+                centrarPantallaElemento(msgContenido);
+            }
+
+            btn.disabled = false;
+        }
+        <!-- END: validar_submit_alojamiento -->
+
+        <!-- BEGIN: validar_submit_ride -->
+        function validarFormularioSubmitRide() {
+            var btn = document.getElementById("btnSendForm");
+            var msgContenido = document.getElementById("msgAlert");
+            var blError = true;
+            var txtError = "";
+
+            btn.disabled = true;
+            limpiarErrores();
+
+            if(trim(document.frmSubmitRide.txtNombre.value) === "" || document.frmSubmitRide.txtNombre.value === "{STATIC_FORM_METM_RIDE_NAME}") {
+                blError = false;
+                destacarError(document.frmSubmitRide.txtNombre);
+                txtError = "{STATIC_FORM_METM_RIDE_NAME_EMPTY}";
+            }else if(!validarEmail(document.frmSubmitRide.txtEmail.value)) {
+                blError = false;
+                destacarError(document.frmSubmitRide.txtEmail);
+                txtError = "{STATIC_FORM_METM_RIDE_MAIL_ERROR}";
+            }else if(typeof $("input[name=rdRideOption]:checked").val()==="undefined"){
+                blError = false;
+                txtError = "{STATIC_FORM_METM_RIDE_OPTION_ERROR}";
+            }
+
+
+            if(blError) {
+                mensajeCargando("{STATIC_GLOBAL_SENDING}...");
+                var formulario=$("#frmSubmitRide");
+                var resultadoProceso;
+                $.ajax({
+                    type: "POST",
+                    url: "ajax/send_metm_transport.php",
+                    data: formulario.serialize(),
+                    success: function(data){
+                        //Si encontramos la variable
+                        resultadoProceso=data;
+                        if(resultadoProceso===1){
+                            msgContenido.innerHTML = "{STATIC_METM_RIDE_MAIL_SENDED}";
+                            msgContenido.setAttribute("class", "msgOK");
+                            document.frmSubmitRide.reset();
+                            refrescarCaptcha();
+                        }else if(resultadoProceso===2){
+                            msgContenido.innerHTML = "{STATIC_CAPTCHA_ENTER_LETTERS_NUMBERS_IMAGE}";
+                            msgContenido.setAttribute("class", "msgKOContact");
+                            msgContenido.style.display = "block";
+                        }else{
+                            msgContenido.innerHTML = "{STATIC_FORM_METM_RIDE_NO_SENDED}";
+                            msgContenido.setAttribute("class", "msgKOContact");
+                            msgContenido.style.display = "block";
+                        }
+
+
+                        $.unblockUI();
+                        btn.disabled = false;
+                    }
+                });
+            }else{
+                msgContenido.innerHTML = txtError;
+                msgContenido.setAttribute("class", "msgKO alert alert-danger");
+                msgContenido.style.display = "block";
+            }
+
+            btn.disabled = false;
+        }
+        <!-- END: validar_submit_ride -->
+
+
+        <!-- BEGIN: validar_formulario_contacto -->
+        function validarFormularioContacto(){
+            var btn = document.getElementById("btnSendForm");
+            var msgContenido = document.getElementById("msgAlert");
+            var blError = true;
+            var txtError = "";
+
+            btn.disabled = true;
+            limpiarErrores();
+
+            if(trim(document.formContact.txtNombre.value) === "" || document.formContact.txtNombre.value === "{STATIC_CONTACT_FIRST_NAME}") {
+                blError = false;
+                destacarError(document.formContact.txtNombre);
+                txtError = "{STATIC_CONTACT_ERROR_FIRST_NAME}";
+            }else if(!validarEmail(document.formContact.txtEmail.value)){
+                blError = false;
+                destacarError(document.formContact.txtEmail);
+                txtError = "{STATIC_CONTACT_ERROR_EMAIL}";
+            }
+
+
+            if(blError) {
+                mensajeCargando("{STATIC_GLOBAL_SENDING}...");
+                var formulario=$("#formContact");
+                var resultadoProceso;
+                $.ajax({
+                    type: "POST",
+                    url: "ajax/send_mail_contact.php",
+                    data: formulario.serialize(),
+                    success: function(data){
+                        //Si encontramos la variable
+                        resultadoProceso=data;
+                        if(resultadoProceso===1){
+                            window.location="contact.php?menu="+document.formContact.hdnIdMenu.value+"&code=1";
+                        }else if(resultadoProceso===2){
+                            var msgContenido = document.getElementById("msgAlert");
+                            msgContenido.innerHTML = "{STATIC_CAPTCHA_ENTER_LETTERS_NUMBERS_IMAGE}";
+                            msgContenido.setAttribute("class", "msgKOContact");
+                            msgContenido.style.display = "block";
+                        }else{
+                            var msgContenido = document.getElementById("msgAlert");
+                            msgContenido.innerHTML = "{STATIC_CONTACT_NO_SENDED}";
+                            msgContenido.setAttribute("class", "msgKOContact");
+                            msgContenido.style.display = "block";
+                        }
+
+
+                        $.unblockUI();
+                        btn.disabled = false;
+                    }
+                });
+            }else{
+                msgContenido.innerHTML = txtError;
+                msgContenido.setAttribute("class", "msgKOContact");
+                msgContenido.style.display = "block";
+                btn.disabled = false;
+            }
+        }
+        <!-- END: validar_formulario_contacto -->
+
+        <!-- BEGIN: validar_formulario_expense -->
+        function validarFormularioExpense() {
+            var btn = document.getElementById("btnSendForm");
+            var msgContenido = document.getElementById("msgAlert");
+            var blError = true;
+            var txtError = "";
+
+
+
+            btn.disabled = true;
+            txtError="{STATIC_GLOBAL_ALL_FIELDS_REQUIRED}";
+            limpiarErrores();
+
+            if(document.frmExpense.txtNombre.value==="" || document.frmExpense.txtNombre.value==="{STATIC_EXPENSE_FORM_NAME}"){
+                blError = false;
+                destacarError(document.frmExpense.txtNombre);
+            }else if(document.frmExpense.cmbConcepto.value<0){
+                blError = false;
+                destacarError(document.frmExpense.cmbConcepto);
+            }else if(document.frmExpense.cmbSubConcepto.value<0){
+                blError = false;
+                destacarError(document.frmExpense.cmbSubConcepto);
+            }else if(document.frmExpense.txtFecha.value==="" || document.frmExpense.txtFecha.value==="{STATIC_EXPENSE_FORM_DATE_INCURRED}"){
+                blError = false;
+                destacarError(document.frmExpense.txtFecha);
+            }else if(document.frmExpense.txtContenido.value==="" || document.frmExpense.txtContenido.value==="{STATIC_EXPENSE_FORM_DESCRIPTION}"){
+                blError = false;
+                destacarError(document.frmExpense.txtContenido);
+            }else if(document.frmExpense.cmbTipoPago.value<0){
+                blError = false;
+                destacarError(document.frmExpense.cmbTipoPago);
+            }else{
+                if((document.frmExpense.txtImporte.value==="" || document.frmExpense.txtImporte.value==="{STATIC_EXPENSE_FORM_AMOUNT}")){
+                    blError = false;
+                    destacarError(document.frmExpense.txtImporte);
+                }else{
+                    var importe=document.frmExpense.txtImporte;
+                    importe.value=importe.value.replace(",",".");
+                    if(isNaN(parseFloat(importe.value,10))){
+                        blError = false;
+                        destacarError(document.frmExpense.txtImporte);
+                        txtError="{STATIC_EXPENSE_FORM_AMOUNT_NUMERIC}";
+                    }else{
+                        importe.value=parseFloat(importe.value,10);
+                    }
+                }
+            }
+
+            if(blError) {
+                document.frmExpense.submit();
+            }else{
+                msgContenido.innerHTML = txtError;
+                msgContenido.setAttribute("class", "msgKO alert alert-danger");
+                msgContenido.style.display = "block";
+            }
+
+            btn.disabled = false;
+        }
+        <!-- END: validar_formulario_expense -->
+    </script>
+
+
+</head>
+<body class="container-fluid wrapper">
+<div class="row loginLink">
+    <div class="col-12 d-md-none w-100 bg-dark py-2">
+        <a href="#loginForm" class="loginLink" style="margin-left:20px;color:white;font-size:100%;">Login</a>
+    </div>
+</div>
+<div class="row topnav">
+    <div class="col-12">
+        <nav class="navbar navbar-expand-md navbar-light">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          <a class="navbar-brand" href="{CURRENT_DOMAIN}" style="padding-left: 0;">
+             <img src="images/pictures/logos/MET_color_transparent_180x92.png" width="180" height="92" alt="">
+          </a>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <!-- BEGIN: item_menu_superior -->
+              <li class="nav-item dropdown {ITEM_MENU_SUPERIOR_PRIVATE}">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="{ITEM_MENU_SUPERIOR_URL}" role="button" aria-haspopup="true" aria-expanded="false">{ITEM_MENU_SUPERIOR_TITULO}</a>
+                <!-- BEGIN: menu_superior_desplegable -->
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <!-- BEGIN: item_menu_superior_desplegable -->
+                  <a class="dropdown-item {ITEM_MENU_SUPERIOR_DESPLEGABLE_PRIVATE}" href="{ITEM_MENU_SUPERIOR_DESPLEGABLE_URL}">{ITEM_MENU_SUPERIOR_DESPLEGABLE_TITULO}</a>
+                  <!-- END: item_menu_superior_desplegable -->
+                </div>
+                <!-- END: menu_superior_desplegable -->
+              </li>
+              <!-- END: item_menu_superior -->
+            </ul>
+          </div>
+        </nav>
+    </div>
+</div>
+<div class="row page-area">
+    <div class="col-12 col-md-9">
+        <!-- BEGIN: control_superior -->
+        {BREADCRUMB}
+      	{SLIDER}
+        <!-- END: control_superior -->
+      	<div class="row content-area">
+            <!-- BEGIN: menu_left -->
+            <div class="col-6 col-md-3 lefthand-menu order-2 order-md-1">
+                    {MENU_LEFT}
+            </div>
+            <div class="col-12 col-md-9 main-content order-1 order-md-2">
+                {CONTENIDO}
+            </div>
+            <!-- END: menu_left -->
+            <!-- BEGIN: home_page -->
+            <div class="col-12 main-content">
+                {CONTENIDO}
+            </div>
+            <!-- END: home_page -->
+        </div>
+    </div>
+    <div class="col-12 col-md-3 sidepanel">
+        <div id="loginPanel"><a name="loginForm"></a>
+        <div class="form-row">
+            <div class="col-12 rowspacer">
+                <div id="loginTitle">{STATIC_MEMBERS}</div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-12 rowspacer">
+                    <!-- BEGIN: panel_login -->
+                    <form id="frmLogin" name="frmLogin" method="post" autocomplete="off" action="authentication.php">
+                        <div class="form-row">
+                            <div class="col-12 rowspacer">
+                                <input type="hidden" name="hdnUrlActual" id="hdnUrlActual" value="{URL_ACTUAL}" />
+                                <input type="text" name="txtLoginUsuario" class="form-control" id="txtLoginUsuario" value="{STATIC_MAIL}" onblur="restaurarInputValue(this,'{STATIC_MAIL}')" onfocus="limpiarInputValue(this,'{STATIC_MAIL}'); window.scrollTo(0, 0);">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-12 rowspacer">
+                                <input type="text" name="txtPassword" class="form-control" id="txtPassword" value="{STATIC_PASSWORD}" onfocus="limpiarInputPassword(this,'txtLoginContrasena')" autocomplete="password"/>
+                                <input type="password"  id="txtLoginContrasena" name="txtLoginContrasena" tabindex="2" onblur="restaurarInputPassword(this,'txtPassword','{STATIC_PASSWORD}')" onkeypress="ejecutarIntroLogin(event);" style="display:none;" autocomplete="current-password"/>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-12 rowspacer">
+                                <p id="msgLoginError" style="{LOGIN_DISPLAY}">{LOGIN_ERROR_MENSAJE}</p>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-12 rowspacer">
+                                <input type="button" name="btnLogin" id="btnLogin" value="{STATIC_SIGN_IN}" onclick="validarLogin()">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 rowspacer">
+                                {STATIC_I_FORGOT_MY_USER} <a href="{URL_REMEMBER_PASSWORD}">{STATIC_PASSWORD}</a>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- END: panel_login -->
+                    <!-- BEGIN: datos_usuario -->
+                    <div class="row">
+                        <div class="col-12 rowspacer">
+                            <div id="infoUserData">
+                        {PANEL_LOGIN_USERNAME}
+                            </div>
+                        </div>
+                    </div>
+                        <!-- BEGIN: bloque_miembro_hasta -->
+
+                    <div class="row">
+                        <div class="col-12 rowspacer">
+                            {STATIC_MEMBER_UNTIL} <strong>{MIEMBRO_FECHA_HASTA}</strong>
+                        </div>
+                    </div>
+                        <!-- BEGIN: bloque_renew -->
+                    <div class="row">
+                        <div class="col-12 rowspacer">
+                            <a href="{URL_PROFILE_RENEW_MEMBERSHIP}">{STATIC_PROFILE_RENEW_MEMBERSHIP}</a>
+                        </div>
+                    </div>
+                        <!-- END: bloque_renew -->
+                    <div class="row">
+                        <div class="col-12 rowspacer">
+                            <span style="color:#8B1513">{EXPIRED_ACCOUNT}</span>
+                        </div>
+                    </div>
+                        <!-- END: bloque_miembro_hasta -->
+                        <!-- BEGIN: bloque_perfil -->
+                    <div class="row">
+                        <div class="col-12 rowspacer">
+                            <a href="profile_edit.php?menu=42">{STATIC_EDIT_PROFILE}</a>
+                        </div>
+                    </div>
+                        <!-- END: bloque_perfil -->
+                        <!-- BEGIN: bloque_pago_pendiente -->
+                    <div class="row">
+                        <div class="col-12 rowspacer"><strong>{STATIC_PAYMENT_PENDING}</strong>
+                        </div>
+                    </div>
+                        <!-- END: bloque_pago_pendiente -->
+                    <div class="row">
+                        <div class="col-12 rowspacer">
+                            <a href="logout.php">{STATIC_DISCONNECT}</a>
+                        </div>
+                    </div>
+                    <!-- END: datos_usuario -->
+                </div>
+
+                <!-- BEGIN: item_boton_acceso -->
+                <!-- BEGIN: si_url -->
+                <div class="row">
+                    <div class="col-12 rowspacer">
+                        <a href="{ITEM_BOTON_ACCESO_URL}" target="{ITEM_BOTON_ACCESO_TARGET}"><img src="{ITEM_BOTON_ACCESO_IMAGEN}"></a>
+                    </div>
+                </div>
+                <!-- END: si_url -->
+                <!-- BEGIN: no_url -->
+                <div class="row">
+                    <div class="col-12 rowspacer">
+                        <img src="{ITEM_BOTON_ACCESO_IMAGEN}">
+                    </div>
+                </div>
+                <!-- END: no_url -->
+                <!-- END: item_boton_acceso -->
+            </div>
+        </div>
+  	</div>
+  </div>
+        <hr>
+
+	<div class="row footer">
+    	<div class="col-12 mx-auto text-center">
+
+        <!--<table width="135" border="0" cellpadding="2" cellspacing="0" title="Click to Verify - This site chose GeoTrust SSL for secure e-commerce and confidential communications.">
+            <tr>
+                <td width="135" align="center" valign="top"><script type="text/javascript" src="https://seal.geotrust.com/getgeotrustsslseal?host_name=www.metmeetings.org&amp;size=S&amp;lang=en"></script><br />
+                <a href="http://www.geotrust.com/ssl/" target="_blank"  style="color:#000000; text-decoration:none; font:bold 7px verdana,sans-serif; letter-spacing:.5px; text-align:center; margin:0px; padding:0px;"></a>
+                </td>
+            </tr>
+        </table>-->
+        &copy; {STATIC_MEDITERRANEAN_EDITORS_AND_TRANSLATORS} &nbsp;
+
+        <!-- BEGIN: item_menu_inferior -->
+        &nbsp;&nbsp;&nbsp;<a href="{ITEM_MENU_INFERIOR_URL}">{ITEM_MENU_INFERIOR_TITULO}</a>
+        <!-- END: item_menu_inferior -->
+
+
+    </div>
+</div>
+
+        <script type="text/javascript">
+
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-39344050-1']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+
+    </script>
+
+</body>
+</html>
+<!-- END: contenido_principal -->

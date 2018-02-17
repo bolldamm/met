@@ -1,0 +1,42 @@
+<!-- BEGIN: paginador_informacion -->
+<span class="buoyancy">{STATIC_PAGINATOR_PAGES}:</span><label>{PAGINA_ACTUAL} {STATIC_PAGINATOR_OF} {TOTAL_PAGINAS}</label>
+<!-- END: paginador_informacion -->
+<!-- BEGIN: paginador_parte_superior -->
+<span class="cats">
+	<!-- BEGIN: boton_siguiente -->
+	<a href="{NEXT_PAGE}" class="next">{STATIC_PAGINATOR_NEXT}</a>
+	<!-- END: boton_siguiente -->
+	<!-- BEGIN: boton_siguiente_disabled -->
+	<span class="nextDisabled"></span>
+	<!-- END: boton_siguiente_disabled -->
+	<!-- BEGIN: boton_anterior -->
+	<a href="{PREVIOUS_PAGE}" class="prev">{STATIC_PAGINATOR_PREVIOUS}</a>
+	<!-- END: boton_anterior -->
+	<!-- BEGIN: boton_anterior_disabled -->
+	<span class="prevDisabled"></span>
+	<!-- END: boton_anterior_disabled -->
+</span>
+<!-- END: paginador_parte_superior -->
+<!-- BEGIN: paginador_bloque -->
+<ul>
+	<!-- BEGIN: item_paginador -->
+	<li><a href="{PAGINATOR.URL}" {PAGINATOR.CLASS}>{PAGINATOR.PAGE}</a></li>
+	<!-- END: item_paginador -->
+</ul>
+<!-- END: paginador_bloque -->
+<!-- BEGIN: paginador_parte_inferior -->
+<span class="ccats">
+	<!-- BEGIN: boton_siguiente -->
+	<a href="{NEXT_PAGE}"  class="next">{STATIC_PAGINATOR_NEXT}</a>
+	<!-- END: boton_siguiente -->
+	<!-- BEGIN: boton_siguiente_disabled -->
+	<span class="nextDisabled"></span>
+	<!-- END: boton_siguiente_disabled -->
+	<!-- BEGIN: boton_anterior -->
+	<a href="{PREVIOUS_PAGE}"  class="prev">{STATIC_PAGINATOR_PREVIOUS}</a>
+	<!-- END: boton_anterior -->
+	<!-- BEGIN: boton_anterior_disabled -->
+	<span class="prevDisabled"></span>
+	<!-- END: boton_anterior_disabled -->
+</span>
+<!-- END: paginador_parte_inferior -->

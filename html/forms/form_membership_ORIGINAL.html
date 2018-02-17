@@ -1,0 +1,230 @@
+<!-- BEGIN: contenido_principal -->
+<div id="form">
+	<p id="msgAlert" class="msgKO" style="display:none;"></p>
+	<form name="frmMembership" id="frmMembership" action="" method="post">
+		<input type="hidden" name="hdnIdModalidad" id="hdnIdModalidad" value="{USUARIO_MODALIDAD}">
+		<input type="hidden" name="hdnIdActividadProfesional" id="hdnIdActividadProfesional">
+		<input type="hidden" name="hdnIdSituacionLaboral" id="hdnIdSituacionLaboral">
+		<div class="boxForm">
+			<label class="textBoxForm">{STATIC_FORM_MEMBERSHIP_LEGEND_ACCOUNT_DETAILS}</label>
+			<table>
+				<tr>
+					<td>
+						<input type="text" class="inputText left required" name="txtEmailUser" value="{STATIC_FORM_MEMBERSHIP_EMAIL_USER}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_EMAIL_USER}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_EMAIL_USER}')" style="width:176px;">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="text" class="inputText left required" name="txtPasswordText" id="txtPasswordText"  value="{STATIC_FORM_MEMBERSHIP_PASSWORD_USER}" onfocus="limpiarInputPassword(this,'txtPassword')">
+						<input type="password" class="inputText left required"  id="txtPassword" name="txtPassword" onblur="restaurarInputPassword(this,'txtPasswordText','{STATIC_FORM_MEMBERSHIP_PASSWORD_USER}')"  style="display:none;" />
+						<input type="text" class="inputText left required" name="txtRePasswordText" id="txtRePasswordText"  value="{STATIC_FORM_MEMBERSHIP_CONFIRM_PASSWORD_USER}" onfocus="limpiarInputPassword(this,'txtRePassword')">
+						<input type="password" class="inputText left required"  id="txtRePassword" name="txtRePassword"  onblur="restaurarInputPassword(this,'txtRePasswordText','{STATIC_FORM_MEMBERSHIP_CONFIRM_PASSWORD_USER}')"  style="display:none;" />
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="boxForm">
+			<label class="textBoxForm">{STATIC_FORM_MEMBERSHIP_LEGEND_PERSONAL_DETAILS}</label>
+			<table>
+				<tr>
+					<td>
+						{COMBO_TITULOS}
+						<input type="text" class="inputText left required" name="txtNombre" value="{STATIC_FORM_MEMBERSHIP_FIRST_NAME}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_FIRST_NAME}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_FIRST_NAME}')" style="width:176px;">
+						<input type="text" class="inputText left required" name="txtApellidos" value="{STATIC_FORM_MEMBERSHIP_LAST_NAMES}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_LAST_NAMES}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_LAST_NAMES}')">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="text" class="inputText left" name="txtNacionalidad" value="{STATIC_FORM_MEMBERSHIP_NATIONALITY}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_NATIONALITY}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_NATIONALITY}')" style="width:260px;">
+						{COMBO_PAIS}
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="boxForm">
+			<label class="textBoxForm">{STATIC_FORM_MEMBERSHIP_LEGEND_ADDRESS}</label>
+			<table>
+				<tr>
+					<td>
+						<input type="text" class="inputText left" name="txtDireccion1" value="{STATIC_FORM_MEMBERSHIP_STREET_1}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_STREET_1}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_STREET_1}')">
+						<input type="text" class="inputText left" name="txtDireccion2" value="{STATIC_FORM_MEMBERSHIP_STREET_2}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_STREET_2}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_STREET_2}')">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="text" class="inputText left required" name="txtCiudad" value="{STATIC_FORM_MEMBERSHIP_TOWN_CITY}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_TOWN_CITY}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_TOWN_CITY}')">
+						<input type="text" class="inputText left" name="txtProvincia" value="{STATIC_FORM_MEMBERSHIP_PROVINCE}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_PROVINCE}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_PROVINCE}')">
+						<input type="text" class="inputText left" name="txtCp" value="{STATIC_FORM_MEMBERSHIP_POSTCODE}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_POSTCODE}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_POSTCODE}')" style="width:80px;">
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="boxForm">
+			<label class="textBoxForm">{STATIC_FORM_MEMBERSHIP_LEGEND_CONTACT_DETAILS}</label>
+			<table>
+				<tr>
+					<td>
+						<input type="text" class="inputText left required" name="txtEmail" value="{STATIC_FORM_MEMBERSHIP_EMAIL}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_EMAIL}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_EMAIL}')">
+						<input type="text" class="inputText left" name="txtTelefonoCasa" value="{STATIC_FORM_MEMBERSHIP_HOME_PHONE}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_HOME_PHONE}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_HOME_PHONE}')">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="text" class="inputText left" name="txtEmailAlternativo" value="{STATIC_FORM_MEMBERSHIP_ALTERNATIVE_EMAIL}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_ALTERNATIVE_EMAIL}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_ALTERNATIVE_EMAIL}')">
+						<input type="text" class="inputText left" name="txtTelefonoTrabajo" value="{STATIC_FORM_MEMBERSHIP_WORK_PHONE}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_WORK_PHONE}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_WORK_PHONE}')">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="text" class="inputText left" name="txtFax" value="{STATIC_FORM_MEMBERSHIP_FAX}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_FAX}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_FAX}')">
+						<input type="text" class="inputText left" name="txtTelefonoMobil" value="{STATIC_FORM_MEMBERSHIP_MOBILE_PHONE}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_MOBILE_PHONE}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_MOBILE_PHONE}')">
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="boxForm">
+			<label class="textBoxForm">{STATIC_FORM_RENEW_MEMBERSHIP_LEGEND_PROFESSIONAL_INFORMATION}</label>
+			<table>
+				<tr>
+					<td>
+						<div class="groupChk" id="containerProfessionalActivity">
+							<img style="float:left;" src="images/pictures/icons/icon.required.png"> &nbsp;{STATIC_FORM_MEMBERSHIP_YOUR_PROFESSION}<br>
+							<!-- BEGIN: item_actividad_profesional -->
+							<label class="inputChk left"><input type="checkbox" name="chk{ITEM_ACTIVIDAD_PROFESIONAL_NOMBRE_ELEMENTO}" value="{ITEM_ACTIVIDAD_PROFESIONAL_ID}"> {ITEM_ACTIVIDAD_PROFESIONAL_NOMBRE}</label>
+							<!-- END: item_actividad_profesional -->
+							<div class="clear"></div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="text" class="inputText" id="txtSpecifyOther" name="txtOtherSpecification" value="{STATIC_FORM_MEMBERSHIP_IF_OTHER_SPECIFY}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_IF_OTHER_SPECIFY}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_IF_OTHER_SPECIFY}')" style="width:155px;">
+						<input type="text" class="inputText" id="txtSpecifyStudy" name="txtStudySpecification" value="{STATIC_FORM_MEMBERSHIP_IF_STUDENT_SUBJECT}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_IF_STUDENT_SUBJECT}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_IF_STUDENT_SUBJECT}')" style="width:155px;">
+						<input type="text" class="inputText" name="txtProfesionQualificacion" value="{STATIC_FORM_MEMBERSHIP_DEGREES_QUALIFICATIONS}" onblur="restaurarInputValue(this,'{STATIC_FORM_MEMBERSHIP_DEGREES_QUALIFICATIONS}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_MEMBERSHIP_DEGREES_QUALIFICATIONS}')" style="width:155px;">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="groupChk" id="containerLaboralSituation">
+							{STATIC_FORM_MEMBERSHIP_WORK_SITUATION}<br>
+							<!-- BEGIN: item_situacion_laboral -->
+							<label class="inputChk left"><input type="checkbox" name="chkSituacion_{SITUACION_LABORAL_ID}" value="{SITUACION_LABORAL_ID}"> {SITUACION_LABORAL_NOMBRE}</label>
+							<!-- END: item_situacion_laboral -->
+							<div class="clear"></div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="boxForm">
+			<label class="textBoxForm">{STATIC_FORM_MEMBERSHIP_LEGEND_ADDITIONAL_INFORMATION}</label>
+			<table>
+				<tr>
+					<td>
+						{COMBO_ANYOS}
+						<div class="groupChk" style="margin-left:314px;">
+							{STATIC_FORM_MEMBERSHIP_SEX}<br>
+							<label class="inputChk left" style="width:90px;"><input type="radio" name="chkSex" value="1"> {STATIC_FORM_MEMBERSHIP_MALE}</label>
+							<label class="inputChk left" style="width:90px;"><input type="radio" name="chkSex" value="2"> {STATIC_FORM_MEMBERSHIP_FEMALE}</label>
+							<div class="clear"></div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<textarea class="inputText" name="txtSobreMet" onblur="restaurarTextAreaValue(this,'{STATIC_FORM_MEMBERSHIP_HOW_DID_YOU_HEAR_ABOUT_MET}')" onfocus="limpiarTextAreaValue(this,'{STATIC_FORM_MEMBERSHIP_HOW_DID_YOU_HEAR_ABOUT_MET}')">{STATIC_FORM_MEMBERSHIP_HOW_DID_YOU_HEAR_ABOUT_MET}</textarea>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="boxForm">
+			<label class="textBoxForm">{STATIC_FORM_MEMBERSHIP_LEGEND_BILLING_INFORMATION}</label>
+			<table>
+				<tr>
+					<td colspan="2" style="display:none;padding-left:10px;"><input type="checkbox" checked="checked" name="chkInvoice" id="chkInvoice" onclick="gestionarBloqueInvoice(this)"> {STATIC_FORM_MEMBERSHIP_NEED_INVOICE}</td>
+				</tr>
+				<tr class="bloqueInvoice">
+					<td>
+						<input type="text" class="inputText required left" name="txtFacturacionNifCliente" value="{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}')">
+					</td>
+					<td>
+						<input type="text" class="inputText required left" name="txtFacturacionNombreCliente" value="{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}')">
+					</td>
+				</tr>
+				<tr class="bloqueInvoice">
+					<td>
+						<input type="text" class="inputText left" name="txtFacturacionNombreEmpresa" value="{STATIC_FORM_PROFILE_BILLING_NAME_COMPANY}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_NAME_COMPANY}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_NAME_COMPANY}')">
+					</td>
+					<td>
+						<input type="text" class="inputText required left" name="txtFacturacionDireccion" value="{STATIC_FORM_PROFILE_BILLING_ADDRESS}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_ADDRESS}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_ADDRESS}')">
+					</td>
+				</tr>
+				<tr class="bloqueInvoice">
+					<td>
+						<input type="text" class="inputText required left" name="txtFacturacionCodigoPostal" value="{STATIC_FORM_PROFILE_BILLING_ZIPCODE}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_ZIPCODE}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_ZIPCODE}')">
+					</td>
+					<td>
+						<input type="text" class="inputText required left" name="txtFacturacionCiudad" value="{STATIC_FORM_PROFILE_BILLING_CITY}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_CITY}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_CITY}')">
+					</td>
+				</tr>
+				<tr class="bloqueInvoice">
+					<td>
+						<input type="text" class="inputText left" name="txtFacturacionProvincia" value="{STATIC_FORM_PROFILE_BILLING_PROVINCE}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_PROVINCE}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_PROVINCE}')">
+					</td>
+					<td>
+						<input type="text" class="inputText required left" name="txtFacturacionPais" value="{STATIC_FORM_PROFILE_BILLING_COUNTRY}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_COUNTRY}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_COUNTRY}')">
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="boxForm">
+			<label class="textBoxForm">{STATIC_FORM_MEMBERSHIP_LEGEND_PREFERRED_METHOD_OF_PAYMENT}</label>
+			<table>
+				<tr>
+					<td style="padding-left:12px;">
+						<p>{STATIC_FORM_MEMBERSHIP_MEMBERSHIP_COSTS_30}</p>
+					</td>
+				</tr>
+				<tr>
+					<td style="padding-left:12px;">
+						{STATIC_FORM_MEMBERSHIP_SPECIAL_FEE}<br>
+					</td>
+				</tr>
+				<tr>
+					<td>{COMBO_SITUACION_ADICIONAL}</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="groupChk">
+							<img src="../../images/pictures/icons/icon.required.png" style="vertical-align:text-top;">&nbsp;<label>{STATIC_FORM_MEMBERSHIP_PAYMENT_METHOD}</label><br>
+							<label class="inputChk left"><input type="radio" name="rdMetodoPago" value="1"> {STATIC_FORM_MEMBERSHIP_BANK_TRANSFER}</label>
+							<label class="inputChk left"><input type="radio" name="rdMetodoPago" value="2"> {STATIC_FORM_MEMBERSHIP_PAYPAL}</label>
+							<label class="inputChk left"><input type="radio" name="rdMetodoPago" value="4"> {STATIC_FORM_MEMBERSHIP_DIRECT_DEBIT_SPAIN}</label>
+							<div class="clear"></div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td style="padding-left:12px;">
+						<p>{STATIC_FORM_MEMBERSHIP_PAYMENT_METHOD_TXT_1}</p>
+						<p>{STATIC_FORM_MEMBERSHIP_PAYMENT_METHOD_TXT_2}</p>
+					</td>
+				</tr>
+			</table>
+		</div>
+        <div class="boxForm">
+			<label class="textBoxForm">{STATIC_FORM_MEMBERSHIP_LEGEND_PRIVACY}</label>
+			<table>
+				<tr>
+					<td style="padding-left:20px;">
+						<img src="../../images/pictures/icons/icon.required.png" style="vertical-align:top;"><input type="checkbox" name="chkPrivacy" class="required">&nbsp;{STATIC_FORM_MEMBERSHIP_PRIVACY_NOTE}
+					</td>
+				</tr>
+			</table>
+        </div>
+		<input type="button" id="btnSendForm" class="right" value="{STATIC_FORM_MEMBERSHIP_REGISTER}" onclick="validarFormularioMembership()">
+		<div class="clear"></div>
+	</form>
+	<div id="resultadoInscripcion" style="display:none;"></div>
+</div>
+<!-- END: contenido_principal -->

@@ -1,0 +1,102 @@
+<!-- BEGIN: contenido_principal -->
+<html>
+	<head>
+		<style>
+			.container{
+				width:760px;
+				font-size:12px;	
+				font-family:Arial;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<table border="0" cellspacing="0" cellpadding="0" style="width:760px;">
+				<tr>
+					<td style="width:50%;">
+						<img src="images/pictures/met.logo.png" />
+					</td>
+					<td style="width:50%;vertical-align:middle;font-size:20px;font-weight:bold;text-align:center;">
+						{INVOICE_PROFORMA} {STATIC_INVOICE_PDF_TITLE_INVOICE}
+					</td>
+				</tr>
+				<tr>
+					<td style="width:50%;padding-top:50px;">
+						{STATIC_INVOICE_PDF_MET_ADDRESS}
+					</td>
+					<td style="width:50%;padding-top:30px;">
+						<table border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td><strong>{STATIC_INVOICE_PDF_DATE}</strong>:</td>
+								<td>{INVOICE_PDF_DATE_VALUE}</td>
+							</tr>
+							<tr>
+								<td><strong>{STATIC_INVOICE_PDF_INVOICE_NUMBER}</strong>:</td>
+								<td>{INVOICE_PDF_INVOICE_NUMBER_VALUE}</td>
+							</tr>
+							<tr>
+								<td><strong>{STATIC_INVOICE_PDF_SUPPLIER_CIF}</strong>:</td>
+								<td>{STATIC_INVOICE_PDF_SUPPLIER_CIF_VALUE}</td>
+							</tr>
+							<tr>
+								<td><strong>{STATIC_INVOICE_PDF_CUSTOMER_CIF}</strong>:</td>
+								<td>{INVOICE_PDF_CUSTOMER_CIF_VALUE}</td>
+							</tr>
+							<tr>
+								<td><strong>{STATIC_INVOICE_PDF_BILLING_ADDRESS}</strong>:</td>
+								<td>
+									{INVOICE_PDF_BILLING_ADDRESS_VALUE}
+								</td>
+							</tr>
+							<tr>
+								<td><strong>{STATIC_INVOICE_PDF_PAYMENT_RECEIVED}</strong>:</td>
+								<td>{INVOICE_PDF_PAYMENT_RECEIVED_VALUE}</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+			<div style="margin-top:50px;">
+				<table border="0" cellspacing="0" cellpadding="0" style="width:100%;">
+					<tr style="background-color:#dcdcdc;">
+						<td style="width:80%;padding:5px;border:1px solid #CCC;">{STATIC_INVOICE_PDF_ITEMS_TITLE}</td>
+						<td style="width:20%;padding:5px;text-align:right;border-top:1px solid #CCC;border-right:1px solid #bcbcbc;border-bottom:1px solid #bcbcbc;">{STATIC_INVOICE_PDF_AMOUNT_TITLE}</td>
+					</tr>
+					<!-- BEGIN: item_linea_factura -->
+					<tr>
+						<td style="width:80%;padding:5px;border-left:1px solid #bcbcbc;border-right:1px solid #bcbcbc;border-bottom:1px solid #bcbcbc;{ESTILO_CONCRETO}">{INVOICE_PDF_ITEMS_TITLE_VALUE}</td>
+						<td style="width:20%;padding:5px;text-align:right;border-right:1px solid #bcbcbc;border-bottom:1px solid #bcbcbc;">{INVOICE_PDF_AMOUNT_TITLE_VALUE}</td>
+					</tr>
+					<!-- END: item_linea_factura -->
+					<tr>
+						<td style="width:80%;border-right:1px solid #bcbcbc;">
+							<div style="position:relative">
+								<div style="position:absolute;padding:10px;">{STATIC_INVOICE_PDF_BANK_DETAIL}</div>
+							</div>
+						</td>
+						<td style="width:20%;background-color:#dcdcdc;border-right:1px solid #bcbcbc;"></td>
+					</tr>
+					<tr>
+						<td style="width:80%;text-align:right;border-right:1px solid #bcbcbc;padding:5px;font-weight:bold;">
+							{STATIC_INVOICE_PDF_SUBTOTAL_TITLE}
+						</td>
+						<td style="width:20%;border-right:1px solid #bcbcbc;border-bottom:1px solid #bcbcbc;background:#dcdcdc;padding:5px;text-align:right;">{INVOICE_PDF_AMOUNT_TITLE_VALUE}</td>
+					</tr>
+					<tr>
+						<td style="width:80%;text-align:right;border-right:1px solid #bcbcbc;padding:5px;font-weight:bold;">{STATIC_INVOICE_PDF_OTHERS_TITLE}</td>
+						<td style="width:20%;border-right:1px solid #bcbcbc;border-bottom:1px solid #bcbcbc;"></td>
+					</tr>
+					<tr>
+						<td style="width:80%;text-align:right;border-right:1px solid #bcbcbc;padding:5px;font-weight:bold;">{STATIC_INVOICE_PDF_VAT_TITLE}</td>
+						<td style="width:20%;border-right:1px solid #bcbcbc;border-bottom:1px solid #bcbcbc;padding:5px;text-align:right;background-color:#dcdcdc;">{STATIC_INVOICE_PDF_VAT_VALUE}</td>
+					</tr>
+					<tr>
+						<td style="width:80%;text-align:right;padding:5px;border-right:1px solid #bcbcbc;font-weight:bold;">{STATIC_INVOICE_PDF_TOTAL_TITLE}</td>
+						<td style="width:20%;text-align:right;padding:5px;border-bottom:1px solid #bcbcbc;border-right:1px solid #bcbcbc;">{INVOICE_PDF_AMOUNT_TITLE_VALUE}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</body>
+</html>
+<!-- END: contenido_principal -->
