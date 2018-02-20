@@ -30,10 +30,8 @@
     <link rel="stylesheet" href="css/section/{SECTION_FILE_CSS}" type="text/css" media="screen">
 
     <!-- Jquery libraries -->
-    <!-- <script src="scripts/js/jquery-1.9.1.min.js"></script> -->
-    <script src="scripts/js/jquery-3.2.1.min.js"></script>
-    <!-- <script src="scripts/js/jquery.min.js" ></script> -->
-    <script src="scripts/js/jquery-migrate-1.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-3.0.1.min.js"></script>
     <script src="scripts/js/jquery.blockUI.js" ></script>
 
     <!-- Bootstrap -->
@@ -1017,7 +1015,7 @@
         //ON PAGE LOAD, call functions
         $( document ).ready(function() {
                 finalPrice();
-                addPlaceholderSupport();
+                //addPlaceholderSupport();
                 reloadCaptchaConference();
                 clearCountryAlert();
                 updatePriceSister();
@@ -1314,19 +1312,28 @@
     </script>
 
 </head>
-<body class="container-fluid wrapper">
+<body>
+<div id="backgroundImage"></div>
+<div id="backgroundBlue" class="d-none d-lg-block"></div>
+<div class="container-fluid wrapper">
 <div class="row loginLink">
     <div class="col-12 d-md-none w-100 bg-dark py-2">
         <a href="#loginForm" class="loginLink" style="margin-left:20px;color:white;font-size:100%;">Login</a>
     </div>
 </div>
+
+<div class="d-none d-md-block">
+    <a href="/met"><img src="images/pictures/logos/logo.met.png" width="244" height="125" alt="MET logo" style="margin-top: 3em;"></a>
+</div>
+
 <div class="row topnav">
     <div class="col-12">
-        <nav class="navbar navbar-expand-md navbar-light">
+        <nav class="navbar navbar-expand-md navbar-dark navbar-custom">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="{CURRENT_DOMAIN}" style="padding-left: 0;">
+            <a class="navbar-brand d-md-none" href="{CURRENT_DOMAIN}" style="padding-left: 0;">
+                <!--<img src="images/pictures/logos/logo.met.png" width="180" height="92" alt="">-->
                 <img src="images/pictures/logos/MET_color_transparent_180x92.png" width="180" height="92" alt="">
             </a>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -1467,8 +1474,7 @@
 </script>
 
 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+</div>
 </body>
 </html>
 <!-- END: contenido_principal -->

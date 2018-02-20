@@ -54,8 +54,8 @@
 #feedback_carousel > ul li {
     display: inline-block;
     float: left;
-    margin: 10px 80px 10px 0px;
-    padding: 0px 0px 0px 10px;
+    margin: 10px 80px 10px 0;
+    padding: 0 0 0 10px;
     transition: margin-left 1.0s ease;
 }
 .js-Carousel .js-Carousel-dots {
@@ -69,13 +69,11 @@
 }
 
 #feedback {
-    border: 0px solid darkgreen;
-    background-color: #f8f9fa;
-    color: cornflowerblue;
+    color: #008080;
     width:90%;
     height: 100%;
     padding: 6px 12px;
-    margin: 0px auto 20px;
+    margin: 0 auto 20px;
     text-align: center;
 }
 .carousel-inner {

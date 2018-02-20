@@ -5,20 +5,15 @@
 }
 h2.titleSection {
 	color: #8B1513;
-	font: 700 24px/24px 'Advent Pro', sans-serif;
-	margin: 0px 0px 15px;
+	margin: 0 0 15px;
 }
 h3.subTitleSection {
 	color: #348A88;
-	font: 400 20px/16px 'Advent Pro', sans-serif;
-	margin: 15px 0px;
+	margin: 15px 0;
 }
 
 #frmSearchMember fieldset {
 	margin-top: 30px;
-}
-#frmSearchMember select, #frmSearchMember input {
-	width: 100%;
 }
 
 #lstResultsMemberDirectory .itemMember {
@@ -26,14 +21,17 @@ h3.subTitleSection {
 	width: 318px;
 	border: 1px solid #B2B2B2;
 	border-radius: 8px;
+	margin-top: 10px;
+	height: 96px;
 }
 #lstResultsMemberDirectory .headshot {
 }
 #lstResultsMemberDirectory .headshot img {
-	margin: 5px 0px 0px 5px;
+	height: 100%;
+	margin: 5px 0 0 5px;
 }
 #lstResultsMemberDirectory .description {
-	margin: 8px 0px 4px 0px;
+	margin: 8px 0 4px -15px;
 }
 #lstResultsMemberDirectory .description label {
 	display: block;
@@ -44,48 +42,38 @@ h3.subTitleSection {
 #lstResultsMemberDirectory .nameMember a {
 	display: block;
 	padding-right: 20px;
-	margin-bottom: 6px;
-	font-weight: normal;
-	font-size: 1em;
+	margin-bottom: 8px;
+	font-size: 1.2em;
+	color:#8B1513;
+	line-height: 0.9em;
 }
-#lstResultsMemberDirectory .mailMember {
+#lstResultsMemberDirectory label {
+	line-height: 1.1em;
+	margin-bottom: 0;
+}
+label.mailMember {
 	background: transparent url('../../images/pictures/icons/icon.mail.png') no-repeat scroll 0 50%;
 }
-#lstResultsMemberDirectory .webMember {
+label.mailMember a {
+	font-size:70%;
+	margin-left: 20px;
+	width: auto;
+	vertical-align: middle;
+}
+label.webMember {
 	background: transparent url('../../images/pictures/icons/icon.web.png') no-repeat scroll 0 50%;
     background-position: bottom left;
+}
+label.webMember a {
+	font-size:70%;
+	margin-left: 20px;
+
 }
 
 
 
 /* form */
 #form #btnSendForm { padding:4px 10px; margin:4px 10px; }
-
-#lstResultsMemberDirectory .nameMember {
-
-}
-#lstResultsMemberDirectory .nameMember a {
-	color:#8B1513;
-    line-height: 0.9em;
-}
-#lstResultsMemberDirectory .itemMember {
-	margin-top: 10px;
-	height: 96px;
-}
-#lstResultsMemberDirectory .itemMember label {
-    height: 20px;
-}
-#lstResultsMemberDirectory .itemMember label.mailMember a {
-	font-size:70%;
-	margin-left: 24px;
-	width: auto;
-    vertical-align: super;
-}
-#lstResultsMemberDirectory .itemMember label.webMember a {
-	font-size:70%;
-	margin-left: 24px;
-}
-
 
 #lstResultsMemberDirectory .itemMember .more {
 	position: absolute;

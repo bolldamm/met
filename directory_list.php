@@ -129,9 +129,9 @@ require "includes/load_main_components.inc.php";
 			$urlBusqueda .= "&ci=".$_GET["ci"];
 			$esCiudad=true;
 		}
-	}else{
+	}/*else{
 		$subPlantilla->assign("CITY_VALUE", STATIC_DIRECTORY_MEMBER_DATABASE_SEARCH_CITY);
-	}
+	}*/
 	
 	//Free text
 	if(isset($_GET["t"]) && trim($_GET["t"]) != "" && $_GET["t"] != STATIC_DIRECTORY_MEMBER_DATABASE_SEARCH_TEXT_SEARCH) {
@@ -141,9 +141,9 @@ require "includes/load_main_components.inc.php";
 			$urlBusqueda .= "&t=".$_GET["t"];
 			$esDescripcion=true;
 		}
-	}else{
+	}/*else{
 		$subPlantilla->assign("QUERY_VALUE", STATIC_DIRECTORY_MEMBER_DATABASE_SEARCH_TEXT_SEARCH);
-	}
+	}*/
 
 	//Whole word only	
 	if(isset($_GET["w"]) && $_GET["w"]=="on"){
@@ -250,19 +250,19 @@ require "includes/load_main_components.inc.php";
 	$subPlantilla->assign("MENU_ID", $idMenu);
 	
 	//Professional activities dropdown
-	$subPlantilla->assign("COMBO_ACTIVIDAD_PROFESIONAL", generalUtils::construirCombo($db, "CALL ed_sp_web_usuario_web_actividad_profesional_obtener_combo(".$_SESSION["id_idioma"].")", "p", "cmbActividadProfesional", $idActividadProfesional, "descripcion", "id_actividad_profesional", STATIC_DIRECTORY_MEMBER_DATABASE_SEARCH_PROFESSIONAL_ACTIVITY, 0, "class='inputText left'"));
+	$subPlantilla->assign("COMBO_ACTIVIDAD_PROFESIONAL", generalUtils::construirCombo($db, "CALL ed_sp_web_usuario_web_actividad_profesional_obtener_combo(".$_SESSION["id_idioma"].")", "p", "cmbActividadProfesional", $idActividadProfesional, "descripcion", "id_actividad_profesional", STATIC_DIRECTORY_MEMBER_DATABASE_SEARCH_PROFESSIONAL_ACTIVITY, 0, "class='form-control'"));
 	
 	//Areas of expertise dropdown   
-    $subPlantilla->assign("COMBO_AREAS_OF_EXPERTISE", generalUtils::construirCombo($db, "CALL ed_sp_get_areas_of_expertise(".$_SESSION["id_idioma"].")", "ae", "cmbAreas", $areaExpertise, "nombre", "id_area", STATIC_DIRECTORY_MEMBER_DATABASE_SEARCH_AREAS_OF_EXPERTISE, 0, "class='inputText left'"));
+    $subPlantilla->assign("COMBO_AREAS_OF_EXPERTISE", generalUtils::construirCombo($db, "CALL ed_sp_get_areas_of_expertise(".$_SESSION["id_idioma"].")", "ae", "cmbAreas", $areaExpertise, "nombre", "id_area", STATIC_DIRECTORY_MEMBER_DATABASE_SEARCH_AREAS_OF_EXPERTISE, 0, "class='form-control'"));
 
 	//Source languages dropdown   
-    $subPlantilla->assign("COMBO_SOURCE_LANGUAGES", generalUtils::construirCombo($db, "CALL ed_sp_get_source_languages(".$idMenuTipo.",".$_SESSION["id_idioma"].")", "so", "cmbSrc", $sourceLanguage, "nombre", "id_working_language", STATIC_DIRECTORY_MEMBER_DATABASE_SEARCH_SOURCE_LANGUAGE, 0, "class='inputText left'"));
+    $subPlantilla->assign("COMBO_SOURCE_LANGUAGES", generalUtils::construirCombo($db, "CALL ed_sp_get_source_languages(".$idMenuTipo.",".$_SESSION["id_idioma"].")", "so", "cmbSrc", $sourceLanguage, "nombre", "id_working_language", STATIC_DIRECTORY_MEMBER_DATABASE_SEARCH_SOURCE_LANGUAGE, 0, "class='form-control'"));
 
 	//Target languages dropdown   
-    $subPlantilla->assign("COMBO_TARGET_LANGUAGES", generalUtils::construirCombo($db, "CALL ed_sp_get_target_languages(".$idMenuTipo.",".$_SESSION["id_idioma"].")", "ta", "cmbTgt", $targetLanguage, "nombre", "id_working_language", STATIC_DIRECTORY_MEMBER_DATABASE_SEARCH_TARGET_LANGUAGE, 0, "class='inputText left'"));
+    $subPlantilla->assign("COMBO_TARGET_LANGUAGES", generalUtils::construirCombo($db, "CALL ed_sp_get_target_languages(".$idMenuTipo.",".$_SESSION["id_idioma"].")", "ta", "cmbTgt", $targetLanguage, "nombre", "id_working_language", STATIC_DIRECTORY_MEMBER_DATABASE_SEARCH_TARGET_LANGUAGE, 0, "class='form-control'"));
 
 	//Countries dropdown
-	$subPlantilla->assign("COMBO_PAISES", generalUtils::construirCombo($db, "CALL ed_sp_web_usuario_web_pais_obtener_combo(".$idMenuTipo.")", "c", "cmbPais", $idPais, "nombre_original", "id_pais", STATIC_DIRECTORY_MEMBER_DATABASE_SEARCH_COUNTRY, 0, "class='inputText left'"));
+	$subPlantilla->assign("COMBO_PAISES", generalUtils::construirCombo($db, "CALL ed_sp_web_usuario_web_pais_obtener_combo(".$idMenuTipo.")", "c", "cmbPais", $idPais, "nombre_original", "id_pais", STATIC_DIRECTORY_MEMBER_DATABASE_SEARCH_COUNTRY, 0, "class='form-control'"));
 	
         
     //Cargamos el breadcrumb

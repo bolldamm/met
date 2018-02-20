@@ -3,42 +3,49 @@
 	{CONTENIDO_DESCRIPCION}
 		<form name="frmSearchMember" id="frmSearchMember" action="directory_list.php" method="get">
 			<input type="hidden" value="{MENU_ID}" name="menu">
-			<fieldset class="form-group">
+			<fieldset>
 				<div class="form-row">
-					<div class="col-12 col-md-6 rowspacer">
+					<div class="col-12 col-md-6">
 						{COMBO_ACTIVIDAD_PROFESIONAL}
 					</div>
-					<div class="col-12 col-md-6 rowspacer">
+					<div class="col-12 col-md-6">
 						{COMBO_AREAS_OF_EXPERTISE}
 					</div>
 				</div>
 				<div class="form-row">
-					<div class="col-12 col-md-6 rowspacer">
+					<div class="col-12 col-md-6">
 						{COMBO_SOURCE_LANGUAGES}
 					</div>
-					<div class="col-12 col-md-6 rowspacer">
+					<div class="col-12 col-md-6">
 						{COMBO_TARGET_LANGUAGES}
 					</div>
 				</div>
 				<div class="form-row">
-					<div class="col-12 col-md-6 rowspacer">
+					<div class="col-12 col-md-6">
 						{COMBO_PAISES}
 					</div>
-					<div class="col-12 col-md-6 rowspacer">
-						<input type="text" class="inputText" value="{CITY_VALUE}" name="ci" style="width:242px;" onblur="restaurarInputValue(this,'{STATIC_DIRECTORY_MEMBER_DATABASE_SEARCH_CITY}')" onfocus="limpiarInputValue(this,'{STATIC_DIRECTORY_MEMBER_DATABASE_SEARCH_CITY}')">
+					<div class="col-12 col-md-6">
+						<input type="text" class="form-control" value="{CITY_VALUE}" name="ci" placeholder="{STATIC_DIRECTORY_MEMBER_DATABASE_SEARCH_CITY}">
 					</div>
 				</div>
 				<div class="form-row">
-					<div class="col-12 col-md-6 rowspacer">
-						<input type="text" class="inputText right" value="{QUERY_VALUE}" name="t" onblur="restaurarInputValue(this,'{STATIC_DIRECTORY_MEMBER_DATABASE_SEARCH_TEXT_SEARCH}')" onfocus="limpiarInputValue(this,'{STATIC_DIRECTORY_MEMBER_DATABASE_SEARCH_TEXT_SEARCH}')">
-					</div>
-					<div class="col-12 col-md-6 rowspacer">
-						<input type="checkbox" name="w" {CHECKED_WHOLE_WORD} style="width:10%;">{STATIC_DIRECTORY_MEMBER_WHOLE_WORD}
+					<div class="col-12 col-md-6">
+						<input type="text" class="form-control" value="{QUERY_VALUE}" name="t" placeholder="{STATIC_DIRECTORY_MEMBER_DATABASE_SEARCH_TEXT_SEARCH}">
 					</div>
 				</div>
 				<div class="form-row">
-					<div class="col-12 rowspacer">
-						<input type="submit" id="btnSendForm" class="right" value="{STATIC_FORM_NEW_SEARCH}">
+					<div class="col-12 col-md-6">
+						<div class="form-group">
+							<div class="form-check">
+								<input class="form-check-input align-middle" type="checkbox" name="w" id="wholeWord" {CHECKED_WHOLE_WORD}>
+								<label class="form-check-label align-middle" for="wholeWord">
+									{STATIC_DIRECTORY_MEMBER_WHOLE_WORD}
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-md-6">
+						<button type="submit" id="btnSendForm" class="btn btn-primary float-right">{STATIC_FORM_NEW_SEARCH}</button>
 					</div>
 				</div>
 			</fieldset>
@@ -50,12 +57,12 @@
 				<div class="itemMember">
 					<div class="row">
 						<div class="col-4 headshot">
-							<a href="{ITEM_MIEMBRO_URL}"><img src="{ITEM_MIEMBRO_IMAGEN}" class="img-fluid"></a>
+							<a href="{ITEM_MIEMBRO_URL}"><img src="{ITEM_MIEMBRO_IMAGEN}" class="img-fluid align-middle"></a>
 						</div>
 						<div class="col-8 description">
-							<h3 class="nameMember"><a href="{ITEM_MIEMBRO_URL}">{ITEM_MIEMBRO_NOMBRE}</a></h3>
+							<div class="nameMember"><a href="{ITEM_MIEMBRO_URL}">{ITEM_MIEMBRO_NOMBRE}</a></div>
 							<!-- BEGIN: mail -->
-                          <label class="mailMember">{ITEM_MIEMBRO_MAIL}</label>
+                          	<label class="mailMember">{ITEM_MIEMBRO_MAIL}</label>
 							<!-- END: mail -->
 							<!-- BEGIN: web -->
 							<label class="webMember"><a href="{ITEM_MIEMBRO_WEB}" target="_blank">{ITEM_MIEMBRO_WEB_CORTAR}</a></label>
