@@ -85,7 +85,12 @@ h6.newsTitle {
     width:2em;
     height:2em;
 }
-
+.nav-item a {
+    border-right: 1px solid #8B1513;
+}
+.nav-item a#last {
+    border-right:none;
+}
 .dropdown {
     /*background-color: #1d4482;*/
     margin: 1px 1px;

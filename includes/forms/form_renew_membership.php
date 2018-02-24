@@ -10,7 +10,7 @@
 	if($_SESSION["met_user"]["id_modalidad"]==MODALIDAD_USUARIO_INDIVIDUAL){
 		
 	//Combo situacion adicional
-	$plantillaFormulario->assign("COMBO_SITUACION_ADICIONAL", generalUtils::construirCombo($db, "CALL ed_sp_web_situacion_adicional_obtener_combo(".$_SESSION["id_idioma"].")", "cmbSituacionAdicional", "cmbSituacionAdicional", $_SESSION["met_user"]["id_situacion_adicional"], "nombre", "id_situacion_adicional", STATIC_GLOBAL_COMBO_DEFAULT, -1, 'class="inputText"' ));
+	$plantillaFormulario->assign("COMBO_SITUACION_ADICIONAL", generalUtils::construirCombo($db, "CALL ed_sp_web_situacion_adicional_obtener_combo(".$_SESSION["id_idioma"].")", "cmbSituacionAdicional", "cmbSituacionAdicional", $_SESSION["met_user"]["id_situacion_adicional"], "nombre", "id_situacion_adicional", STATIC_GLOBAL_COMBO_DEFAULT, -1, 'class="form-control"' ));
 		
 		
 		$plantillaFormulario->parse("contenido_principal.bloque_formulario.bloque_individual");
@@ -29,7 +29,8 @@
 	$plantillaFormulario->assign("DISPLAY_BLOQUE_INVOICE","style='display:none'");
 
 
-	//Valores por defecto
+	//Valores por defecto NOT NEEDED
+/*
 	$plantillaFormulario->assign("FORM_PROFILE_BILLING_CUSTOMER_NIF",STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF);
 	$plantillaFormulario->assign("FORM_PROFILE_BILLING_NAME_CUSTOMER",STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER);
 	$plantillaFormulario->assign("FORM_PROFILE_BILLING_NAME_COMPANY",STATIC_FORM_PROFILE_BILLING_NAME_COMPANY);
@@ -38,7 +39,7 @@
 	$plantillaFormulario->assign("FORM_PROFILE_BILLING_CITY",STATIC_FORM_PROFILE_BILLING_CITY);
 	$plantillaFormulario->assign("FORM_PROFILE_BILLING_PROVINCE",STATIC_FORM_PROFILE_BILLING_PROVINCE);
 	$plantillaFormulario->assign("FORM_PROFILE_BILLING_COUNTRY",STATIC_FORM_PROFILE_BILLING_COUNTRY);
-	
+*/
 	
 	//Obtener los datos por defecto
 	$resultadoUsuarioConcreto=$db->callProcedure("CALL ed_sp_web_usuario_web_datos_factura_obtener(".$_SESSION["met_user"]["id"].")");
@@ -82,5 +83,5 @@
 	/**
 	 * Realizamos todos los parse realcionados con este apartado
 	 */
-	$plantilla->parse("contenido_principal.validar_membership_renew");
+	$plantilla->parse("contenido_principal.validate_renew_membership_form");
 ?>

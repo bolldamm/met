@@ -1,0 +1,98 @@
+<!-- BEGIN: contenido_principal -->
+<div id="form">
+    <!-- BEGIN: bloque_formulario_caducado -->
+    {STATIC_RENEW_MEMBERSHIP_FORM_CADUCITY_1} {FECHA_INSCRIPCION} {STATIC_RENEW_MEMBERSHIP_FORM_CADUCITY_2}
+    <!-- END: bloque_formulario_caducado -->
+    <!-- BEGIN: bloque_formulario -->
+    <p id="msgAlert" class="msgKO" style="display:none;"></p>
+    <form name="frmMembershipRenew" id="frmMembership" action="" method="post">
+        <div class="boxForm">
+            <label class="textBoxForm">{STATIC_FORM_MEMBERSHIP_LEGEND_BILLING_INFORMATION}</label>
+            <table>
+                <tr>
+                    <td style="display:none" colspan="2" style="padding-left:10px;"><input checked="checked" disabled="" type="checkbox"  name="chkInvoice" id="chkInvoice" onclick="gestionarBloqueInvoice(this)"> {STATIC_FORM_MEMBERSHIP_NEED_INVOICE}</td>
+                </tr>
+                <tr class="bloqueInvoice">
+                    <td>
+                        <input type="text" class="inputText required left" name="txtFacturacionNifCliente" value="{FORM_PROFILE_BILLING_CUSTOMER_NIF}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}')">
+                    </td>
+                    <td>
+                        <input type="text" class="inputText required left" name="txtFacturacionNombreCliente" value="{FORM_PROFILE_BILLING_NAME_CUSTOMER}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}')">
+                    </td>
+                </tr>
+                <tr class="bloqueInvoice">
+                    <td>
+                        <input type="text" class="inputText left" name="txtFacturacionNombreEmpresa" value="{FORM_PROFILE_BILLING_NAME_COMPANY}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_NAME_COMPANY}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_NAME_COMPANY}')">
+                    </td>
+                    <td>
+                        <input type="text" class="inputText required left" name="txtFacturacionDireccion" value="{FORM_PROFILE_BILLING_ADDRESS}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_ADDRESS}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_ADDRESS}')">
+                    </td>
+                </tr>
+                <tr class="bloqueInvoice">
+                    <td>
+                        <input type="text" class="inputText required left" name="txtFacturacionCodigoPostal" value="{FORM_PROFILE_BILLING_ZIPCODE}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_ZIPCODE}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_ZIPCODE}')">
+                    </td>
+                    <td>
+                        <input type="text" class="inputText required left" name="txtFacturacionCiudad" value="{FORM_PROFILE_BILLING_CITY}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_CITY}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_CITY}')">
+                    </td>
+                </tr>
+                <tr class="bloqueInvoice">
+                    <td>
+                        <input type="text" class="inputText left" name="txtFacturacionProvincia" value="{FORM_PROFILE_BILLING_PROVINCE}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_PROVINCE}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_PROVINCE}')">
+                    </td>
+                    <td>
+                        <input type="text" class="inputText required left" name="txtFacturacionPais" value="{FORM_PROFILE_BILLING_COUNTRY}" onblur="restaurarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_COUNTRY}')" onfocus="limpiarInputValue(this,'{STATIC_FORM_PROFILE_BILLING_COUNTRY}')">
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="boxForm">
+            <label class="textBoxForm">{STATIC_FORM_RENEW_MEMBERSHIP_LEGEND_RENEW_MEMBERSHIP}</label>
+            <table>
+                <tr>
+                    <td style="padding-left:12px;">{STATIC_FORM_RENEW_MEMBERSHIP_RENEW_MEMBERSHIP_TEXT}</td>
+                </tr>
+                <!-- BEGIN: bloque_individual -->
+                <tr>
+                    <td style="padding-left:12px;">
+                        <p>{STATIC_FORM_MEMBERSHIP_MEMBERSHIP_COSTS_30}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-left:12px;">
+                        {STATIC_FORM_MEMBERSHIP_SPECIAL_FEE}<br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>{COMBO_SITUACION_ADICIONAL}</td>
+                </tr>
+                <!-- END: bloque_individual -->
+                <!-- BEGIN: bloque_institucion -->
+                <tr>
+                    <td style="padding-left:12px;">
+                        <p>
+                            {LITERAL_PRECIO_RENOVACION}
+                        </p>
+                    </td>
+                </tr>
+                <!-- END: bloque_institucion -->
+                <tr>
+                    <td>
+                        <div class="groupChk">
+                            <label class="required">{STATIC_FORM_MEMBERSHIP_PAYMENT_METHOD}</label><br>
+                            <label class="inputChk left"><input type="radio" name="rdMetodoPago" value="1"> {STATIC_FORM_MEMBERSHIP_BANK_TRANSFER}</label>
+                            <label class="inputChk left"><input type="radio" name="rdMetodoPago" value="2"> {STATIC_FORM_MEMBERSHIP_PAYPAL}</label>
+                            <label class="inputChk left"><input type="radio" name="rdMetodoPago" value="4"> {STATIC_FORM_MEMBERSHIP_DIRECT_DEBIT_SPAIN}</label>
+                            <div class="clear"></div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <input type="button" id="btnSendForm" class="right" value="{STATIC_FORM_RENEW_MEMBERSHIP_RENEW}" onclick="validarFormularioMembershipRenew()">
+        <div class="clear"></div>
+    </form>
+    <div id="resultadoInscripcion" style="display:none;"></div>
+    <!-- END: bloque_formulario -->
+</div>
+<!-- END: contenido_principal -->

@@ -1,4 +1,5 @@
 <!-- BEGIN: contenido_principal -->
+<p id="msgAlert" class="msgKO" style="display:none;"></p>
 <form class="needs-validation frmConferenceRegister" novalidate name="frmConferenceRegister" id="frmConferenceRegister" action="" method="post"
       enctype="multipart/form-data">
     <input type="hidden" name="hdnPriceMemberSpeaker" id="hdnPriceMemberSpeaker"
@@ -94,7 +95,7 @@
     <fieldset>
         <legend>{STATIC_FORM_CONFERENCE_REGISTER_LEGEND_SPEAKER_HELPER}</legend>
         <div class="form-check" id="Speakers">
-                <input class="form-check-input" type="checkbox" name="chkSpeaker" id="chkSpeaker" onclick="reinicializarPrecioTotal()">
+                <input class="form-check-input" type="checkbox" name="chkSpeaker" id="chkSpeaker">
                 <label class="form-check-label" for="chkSpeaker">
                     {STATIC_FORM_CONFERENCE_REGISTER_SPEAKER_HELPER}
                 </label>
@@ -225,7 +226,7 @@
             <div class="col-12 col-md-6">
                 <input type="text" class="form-control" name="txtFacturacionNifCliente" id="txtFacturacionNifCliente"
                        value="{FORM_PROFILE_BILLING_CUSTOMER_NIF}"
-                       placeholder="{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}" required>
+                       placeholder="{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}*" required>
                 <div class="invalid-feedback">
                     Please enter your tax ID or VAT number
                 </div>
@@ -234,7 +235,7 @@
                 <label class="sr-only" for="txtFacturacionNombreCliente"></label>
                 <input type="text" class="form-control" name="txtFacturacionNombreCliente" id="txtFacturacionNombreCliente"
                        value="{FORM_PROFILE_BILLING_NAME_CUSTOMER}"
-                       placeholder="{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}" required>
+                       placeholder="{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}*" required>
                 <div class="invalid-feedback">
                     Please enter your name for billing purposes
                 </div>
@@ -251,7 +252,7 @@
                 <label class="sr-only" for="txtFacturacionDireccion"></label>
                 <input type="text" class="form-control" name="txtFacturacionDireccion" id="txtFacturacionDireccion"
                        value="{FORM_PROFILE_BILLING_ADDRESS}"
-                       placeholder="{STATIC_FORM_PROFILE_BILLING_ADDRESS}" required>
+                       placeholder="{STATIC_FORM_PROFILE_BILLING_ADDRESS}*" required>
                 <div class="invalid-feedback">
                     Please enter your address
                 </div>
@@ -262,7 +263,7 @@
                 <label class="sr-only" for="txtFacturacionCodigoPostal"></label>
                 <input type="text" class="form-control" name="txtFacturacionCodigoPostal" id="txtFacturacionCodigoPostal"
                        value="{FORM_PROFILE_BILLING_ZIPCODE}"
-                       placeholder="{STATIC_FORM_PROFILE_BILLING_ZIPCODE}" required>
+                       placeholder="{STATIC_FORM_PROFILE_BILLING_ZIPCODE}*" required>
                 <div class="invalid-feedback">
                     Please enter your postal code
                 </div>
@@ -271,7 +272,7 @@
                 <label class="sr-only" for="txtFacturacionCiudad"></label>
                 <input type="text" class="form-control" name="txtFacturacionCiudad" id="txtFacturacionCiudad"
                        value="{FORM_PROFILE_BILLING_CITY}"
-                       placeholder="{STATIC_FORM_PROFILE_BILLING_CITY}" required>
+                       placeholder="{STATIC_FORM_PROFILE_BILLING_CITY}*" required>
                 <div class="invalid-feedback">
                     Please enter your town or city
                 </div>
@@ -288,7 +289,7 @@
                 <label class="sr-only" for="txtFacturacionPais"></label>
                 <input type="text" class="form-control" name="txtFacturacionPais" id="txtFacturacionPais"
                        value="{FORM_PROFILE_BILLING_COUNTRY}"
-                       placeholder="{STATIC_FORM_PROFILE_BILLING_COUNTRY}" required>
+                       placeholder="{STATIC_FORM_PROFILE_BILLING_COUNTRY}*" required>
                 <div class="invalid-feedback">
                     Please enter your country
                 </div>

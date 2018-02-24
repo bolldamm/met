@@ -348,7 +348,7 @@ if (isset($_SESSION["met_user"])) {
                     "id_pais",
                     STATIC_FORM_MEMBERSHIP_COUNTRY_OF_RESIDENCE."*",
                     -1,
-                    "class='form-control' style='color:slategray;' required"));
+                    "class='form-control' style='color:slategray;'"));
 
     $plantillaFormulario->parse("contenido_principal.bloque_pais");
     $plantilla->parse("contenido_principal.validar_conference_register.validacion_pais");

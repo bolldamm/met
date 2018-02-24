@@ -27,8 +27,8 @@ h3.subTitleSection {
 #lstResultsMemberDirectory .headshot {
 }
 #lstResultsMemberDirectory .headshot img {
-	height: 100%;
 	margin: 5px 0 0 5px;
+	vertical-align: middle;
 }
 #lstResultsMemberDirectory .description {
 	margin: 8px 0 4px -15px;

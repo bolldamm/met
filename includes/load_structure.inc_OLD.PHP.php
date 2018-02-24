@@ -62,13 +62,13 @@ if (isset($idSeo)) {
 }
 
 /*
+ * Get user and membership details and construct login panel
  * If user is logged in…
- * Get user details and membership status (paid-up, pending, expired, etc.) and construct login panel
  */
 if (isset($_SESSION["met_user"])) {
     //Set the user type for menu display purposes to that of the currently logged-in user
     $idMenuTipo = $_SESSION["met_user"]["tipoUsuario"];
-    //If user is not a "nominee" (now obsolete), i.e. if user is an ordinary member
+    //If user is a regular member, not a "nominee" (now obsolete)
     if ($idMenuTipo != TIPO_USUARIO_INVITADO) {
         /*
          * Como existe la opción de que renovemos la subscripcion ya sea por paypal y por transferencia debemos tener actualizado las variables de sesion asociadas al login, cabe tener en cuenta que la razon principal por la cual se hace esto, es porque si tu renuevas con paypal, en el fichero de confirmacion de pago, no podemos modificar variables de sesion
@@ -143,24 +143,19 @@ if (isset($_SESSION["met_user"])) {
     $plantilla->assign("PANEL_LOGIN_USERNAME", $_SESSION["met_user"]["username"]);
     $plantilla->parse("contenido_principal.datos_usuario");
 
-    /*
-     * If user is not logged in…
-     */
+    //If user is not logged in
 } else {
-    // Set user type for menu display purposes to "non-member" (-1)
+    //Set user type for menu display purposes to "non-member" (-1)
     $idMenuTipo = -1;
 
-    // If session variable "loginErrorMessage" is set (from authentication.php redirect), display message
-    if (isset($_SESSION['loginErrorMessage'])) {
-        $plantilla->assign("LOGIN_ERROR_MENSAJE", $_SESSION['loginErrorMessage']);
+    //Show the login area and login error message where necessary
+    if (isset($_GET["c"]) && $_GET["c"] == 1) {
+        $plantilla->assign("LOGIN_ERROR_MENSAJE", STATIC_FORM_LOGIN_ERROR_USERNAME_AND_PASSWORD_INCORRECT);
         $plantilla->assign("LOGIN_DISPLAY", "display:block;");
-        // unset the session variable before continuing
-        unset($_SESSION['loginErrorMessage']);
-        // Otherwise display login panel as normal
     } else {
         $plantilla->assign("LOGIN_DISPLAY", "display:none;");
     }
-    $plantilla->parse("contenido_principal.validate_login");
+    $plantilla->parse("contenido_principal.validar_login");
     $plantilla->parse("contenido_principal.panel_login");
 }
 
@@ -206,6 +201,7 @@ if ($totalGet == 0 || ($totalGet == 1 && isset($_GET["idioma"]))) {
     $caracter = "&";
 }
 
+
 /**
  * Load top-level items for main (horizontal) menu
  * First, get list of top-level menu items
@@ -230,6 +226,17 @@ while ($dataMenuSuperior = $db->getData($resultMenuSuperior)) {
     //$plantilla->assign("ITEM_MENU_SUPERIOR_URL", $dataMenuSuperior["url"]."?menu=".$dataMenuSuperior["id_menu"]);
     $plantilla->assign("ITEM_MENU_SUPERIOR_ACTIVO", ($idMenu == $dataMenuSuperior["id_menu"]) ? "current" : "");
 
+
+    $plantilla->assign("ITEM_MENU_SUPERIOR_PRIVATE", ($dataMenuSuperior["id_tipo_usuario_web"] != "" && ($idMenuTipo == TIPO_USUARIO_ADMIN || $idMenuTipo == TIPO_USUARIO_CONSEJO || $dataMenuSuperiorDesplegable["id_tipo_usuario_web"] == $idMenuTipo) ? "specialMenu" : ""));
+
+    if ($cont == 0) {
+        $plantilla->assign("ITEM_MENU_SUPERIOR_ID", "first");
+    } elseif ($cont == $totalMenus - 1) {
+        $plantilla->assign("ITEM_MENU_SUPERIOR_ID", "last");
+    } else {
+        $plantilla->assign("ITEM_MENU_SUPERIOR_ID", "");
+    }
+
     /**
      * Load dropdown submenu items
      * First, get list of submenu items
@@ -239,17 +246,6 @@ while ($dataMenuSuperior = $db->getData($resultMenuSuperior)) {
         while ($dataMenuSuperiorDesplegable = $db->getData($resultMenuSuperiorDesplegable)) {
             $plantilla->assign("ITEM_MENU_SUPERIOR_DESPLEGABLE_TITULO", $dataMenuSuperiorDesplegable["nombre"]);
             $esMostrableSubMenu = true;
-
-
-            $plantilla->assign("ITEM_MENU_SUPERIOR_PRIVATE", ($dataMenuSuperior["id_tipo_usuario_web"] != "" && ($idMenuTipo == TIPO_USUARIO_ADMIN || $idMenuTipo == TIPO_USUARIO_CONSEJO || $dataMenuSuperiorDesplegable["id_tipo_usuario_web"] == $idMenuTipo) ? "specialMenu" : ""));
-
-    if ($cont == 0) {
-        $plantilla->assign("ITEM_MENU_SUPERIOR_ID", "first");
-    } elseif ($cont == $totalMenus - 1) {
-        $plantilla->assign("ITEM_MENU_SUPERIOR_ID", "last");
-    } else {
-        $plantilla->assign("ITEM_MENU_SUPERIOR_ID", "");
-    }
 
             /*
             if(isset($_SESSION["met_user"])){
@@ -331,9 +327,8 @@ while ($dataBotonAcceso = $db->getData($resultBotonesAcceso)) {
 
 /**
  * Random background image
- *
- * $resultFondo = $db->callProcedure("CALL ed_sp_web_menu_archivo_obtener_concreto_aleatorio(".$idMenuHome.")");
- * $dataFondo = $db->getData($resultFondo);
- * $plantilla->assign("FONDO_WEB", "files/backgrounds/".$dataFondo["nombre"]);
  */
+$resultFondo = $db->callProcedure("CALL ed_sp_web_menu_archivo_obtener_concreto_aleatorio(" . $idMenuHome . ")");
+$dataFondo = $db->getData($resultFondo);
+$plantilla->assign("FONDO_WEB", "files/backgrounds/" . $dataFondo["nombre"]);
 ?>

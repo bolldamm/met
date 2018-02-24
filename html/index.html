@@ -163,7 +163,7 @@
     <script>
         "use strict";
         <!-- BEGIN: validate_login -->
-        document.addEventListener("DOMContentLoaded", function() {
+            document.addEventListener("DOMContentLoaded", function() {
             var loginForm = document.getElementById("frmLogin");
             var validation = loginForm.addEventListener("submit", function (event) {
                 if (loginForm.checkValidity() === false) {
@@ -178,7 +178,7 @@
         <!-- END: validate_login -->
 
         <!-- BEGIN: validar_remember_password-->
-           function validarEnvioClave() {
+            function validarEnvioClave() {
                var btnSubmit = document.frmRecordarClave.btnLogin;
                var panelErrorLogin = document.getElementById("msgError");
                panelErrorLogin.className = "";
@@ -237,7 +237,7 @@
         <!-- END: validar_remember_password -->
 
         <!-- BEGIN: formulario_reiniciar_clave -->
-        function validarResetClave() {
+            function validarResetClave() {
             var btnSubmit = document.frmResetClave.btnLogin;
             var panelErrorLogin = document.getElementById("msgError");
             var blError = false;
@@ -333,7 +333,7 @@
         function validateMembershipForm() {
             $("#frmMembership").on("submit", function (event) {
                 var country = $("#cmbPais");
-                var profActs = $(".professionalActivity:checked").length;
+                var profActs = $(".professionalActivity:checked");
                 if (this.checkValidity() === false) {
                     if (country.val() < 0) {
                         country.css("border-color", "#dc3545");
@@ -347,16 +347,21 @@
                         $("#chkPrivacyMessage").html("To submit the form, you must accept MET's privacy policy");
                         $("#containerPrivacyCheck").addClass("errorBackgroundColor");
                     }
-                    //without scroll animation
-                    //$(".form-control:invalid").first().get(0).scrollIntoView();
-
-                    //with scroll animation
-                    $("html, body").animate({
-                        scrollTop: $(".form-control:invalid").first().offset().top
-                    }, 1000);
+                    //Scroll to first invalid text input or checkbox, with animation
+                    var txtInvalid = $(".form-control:invalid");
+                    var chkInvalid = $(".form-check-input:invalid");
+                    if (txtInvalid.length > 0) {
+                        $("html, body").animate({
+                            scrollTop: txtInvalid.first().offset().top
+                        }, 800);
+                    } else if (chkInvalid.length > 0) {
+                        $("html, body").animate({
+                            scrollTop: chkInvalid.first().offset().top
+                        }, 800);
+                    }
                     event.preventDefault();
                     event.stopPropagation();
-                } else if (profActs < 1) {
+                } else if (profActs.length < 1) {
                     $("#profActsMessage").html("Please select at least one activity");
                     $("#containerProfActs").addClass("errorBackgroundColor");
                     //with scroll animation
@@ -365,6 +370,33 @@
                     }, 1000);
                     event.preventDefault();
                     event.stopPropagation();
+                } else if (country.val() < 0) {
+                    country.css("border-color", "#dc3545");
+                    $("#chkCountryMessage").html("Please select a country");
+                    $('html, body').animate({
+                        scrollTop: $("#personalDetails").offset().top
+                    }, 1000);
+                    event.preventDefault();
+                    event.stopPropagation();
+                } else {
+                    var cadenaActividades="";
+                    profActs.each(function(index,valor){
+                        cadenaActividades+=valor.value+",";
+                    });
+                    cadenaActividades=cadenaActividades.substring(0,cadenaActividades.length-1);
+                    document.frmMembership.hdnIdActividadProfesional.value=cadenaActividades;
+
+                    var cadenaSituacionesLaborales="";
+                    $(".workSituation:checked").each(function(index,valor){
+                        cadenaSituacionesLaborales+=valor.value+",";
+                    });
+                    cadenaSituacionesLaborales=cadenaSituacionesLaborales.substring(0,cadenaSituacionesLaborales.length-1);
+                    document.frmMembership.hdnIdSituacionLaboral.value=cadenaSituacionesLaborales;
+
+                    //Run function to block user interface via blockUI.js and display "Sending…" message
+                    mensajeCargando("{STATIC_GLOBAL_SENDING}...");
+                    //Run function to generate conference registration (AJAX call to save_inscription_conference.php)
+                    generateMemberRegistration();
                 }
                 this.classList.add("was-validated");
             });
@@ -380,111 +412,115 @@
             validateMembershipForm();
             supports_input_placeholder();
         });
+
+        function generateMemberRegistration(){
+            var form=$("#frmMembership");
+            var signupResult;
+            $.ajax({
+                type: "POST",
+                url: "ajax/save_inscription.php",
+                data: form.serialize(),
+                success: function(data){
+                    //Store serialised signup data in membership registration form
+                    document.getElementById("resultadoInscripcion").innerHTML=data;
+                    //Get result (1=transfer, 2=Paypal, or else error message) from "process_form.html"
+                    signupResult=document.getElementById("hdnTipoResultado");
+
+                    //If bank transfer, call "inscripcion_finalizada.php"
+                    //With parameter "tipo" (= payment method)
+                    if(signupResult.value==="1"){
+                        window.location="inscripcion_finalizada.php?tipo=1";
+
+                    }else if(signupResult.value==="2"){
+                        //If Paypal, submit data to Paypal in paypal_form.html
+                        document.frmPaypal.submit();
+
+                    }else if(signupResult.value==="4"){
+                        window.location="inscripcion_finalizada.php?tipo=4";
+
+                    }else{
+                        //Otherwise, result = error message, so display message on registration form
+                        var msgContenido = document.getElementById("msgAlert");
+                        msgContenido.innerHTML = signupResult.value;
+                        msgContenido.setAttribute("class", "msgKO");
+                        msgContenido.style.display = "block";
+                        moverWeb();
+                        //Unblock interface via blockUI.js
+                        $.unblockUI();
+                    }
+                }
+            });
+        }
+
         <!-- END: validate_membership_form -->
 
         <!-- BEGIN: validate_renew_membership_form -->
-        function validarFormularioMembershipRenew() {
-            var btn = document.getElementById("btnSendForm");
-            var msgContenido = document.getElementById("msgAlert");
-            var blError = true;
-            var txtError = "";
 
-            btn.disabled = true;
-            limpiarErrores();
-            if(radioButtonValorSeleccionado(document.frmMembershipRenew.rdMetodoPago) < 0) {
-                blError = false;
-                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_PAYMENT_METHOD}";
-                msgContenido.innerHTML = txtError;
-            }else if(document.frmMembershipRenew.chkInvoice.checked){
-                if(trim(document.frmMembershipRenew.txtFacturacionNifCliente.value) === "" || document.frmMembershipRenew.txtFacturacionNifCliente.value === "{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}"){
-                    blError = false;
-                    destacarError(document.frmMembershipRenew.txtFacturacionNifCliente);
-                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_NIF}";
-                }else if(trim(document.frmMembershipRenew.txtFacturacionNombreCliente.value) === "" || document.frmMembershipRenew.txtFacturacionNombreCliente.value === "{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}"){
-                    blError = false;
-                    destacarError(document.frmMembershipRenew.txtFacturacionNombreCliente);
-                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_NAME}";
-                }else if(trim(document.frmMembershipRenew.txtFacturacionDireccion.value) === "" || document.frmMembershipRenew.txtFacturacionDireccion.value === "{STATIC_FORM_PROFILE_BILLING_ADDRESS}"){
-                    blError = false;
-                    destacarError(document.frmMembershipRenew.txtFacturacionDireccion);
-                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_ADDRESS}";
-                }else if(trim(document.frmMembershipRenew.txtFacturacionCodigoPostal.value) === "" || document.frmMembershipRenew.txtFacturacionCodigoPostal.value === "{STATIC_FORM_PROFILE_BILLING_ZIPCODE}"){
-                    blError = false;
-                    destacarError(document.frmMembershipRenew.txtFacturacionCodigoPostal);
-                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_ZIPCODE}";
-                }else if(trim(document.frmMembershipRenew.txtFacturacionCiudad.value) === "" || document.frmMembershipRenew.txtFacturacionCiudad.value === "{STATIC_FORM_PROFILE_BILLING_CITY}"){
-                    blError = false;
-                    destacarError(document.frmMembershipRenew.txtFacturacionCiudad);
-                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_CITY}";
-                }else if(trim(document.frmMembershipRenew.txtFacturacionPais.value) === "" || document.frmMembershipRenew.txtFacturacionPais.value === "{STATIC_FORM_PROFILE_BILLING_COUNTRY}"){
-                    blError = false;
-                    destacarError(document.frmMembershipRenew.txtFacturacionPais);
-                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_COUNTRY}";
+        //ON CLICK, clear alert for Payment methods
+        function clearPaymentMethodWarning() {
+            $(".paymentMethod").on("click", function () {
+                if ($(".paymentMethod:checked")) {
+                    $("#paymentMethodMessage").html("");
+                    $("#containerPaymentMethod").removeClass("errorBackgroundColor");
                 }
-            }
-
-            if(blError){
-                mensajeCargando("{STATIC_GLOBAL_SENDING}...");
-                generarRenovacion();
-            }else{
-                msgContenido.innerHTML = txtError;
-                msgContenido.setAttribute("class", "msgKO alert alert-danger");
-                msgContenido.style.display = "block";
-                moverWeb();
-            }
-            btn.disabled = false;
+            });
         }
 
-        function validarFormularioMembershipRenewAux() {
-            var btn = document.getElementById("btnSendForm");
-            var msgContenido = document.getElementById("msgAlert");
-            var blError = true;
-            var txtError = "";
-
-            btn.disabled = true;
-            limpiarErrores();
-            if(radioButtonValorSeleccionado(document.frmMembershipRenew.rdMetodoPago) < 0) {
-                blError = false;
-                txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_PAYMENT_METHOD}";
-                msgContenido.innerHTML = txtError;
-            }else if(document.frmMembershipRenew.chkInvoice.checked){
-                if(trim(document.frmMembershipRenew.txtFacturacionNifCliente.value) === "" || document.frmMembershipRenew.txtFacturacionNifCliente.value === "{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}"){
-                    blError = false;
-                    destacarError(document.frmMembershipRenew.txtFacturacionNifCliente);
-                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_NIF}";
-                }else if(trim(document.frmMembershipRenew.txtFacturacionNombreCliente.value) === "" || document.frmMembershipRenew.txtFacturacionNombreCliente.value === "{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}"){
-                    blError = false;
-                    destacarError(document.frmMembershipRenew.txtFacturacionNombreCliente);
-                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_NAME}";
-                }else if(trim(document.frmMembershipRenew.txtFacturacionDireccion.value) === "" || document.frmMembershipRenew.txtFacturacionDireccion.value === "{STATIC_FORM_PROFILE_BILLING_ADDRESS}"){
-                    blError = false;
-                    destacarError(document.frmMembershipRenew.txtFacturacionDireccion);
-                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_ADDRESS}";
-                }else if(trim(document.frmMembershipRenew.txtFacturacionCodigoPostal.value) === "" || document.frmMembershipRenew.txtFacturacionCodigoPostal.value === "{STATIC_FORM_PROFILE_BILLING_ZIPCODE}"){
-                    blError = false;
-                    destacarError(document.frmMembershipRenew.txtFacturacionCodigoPostal);
-                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_ZIPCODE}";
-                }else if(trim(document.frmMembershipRenew.txtFacturacionCiudad.value) === "" || document.frmMembershipRenew.txtFacturacionCiudad.value === "{STATIC_FORM_PROFILE_BILLING_CITY}"){
-                    blError = false;
-                    destacarError(document.frmMembershipRenew.txtFacturacionCiudad);
-                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_CITY}";
-                }else if(trim(document.frmMembershipRenew.txtFacturacionPais.value) === "" || document.frmMembershipRenew.txtFacturacionPais.value === "{STATIC_FORM_PROFILE_BILLING_COUNTRY}"){
-                    blError = false;
-                    destacarError(document.frmMembershipRenew.txtFacturacionPais);
-                    txtError = "{STATIC_FORM_MEMBERSHIP_BILLING_ERROR_COUNTRY}";
+        //ON SUBMIT, validate required fields
+        function validateRenewMembershipForm() {
+            $("#frmMembership").on("submit", function (event) {
+                if (this.checkValidity() === false) {
+                    if (!$(".paymentMethod").prop("checked")) {
+                        $("#paymentMethodMessage").html("Please select a payment method");
+                        $("#containerPaymentMethod").addClass("errorBackgroundColor");
+                    }
+                    event.preventDefault();
+                    event.stopPropagation();
+                } else {
+                    //Block user interface (blockUI,js) and display "Sending…" message
+                    mensajeCargando("{STATIC_GLOBAL_SENDING}...");
+                    //Generate conference registration (AJAX call to save_inscription_conference.php)
+                    generateMembershipRenewal();
                 }
-            }
+            this.classList.add("was-validated");
+            });
+        }
 
-            if(blError){
-                mensajeCargando("{STATIC_GLOBAL_SENDING}...");
-                generarRenovacionAux();
-            }else{
-                msgContenido.innerHTML = txtError;
-                msgContenido.setAttribute("class", "msgKO alert alert-danger");
-                msgContenido.style.display = "block";
-                moverWeb();
-            }
-            btn.disabled = false;
+        //ON PAGE LOAD, add event listeners
+        $( document ).ready(function() {
+            clearPaymentMethodWarning();
+            validateRenewMembershipForm();
+        });
+
+        function generateMembershipRenewal(){
+            var form=$("#frmMembership");
+            var renewalResult;
+            $.ajax({
+                type: "POST",
+                url: "ajax/save_renew_inscription.php",
+                data: form.serialize(),
+                success: function(data){
+                    //Si es correcto...
+                    document.getElementById("resultadoInscripcion").innerHTML=data;
+
+                    //Si encontramos la variable
+                    renewalResult=document.getElementById("hdnTipoResultado");
+                    if(renewalResult.value==="1"){
+                        window.location="inscripcion_finalizada.php?tipo=1";
+                    }else if(renewalResult.value==="2"){
+                        document.frmPaypal.submit();
+                    }else if(renewalResult.value==="4"){
+                        window.location="inscripcion_finalizada.php?tipo=4";
+                    }else{
+                        var msgContenido = document.getElementById("msgAlert");
+                        msgContenido.innerHTML = renewalResult.value;
+                        msgContenido.setAttribute("class", "msgKO");
+                        msgContenido.style.display = "block";
+                        moverWeb();
+                        $.unblockUI();
+                    }
+                }
+            });
         }
         <!-- END: validate_renew_membership_form -->
 
@@ -698,7 +734,7 @@
             });
         }
 
-        //ON CHANGE, recalculate total price when sister association selected (unselected)
+        //ON CHANGE, recalculate total price when sister association is selected (unselected)
         function updatePriceSister() {
             $("#cmbAsociacionHermana").on("change", function () {
                 recalculateTotalPrice();
@@ -732,8 +768,7 @@
             });
         }
 
-        //ON CLICK, disable minisessions on a given date when a workshop is selected
-        //and clear error message and background colour
+        //ON CLICK, disable minisessions when a workshop is selected and clear error message
         function disableMinisessions() {
             $(".rdnWorkshop").each(function () {
                 $(this).on("click", function (event) {
@@ -784,8 +819,7 @@
             });
         }
 
-        //ON CLICK, disable all workshops when "Can't attend any workshop" is selected
-        // and remove alert and background colour where appropriate
+        //ON CLICK, disable workshops when "Can't attend" is checked, and remove alert
         function disableAllWorkshops() {
             $("#chkNotWorkshop").on("click", function () {
                 if (this.checked) {
@@ -802,6 +836,15 @@
             });
         }
 
+        //ON KEYUP, clear badge alert
+        function clearBadgeAlert() {
+            var badgeText = $("#txtaBadge");
+            badgeText.on("keyup", function () {
+                if ($("#txtaBadge").val()) {
+                    $("#badgeMessage").html("");
+                }
+            });
+        }
         //ON CLICK, clear payment method alert when a button is selected
         function clearPaymentMethodAlert() {
             $(".paymentMethod").on("click", function () {
@@ -831,17 +874,17 @@
             $("#frmConferenceRegister").on("submit", function (event) {
                 var workshops = $(".rdnWorkshop:checked").length;
                 var minisessions = $(".chkMinisession:checked").length;
+                var countrySelect = $("#cmbPais");
                 if (this.checkValidity() === false) {
-                    var countrySelect = $("#cmbPais");
                     if (countrySelect.val() < 0) {
                         countrySelect.css("border-color", "#dc3545");
                         $("#chkCountryMessage").html("Please select a country");
                     }
-                     if (workshops < 1 && minisessions < 1) {
-                         $("#workshopsMessage").html("Registration for one workshop or two minisessions is included in the conference fee. If you do not wish to register for any of the workshops, please check the appropriate box before submitting the form");
-                         $("#containerWorkshop").addClass("errorBackgroundColor");
-                     }
-                    if  (!$("#txtaBadge").val()) {
+                    if (workshops < 1 && minisessions < 1) {
+                        $("#workshopsMessage").html("Registration for one workshop or two minisessions is included in the conference fee. If you do not wish to register for any of the workshops, please check the appropriate box before submitting the form");
+                        $("#containerWorkshop").addClass("errorBackgroundColor");
+                    }
+                    if (!$("#txtaBadge").val()) {
                         $("#badgeMessage").html("Please enter your badge information");
                     }
                     if (!$(".paymentMethod").prop("checked")) {
@@ -852,9 +895,25 @@
                         $("#chkPrivacyMessage").html("To submit the form, you must accept MET's privacy policy");
                         $("#containerPrivacyCheck").addClass("errorBackgroundColor");
                     }
-                    //with scroll animation
+                    //Scroll to first invalid text input or checkbox, with animation
+                    var txtInvalid = $(".form-control:invalid");
+                    var chkInvalid = $(".form-check-input:invalid");
+                    if (txtInvalid.length > 0) {
+                        $("html, body").animate({
+                            scrollTop: txtInvalid.first().offset().top
+                        }, 800);
+                    } else if (chkInvalid.length > 0) {
+                        $("html, body").animate({
+                            scrollTop: chkInvalid.first().offset().top
+                        }, 800);
+                    }
+                    event.preventDefault();
+                    event.stopPropagation();
+                } else if (countrySelect.val() < 0) {
+                    countrySelect.css("border-color", "#dc3545");
+                    $("#chkCountryMessage").html("Please select a country");
                     $('html, body').animate({
-                        scrollTop: $(".form-control:invalid").first().offset().top
+                        scrollTop: $("#personalDetails").offset().top
                     }, 1000);
                     event.preventDefault();
                     event.stopPropagation();
@@ -862,7 +921,7 @@
                     var container = $("#containerWorkshop");
                     $("#workshopsMessage").html("Registration for one workshop or two minisessions is included in the conference fee. If you do not wish to register for any of the workshops, please check the appropriate box before submitting the form");
                     container.addClass("errorBackgroundColor");
-                    //with scroll animation
+                    //Scroll to workshop checkboxes, with animation
                     $("html, body").animate({
                         scrollTop: container.offset().top
                     }, 1000);
@@ -873,7 +932,7 @@
                         var miniDate = this.name.split("_")[1];
                         if ($(".minisessionChoice_" + miniDate + ":checked").length > 2) {
                             $("#containerWorkshop").addClass("errorBackgroundColor");
-                            //with scroll animation
+                            //Scroll to minisession checkboxes, with animation
                             $("html, body").animate({
                                 scrollTop: container.offset().top
                             }, 1000);
@@ -1014,21 +1073,22 @@
 
         //ON PAGE LOAD, call functions
         $( document ).ready(function() {
-                finalPrice();
-                //addPlaceholderSupport();
-                reloadCaptchaConference();
-                clearCountryAlert();
-                updatePriceSister();
-                deselectRadioButtons();
-                disableMinisessions();
-                clearWorkshopsAlert();
-                warnThreeMinisessions();
-                disableAllWorkshops();
-                clearPaymentMethodAlert();
-                setPrivacyAlert();
-                validateConferenceOnSubmit();
-                supports_input_placeholder()
-            });
+            finalPrice();
+            //addPlaceholderSupport();
+            reloadCaptchaConference();
+            clearCountryAlert();
+            updatePriceSister();
+            deselectRadioButtons();
+            disableMinisessions();
+            clearWorkshopsAlert();
+            warnThreeMinisessions();
+            disableAllWorkshops();
+            clearBadgeAlert();
+            clearPaymentMethodAlert();
+            setPrivacyAlert();
+            validateConferenceOnSubmit();
+            supports_input_placeholder()
+        });
         <!-- END: validate_conference_registration_form -->
 
         <!-- BEGIN: validar_offer_interesed -->
@@ -1313,7 +1373,7 @@
 
 </head>
 <body>
-<div id="backgroundImage"></div>
+<div id="backgroundImage" role="img" aria-label="Changing background image"></div>
 <div id="backgroundBlue" class="d-none d-lg-block"></div>
 <div class="container-fluid wrapper">
 <div class="row loginLink">
@@ -1340,7 +1400,7 @@
                 <ul class="navbar-nav mr-auto">
                     <!-- BEGIN: item_menu_superior -->
                     <li class="nav-item dropdown {ITEM_MENU_SUPERIOR_PRIVATE}">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="{ITEM_MENU_SUPERIOR_URL}" role="button" aria-haspopup="true" aria-expanded="false">{ITEM_MENU_SUPERIOR_TITULO}</a>
+                        <a class="nav-link dropdown-toggle" id="{ITEM_MENU_SUPERIOR_ID}" data-toggle="dropdown" href="{ITEM_MENU_SUPERIOR_URL}" role="button" aria-haspopup="true" aria-expanded="false">{ITEM_MENU_SUPERIOR_TITULO}</a>
                         <!-- BEGIN: menu_superior_desplegable -->
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <!-- BEGIN: item_menu_superior_desplegable -->

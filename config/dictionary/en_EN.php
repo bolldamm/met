@@ -702,19 +702,19 @@
   define("STATIC_INSCRIPTION_LAST_STEP_SUCCESS","
     Your registration was successful. You can now log in to our website.
                 <br><br>
-Welcome! Take a few minutes to explore <a href='http://www.metmeetings.org/' target='_blank'>our website</a> and find out more about MET and the <a href='http://www.metmeetings.org/en/how-to-become-a-member:45 target=_blank'>membership benefits</a> we offer.<br><br>
-The <strong><a href='http://www.metmeetings.org/en/directory-of-members:19' target='_blank'>Directory of Members</a></strong> is a great way to market yourself and to network with other MET members. To fill out and edit your <strong>online profile</strong>, click on the \"Edit profile\" link in the log-in area. You decide whether you want your profile to be public or visible only to other members. <br><br>
+Welcome! Take a few minutes to explore <a href='http://www.metmeetings.org/' target='_blank'>our website</a> and find out more about MET and the <a href='http://www.metmeetings.org/en/how-to-become-a-member:45' target='_blank'>membership benefits</a> we offer.<br><br>
+The <strong><a href='http://www.metmeetings.org/en/directory-of-members:19' target='_blank'>Directory of Members</a></strong> is a great way to market yourself and to network with other MET members. To fill out and edit your <strong>online profile</strong>, click on the 'Edit profile' link in the log-in area. You decide whether you want your profile to be public or visible only to other members. <br><br>
 Check out the <strong>Members</strong> tab to discover members-only discounts on publications, subscriptions, software, courses and conferences by other professional associations. Download the <strong>MET logo</strong> to display on your website. <br><br>
 Click on the <strong>Workshops</strong> tab to keep up-to-date  with our CPD schedule. The <strong>Conference</strong> tab gives you access to the archives of past <strong>METMs</strong>, along with posters, presentations and PDF documents. <br><br>
 Register on <a href='https://www.metmeetings.org/en/the-hive:1026' target='_blank'>the Hive</a>, MET’s online resource hub. Browse through fellow members’ posts and contribute your own favourite tips and tools.<br><br>
-We invite you to join MET's private <strong><a href='https://www.linkedin.com/groups/Mediterranean-Editors-Translators-MET-2518533/about' target='_blank'>LinkedIn group</a></strong>, where members can share news and links of interest and keep in touch between events. If interested, please send a request to join the group via the LinkedIn page and then e-mail the <a href=' mailto:promotion@metmeetings.org'>Promotion Chair</a> to let us know that you have done so.<br><br>
+We invite you to join MET's private <strong><a href='https://www.linkedin.com/groups/Mediterranean-Editors-Translators-MET-2518533/about' target='_blank'>LinkedIn group</a></strong>, where members can share news and links of interest and keep in touch between events. If interested, please send a request to join the group via the LinkedIn page and then e-mail the <a href='mailto:promotion@metmeetings.org'>Promotion Chair</a> to let us know that you have done so.<br><br>
 You can also find us on <a href='https://twitter.com/METMeetings' target='_blank'>Twitter</a> and <a href='http://www.facebook.com/pages/Mediterranean-Editors-and-Translators/210026365732115' target='_blank'>Facebook</a>.
 <br><br>
-For your convenience, MET's bank account details are shown below.  Please remember to state your name and the reason for the transfer on all bank transfers you make to MET.  All bank transfers should be \"Free of bank charges to the receiver\".
+For your convenience, MET's bank account details are shown below.  Please remember to state your name and the reason for the transfer on all bank transfers you make to MET.  All bank transfers should be 'Free of bank charges to the receiver'.
 <br><br>
 Account holder/Name: Mediterranean Editors and Translators<br>
 Name and address of bank: 
-\"la Caixa\"<br>
+'la Caixa'<br>
 Pl. Tetuan, 25, 08010 Barcelona<br>
 IBAN: ES97 2100 0873 1802 0031 7499<br>
 BIC/Swift code: CAIXESBB <br><br>

@@ -25,7 +25,7 @@
   	$mail->Host = "smtp.metmeetings.org";
   	$mail->SMTPAuth = true;
   	$mail->Username = "noreply@metmeetings.org"; 
-  	$mail->Password = "DqXKfp!YbrG9s*";
+  	$mail->Password = "PNFPd|-?|3Pd";
    	$mail->Timeout=30;
   	$mail->IsHTML(true);
   

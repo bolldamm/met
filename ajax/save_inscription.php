@@ -260,7 +260,7 @@
 		switch($metodoPago){
 			case INSCRIPCION_TIPO_PAGO_PAYPAL:
 				$subPlantilla=new XTemplate("../html/ajax/paypal_form.html");
-				$serverActual="http://www.metmeetings.org/";
+				$serverActual="https://www.metmeetings.org/";
 				
 				//Generamos encriptacion		
 				require "../classes/paypal/clase.paypal.php";
@@ -282,7 +282,8 @@
 	
 				//Variables paypal
 				$form["item_name"]="MET";
-				$form["amount"]=$importe;	
+				$form["amount"]=$importe;
+                //$form["amount"]="0.01";
 		
 
 			    $paypal = new PayPal($config);
