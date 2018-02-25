@@ -40,8 +40,8 @@ table.tblConference .spacingWorkShop label { padding-left:20px; color:#898989; }
 
 /* messages */
 #msgAlert, #msgAlertStatic { padding:4px 12px 4px 12px; border-radius:6px; }
-#form p.msgKO { background:#f9ebea; color:#8B1513; border:1px solid #8B1513; }
-#form p.msgOK { background:#ebfafa; color:#348A88; border:1px solid #348A88; }
+.msgKO { background:#f9ebea; color:#8B1513; border:1px solid #8B1513; }
+.msgOK { background:#ebfafa; color:#348A88; border:1px solid #348A88; }
 
 /* checkbox */
 .groupChk { margin:4px 12px; }
@@ -55,10 +55,11 @@ table.tblConference .spacingWorkShop label { padding-left:20px; color:#898989; }
 
 /* captcha */
 
-#txtCaptcha { float:left; margin-left: 1em; text-transform:uppercase;}
+#txtCaptcha { float:left; margin: 0 0 .5em 1em; text-transform:uppercase; padding-bottom: 1em; }
 #imageCaptcha { border:1px solid #B2B2B2; border-radius:6px; float:right; }
-.captchaText { font-size:80%; }
-.captchaImage { padding-top: 1em; }
+#frmRecordarClave #imageCaptcha, #frmRecordarClave #reloadCaptcha { margin: .8em 3em 0 0; }
+.captchaText { font-size:80%; padding-bottom: .8em; }
+.captchaFeedback { padding-left: 1em; padding-bottom: 1em; }
 
 div.sex {
     padding-left: 1em;

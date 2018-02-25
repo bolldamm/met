@@ -1,7 +1,7 @@
 <?php
 
 /**
- * 
+ *
  * Pagina openbox de contenido libre
  * @author Edata S.L.
  * @copyright Edata S.L.
@@ -75,42 +75,40 @@ if (count($_POST) > 0) {
         $db->callProcedure("CALL ed_sp_web_usuario_web_working_languages_eliminar(" . $_SESSION["met_user"]["id"] . ")");
 
         //Insert selected working languages
-        if($_POST['cmbSource'] != '' && $_POST['cmbTarget'] != '') {
-        $sourceLangs = array();
-        $targetLangs = array();
-        $idLangsAll = array();
-        $idLangs = array();
-        $sourceLangs = $_POST['cmbSource'];
-        $targetLangs = $_POST['cmbTarget'];
-        $idLangsAll = array_merge($sourceLangs,$targetLangs);
-        $idLangs = array_unique($idLangsAll);
-        foreach($idLangs as $idLang) {
-            if(in_array($idLang, $sourceLangs)) {
-                $isSource = '1';
+        if ($_POST['cmbSource'] != '' && $_POST['cmbTarget'] != '') {
+            $sourceLangs = array();
+            $targetLangs = array();
+            $idLangsAll = array();
+            $idLangs = array();
+            $sourceLangs = $_POST['cmbSource'];
+            $targetLangs = $_POST['cmbTarget'];
+            $idLangsAll = array_merge($sourceLangs, $targetLangs);
+            $idLangs = array_unique($idLangsAll);
+            foreach ($idLangs as $idLang) {
+                if (in_array($idLang, $sourceLangs)) {
+                    $isSource = '1';
+                } else {
+                    $isSource = '0';
+                }
+                if (in_array($idLang, $targetLangs)) {
+                    $isTarget = '1';
+                } else {
+                    $isTarget = '0';
+                }
+                $db->callProcedure("CALL ed_sp_web_usuario_web_working_languages_insertar(" . $_SESSION["met_user"]["id"] . ",'" . $idLang . "','" . $isSource . "','" . $isTarget . "')");
             }
-                    else {
-                $isSource = '0';
-                    }
-            if(in_array($idLang, $targetLangs)) {
-                $isTarget = '1';
-            }
-                    else {
-                $isTarget = '0';
-                    }
-        $db->callProcedure("CALL ed_sp_web_usuario_web_working_languages_insertar(" . $_SESSION["met_user"]["id"] . ",'" . $idLang . "','" . $isSource . "','" . $isTarget . "')");
         }
-        }
-       
+
         //Delete all previously selected areas of expertise from profile
         $db->callProcedure("CALL ed_sp_web_usuario_web_areas_of_expertise_eliminar(" . $_SESSION["met_user"]["id"] . ")");
         //Insert newly selected areas of expertise
-        if($_POST['cmbAreas'] != '') {
-        $areas = $_POST['cmbAreas'];
-        foreach($areas as $area){      
-        $db->callProcedure("CALL ed_sp_web_usuario_web_areas_of_expertise_insertar(" . $_SESSION["met_user"]["id"] . ",'" . $area . "')");
+        if ($_POST['cmbAreas'] != '') {
+            $areas = $_POST['cmbAreas'];
+            foreach ($areas as $area) {
+                $db->callProcedure("CALL ed_sp_web_usuario_web_areas_of_expertise_insertar(" . $_SESSION["met_user"]["id"] . ",'" . $area . "')");
+            }
         }
-        }
-        
+
         if ($_POST["cmbPais"] == -1) {
             $_POST["cmbPais"] = "null";
         }
@@ -157,7 +155,7 @@ if (count($_POST) > 0) {
         //Eliminamos actividades web actuales
         $db->callProcedure("CALL ed_sp_web_usuario_web_actividad_profesional_eliminar(" . $_SESSION["met_user"]["id"] . ")");
 
-        //Insertamos actividades web
+        //Insert professional activities, associating the text field content with the "Student" and "Other" checkboxes
         $vectorActividadProfesional = array_filter(explode(",", $_POST["hdnIdActividadProfesional"]));
         foreach ($vectorActividadProfesional as $valor) {
             $descripcion = "";
@@ -185,7 +183,7 @@ if (count($_POST) > 0) {
 
         //Ir con cuidado
         //$_SESSION["met_user"]["username"] = $nombre." ".$apellidos;		
-    $idUsuarioWebLogin = $_SESSION["met_user"]["id"];
+        $idUsuarioWebLogin = $_SESSION["met_user"]["id"];
         require_once "includes/load_upload_image_profile.inc.php";
 
         $db->endTransaction();
@@ -211,7 +209,8 @@ $urlActual = generalUtils::generarUrlAmigableMenu($vectorAtributosMenu);
 //Assign Edit profile explanatory text (from Easygestor) to placeholder
 $subPlantilla->assign("CONTENIDO_DESCRIPCION", $datoMenuSeo["descripcion"]);
 
-//If the page request URL contains an error parameter c, display the appropriate error message
+//If the page request URL contains an error parameter c (i.e. form has already been submitted)
+//display appropriate error or success message
 if (isset($_GET["c"]) && is_numeric($_GET["c"])) {
     $claseMensaje = "msgOK";
     $txtMensaje = "";
@@ -376,14 +375,14 @@ while ($dataActividadProfesional = $db->getData($resulActividadesProfesionales))
             if ($dataActividadProfesional["descripcion"] != "") {
                 $subPlantilla->assign("MIEMBRO_ESPECIFICACION_ESTUDIOS", $dataActividadProfesional["descripcion"]);
             }
-        //If the current activity is "Other" (and is in the member's profile)
+            //If the current activity is "Other" (and is in the member's profile)
         } else if ($dataActividadProfesional["id_actividad_profesional"] == "8") {
             //Assign the description of the other activity (if any) to a placeholder
             if ($dataActividadProfesional["descripcion"] != "") {
                 $subPlantilla->assign("MIEMBRO_ESPECIFICACION_OTROS", $dataActividadProfesional["descripcion"]);
             }
         }
-    //If the member doesn't have the current activity, leave "checked" placeholder empty
+        //If the member doesn't have the current activity, leave "checked" placeholder empty
     } else {
         $subPlantilla->assign("CHECKED_ACTIVIDAD_PROFESIONAL", "");
     }
@@ -427,9 +426,9 @@ $subPlantilla->assign("COMBO_PAIS", generalUtils::construirCombo($db,
     $datoUsuarioIndividual["id_pais"],
     "nombre_original",
     "id_pais",
-    STATIC_FORM_MEMBERSHIP_COUNTRY_OF_RESIDENCE."*",
+    STATIC_FORM_MEMBERSHIP_COUNTRY_OF_RESIDENCE . "*",
     -1,
-    "class='form-control' style='color:slategray;' required"));
+    "class='form-control' style='color:slategray;' autocomplete='country-name'"));
 
 //Assign IDs and WYSIWYG editor to text fields
 $plantilla->assign("TEXTAREA_ID", "txtOtherCPD");
@@ -486,7 +485,7 @@ if ($datoUsuarioWeb["web"] != "") {
     $subPlantilla->assign("PERFIL_VALOR_WEB", $datoUsuarioWeb["web"]);
 }
 if ($datoUsuarioWeb["imagen"] != "") {
-    $imagen_miembro = "files/members/thumb/".$datoUsuarioWeb["imagen"];
+    $imagen_miembro = "files/members/thumb/" . $datoUsuarioWeb["imagen"];
 } else {
     $imagen_miembro = "files/members/default.jpg";
 }
@@ -548,20 +547,20 @@ $subPlantilla->assign("PERFIL_FACTURACION", $plantillaPerfilFacturacionUsuario->
 /*
  * Get membership history and assign data to placeholders
  */
-  $resultadoInscripcion=$db->callProcedure("CALL ".OBJECT_DB_ACRONYM."_sp_inscripcion_usuario_web_historial(".$_SESSION["met_user"]["id"].",".$_SESSION["id_idioma"].")");
-  while($datoInscripcion=$db->getData($resultadoInscripcion)){
-      if($datoInscripcion["pagado"]==1){
-          $fechaStart=explode(" ",$datoInscripcion["fecha_inscripcion"]);
-          $subPlantilla->assign("INSCRIPTIONS_HISTORY_ID",$datoInscripcion["id_inscripcion"]);
-          $subPlantilla->assign("INSCRIPTIONS_HISTORY_AMOUNT",$datoInscripcion["importe"]);
-          $subPlantilla->assign("INSCRIPTIONS_HISTORY_NUMBER",$datoInscripcion["numero_inscripcion"]);
-          $subPlantilla->assign("INSCRIPTIONS_HISTORY_START_DATE",generalUtils::conversionFechaFormato($fechaStart[0],"-","-"));
-          $subPlantilla->assign("INSCRIPTIONS_HISTORY_END_DATE",generalUtils::conversionFechaFormato($datoInscripcion["fecha_finalizacion"],"-","-"));
-          $subPlantilla->assign("INSCRIPTIONS_HISTORY_PAYMENT_TYPE",$datoInscripcion["tipo_pago"]);
+$resultadoInscripcion = $db->callProcedure("CALL " . OBJECT_DB_ACRONYM . "_sp_inscripcion_usuario_web_historial(" . $_SESSION["met_user"]["id"] . "," . $_SESSION["id_idioma"] . ")");
+while ($datoInscripcion = $db->getData($resultadoInscripcion)) {
+    if ($datoInscripcion["pagado"] == 1) {
+        $fechaStart = explode(" ", $datoInscripcion["fecha_inscripcion"]);
+        $subPlantilla->assign("INSCRIPTIONS_HISTORY_ID", $datoInscripcion["id_inscripcion"]);
+        $subPlantilla->assign("INSCRIPTIONS_HISTORY_AMOUNT", $datoInscripcion["importe"]);
+        $subPlantilla->assign("INSCRIPTIONS_HISTORY_NUMBER", $datoInscripcion["numero_inscripcion"]);
+        $subPlantilla->assign("INSCRIPTIONS_HISTORY_START_DATE", generalUtils::conversionFechaFormato($fechaStart[0], "-", "-"));
+        $subPlantilla->assign("INSCRIPTIONS_HISTORY_END_DATE", generalUtils::conversionFechaFormato($datoInscripcion["fecha_finalizacion"], "-", "-"));
+        $subPlantilla->assign("INSCRIPTIONS_HISTORY_PAYMENT_TYPE", $datoInscripcion["tipo_pago"]);
 
-          $subPlantilla->parse("contenido_principal.item_inscripcion");
-      }
-  }
+        $subPlantilla->parse("contenido_principal.item_inscripcion");
+    }
+}
 
 //Loan the breadcrumbs
 require "includes/load_breadcrumb.inc.php";

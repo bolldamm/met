@@ -398,6 +398,8 @@
                     //Run function to generate conference registration (AJAX call to save_inscription_conference.php)
                     generateMemberRegistration();
                 }
+                event.preventDefault();
+                event.stopPropagation();
                 this.classList.add("was-validated");
             });
         }
@@ -441,11 +443,10 @@
                     }else{
                         //Otherwise, result = error message, so display message on registration form
                         var msgContenido = document.getElementById("msgAlert");
-                        msgContenido.innerHTML = signupResult.value;
+                        msgContenido.innerHTML = resultadoProceso.value;
                         msgContenido.setAttribute("class", "msgKO");
                         msgContenido.style.display = "block";
                         moverWeb();
-                        //Unblock interface via blockUI.js
                         $.unblockUI();
                     }
                 }
@@ -482,7 +483,9 @@
                     //Generate conference registration (AJAX call to save_inscription_conference.php)
                     generateMembershipRenewal();
                 }
-            this.classList.add("was-validated");
+                event.preventDefault();
+                event.stopPropagation();
+                this.classList.add("was-validated");
             });
         }
 
@@ -513,7 +516,7 @@
                         window.location="inscripcion_finalizada.php?tipo=4";
                     }else{
                         var msgContenido = document.getElementById("msgAlert");
-                        msgContenido.innerHTML = renewalResult.value;
+                        msgContenido.innerHTML = resultadoProceso.value;
                         msgContenido.setAttribute("class", "msgKO");
                         msgContenido.style.display = "block";
                         moverWeb();
@@ -596,7 +599,7 @@
         //ON CLICK, unset/reset error message when privacy checkbox is checked/unchecked
         function privacyAlert() {
             $("#chkPrivacy").on("click", function () {
-                if (this.checked === true) {
+                if ($(this).prop("checked")) {
                     $("#chkPrivacyMessage").html("");
                     $("#containerPrivacyCheck").removeClass("errorBackgroundColor");
                 } else {
@@ -610,31 +613,40 @@
         function validateWorkshopsOnSubmit() {
             var form = document.getElementById("frmWorkshopRegister");
             form.addEventListener("submit", function(event) {
-
-                //Add colour highlighting and custom error message to…
-
-                //Payment method (has required attribute)
-                if (!$(".paymentMethod").prop("checked")) {
-                    $("#paymentMethodMessage").html("Please select a payment method");
-                    $("#containerPaymentMethod").addClass("errorBackgroundColor");
-                }
-
-                //Privacy consent (has required attribute)
-                if (!$("#chkPrivacy").prop("checked")) {
-                    $("#chkPrivacyMessage").html("To submit the form, you must accept MET's privacy policy");
-                    $("#containerPrivacyCheck").addClass("errorBackgroundColor");
-                }
-
-                //Run standard HTML5 validation
                 if (form.checkValidity() === false) {
-                    //with scroll animation
-                    $('html, body').animate({
-                        scrollTop: $(".form-control:invalid").first().offset().top
-                    }, 1000);
                     event.preventDefault();
                     event.stopPropagation();
+                    //Payment method (has required attribute)
+                    if (!$(".paymentMethod").prop("checked")) {
+                        $("#paymentMethodMessage").html("Please select a payment method");
+                        $("#containerPaymentMethod").addClass("errorBackgroundColor");
+                    }
+                    //Privacy consent (has required attribute)
+                    if (!$("#chkPrivacy").prop("checked")) {
+                        $("#chkPrivacyMessage").html("To submit the form, you must accept MET's privacy policy");
+                        $("#containerPrivacyCheck").addClass("errorBackgroundColor");
+                    }
+                    //Scroll to first invalid text input or checkbox, with animation
+                    var txtInvalid = $(".form-control:invalid");
+                    var chkInvalid = $(".form-check-input:invalid");
+                    if (txtInvalid.length > 0) {
+                        $("html, body").animate({
+                            scrollTop: txtInvalid.first().offset().top
+                        }, 800);
+                    } else if (chkInvalid.length > 0) {
+                        $("html, body").animate({
+                            scrollTop: chkInvalid.first().offset().top
+                        }, 800);
+                    }
+                } else if ($(".workshopChoice:checked").length < 1) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    $("#workshopMessage").html("Please select a workshop");
+                    $("html, body").animate({
+                        scrollTop: $("#containerWorkshop").offset().top
+                    }, 800);
                 } else {
-                    //If all validations OK, store workshop choices (string of IDs) in hidden variable
+                    //If all client-side validations OK, store workshop choices (IDs) in hidden element
                     var workshopChoices = "";
                     var workshops = document.getElementsByClassName("workshopChoice");
                     for (var i = 0; i < workshops.length; i++) {
@@ -647,14 +659,15 @@
                     workshopChoices = workshopChoices.substring(0, workshopChoices.length - 1);
                     document.frmWorkshopRegister.hdnIdTaller.value = workshopChoices;
 
-                    //Block user interface (blockUI,js) and display "Sending…" message
+                    //Block user interface (blockUI.js) and display "Sending…" message
                     mensajeCargando("{STATIC_GLOBAL_SENDING}...");
 
-                    //Generate workshop registration (AJAX call to save_inscription_workshop.php)
+                    //Generate workshop registration (Ajax call in save_inscription_workshop.php)
                     generateWorkshopRegistration();
                 }
+                event.preventDefault();
+                event.stopPropagation();
                 form.classList.add("was-validated");
-
             }, false);
         }
 
@@ -663,6 +676,7 @@
             calculatePriceWorkshops();
             updatePriceSisterAssoc();
             removePaymentMethodAlert();
+            privacyAlert();
             refreshCaptchaWorkshop();
             validateWorkshopsOnSubmit(); //this calls generarInscripcionWorkshop() if valid
             supports_input_placeholder();
@@ -674,17 +688,18 @@
 * If bank transfer and success, calls inscripcion_finalizada.php
 * If Paypal, submits payment data to Paypal in paypal_form.html
 */
-        function generateWorkshopRegistration() {
+        function generateWorkshopRegistration(event) {
             var form = $("#frmWorkshopRegister");
             var signupResult;
+            var msgContenido = document.getElementById("msgAlert");
             $.ajax({
                 type: "POST",
                 url: "ajax/save_inscription_workshop.php",
                 data: form.serialize(),
                 success: function (data) {
-                    //Store serialised signup data in workshop registration form
+                    //Document is workshop form - store serialised form data in "resultadoInscripcion" DIV
                     document.getElementById("resultadoInscripcion").innerHTML = data;
-                    //Get result (1=transfer, 2=Paypal, or else error message) from "process_form.html"
+                    //Document is process_form.html - get result (1=transfer, 2=Paypal, or else error message) from process_form.html
                     signupResult = document.getElementById("hdnTipoResultado");
 
                     //If bank transfer, call "inscripcion_finalizada.php"
@@ -696,13 +711,10 @@
                     } else if (signupResult.value === "2") {
                         document.frmPaypal.submit();
 
-                    //Otherwise, result = error message, so display message on registration form
+                    //Otherwise, the signup result is an error message
                     } else {
-                        var msgContenido = document.getElementById("msgAlert");
-                        msgContenido.innerHTML = signupResult.value;
-                        msgContenido.setAttribute("class", "msgKO alert alert-danger");
-                        msgContenido.style.display = "block";
-                        moverWeb();
+                        var captchaMessage = document.getElementById("captchaMessage");
+                        captchaMessage.innerHTML = signupResult.value;
                         $.unblockUI();
                     }
                 }
@@ -879,6 +891,9 @@
                     if (countrySelect.val() < 0) {
                         countrySelect.css("border-color", "#dc3545");
                         $("#chkCountryMessage").html("Please select a country");
+                    } else {
+                        countrySelect.css("border-color", "");
+                        $("#chkCountryMessage").html("");
                     }
                     if (workshops < 1 && minisessions < 1) {
                         $("#workshopsMessage").html("Registration for one workshop or two minisessions is included in the conference fee. If you do not wish to register for any of the workshops, please check the appropriate box before submitting the form");
@@ -946,6 +961,8 @@
                     //Generate conference registration (AJAX call to save_inscription_conference.php)
                     generateConferenceRegistration();
                 }
+                event.preventDefault();
+                event.stopPropagation();
                 this.classList.add("was-validated");
             });
         }
@@ -1060,11 +1077,8 @@
 
                     }else{
                         //Otherwise, result = error message, so display message on registration form
-                        var msgContenido = document.getElementById("msgAlert");
-                        msgContenido.innerHTML = signupResult.value;
-                        msgContenido.setAttribute("class", "msgKO");
-                        msgContenido.style.display = "block";
-                        moverWeb();
+                        var captchaMessage = document.getElementById("captchaMessage");
+                        captchaMessage.innerHTML = signupResult.value;
                         $.unblockUI();
                     }
                 }
@@ -1178,16 +1192,16 @@
         function validateEditProfile() {
             $("#frmMembership").on("submit", function (event) {
                 var country = $("#cmbPais");
-                var profActs = $(".professionalActivity:checked").length;
+                var profActs = $(".professionalActivity:checked");
                 if (this.checkValidity() === false) {
                     //A required field is empty
                     //with scroll animation
                     $("html, body").animate({
                         scrollTop: $(".form-control:invalid").first().offset().top
-                    }, 1000);
+                    }, 800);
                     event.preventDefault();
                     event.stopPropagation();
-                } else if ((country.val() < 0) || (profActs < 1)) {
+                } else if ((country.val() < 0) || (profActs.length < 1)) {
                     if (country.val() < 0) {
                         //No country of residence selected
                         //document.getElementById("cmbPais").classList.add("errorBorderColor");
@@ -1195,21 +1209,37 @@
                         $("#chkCountryMessage").html("Please select a country");
                         $("html, body").animate({
                             scrollTop: country.offset().top
-                        }, 1000);
+                        }, 800);
                     }
-                    if (profActs < 1) {
+                    if (profActs.length < 1) {
                         var profContainer = $("#containerProfActs");
                         //No professional activity selected
                         $("#profActsMessage").html("Please select at least one activity");
                         profContainer.addClass("errorBackgroundColor");
                         $("html, body").animate({
                             scrollTop: profContainer.offset().top
-                        }, 1000);
+                        }, 800);
                     }
                     event.preventDefault();
                     event.stopPropagation();
+                } else {
+                    var cadenaActividades="";
+                    profActs.each(function(index,valor){
+                        cadenaActividades+=valor.value+",";
+                    });
+                    cadenaActividades=cadenaActividades.substring(0,cadenaActividades.length-1);
+                    document.frmMembership.hdnIdActividadProfesional.value=cadenaActividades;
+
+                    var cadenaSituacionesLaborales="";
+                    $(".workSituation:checked").each(function(index,valor){
+                        cadenaSituacionesLaborales+=valor.value+",";
+                    });
+                    cadenaSituacionesLaborales=cadenaSituacionesLaborales.substring(0,cadenaSituacionesLaborales.length-1);
+                    document.frmMembership.hdnIdSituacionLaboral.value=cadenaSituacionesLaborales;
+
+                    //Run function to block user interface via blockUI.js and display "Sending…" message
+                    mensajeCargando("{STATIC_GLOBAL_SENDING}...");
                 }
-                this.classList.add("was-validated");
             });
         }
 

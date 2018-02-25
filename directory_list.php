@@ -262,7 +262,7 @@ require "includes/load_main_components.inc.php";
     $subPlantilla->assign("COMBO_TARGET_LANGUAGES", generalUtils::construirCombo($db, "CALL ed_sp_get_target_languages(".$idMenuTipo.",".$_SESSION["id_idioma"].")", "ta", "cmbTgt", $targetLanguage, "nombre", "id_working_language", STATIC_DIRECTORY_MEMBER_DATABASE_SEARCH_TARGET_LANGUAGE, 0, "class='form-control'"));
 
 	//Countries dropdown
-	$subPlantilla->assign("COMBO_PAISES", generalUtils::construirCombo($db, "CALL ed_sp_web_usuario_web_pais_obtener_combo(".$idMenuTipo.")", "c", "cmbPais", $idPais, "nombre_original", "id_pais", STATIC_DIRECTORY_MEMBER_DATABASE_SEARCH_COUNTRY, 0, "class='form-control'"));
+	$subPlantilla->assign("COMBO_PAISES", generalUtils::construirCombo($db, "CALL ed_sp_web_usuario_web_pais_obtener_combo(".$idMenuTipo.")", "c", "cmbPais", $idPais, "nombre_original", "id_pais", STATIC_DIRECTORY_MEMBER_DATABASE_SEARCH_COUNTRY, 0, "class='form-control' autocomplete='country-name'"));
 	
         
     //Cargamos el breadcrumb

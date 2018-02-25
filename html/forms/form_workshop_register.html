@@ -88,6 +88,7 @@
             <!-- END: item_taller -->
             </tbody>
         </table>
+        <span id="workshopMessage" class="validationMessage"></span>
     </fieldset>
 
     <div id="total-payable">
@@ -213,7 +214,11 @@
                          title="{STATIC_CAPTCHA_RELOAD}">&nbsp;
                 </div>
                 <div class="col-6">
-                    <input type="text" class="form-control" id="txtCaptcha" name="txtCaptcha" maxlength="5" style="width:100px;">
+                    <input type='text' class='form-control' id='txtCaptcha' name='txtCaptcha' maxlength='5' required>
+                    <span id="captchaMessage" class="validationMessage"></span>
+                    <div class='invalid-feedback captchaFeedback'>
+                        Please enter the characters from the image
+                    </div>
                 </div>
             </div>
         </div>

@@ -43,9 +43,6 @@ p#msgLoginError {
     margin-top: .5em;
     color: #dc3545;
 }
-#frmRecordarClave #imageCaptcha, #frmRecordarClave #reloadCaptcha {
-    margin: .8em 3em 0 0;
-}
 h6.newsTitle {
     color: #8B1513;
     margin: .8em 0 0 0;

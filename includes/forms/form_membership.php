@@ -11,7 +11,7 @@
 $plantillaFormulario->assign("COMBO_TITULOS", generalUtils::construirCombo($db, "CALL ed_sp_web_tratamiento_usuario_web_obtener_combo(".$_SESSION["id_idioma"].")", "cmbTitulo", "cmbTitulo", -1, "nombre", "id_tratamiento_usuario_web", STATIC_FORM_MEMBERSHIP_TITLE, -1, 'class="form-control" style="color:lightslategray;"'));
 
 //Combo paises
-$plantillaFormulario->assign("COMBO_PAIS", generalUtils::construirCombo($db, "CALL ed_sp_web_pais_obtener_combo()", "cmbPais", "cmbPais", -1, "nombre_original", "id_pais", STATIC_FORM_MEMBERSHIP_COUNTRY_OF_RESIDENCE."*", -1, 'class="form-control" style="width:100%; color:lightslategray;"'));
+$plantillaFormulario->assign("COMBO_PAIS", generalUtils::construirCombo($db, "CALL ed_sp_web_pais_obtener_combo()", "cmbPais", "cmbPais", -1, "nombre_original", "id_pais", STATIC_FORM_MEMBERSHIP_COUNTRY_OF_RESIDENCE."*", -1, 'class="form-control" style="width:100%; color:lightslategray;" autocomplete="country-name" '));
 
 //Combo años
 $plantillaFormulario->assign("COMBO_ANYOS", generalUtils::construirCombo($db, "CALL ed_sp_web_edad_usuario_web_obtener_combo(".$_SESSION["id_idioma"].")", "cmbAnyos", "cmbAnyos", -1, "nombre", "id_edad_usuario_web", STATIC_FORM_MEMBERSHIP_AGE, -1, 'class="form-control" style="width:5em; color:lightslategray;"'));

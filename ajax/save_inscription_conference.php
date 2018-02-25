@@ -55,7 +55,7 @@
 	}
 	
 	
-	//Comprobamos que ha introducido bien el captcha
+	//Check that captcha is correct
 	include("../classes/secureimage/securimage.php");
   	$img = new Securimage();
 

@@ -1,6 +1,7 @@
 <?php
 	/**
-     * Stores result (payment method or error) of signup process in "process_form.html" template
+     * If valid, stores result (payment method) in "process_form.html"
+     * If invalid, stores error message in "process_form.html"
 	 * Gets data from signup form and validates it
      * Inserts signup data in database and submits data to Paypal
      * Passes data to load_save_inscription_workshop.inc.php for movement and emails
@@ -175,7 +176,7 @@
 
 		$db->startTransaction();
 
-		//If payment method is Paypal, se registration status to "Pending"
+		//If payment method is Paypal, set registration status to "Pending"
 		if($metodoPago==INSCRIPCION_TIPO_PAGO_PAYPAL){
 			//Si estamos pagando por paypal o tpv... el estado es pendiente hasta que se haga el pago
 			$idEstadoInscripcion=INSCRIPCION_ESTADO_INSCRIPCION_PENDIENTE;
