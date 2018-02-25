@@ -265,152 +265,282 @@
         <!-- END: formulario_reiniciar_clave -->
 
         <!-- BEGIN: validate_membership_form -->
-        //Validate password matching on key up
-        function checkPass() {
-            var pass = $("#txtPasswd");
-            var rePass = $("#txtRePasswd");
-            var pwdMessage = $("#pwdMessage");
-            if (pass.val() !== "" && rePass.val() !== "") {
-                if (pass.val() !== rePass.val()) {
-                    pwdMessage.css("color", "#dc3545");
-                    pwdMessage.html("Passwords must match");
-                    $("#btnSendForm").prop("disabled", true);
-                } else {
-                    pwdMessage.css("color", "#28a745");
-                    pwdMessage.html("Passwords match!");
-                    $("#btnSendForm").prop("disabled", false);
-                }
-            }
-        }
 
-        //ON CLICK, clear alert on country dropdown if country selected
-        function clearCountryError() {
-            $("#cmbPais").on("click", function() {
-                if ($(this).val() > 0) {
-                    $(this).css("border-color", "");
-                    $("#chkCountryMessage").html("");
+        function removeUsernameAlert () {
+            $("#txtEmailUser").on("keyup", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#emailUserMessage").html("");
                 }
             });
         }
-
-        //ON CLICK, clear alert on professional activities if one selected
-        function clearProfActivAlert() {
+        function removePasswordAlert () {
+            $("#txtPasswd").on("keyup", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#passwordMessage").html("");
+                }
+            });
+        }
+        function removeConfirmPasswordAlert () {
+            $("#txtRePasswd").on("keyup", function () {
+                if ($("#txtPasswd").val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#confirmPasswordMessage").html("");
+                }
+            });
+        }
+        function removeMatchPasswordsAlert () {
+            $("#txtRePasswd").on("keyup", function () {
+                if ($(this).val() === $("#txtPasswd").val()) {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#passwordMatchMessage").html("");
+                }
+            });
+        }
+        function removeFirstNameAlert () {
+            $("#txtNombre").on("keyup", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#firstNameMessage").html("");
+                }
+            });
+        }
+        function removeLastNameameAlert () {
+            $("#txtApellidos").on("keyup", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#lastNameMessage").html("");
+                }
+            });
+        }
+        function removeCountryAlert () {
+            $("#cmbPais").on("change", function () {
+                if ($(this).val() > -1) {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#countryMessage").html("");
+                }
+            });
+        }
+        function removeProfActsAlert () {
             $(".professionalActivity").each(function() {
-                $(this).on("click", function() {
-                    if (this.checked) {
+                $(this).on("click", function () {
+                    if ($(this).length > 0) {
+                        $("#containerProfActs").removeClass("errorBackgroundColor error");
                         $("#profActsMessage").html("");
-                        $("#containerProfActs").removeClass("errorBackgroundColor");
                     }
                 });
             });
         }
-
-        //ON CLICK, clear alert for Payment methods
-        function removePaymentMethodWarning() {
+        function removeNifAlert () {
+            $("#txtFacturacionNifCliente").on("change", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#nifMessage").html("");
+                }
+            });
+        }
+        function removeBillingNameAlert () {
+            $("#txtFacturacionNombreCliente").on("change", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#billingNameMessage").html("");
+                }
+            });
+        }
+        function removeBillingAddressAlert () {
+            $("#txtFacturacionDireccion").on("change", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#addressMessage").html("");
+                }
+            });
+        }
+        function removeBillingPostcodeAlert () {
+            $("#txtFacturacionCodigoPostal").on("change", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#postcodeMessage").html("");
+                }
+            });
+        }
+        function removeBillingCityAlert () {
+            $("#txtFacturacionCiudad").on("change", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#cityMessage").html("");
+                }
+            });
+        }
+        function removeBillingCountryAlert () {
+            $("#txtFacturacionPais").on("change", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#billingCountryMessage").html("");
+                }
+            });
+        }
+        function removePaymentAlert () {
             $(".paymentMethod").on("click", function () {
-                if ($(".paymentMethod:checked")) {
+                if ($(this).prop("checked") !== false) {
+                    $("#containerPaymentMethod").removeClass("errorBackgroundColor error");
                     $("#paymentMethodMessage").html("");
-                    $("#containerPaymentMethod").removeClass("errorBackgroundColor");
+                }
+            });
+        }
+        function removePrivacyAlert () {
+            $("#chkPrivacy").on("click", function () {
+                if ($(this).prop("checked") !== false) {
+                    $("#containerPrivacyCheck").removeClass("errorBackgroundColor error");
+                    $("#privacyMessage").html("");
                 }
             });
         }
 
-        //ON CLICK, unset/reset alert for Privacy checkbox
-        function togglePrivacyAlert() {
-            $("#chkPrivacy").on("click", function () {
-                //ON CLICK,
-                if (this.checked === true) {
-                    $("#chkPrivacyMessage").html("");
-                    $("#containerPrivacyCheck").removeClass("errorBackgroundColor");
-                } else {
-                    $("#chkPrivacyMessage").html("To submit the form, you must accept MET's privacy policy");
-                    $("#containerPrivacyCheck").addClass("errorBackgroundColor");
-                }
-            });
-        }
 
         //ON SUBMIT, validate required fields
         function validateMembershipForm() {
             $("#frmMembership").on("submit", function (event) {
+                var username = $("#txtEmailUser");
+                var pass = $("#txtPasswd");
+                var rePass = $("#txtRePasswd");
+                var firstName = $("#txtNombre");
+                var lastName = $("#txtApellidos");
                 var country = $("#cmbPais");
                 var profActs = $(".professionalActivity:checked");
-                if (this.checkValidity() === false) {
-                    if (country.val() < 0) {
-                        country.css("border-color", "#dc3545");
-                        $("#chkCountryMessage").html("Please select a country");
-                    }
-                    if (!$(".paymentMethod").prop("checked")) {
-                        $("#paymentMethodMessage").html("Please select a payment method");
-                        $("#containerPaymentMethod").addClass("errorBackgroundColor");
-                    }
-                    if (!$("#chkPrivacy").prop("checked")) {
-                        $("#chkPrivacyMessage").html("To submit the form, you must accept MET's privacy policy");
-                        $("#containerPrivacyCheck").addClass("errorBackgroundColor");
-                    }
-                    //Scroll to first invalid text input or checkbox, with animation
-                    var txtInvalid = $(".form-control:invalid");
-                    var chkInvalid = $(".form-check-input:invalid");
-                    if (txtInvalid.length > 0) {
-                        $("html, body").animate({
-                            scrollTop: txtInvalid.first().offset().top
-                        }, 800);
-                    } else if (chkInvalid.length > 0) {
-                        $("html, body").animate({
-                            scrollTop: chkInvalid.first().offset().top
-                        }, 800);
-                    }
-                    event.preventDefault();
-                    event.stopPropagation();
-                } else if (profActs.length < 1) {
-                    $("#profActsMessage").html("Please select at least one activity");
-                    $("#containerProfActs").addClass("errorBackgroundColor");
-                    //with scroll animation
-                    $('html, body').animate({
-                        scrollTop: $("#profInfo").offset().top
-                    }, 1000);
-                    event.preventDefault();
-                    event.stopPropagation();
-                } else if (country.val() < 0) {
-                    country.css("border-color", "#dc3545");
-                    $("#chkCountryMessage").html("Please select a country");
-                    $('html, body').animate({
-                        scrollTop: $("#personalDetails").offset().top
-                    }, 1000);
-                    event.preventDefault();
-                    event.stopPropagation();
-                } else {
-                    var cadenaActividades="";
-                    profActs.each(function(index,valor){
-                        cadenaActividades+=valor.value+",";
-                    });
-                    cadenaActividades=cadenaActividades.substring(0,cadenaActividades.length-1);
-                    document.frmMembership.hdnIdActividadProfesional.value=cadenaActividades;
+                var billingNif = $("#txtFacturacionNifCliente");
+                var billingName = $("#txtFacturacionNombreCliente");
+                var billingAddress = $("#txtFacturacionDireccion");
+                var billingPostcode = $("#txtFacturacionCodigoPostal");
+                var billingCity = $("#txtFacturacionCiudad");
+                var billingCountry = $("#txtFacturacionPais");
+                var paymentMethod = $(".paymentMethod");
+                var privacy = $("#chkPrivacy");
 
-                    var cadenaSituacionesLaborales="";
-                    $(".workSituation:checked").each(function(index,valor){
-                        cadenaSituacionesLaborales+=valor.value+",";
+                // Stop form submission
+                event.preventDefault();
+                event.stopPropagation();
+
+                //If any fields are invalid, display alert and message
+                if (username.val() === "") {
+                    username.addClass("errorBorderColor error");
+                    $("#emailUserMessage").html("Please enter a valid email address");
+                }
+                if (pass.val() === "") {
+                    pass.addClass("errorBorderColor error");
+                    $("#passwordMessage").html("Please enter password");
+                }
+                if (rePass.val() === "") {
+                    rePass.addClass("errorBorderColor error");
+                    $("#confirmPasswordMessage").html("Please confirm password");
+                }
+                if (pass.val() !== "" && rePass.val() !== "" && pass.val() !== rePass.val()) {
+                    rePass.addClass("errorBorderColor error");
+                    $("#passwordMatchMessage").html("Passwords must match");
+                }
+                if (firstName.val() === "") {
+                    firstName.addClass("errorBorderColor error");
+                    $("#firstNameMessage").html("Please enter your first name");
+                }
+                if (lastName.val() === "") {
+                    lastName.addClass("errorBorderColor error");
+                    $("#lastNameMessage").html("Please enter your last name(s)");
+                }
+                if (country.val() < 0) {
+                    country.addClass("errorBorderColor error");
+                    $("#countryMessage").html("Please select a country");
+                }
+                if (profActs.length < 1) {
+                    $("#containerProfActs").addClass("errorBackgroundColor error");
+                    $("#profActsMessage").html("Please select at least one activity");
+                }
+                if (billingNif.val() === "") {
+                    billingNif.addClass("errorBorderColor error");
+                    $("#nifMessage").html("Please enter your tax ID or VAT number");
+                }
+                if (billingName.val() === "") {
+                    billingName.addClass("errorBorderColor error");
+                    $("#billingNameMessage").html("Please enter your name for billing purposes");
+                }
+                if (billingAddress.val() === "") {
+                    billingAddress.addClass("errorBorderColor error");
+                    $("#addressMessage").html("Please enter your address");
+                }
+                if (billingPostcode.val() === "") {
+                    billingPostcode.addClass("errorBorderColor error");
+                    $("#postcodeMessage").html("Please enter your postal code");
+                }
+                if (billingCity.val() === "") {
+                    billingCity.addClass("errorBorderColor error");
+                    $("#cityMessage").html("Please enter your town or city");
+                }
+                if (billingCountry.val() === "") {
+                    billingCountry.addClass("errorBorderColor error");
+                    $("#billingCountryMessage").html("Please enter your country");
+                }
+                if (paymentMethod.prop("checked") === false) {
+                    $("#containerPaymentMethod").addClass("errorBackgroundColor error");
+                    $("#paymentMethodMessage").html("Please select a payment method");
+                }
+                if (privacy.prop("checked") === false) {
+                    $("#containerPrivacyCheck").addClass("errorBackgroundColor error");
+                    $("#privacyMessage").html("To submit the form, you must accept MET's privacy policy");
+                }
+
+                //If any fields are invalid, scroll to first invalid input or checkbox, with animation
+                if (username.val() === "" || pass.val() === "" || rePass.val() === "" || pass.val() !== rePass.val() || firstName.val() === "" || lastName.val() === "" || country.val() < 0 || profActs.length < 1 || billingNif.val() === "" || billingName.val() === "" || billingAddress.val() === "" || billingPostcode.val() === "" || billingCity.val() === "" || billingCountry.val() === "" || paymentMethod.prop("checked") === false || privacy.prop("checked") === false) {
+                    var invalidInput = $(".error");
+                    if (invalidInput.length > 0) {
+                        $("html, body").animate({
+                            scrollTop: invalidInput.first().offset().top
+                        }, 800);
+                    }
+
+                } else {
+
+                    //Store choices (prof activities and work situations) in hidden element
+                    var cadenaActividades = "";
+                    profActs.each(function (index, valor) {
+                        cadenaActividades += valor.value + ",";
                     });
-                    cadenaSituacionesLaborales=cadenaSituacionesLaborales.substring(0,cadenaSituacionesLaborales.length-1);
-                    document.frmMembership.hdnIdSituacionLaboral.value=cadenaSituacionesLaborales;
+                    cadenaActividades = cadenaActividades.substring(0, cadenaActividades.length - 1);
+                    document.frmMembership.hdnIdActividadProfesional.value = cadenaActividades;
+
+                    var cadenaSituacionesLaborales = "";
+                    $(".workSituation:checked").each(function (index, valor) {
+                        cadenaSituacionesLaborales += valor.value + ",";
+                    });
+                    cadenaSituacionesLaborales = cadenaSituacionesLaborales.substring(0, cadenaSituacionesLaborales.length - 1);
+                    document.frmMembership.hdnIdSituacionLaboral.value = cadenaSituacionesLaborales;
 
                     //Run function to block user interface via blockUI.js and display "Sending…" message
                     mensajeCargando("{STATIC_GLOBAL_SENDING}...");
+
                     //Run function to generate conference registration (AJAX call to save_inscription_conference.php)
                     generateMemberRegistration();
                 }
-                event.preventDefault();
-                event.stopPropagation();
-                this.classList.add("was-validated");
+
             });
         }
 
         //ON PAGE LOAD, add event listeners
         $( document ).ready(function() {
-            checkPass();
-            clearCountryError();
-            clearProfActivAlert();
-            removePaymentMethodWarning();
-            togglePrivacyAlert();
+            removeUsernameAlert();
+            removePasswordAlert();
+            removeConfirmPasswordAlert();
+            removeMatchPasswordsAlert();
+            removeFirstNameAlert();
+            removeLastNameameAlert();
+            removeCountryAlert();
+            removeProfActsAlert();
+            removeNifAlert();
+            removeBillingNameAlert();
+            removeBillingAddressAlert();
+            removeBillingPostcodeAlert();
+            removeBillingCityAlert();
+            removeBillingCountryAlert();
+            removePaymentAlert();
+            removePrivacyAlert();
             validateMembershipForm();
             supports_input_placeholder();
         });
@@ -443,7 +573,7 @@
                     }else{
                         //Otherwise, result = error message, so display message on registration form
                         var msgContenido = document.getElementById("msgAlert");
-                        msgContenido.innerHTML = resultadoProceso.value;
+                        msgContenido.innerHTML = signupResult.value;
                         msgContenido.setAttribute("class", "msgKO");
                         msgContenido.style.display = "block";
                         moverWeb();

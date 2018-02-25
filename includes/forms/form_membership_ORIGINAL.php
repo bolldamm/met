@@ -8,17 +8,17 @@
  */
 
 //Combo titulos
-$plantillaFormulario->assign("COMBO_TITULOS", generalUtils::construirCombo($db, "CALL ed_sp_web_tratamiento_usuario_web_obtener_combo(".$_SESSION["id_idioma"].")", "cmbTitulo", "cmbTitulo", -1, "nombre", "id_tratamiento_usuario_web", STATIC_FORM_MEMBERSHIP_TITLE, -1, 'class="form-control" style="color:lightslategray;"'));
+$plantillaFormulario->assign("COMBO_TITULOS", generalUtils::construirCombo($db, "CALL ed_sp_web_tratamiento_usuario_web_obtener_combo(".$_SESSION["id_idioma"].")", "cmbTitulo", "cmbTitulo", -1, "nombre", "id_tratamiento_usuario_web", STATIC_FORM_MEMBERSHIP_TITLE, -1, 'class="inputText left" style="width:63px;"'));
 
 //Combo paises
-$plantillaFormulario->assign("COMBO_PAIS", generalUtils::construirCombo($db, "CALL ed_sp_web_pais_obtener_combo()", "cmbPais", "cmbPais", -1, "nombre_original", "id_pais", STATIC_FORM_MEMBERSHIP_COUNTRY_OF_RESIDENCE."*", -1, 'class="form-control" style="width:100%; color:lightslategray;" autocomplete="country-name" '));
+$plantillaFormulario->assign("COMBO_PAIS", generalUtils::construirCombo($db, "CALL ed_sp_web_pais_obtener_combo()", "cmbPais", "cmbPais", -1, "nombre_original", "id_pais", STATIC_FORM_MEMBERSHIP_COUNTRY_OF_RESIDENCE, -1, 'class="inputText left required" style="width:283px;"'));
 
 //Combo años
-$plantillaFormulario->assign("COMBO_ANYOS", generalUtils::construirCombo($db, "CALL ed_sp_web_edad_usuario_web_obtener_combo(".$_SESSION["id_idioma"].")", "cmbAnyos", "cmbAnyos", -1, "nombre", "id_edad_usuario_web", STATIC_FORM_MEMBERSHIP_AGE, -1, 'class="form-control" style="width:5em; color:lightslategray;"'));
+$plantillaFormulario->assign("COMBO_ANYOS", generalUtils::construirCombo($db, "CALL ed_sp_web_edad_usuario_web_obtener_combo(".$_SESSION["id_idioma"].")", "cmbAnyos", "cmbAnyos", -1, "nombre", "id_edad_usuario_web", STATIC_FORM_MEMBERSHIP_AGE, -1, 'class="inputText left" style="width:auto; margin-top:10px;"'));
 
 
 //Combo situacion adicional
-$plantillaFormulario->assign("COMBO_SITUACION_ADICIONAL", generalUtils::construirCombo($db, "CALL ed_sp_web_situacion_adicional_obtener_combo(".$_SESSION["id_idioma"].")", "cmbSituacionAdicional", "cmbSituacionAdicional", -1, "nombre", "id_situacion_adicional", STATIC_GLOBAL_COMBO_DEFAULT, -1, 'class="form-control" style="width:100%; margin-top:1em; color:lightslategray;"' ));
+$plantillaFormulario->assign("COMBO_SITUACION_ADICIONAL", generalUtils::construirCombo($db, "CALL ed_sp_web_situacion_adicional_obtener_combo(".$_SESSION["id_idioma"].")", "cmbSituacionAdicional", "cmbSituacionAdicional", -1, "nombre", "id_situacion_adicional", STATIC_GLOBAL_COMBO_DEFAULT, -1, 'class="inputText"' ));
 
 
 //Listado de actividades profesionales
@@ -34,6 +34,9 @@ while($dataActividadProfesional = $db->getData($resulActividadesProfesionales)) 
     $plantillaFormulario->parse("contenido_principal.item_actividad_profesional");
 }
 
+$plantilla->assign("VALIDACION_CHECKS", substr($validacion, 0, -3));
+
+
 //Listamos situaciones laborales
 $resultadoSituacionLaboral = $db->callProcedure("CALL ed_sp_web_situacion_laboral_obtener(".$_SESSION["id_idioma"].")");
 while($dataSituacionLaboral = $db->getData($resultadoSituacionLaboral)) {
@@ -42,10 +45,12 @@ while($dataSituacionLaboral = $db->getData($resultadoSituacionLaboral)) {
 
     $plantillaFormulario->parse("contenido_principal.item_situacion_laboral");
 }
+$plantillaFormulario->assign("DISPLAY_BLOQUE_INVOICE","style='display:none'");
+
 $plantillaFormulario->assign("USUARIO_MODALIDAD",MODALIDAD_USUARIO_INDIVIDUAL);
 
 /**
- * Realizamos todos los parse relacionados con este apartado
+ * Realizamos todos los parse realcionados con este apartado
  */
-$plantilla->parse("contenido_principal.validate_membership_form");
+$plantilla->parse("contenido_principal.validar_membership");
 ?>

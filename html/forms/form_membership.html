@@ -7,23 +7,17 @@
 
     <fieldset>
         <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_ACCOUNT_DETAILS}</legend>
-        <input type='email' class='form-control' name='txtEmailUser' placeholder='{STATIC_FORM_MEMBERSHIP_EMAIL_USER}*' autocomplete='email' required>
-        <div class='invalid-feedback'>
-            Please enter a valid email address
-        </div>
+        <input type='email' class='form-control' name='txtEmailUser' id='txtEmailUser' placeholder='{STATIC_FORM_MEMBERSHIP_EMAIL_USER}' autocomplete='email'>
+        <span id='emailUserMessage' class='validationMessage'></span>
         <div class='form-row'>
             <div class='col-12 col-md-6'>
-                <input type='password' class='form-control' name='txtPasswd' id='txtPasswd'  placeholder='{STATIC_FORM_MEMBERSHIP_PASSWORD_USER}*' autocomplete='new-password' required>
-                <div class='invalid-feedback'>
-                    Please enter password.
-                </div>
+                <input type='password' class='form-control' name='txtPasswd' id='txtPasswd'  placeholder='{STATIC_FORM_MEMBERSHIP_PASSWORD_USER}' autocomplete='new-password'>
+                <span id='passwordMessage' class='validationMessage'></span>
             </div>
             <div class='col-12 col-md-6'>
-                <input type='password' class='form-control' name='txtRePasswd' id='txtRePasswd'  placeholder='{STATIC_FORM_MEMBERSHIP_CONFIRM_PASSWORD_USER}*' autocomplete='new-password' required>
-                <div class='invalid-feedback'>
-                    Please confirm password
-                </div>
-                <span id='pwdMessage' class='validationMessage'></span>
+                <input type='password' class='form-control' name='txtRePasswd' id='txtRePasswd'  placeholder='{STATIC_FORM_MEMBERSHIP_CONFIRM_PASSWORD_USER}' autocomplete='new-password'>
+                <span id='confirmPasswordMessage' class='validationMessage'></span>
+                <span id='passwordMatchMessage' class='validationMessage'></span>
             </div>
         </div>
     </fieldset>
@@ -35,17 +29,13 @@
                 {COMBO_TITULOS}
             </div>
             <div class='col-12 col-md-5'>
-                <input type='text' class='form-control' name='txtNombre' autocomplete='given-name' placeholder='{STATIC_FORM_MEMBERSHIP_FIRST_NAME}*' required>
-                <div class='invalid-feedback'>
-                    Please enter your first name
-                </div>
+                <input type='text' class='form-control' name='txtNombre' id='txtNombre' autocomplete='given-name' placeholder='{STATIC_FORM_MEMBERSHIP_FIRST_NAME}'>
+                <span id='firstNameMessage' class='validationMessage'></span>
             </div>
             <div class='col-12 col-md-5'>
-                <input type='text' class='form-control' name='txtApellidos' autocomplete='family-name'
-                       placeholder='{STATIC_FORM_MEMBERSHIP_LAST_NAMES}*' required>
-                <div class='invalid-feedback'>
-                    Please enter your last name
-                </div>
+                <input type='text' class='form-control' name='txtApellidos' id='txtApellidos' autocomplete='family-name'
+                       placeholder='{STATIC_FORM_MEMBERSHIP_LAST_NAMES}'>
+                <span id='lastNameMessage' class='validationMessage'></span>
             </div>
         </div>
         <div class='form-row'>
@@ -54,7 +44,7 @@
             </div>
             <div class='col-12 col-md-6'>
                 {COMBO_PAIS}
-                <span id='chkCountryMessage' class='validationMessage'></span>
+                <span id='countryMessage' class='validationMessage'></span>
             </div>
         </div>
     </fieldset>
@@ -112,7 +102,7 @@
 
     <fieldset id='profInfo'>
         <legend>{STATIC_FORM_RENEW_MEMBERSHIP_LEGEND_PROFESSIONAL_INFORMATION}</legend>
-        <b>{STATIC_FORM_MEMBERSHIP_YOUR_PROFESSION}</b>*
+        <b>{STATIC_FORM_MEMBERSHIP_YOUR_PROFESSION}</b>
         <div class='form-group' id='containerProfActs'>
             <!-- BEGIN: item_actividad_profesional -->
             <div class='form-check form-check-inline prof-activity'>
@@ -122,8 +112,8 @@
                 </label>
             </div>
             <!-- END: item_actividad_profesional -->
-            <span id='profActsMessage' class='validationMessage'></span>
         </div>
+        <span id='profActsMessage' class='validationMessage'></span>
         <div class='form-row'>
             <div class='col-12 col-md-4 form-group'>
                 <label class='d-none d-md-block d-xl-none small' for='txtSpecifyOther'>If Other, please specify</label>
@@ -184,16 +174,12 @@
         <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_BILLING_INFORMATION}</legend>
         <div class='form-row'>
             <div class='col-12 col-md-6'>
-                <input type='text' class='form-control' name='txtFacturacionNifCliente' placeholder='{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}*' required>
-                <div class='invalid-feedback'>
-                    Please enter your tax ID or VAT number
-                </div>
+                <input type='text' class='form-control' name='txtFacturacionNifCliente' id='txtFacturacionNifCliente' placeholder='{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}'>
+                <span id='nifMessage' class='validationMessage'></span>
             </div>
             <div class='col-12 col-md-6'>
-                <input type='text' class='form-control' name='txtFacturacionNombreCliente' autocomplete='name' placeholder='{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}*' required>
-                <div class='invalid-feedback'>
-                    Please enter your name for billing purposes
-                </div>
+                <input type='text' class='form-control' name='txtFacturacionNombreCliente' id='txtFacturacionNombreCliente' autocomplete='name' placeholder='{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}'>
+                <span id='billingNameMessage' class='validationMessage'></span>
             </div>
         </div>
         <div class='form-row'>
@@ -201,24 +187,18 @@
                 <input type='text' class='form-control' name='txtFacturacionNombreEmpresa' autocomplete='organization' placeholder='{STATIC_FORM_PROFILE_BILLING_NAME_COMPANY}'>
             </div>
             <div class='col-12 col-md-6'>
-                <input type='text' class='form-control' name='txtFacturacionDireccion' autocomplete='address-line1' placeholder='{STATIC_FORM_PROFILE_BILLING_ADDRESS}*' required>
-                <div class='invalid-feedback'>
-                    Please enter your address
-                </div>
+                <input type='text' class='form-control' name='txtFacturacionDireccion' id='txtFacturacionDireccion' autocomplete='address-line1' placeholder='{STATIC_FORM_PROFILE_BILLING_ADDRESS}'>
+                <span id='addressMessage' class='validationMessage'></span>
             </div>
         </div>
         <div class='form-row'>
             <div class='col-12 col-md-6'>
-                <input type='text' class='form-control' name='txtFacturacionCodigoPostal' autocomplete='postal-code' placeholder='{STATIC_FORM_PROFILE_BILLING_ZIPCODE}*' required>
-                <div class='invalid-feedback'>
-                    Please enter your postal code
-                </div>
+                <input type='text' class='form-control' name='txtFacturacionCodigoPostal' id='txtFacturacionCodigoPostal' autocomplete='postal-code' placeholder='{STATIC_FORM_PROFILE_BILLING_ZIPCODE}'>
+                <span id='postcodeMessage' class='validationMessage'></span>
             </div>
             <div class='col-12 col-md-6'>
-                <input type='text' class='form-control' name='txtFacturacionCiudad' autocomplete='address-level2' placeholder='{STATIC_FORM_PROFILE_BILLING_CITY}*' required>
-                <div class='invalid-feedback'>
-                    Please enter your town or city
-                </div>
+                <input type='text' class='form-control' name='txtFacturacionCiudad' id='txtFacturacionCiudad' autocomplete='address-level2' placeholder='{STATIC_FORM_PROFILE_BILLING_CITY}'>
+                <span id='cityMessage' class='validationMessage'></span>
             </div>
         </div>
         <div class='form-row'>
@@ -226,10 +206,8 @@
                 <input type='text' class='form-control' name='txtFacturacionProvincia' autocomplete='address-level1' placeholder='{STATIC_FORM_PROFILE_BILLING_PROVINCE}'>
             </div>
             <div class='col-12 col-md-6'>
-                <input type='text' class='form-control' name='txtFacturacionPais' autocomplete='country-name' placeholder='{STATIC_FORM_PROFILE_BILLING_COUNTRY}*' required>
-                <div class='invalid-feedback'>
-                    Please enter your country
-                </div>
+                <input type='text' class='form-control' name='txtFacturacionPais' id='txtFacturacionPais' autocomplete='country-name' placeholder='{STATIC_FORM_PROFILE_BILLING_COUNTRY}'>
+                <span id='billingCountryMessage' class='validationMessage'></span>
             </div>
         </div>
     </fieldset>
@@ -247,32 +225,28 @@
                 {COMBO_SITUACION_ADICIONAL}
             </div>
         </div>
-        <b>{STATIC_FORM_MEMBERSHIP_PAYMENT_METHOD}*</b>
+        <b>{STATIC_FORM_MEMBERSHIP_PAYMENT_METHOD}</b>
         <div class='form-row' id='containerPaymentMethod'>
             <div class='form-check form-check-inline'>
-                <input type='radio' class='form-check-input paymentMethod' id='transfer' name='rdMetodoPago' value='1' required>
+                <input type='radio' class='form-check-input paymentMethod' id='transfer' name='rdMetodoPago' value='1'>
                 <label class='form-check-label' for='transfer'>
                     {STATIC_FORM_MEMBERSHIP_BANK_TRANSFER}
                 </label>
             </div>
             <div class='form-check form-check-inline'>
-                <input type='radio' class='form-check-input paymentMethod' id='paypal' name='rdMetodoPago' value='2' required>
+                <input type='radio' class='form-check-input paymentMethod' id='paypal' name='rdMetodoPago' value='2'>
                 <label class='form-check-label' for='paypal'>
                     {STATIC_FORM_MEMBERSHIP_PAYPAL}
                 </label>
             </div>
             <div class='form-check form-check-inline'>
-                <input type='radio' class='form-check-input paymentMethod' id='debit' name='rdMetodoPago' value='4' required>
+                <input type='radio' class='form-check-input paymentMethod' id='debit' name='rdMetodoPago' value='4'>
                 <label class='form-check-label' for='debit'>
                     {STATIC_FORM_MEMBERSHIP_DIRECT_DEBIT_SPAIN}
                 </label>
             </div>
-            <span id='paymentMethodMessage' class='validationMessage'></span>
-            <!--<div class='invalid-feedback'>
-                Please select a payment method
-            </div>-->
-
         </div>
+        <span id='paymentMethodMessage' class='validationMessage'></span>
         <div class='form-text'>
             {STATIC_FORM_MEMBERSHIP_PAYMENT_METHOD_TXT_1}
         </div>
@@ -285,13 +259,13 @@
         <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_PRIVACY}</legend>
         <div id='containerPrivacyCheck'>
             <div class='form-check'>
-                <input class='form-check-input' type='checkbox' value='' name='chkPrivacy' id='chkPrivacy' required>
+                <input class='form-check-input' type='checkbox' value='' name='chkPrivacy' id='chkPrivacy'>
                 <label class='form-check-label' for='chkPrivacy'>
                     {STATIC_FORM_MEMBERSHIP_PRIVACY_NOTE}
                 </label>
-                <span id='chkPrivacyMessage' class='validationMessage'></span>
             </div>
         </div>
+        <span id='privacyMessage' class='validationMessage'></span>
     </fieldset>
 
     <div>
