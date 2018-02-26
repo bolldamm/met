@@ -295,11 +295,14 @@
                 if ($(this).val() === $("#txtPasswd").val()) {
                     $(this).removeClass("errorBorderColor error");
                     $("#passwordMatchMessage").html("");
+                } else {
+                    $(this).addClass("errorBorderColor error");
+                    $("#passwordMatchMessage").html("Passwords must match");
                 }
             });
         }
         function removeFirstNameAlert () {
-            $("#txtNombre").on("keyup", function () {
+            $("#txtNombre").on("blur", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#firstNameMessage").html("");
@@ -307,7 +310,7 @@
             });
         }
         function removeLastNameameAlert () {
-            $("#txtApellidos").on("keyup", function () {
+            $("#txtApellidos").on("blur", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#lastNameMessage").html("");
@@ -333,7 +336,7 @@
             });
         }
         function removeNifAlert () {
-            $("#txtFacturacionNifCliente").on("change", function () {
+            $("#txtFacturacionNifCliente").on("blur", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#nifMessage").html("");
@@ -341,7 +344,7 @@
             });
         }
         function removeBillingNameAlert () {
-            $("#txtFacturacionNombreCliente").on("change", function () {
+            $("#txtFacturacionNombreCliente").on("blur", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#billingNameMessage").html("");
@@ -349,7 +352,7 @@
             });
         }
         function removeBillingAddressAlert () {
-            $("#txtFacturacionDireccion").on("change", function () {
+            $("#txtFacturacionDireccion").on("blur", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#addressMessage").html("");
@@ -357,7 +360,7 @@
             });
         }
         function removeBillingPostcodeAlert () {
-            $("#txtFacturacionCodigoPostal").on("change", function () {
+            $("#txtFacturacionCodigoPostal").on("blur", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#postcodeMessage").html("");
@@ -365,7 +368,7 @@
             });
         }
         function removeBillingCityAlert () {
-            $("#txtFacturacionCiudad").on("change", function () {
+            $("#txtFacturacionCiudad").on("blur", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#cityMessage").html("");
@@ -373,7 +376,7 @@
             });
         }
         function removeBillingCountryAlert () {
-            $("#txtFacturacionPais").on("change", function () {
+            $("#txtFacturacionPais").on("blur", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#billingCountryMessage").html("");
@@ -397,11 +400,16 @@
             });
         }
 
-
         //ON SUBMIT, validate required fields
         function validateMembershipForm() {
             $("#frmMembership").on("submit", function (event) {
+
+                // Stop form submission
+                event.preventDefault();
+                event.stopPropagation();
+
                 var username = $("#txtEmailUser");
+                var emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
                 var pass = $("#txtPasswd");
                 var rePass = $("#txtRePasswd");
                 var firstName = $("#txtNombre");
@@ -417,12 +425,8 @@
                 var paymentMethod = $(".paymentMethod");
                 var privacy = $("#chkPrivacy");
 
-                // Stop form submission
-                event.preventDefault();
-                event.stopPropagation();
-
                 //If any fields are invalid, display alert and message
-                if (username.val() === "") {
+                if (username.val() === "" || emailRegExp.test(username.val()) === false) {
                     username.addClass("errorBorderColor error");
                     $("#emailUserMessage").html("Please enter a valid email address");
                 }
@@ -586,36 +590,38 @@
         <!-- END: validate_membership_form -->
 
         <!-- BEGIN: validate_renew_membership_form -->
+        //Uses HTML5 validation because it's much simpler
 
-        //ON CLICK, clear alert for Payment methods
+        //ON CLICK, clear Payment methods warning
         function clearPaymentMethodWarning() {
             $(".paymentMethod").on("click", function () {
-                if ($(".paymentMethod:checked")) {
+                if ($(this).prop("checked") === true) {
                     $("#paymentMethodMessage").html("");
                     $("#containerPaymentMethod").removeClass("errorBackgroundColor");
                 }
             });
         }
 
-        //ON SUBMIT, validate required fields
+        //ON SUBMIT, stop submission, validate required fields, then submit
         function validateRenewMembershipForm() {
             $("#frmMembership").on("submit", function (event) {
+                // Stop form submission
+                event.preventDefault();
+                event.stopPropagation();
+
+                if ($(".paymentMethod").prop("checked") === false) {
+                    $("#paymentMethodMessage").html("Please select a payment method");
+                    $("#containerPaymentMethod").addClass("errorBackgroundColor");
+                }
+
                 if (this.checkValidity() === false) {
-                    if (!$(".paymentMethod").prop("checked")) {
-                        $("#paymentMethodMessage").html("Please select a payment method");
-                        $("#containerPaymentMethod").addClass("errorBackgroundColor");
-                    }
-                    event.preventDefault();
-                    event.stopPropagation();
+                    this.classList.add("was-validated");
                 } else {
                     //Block user interface (blockUI,js) and display "Sending…" message
                     mensajeCargando("{STATIC_GLOBAL_SENDING}...");
                     //Generate conference registration (AJAX call to save_inscription_conference.php)
                     generateMembershipRenewal();
                 }
-                event.preventDefault();
-                event.stopPropagation();
-                this.classList.add("was-validated");
             });
         }
 
@@ -646,7 +652,7 @@
                         window.location="inscripcion_finalizada.php?tipo=4";
                     }else{
                         var msgContenido = document.getElementById("msgAlert");
-                        msgContenido.innerHTML = resultadoProceso.value;
+                        msgContenido.innerHTML = renewalResult.value;
                         msgContenido.setAttribute("class", "msgKO");
                         msgContenido.style.display = "block";
                         moverWeb();
@@ -658,7 +664,7 @@
         <!-- END: validate_renew_membership_form -->
 
         <!-- BEGIN: validate_workshop_registration_form -->
-        //ON CLICK, calculate total price when workshop clicked
+
         function calculatePriceWorkshops() {
             var thisWorkshopPrice;
             $(".workshopChoice").each(function () {
@@ -708,7 +714,6 @@
             });
         }
 
-        //ON CLICK, refresh captcha image when refresh icon is clicked
         function refreshCaptchaWorkshop() {
             document.getElementById("reloadCaptcha").addEventListener("click", function () {
                 document.getElementById("imageCaptcha").src = "classes/secureimage/securimage_show.php?sid=" + Math.random();
@@ -716,67 +721,197 @@
             });
         }
 
-        //ON CLICK, remove payment method alert when a button is selected
-        function removePaymentMethodAlert() {
+        function clearEmailAlert () {
+            $("#txtEmail").on("keyup", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#emailMessage").html("");
+                }
+            });
+        }
+        function clearFirstNameAlert () {
+            $("#txtNombre").on("blur", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#firstNameMessage").html("");
+                }
+            });
+        }
+        function clearLastNameAlert () {
+            $("#txtApellidos").on("blur", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#lastNameMessage").html("");
+                }
+            });
+        }
+        function clearWorkshopAlert () {
+            $(".workshopChoice").each(function() {
+                $(this).on("click", function (event) {
+                    if ($(this).prop("checked") !== false) {
+                        $(this).removeClass("errorBorderColor error");
+                        $("#workshopMessage").html("");
+                    }
+                });
+            });
+        }
+        function clearNifAlert () {
+            $("#txtFacturacionNifCliente").on("blur", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#nifMessage").html("");
+                }
+            });
+        }
+        function clearBillingNameAlert () {
+            $("#txtFacturacionNombreCliente").on("blur", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#billingNameMessage").html("");
+                }
+            });
+        }
+        function clearBillingAddressAlert () {
+            $("#txtFacturacionDireccion").on("blur", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#addressMessage").html("");
+                }
+            });
+        }
+        function clearBillingPostcodeAlert () {
+            $("#txtFacturacionCodigoPostal").on("blur", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#postcodeMessage").html("");
+                }
+            });
+        }
+        function clearBillingCityAlert () {
+            $("#txtFacturacionCiudad").on("blur", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#cityMessage").html("");
+                }
+            });
+        }
+        function clearBillingCountryAlert () {
+            $("#txtFacturacionPais").on("blur", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#billingCountryMessage").html("");
+                }
+            });
+        }
+        function clearPaymentAlert () {
             $(".paymentMethod").on("click", function () {
-                if ($(".paymentMethod:checked")) {
+                if ($(this).prop("checked") !== false) {
+                    $("#containerPaymentMethod").removeClass("errorBackgroundColor error");
                     $("#paymentMethodMessage").html("");
-                    $("#containerPaymentMethod").removeClass("errorBackgroundColor");
+                }
+            });
+        }
+        function clearPrivacyAlert () {
+            $("#chkPrivacy").on("click", function () {
+                if ($(this).prop("checked") !== false) {
+                    $("#containerPrivacyCheck").removeClass("errorBackgroundColor error");
+                    $("#privacyMessage").html("");
+                }
+            });
+        }
+        function clearCaptchaAlert () {
+            $("#txtCaptcha").on("keyup", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#captchaMessage").html("");
                 }
             });
         }
 
-        //ON CLICK, unset/reset error message when privacy checkbox is checked/unchecked
-        function privacyAlert() {
-            $("#chkPrivacy").on("click", function () {
-                if ($(this).prop("checked")) {
-                    $("#chkPrivacyMessage").html("");
-                    $("#containerPrivacyCheck").removeClass("errorBackgroundColor");
-                } else {
-                    $("#chkPrivacyMessage").html("To submit the form, you must accept MET's privacy policy");
+        function validateWorkshopForm() {
+            $("#frmWorkshopRegister").on("submit", function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                var firstName = $("#txtNombre");
+                var lastName = $("#txtApellidos");
+                var email = $("#txtEmail");
+                var emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+                var workshopContainer = $("#containerWorkshop");
+                var workshopChoice = $(".workshopChoice:checked");
+                var billingNif = $("#txtFacturacionNifCliente");
+                var billingName = $("#txtFacturacionNombreCliente");
+                var billingAddress = $("#txtFacturacionDireccion");
+                var billingPostcode = $("#txtFacturacionCodigoPostal");
+                var billingCity = $("#txtFacturacionCiudad");
+                var billingCountry = $("#txtFacturacionPais");
+                var paymentMethod = $(".paymentMethod");
+                var privacy = $("#chkPrivacy");
+                var captchaText = $("#txtCaptcha");
+
+                if (firstName.val() === "") {
+                    firstName.addClass("errorBorderColor error");
+                    $("#firstNameMessage").html("Please enter your first name");
+                }
+                if (lastName.val() === "") {
+                    lastName.addClass("errorBorderColor error");
+                    $("#lastNameMessage").html("Please enter your last name(s)");
+                }
+                if (email.val() === "" || emailRegExp.test(email.val()) === false) {
+                    email.addClass("errorBorderColor error");
+                    $("#emailMessage").html("Please enter a valid email address");
+                }
+                if (workshopChoice.length < 1) {
+                    workshopContainer.addClass("error");
+                    $("#workshopMessage").html("Please select a workshop");
+                }
+                if (billingNif.val() === "") {
+                    billingNif.addClass("errorBorderColor error");
+                    $("#nifMessage").html("Please enter your tax ID or VAT number");
+                }
+                if (billingName.val() === "") {
+                    billingName.addClass("errorBorderColor error");
+                    $("#billingNameMessage").html("Please enter your name for billing purposes");
+                }
+                if (billingAddress.val() === "") {
+                    billingAddress.addClass("errorBorderColor error");
+                    $("#addressMessage").html("Please enter your address");
+                }
+                if (billingPostcode.val() === "") {
+                    billingPostcode.addClass("errorBorderColor error");
+                    $("#postcodeMessage").html("Please enter your postal code");
+                }
+                if (billingCity.val() === "") {
+                    billingCity.addClass("errorBorderColor error");
+                    $("#cityMessage").html("Please enter your town or city");
+                }
+                if (billingCountry.val() === "") {
+                    billingCountry.addClass("errorBorderColor error");
+                    $("#billingCountryMessage").html("Please enter your country");
+                }
+                if (paymentMethod.prop("checked") === false) {
+                    $("#paymentMethodMessage").html("Please select a payment method");
+                    $("#containerPaymentMethod").addClass("errorBackgroundColor");
+                }
+                 if (privacy.prop("checked") === false) {
+                    $("#privacyMessage").html("To submit the form, you must accept MET's privacy policy");
                     $("#containerPrivacyCheck").addClass("errorBackgroundColor");
                 }
-            });
-        }
+                if (captchaText.val() === "") {
+                    captchaText.addClass("errorBorderColor error");
+                    $("#captchaMessage").html("Please enter the characters from the image");
+                }
 
-        //ON SUBMIT, validate required fields
-        function validateWorkshopsOnSubmit() {
-            var form = document.getElementById("frmWorkshopRegister");
-            form.addEventListener("submit", function(event) {
-                if (form.checkValidity() === false) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    //Payment method (has required attribute)
-                    if (!$(".paymentMethod").prop("checked")) {
-                        $("#paymentMethodMessage").html("Please select a payment method");
-                        $("#containerPaymentMethod").addClass("errorBackgroundColor");
-                    }
-                    //Privacy consent (has required attribute)
-                    if (!$("#chkPrivacy").prop("checked")) {
-                        $("#chkPrivacyMessage").html("To submit the form, you must accept MET's privacy policy");
-                        $("#containerPrivacyCheck").addClass("errorBackgroundColor");
-                    }
-                    //Scroll to first invalid text input or checkbox, with animation
-                    var txtInvalid = $(".form-control:invalid");
-                    var chkInvalid = $(".form-check-input:invalid");
-                    if (txtInvalid.length > 0) {
+                //If any fields are invalid, scroll to first invalid input or checkbox, with animation
+                if (email.val() === "" || firstName.val() === "" || lastName.val() === "" || workshopChoice.length < 1 || billingNif.val() === "" || billingName.val() === "" || billingAddress.val() === "" || billingPostcode.val() === "" || billingCity.val() === "" || billingCountry.val() === "" || paymentMethod.prop("checked") === false || privacy.prop("checked") === false || captchaText.val() === "") {
+                    var invalidInput = $(".error");
+                    if (invalidInput.length > 0) {
                         $("html, body").animate({
-                            scrollTop: txtInvalid.first().offset().top
-                        }, 800);
-                    } else if (chkInvalid.length > 0) {
-                        $("html, body").animate({
-                            scrollTop: chkInvalid.first().offset().top
+                            scrollTop: invalidInput.first().offset().top
                         }, 800);
                     }
-                } else if ($(".workshopChoice:checked").length < 1) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    $("#workshopMessage").html("Please select a workshop");
-                    $("html, body").animate({
-                        scrollTop: $("#containerWorkshop").offset().top
-                    }, 800);
                 } else {
-                    //If all client-side validations OK, store workshop choices (IDs) in hidden element
+                    //If all client-side validations are OK, store workshop choices (IDs) in hidden element
                     var workshopChoices = "";
                     var workshops = document.getElementsByClassName("workshopChoice");
                     for (var i = 0; i < workshops.length; i++) {
@@ -795,20 +930,28 @@
                     //Generate workshop registration (Ajax call in save_inscription_workshop.php)
                     generateWorkshopRegistration();
                 }
-                event.preventDefault();
-                event.stopPropagation();
-                form.classList.add("was-validated");
-            }, false);
+            });
         }
 
         //ON PAGE LOAD, add event listeners
         $( document ).ready(function() {
             calculatePriceWorkshops();
             updatePriceSisterAssoc();
-            removePaymentMethodAlert();
-            privacyAlert();
             refreshCaptchaWorkshop();
-            validateWorkshopsOnSubmit(); //this calls generarInscripcionWorkshop() if valid
+            clearEmailAlert();
+            clearFirstNameAlert();
+            clearLastNameAlert();
+            clearWorkshopAlert();
+            clearNifAlert();
+            clearBillingNameAlert();
+            clearBillingAddressAlert();
+            clearBillingPostcodeAlert();
+            clearBillingCityAlert();
+            clearBillingCountryAlert();
+            clearPaymentAlert();
+            clearPrivacyAlert();
+            clearCaptchaAlert();
+            validateWorkshopForm();
             supports_input_placeholder();
         });
 

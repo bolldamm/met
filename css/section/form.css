@@ -146,3 +146,6 @@ label {
     font-weight: bold;
     color: #303030;
 }
+input.required {
+    background: transparent url(../../images/pictures/icons/icon.required.png) no-repeat scroll 3px 5px;
+}
