@@ -891,11 +891,11 @@
                 }
                 if (paymentMethod.prop("checked") === false) {
                     $("#paymentMethodMessage").html("Please select a payment method");
-                    $("#containerPaymentMethod").addClass("errorBackgroundColor");
+                    $("#containerPaymentMethod").addClass("errorBackgroundColor error");
                 }
                  if (privacy.prop("checked") === false) {
                     $("#privacyMessage").html("To submit the form, you must accept MET's privacy policy");
-                    $("#containerPrivacyCheck").addClass("errorBackgroundColor");
+                    $("#containerPrivacyCheck").addClass("errorBackgroundColor error");
                 }
                 if (captchaText.val() === "") {
                     captchaText.addClass("errorBorderColor error");
@@ -996,37 +996,54 @@
         <!-- END: validate_workshop_registration_form -->
 
         <!-- BEGIN: validate_conference_registration_form -->
-        //Used in save_inscription_conference.php for sending price to Paypal
+
         function finalPrice() {
+            //Used in save_inscription_conference.php for sending price to Paypal
             var totalPayable = document.getElementById("totalPayable").innerHTML;
             document.getElementById("finalPrice").innerHTML = totalPayable;
         }
-
-        //ON CLICK, refresh captcha image when Refresh icon is clicked
         function reloadCaptchaConference() {
             $("#reloadCaptcha").on("click", function() {
                 $("#imageCaptcha").attr("src", "classes/secureimage/securimage_show.php?sid=" + Math.random()).value = "";
             });
         }
-
-        //ON CLICK, clear country alert when a country is selected
-        function clearCountryAlert() {
-            $("#cmbPais").on("click", function () {
-                if ($(this).val() > 0) {
-                    $(this).css("border-color", "");
-                    $("#chkCountryMessage").html("");
+        function unsetFirstNameAlert () {
+            $("#txtNombre").on("blur", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#firstNameMessage").html("");
                 }
             });
         }
-
-        //ON CHANGE, recalculate total price when sister association is selected (unselected)
+        function unsetLastNameAlert () {
+            $("#txtApellidos").on("blur", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#lastNameMessage").html("");
+                }
+            });
+        }
+        function unsetEmailAlert () {
+            $("#txtEmail").on("keyup", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#emailMessage").html("");
+                }
+            });
+        }
+        function unsetCountryAlert() {
+            $("#cmbPais").on("change", function () {
+                if ($(this).val() > -1) {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#countryMessage").html("");
+                }
+            });
+        }
         function updatePriceSister() {
             $("#cmbAsociacionHermana").on("change", function () {
                 recalculateTotalPrice();
             });
         }
-
-        //ON CLICK, deselect a currently selected workshop radio button
         function deselectRadioButtons() {
             //Add a click event listener to each workshop radio button
             $(".rdnWorkshop").each(function () {
@@ -1052,8 +1069,6 @@
                 });
             });
         }
-
-        //ON CLICK, disable minisessions when a workshop is selected and clear error message
         function disableMinisessions() {
             $(".rdnWorkshop").each(function () {
                 $(this).on("click", function (event) {
@@ -1063,7 +1078,7 @@
                         minisessions.prop("checked", false);
                         minisessions.prop("disabled", true);
                         $("#workshopsMessage").html("");
-                        $("#containerWorkshop").removeClass("errorBackgroundColor");
+                        $("#containerWorkshop").removeClass("errorBackgroundColor error");
                     } else {
                         //Enable all the minisession inputs on this date
                         minisessions.prop("disabled", false);
@@ -1072,39 +1087,33 @@
                 });
             });
         }
-
-        //ON CLICK, clear alert and background colour when one minisession selected
-        function clearWorkshopsAlert() {
+        function unsetWorkshopsAlert() {
             $(".chkMinisession").each(function () {
                 $(this).on("click", function (event) {
                     if ($(".chkMinisession:checked").length > 0) {
                         $("#workshopsMessage").html("");
-                        $("#containerWorkshop").removeClass("errorBackgroundColor");
+                        $("#containerWorkshop").removeClass("errorBackgroundColor error");
                         recalculateTotalPrice()
                     }
                 });
             });
         }
-
-        //ON CLICK, display alert when more than two minisessions are selected on one day
-        function warnThreeMinisessions() {
+        function setThreeMinisessionsAlert() {
             $(".chkMinisession").each(function () {
                 $(this).on("click", function (event) {
                     var miniDate = this.name.split("_")[1];
                     var minisessionContainer = $("#container_mini_session_" + miniDate);
                     var numChecked = minisessionContainer.find("input[type=checkbox]:checked").length;
                     if (numChecked >= 3) {
-                        $("#chkMaxMinisessions").html("Please select no more than two minisessions on any one day");
-                        $(minisessionContainer).addClass("errorBackgroundColor");
+                        $("#maxMinisessionsMessage").html("Please select no more than two minisessions on any one day");
+                        $(minisessionContainer).addClass("errorBackgroundColor error");
                     } else {
-                        $("#chkMaxMinisessions").html("");
-                        $(minisessionContainer).removeClass("errorBackgroundColor");
+                        $("#maxMinisessionsMessage").html("");
+                        $(minisessionContainer).removeClass("errorBackgroundColor error");
                     }
                 });
             });
         }
-
-        //ON CLICK, disable workshops when "Can't attend" is checked, and remove alert
         function disableAllWorkshops() {
             $("#chkNotWorkshop").on("click", function () {
                 if (this.checked) {
@@ -1112,7 +1121,7 @@
                     $("input.hiddenDate").val("");
                     $(".chkMinisession").prop("disabled", true).prop("checked", false);
                     $("#workshopsMessage").html("");
-                    $("#containerWorkshop").removeClass("errorBackgroundColor").removeClass("warningBackgroundColor");
+                    $("#containerWorkshop").removeClass("errorBackgroundColor error").removeClass("warningBackgroundColor");
                 } else {
                     $(".rdnWorkshop").prop("disabled", false);
                     $(".chkMinisession").prop("disabled", false);
@@ -1120,123 +1129,201 @@
                 //recalculateTotalPrice();
             });
         }
-
-        //ON KEYUP, clear badge alert
-        function clearBadgeAlert() {
+        function unsetBadgeAlert() {
             var badgeText = $("#txtaBadge");
             badgeText.on("keyup", function () {
                 if ($("#txtaBadge").val()) {
                     $("#badgeMessage").html("");
+                    badgeText.removeClass("errorBorderColor error");
                 }
             });
         }
-        //ON CLICK, clear payment method alert when a button is selected
-        function clearPaymentMethodAlert() {
+        function unsetNifAlert () {
+            $("#txtFacturacionNifCliente").on("blur", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#nifMessage").html("");
+                }
+            });
+        }
+        function unsetBillingNameAlert () {
+            $("#txtFacturacionNombreCliente").on("blur", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#billingNameMessage").html("");
+                }
+            });
+        }
+        function unsetBillingAddressAlert () {
+            $("#txtFacturacionDireccion").on("blur", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#addressMessage").html("");
+                }
+            });
+        }
+        function unsetBillingPostcodeAlert () {
+            $("#txtFacturacionCodigoPostal").on("blur", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#postcodeMessage").html("");
+                }
+            });
+        }
+        function unsetBillingCityAlert () {
+            $("#txtFacturacionCiudad").on("blur", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#cityMessage").html("");
+                }
+            });
+        }
+        function unsetBillingCountryAlert () {
+            $("#txtFacturacionPais").on("blur", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#billingCountryMessage").html("");
+                }
+            });
+        }
+        function unsetPaymentMethodAlert() {
             $(".paymentMethod").on("click", function () {
                 if ($(".paymentMethod:checked")) {
                     $("#paymentMethodMessage").html("");
-                    $("#containerPaymentMethod").removeClass("errorBackgroundColor");
+                    $("#containerPaymentMethod").removeClass("errorBackgroundColor error");
                 }
             });
         }
-
-        //ON CLICK, clear/re-display error message when privacy checkbox is checked/unchecked
-        function setPrivacyAlert() {
+        function unsetPrivacyAlert() {
             $("#chkPrivacy").on("click", function () {
                 //ON CLICK,
                 if (this.checked === true) {
-                    $("#chkPrivacyMessage").html("");
-                    $("#containerPrivacyCheck").removeClass("errorBackgroundColor");
+                    $("#privacyMessage").html("");
+                    $("#containerPrivacyCheck").removeClass("errorBackgroundColor error");
                 } else {
-                    $("#chkPrivacyMessage").html("To submit the form, you must accept MET's privacy policy");
-                    $("#containerPrivacyCheck").addClass("errorBackgroundColor");
+                    $("#privacyMessage").html("To submit the form, you must accept MET's privacy policy");
+                    $("#containerPrivacyCheck").addClass("errorBackgroundColor error");
+                }
+            });
+        }
+        function unsetCaptchaAlert () {
+            $("#txtCaptcha").on("keyup", function () {
+                if ($(this).val() !== "") {
+                    $(this).removeClass("errorBorderColor error");
+                    $("#captchaMessage").html("");
                 }
             });
         }
 
-        //ON SUBMIT, validate required fields and block submission if any invalid
-        function validateConferenceOnSubmit() {
+        function validateConferenceForm() {
             $("#frmConferenceRegister").on("submit", function (event) {
-                var workshops = $(".rdnWorkshop:checked").length;
-                var minisessions = $(".chkMinisession:checked").length;
-                var countrySelect = $("#cmbPais");
-                if (this.checkValidity() === false) {
-                    if (countrySelect.val() < 0) {
-                        countrySelect.css("border-color", "#dc3545");
-                        $("#chkCountryMessage").html("Please select a country");
-                    } else {
-                        countrySelect.css("border-color", "");
-                        $("#chkCountryMessage").html("");
-                    }
-                    if (workshops < 1 && minisessions < 1) {
-                        $("#workshopsMessage").html("Registration for one workshop or two minisessions is included in the conference fee. If you do not wish to register for any of the workshops, please check the appropriate box before submitting the form");
-                        $("#containerWorkshop").addClass("errorBackgroundColor");
-                    }
-                    if (!$("#txtaBadge").val()) {
-                        $("#badgeMessage").html("Please enter your badge information");
-                    }
-                    if (!$(".paymentMethod").prop("checked")) {
-                        $("#paymentMethodMessage").html("Please select a payment method");
-                        $("#containerPaymentMethod").addClass("errorBackgroundColor");
-                    }
-                    if (!$("#chkPrivacy").prop("checked")) {
-                        $("#chkPrivacyMessage").html("To submit the form, you must accept MET's privacy policy");
-                        $("#containerPrivacyCheck").addClass("errorBackgroundColor");
-                    }
-                    //Scroll to first invalid text input or checkbox, with animation
-                    var txtInvalid = $(".form-control:invalid");
-                    var chkInvalid = $(".form-check-input:invalid");
-                    if (txtInvalid.length > 0) {
-                        $("html, body").animate({
-                            scrollTop: txtInvalid.first().offset().top
-                        }, 800);
-                    } else if (chkInvalid.length > 0) {
-                        $("html, body").animate({
-                            scrollTop: chkInvalid.first().offset().top
-                        }, 800);
-                    }
-                    event.preventDefault();
-                    event.stopPropagation();
-                } else if (countrySelect.val() < 0) {
-                    countrySelect.css("border-color", "#dc3545");
-                    $("#chkCountryMessage").html("Please select a country");
-                    $('html, body').animate({
-                        scrollTop: $("#personalDetails").offset().top
-                    }, 1000);
-                    event.preventDefault();
-                    event.stopPropagation();
-                } else if (workshops < 1 && minisessions < 1) {
-                    var container = $("#containerWorkshop");
+                event.preventDefault();
+                event.stopPropagation();
+
+                var firstName = $("#txtNombre");
+                var lastName = $("#txtApellidos");
+                var email = $("#txtEmail");
+                var emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+                var country = $("#cmbPais");
+                var workshops = $(".rdnWorkshop:checked");
+                var minisessions = $(".chkMinisession:checked");
+                var badge = $("#txtaBadge");
+                var billingNif = $("#txtFacturacionNifCliente");
+                var billingName = $("#txtFacturacionNombreCliente");
+                var billingAddress = $("#txtFacturacionDireccion");
+                var billingPostcode = $("#txtFacturacionCodigoPostal");
+                var billingCity = $("#txtFacturacionCiudad");
+                var billingCountry = $("#txtFacturacionPais");
+                var paymentMethod = $(".paymentMethod");
+                var privacy = $("#chkPrivacy");
+                var captchaText = $("#txtCaptcha");
+
+                if (firstName.val() === "") {
+                    firstName.addClass("errorBorderColor error");
+                    $("#firstNameMessage").html("Please enter your first name");
+                }
+                if (lastName.val() === "") {
+                    lastName.addClass("errorBorderColor error");
+                    $("#lastNameMessage").html("Please enter your last name(s)");
+                }
+                if (email.val() === "" || emailRegExp.test(email.val()) === false) {
+                    email.addClass("errorBorderColor error");
+                    $("#emailMessage").html("Please enter a valid email address");
+                }
+                if (country.val() < 0) {
+                    country.addClass("errorBorderColor error");
+                    $("#countryMessage").html("Please select a country");
+                }
+                if (workshops.length < 1 && minisessions.length < 1) {
                     $("#workshopsMessage").html("Registration for one workshop or two minisessions is included in the conference fee. If you do not wish to register for any of the workshops, please check the appropriate box before submitting the form");
-                    container.addClass("errorBackgroundColor");
-                    //Scroll to workshop checkboxes, with animation
-                    $("html, body").animate({
-                        scrollTop: container.offset().top
-                    }, 1000);
-                    event.preventDefault();
-                    event.stopPropagation();
-                } else if (minisessions > 2) {
+                    $("#containerWorkshop").addClass("errorBackgroundColor error");
+                }
+                if (minisessions.length > 2) {
                     $(".hiddenDate").each(function () {
                         var miniDate = this.name.split("_")[1];
                         if ($(".minisessionChoice_" + miniDate + ":checked").length > 2) {
-                            $("#containerWorkshop").addClass("errorBackgroundColor");
-                            //Scroll to minisession checkboxes, with animation
-                            $("html, body").animate({
-                                scrollTop: container.offset().top
-                            }, 1000);
-                            event.preventDefault();
-                            event.stopPropagation();
+                            $("#maxMinisessionsMessage").html("Please select no more than two minisessions on any one day");
+                            $("#containerWorkshop").addClass("errorBackgroundColor error");
                         }
                     });
+                }
+                if (billingNif.val() === "") {
+                    billingNif.addClass("errorBorderColor error");
+                    $("#nifMessage").html("Please enter your tax ID or VAT number");
+                }
+                if (billingName.val() === "") {
+                    billingName.addClass("errorBorderColor error");
+                    $("#billingNameMessage").html("Please enter your name for billing purposes");
+                }
+                if (billingAddress.val() === "") {
+                    billingAddress.addClass("errorBorderColor error");
+                    $("#addressMessage").html("Please enter your address");
+                }
+                if (billingPostcode.val() === "") {
+                    billingPostcode.addClass("errorBorderColor error");
+                    $("#postcodeMessage").html("Please enter your postal code");
+                }
+                if (billingCity.val() === "") {
+                    billingCity.addClass("errorBorderColor error");
+                    $("#cityMessage").html("Please enter your town or city");
+                }
+                if (billingCountry.val() === "") {
+                    billingCountry.addClass("errorBorderColor error");
+                    $("#billingCountryMessage").html("Please enter your country");
+                }
+                if (badge.val() === "") {
+                    badge.addClass("errorBorderColor error");
+                    $("#badgeMessage").html("Please enter your badge information");
+                }
+                if (paymentMethod.prop("checked") === false) {
+                    $("#paymentMethodMessage").html("Please select a payment method");
+                    $("#containerPaymentMethod").addClass("errorBackgroundColor error");
+                }
+                if (privacy.prop("checked") === false) {
+                    $("#privacyMessage").html("To submit the form, you must accept MET's privacy policy");
+                    $("#containerPrivacyCheck").addClass("errorBackgroundColor error");
+                }
+                if (captchaText.val() === "") {
+                    captchaText.addClass("errorBorderColor error");
+                    $("#captchaMessage").html("Please enter the characters from the image");
+                }
+
+                //If any fields are invalid, scroll to first invalid input or checkbox, with animation
+                if (firstName.val() === "" || lastName.val() === "" || (email.val() === "" || emailRegExp.test(email.val()) === false) || country.val() < 0 || (workshops.length < 1 && minisessions.length < 1) || minisessions.length > 2 || billingNif.val() === "" || billingName.val() === "" || billingAddress.val() === "" || billingPostcode.val() === "" || billingCity.val() === "" || billingCountry.val() === "" || paymentMethod.prop("checked") === false || privacy.prop("checked") === false || captchaText.val() === "") {
+                    var invalidInput = $(".error");
+                    if(invalidInput.length > 0) {
+                        $("html, body").animate({
+                            scrollTop: invalidInput.first().offset().top
+                        }, 800);
+                    }
                 } else {
+
                     //Block user interface (blockUI,js) and display "Sending…" message
                     mensajeCargando("{STATIC_GLOBAL_SENDING}...");
+
                     //Generate conference registration (AJAX call to save_inscription_conference.php)
                     generateConferenceRegistration();
                 }
-                event.preventDefault();
-                event.stopPropagation();
-                this.classList.add("was-validated");
             });
         }
 
@@ -1314,7 +1401,7 @@
                 price+=(dinnerGuestPrice*document.getElementById("cmbInvitados").value);
             }
 
-            document.getElementById("debug").innerHTML = price;
+            /*document.getElementById("debug").innerHTML = price;*/
 
             document.getElementById("totalPayable").innerHTML=price;
             document.getElementById("finalPrice").value=price;
@@ -1361,20 +1448,29 @@
         //ON PAGE LOAD, call functions
         $( document ).ready(function() {
             finalPrice();
-            //addPlaceholderSupport();
             reloadCaptchaConference();
-            clearCountryAlert();
+            unsetFirstNameAlert();
+            unsetLastNameAlert();
+            unsetEmailAlert();
+            unsetCountryAlert();
             updatePriceSister();
             deselectRadioButtons();
             disableMinisessions();
-            clearWorkshopsAlert();
-            warnThreeMinisessions();
+            unsetWorkshopsAlert();
+            setThreeMinisessionsAlert();
             disableAllWorkshops();
-            clearBadgeAlert();
-            clearPaymentMethodAlert();
-            setPrivacyAlert();
-            validateConferenceOnSubmit();
-            supports_input_placeholder()
+            unsetBadgeAlert();
+            unsetNifAlert();
+            unsetBillingNameAlert();
+            unsetBillingAddressAlert();
+            unsetBillingPostcodeAlert();
+            unsetBillingCityAlert();
+            unsetBillingCountryAlert();
+            unsetPaymentMethodAlert();
+            unsetPrivacyAlert();
+            unsetCaptchaAlert();
+            supports_input_placeholder();
+            validateConferenceForm();
         });
         <!-- END: validate_conference_registration_form -->
 
@@ -1455,7 +1551,7 @@
                 $(this).on("click", function() {
                     if (this.checked) {
                         $("#profActsMessage").html("");
-                        $("#containerProfActs").removeClass("errorBackgroundColor");
+                        $("#containerProfActs").removeClass("errorBackgroundColor error");
                     }
                 });
             });
@@ -1488,7 +1584,7 @@
                         var profContainer = $("#containerProfActs");
                         //No professional activity selected
                         $("#profActsMessage").html("Please select at least one activity");
-                        profContainer.addClass("errorBackgroundColor");
+                        profContainer.addClass("errorBackgroundColor error");
                         $("html, body").animate({
                             scrollTop: profContainer.offset().top
                         }, 800);

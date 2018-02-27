@@ -45,33 +45,27 @@
                 {COMBO_TITULOS}
             </div>
             <div class='col-12 col-md-5'>
-                <input type='text' class='form-control' name='txtNombre'
+                <input type='text' class='form-control required' name='txtNombre' id='txtNombre'
                        value='{FORM_MEMBERSHIP_FIRST_NAME}'
                        autocomplete='given-name'
-                       placeholder='{STATIC_FORM_MEMBERSHIP_FIRST_NAME}' required>
-                <div class='invalid-feedback'>
-                    Please enter your first name
-                </div>
+                       placeholder='{STATIC_FORM_MEMBERSHIP_FIRST_NAME}'>
+                <span id='firstNameMessage' class='validationMessage'></span>
             </div>
             <div class='col-12 col-md-5'>
-                <input type='text' class='form-control' name='txtApellidos'
+                <input type='text' class='form-control required' name='txtApellidos' id='txtApellidos'
                        value='{FORM_MEMBERSHIP_LAST_NAMES}'
                        autocomplete='family-name'
-                       placeholder='{STATIC_FORM_MEMBERSHIP_LAST_NAMES}' required>
-                <div class='invalid-feedback'>
-                    Please enter your last name
-                </div>
+                       placeholder='{STATIC_FORM_MEMBERSHIP_LAST_NAMES}'>
+                <span id='lastNameMessage' class='validationMessage'></span>
             </div>
         </div>
         <div class='form-row'>
             <div class='col-12 col-md-6'>
-                <input type='text' class='form-control' name='txtEmail'
+                <input type='email' class='form-control required' name='txtEmail' id='txtEmail'
                        value='{FORM_MEMBERSHIP_EMAIL}'
                        autocomplete='email'
-                       placeholder='{STATIC_FORM_MEMBERSHIP_EMAIL}' required>
-                <div class='invalid-feedback'>
-                    Please enter a valid email address
-                </div>
+                       placeholder='{STATIC_FORM_MEMBERSHIP_EMAIL}'>
+                <span id='emailMessage' class='validationMessage'></span>
             </div>
             <div class='col-12 col-md-6'>
                 <input type='text' class='form-control' name='txtTelefono'
@@ -83,7 +77,7 @@
         <!-- BEGIN: bloque_pais -->
             {COMBO_PAIS}
         <!-- END: bloque_pais -->
-        <span id='chkCountryMessage' class='validationMessage'></span>
+        <span id='countryMessage' class='validationMessage'></span>
     </fieldset>
 
     <div style='{IFMEMBER}'>
@@ -155,7 +149,7 @@
                 </div>
                 <!-- END: bloque_fecha_taller -->
             </div>
-            <span id='chkMaxMinisessions' class='validationMessage'></span>
+            <span id='maxMinisessionsMessage' class='validationMessage'></span>
             <div class='form-check'>
                 <input class='form-check-input workshopChoice' type='checkbox'
                        name='chkNotWorkshop' id='chkNotWorkshop'
@@ -184,7 +178,7 @@
                   name='txtaBadge'
                   id='txtaBadge'
                   placeholder='Write your badge text here*'
-                  rows='3' required></textarea>
+                  rows='3'></textarea>
         <span id='badgeMessage' class='validationMessage'></span>
     </fieldset>
 
@@ -227,83 +221,49 @@
         <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_BILLING_INFORMATION}</legend>
         <p class='form-text'>{STATIC_FORM_MEMBERSHIP_BILLING_EXPLANATORY_TEXT}</p>
         <div class='form-row'>
-            <div class='col-12 col-md-6'>
-                <input type='text' class='form-control' name='txtFacturacionNifCliente' id='txtFacturacionNifCliente'
-                       value='{FORM_PROFILE_BILLING_CUSTOMER_NIF}'
-                       placeholder='{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}*' required>
-                <div class='invalid-feedback'>
-                    Please enter your tax ID or VAT number
-                </div>
+            <div class='col-12- col-md-6'>
+                <label class='sr-only' for='txtFacturacionNifCliente'></label>
+                <input type='text' class='form-control required' name='txtFacturacionNifCliente' id='txtFacturacionNifCliente' value='{FORM_PROFILE_BILLING_CUSTOMER_NIF}' placeholder='{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}'>
+                <span id='nifMessage' class='validationMessage'></span>
             </div>
-            <div class='col-12 col-md-6'>
+            <div class='col-12- col-md-6'>
                 <label class='sr-only' for='txtFacturacionNombreCliente'></label>
-                <input type='text' class='form-control' name='txtFacturacionNombreCliente' id='txtFacturacionNombreCliente'
-                       value='{FORM_PROFILE_BILLING_NAME_CUSTOMER}'
-                       autocomplete='name'
-                       placeholder='{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}*' required>
-                <div class='invalid-feedback'>
-                    Please enter your name for billing purposes
-                </div>
+                <input type='text' class='form-control required' name='txtFacturacionNombreCliente' id='txtFacturacionNombreCliente' value='{FORM_PROFILE_BILLING_NAME_CUSTOMER}' autocomplete='name' placeholder='{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}'>
+                <span id='billingNameMessage' class='validationMessage'></span>
             </div>
         </div>
         <div class='form-row'>
-            <div class='col-12 col-md-6'>
+            <div class='col-12- col-md-6'>
                 <label class='sr-only' for='txtFacturacionNombreEmpresa'></label>
-                <input type='text' class='form-control' name='txtFacturacionNombreEmpresa' id='txtFacturacionNombreEmpresa'
-                       value='{FORM_PROFILE_BILLING_NAME_COMPANY}'
-                       autocomplete='organization'
-                       placeholder='{STATIC_FORM_PROFILE_BILLING_NAME_COMPANY}'>
+                <input type='text' class='form-control' name='txtFacturacionNombreEmpresa' id='txtFacturacionNombreEmpresa' value='{FORM_PROFILE_BILLING_NAME_COMPANY}' autocomplete='organization' placeholder='{STATIC_FORM_PROFILE_BILLING_NAME_COMPANY}'>
             </div>
-            <div class='col-12 col-md-6'>
+            <div class='col-12- col-md-6'>
                 <label class='sr-only' for='txtFacturacionDireccion'></label>
-                <input type='text' class='form-control' name='txtFacturacionDireccion' id='txtFacturacionDireccion'
-                       value='{FORM_PROFILE_BILLING_ADDRESS}'
-                       autocomplete='address-line1'
-                       placeholder='{STATIC_FORM_PROFILE_BILLING_ADDRESS}*' required>
-                <div class='invalid-feedback'>
-                    Please enter your address
-                </div>
+                <input type='text' class='form-control required' name='txtFacturacionDireccion' id='txtFacturacionDireccion' value='{FORM_PROFILE_BILLING_ADDRESS}' autocomplete='address-line1' placeholder='{STATIC_FORM_PROFILE_BILLING_ADDRESS}'>
+                <span id='addressMessage' class='validationMessage'></span>
             </div>
         </div>
         <div class='form-row'>
-            <div class='col-12 col-md-6'>
+            <div class='col-12- col-md-6'>
                 <label class='sr-only' for='txtFacturacionCodigoPostal'></label>
-                <input type='text' class='form-control' name='txtFacturacionCodigoPostal' id='txtFacturacionCodigoPostal'
-                       value='{FORM_PROFILE_BILLING_ZIPCODE}'
-                       autocomplete='postal-code'
-                       placeholder='{STATIC_FORM_PROFILE_BILLING_ZIPCODE}*' required>
-                <div class='invalid-feedback'>
-                    Please enter your postal code
-                </div>
+                <input type='text' class='form-control required' name='txtFacturacionCodigoPostal' id='txtFacturacionCodigoPostal' value='{FORM_PROFILE_BILLING_ZIPCODE}' autocomplete='postal-code' placeholder='{STATIC_FORM_PROFILE_BILLING_ZIPCODE}'>
+                <span id='postcodeMessage' class='validationMessage'></span>
             </div>
-            <div class='col-12 col-md-6'>
+            <div class='col-12- col-md-6'>
                 <label class='sr-only' for='txtFacturacionCiudad'></label>
-                <input type='text' class='form-control' name='txtFacturacionCiudad' id='txtFacturacionCiudad'
-                       value='{FORM_PROFILE_BILLING_CITY}'
-                       autocomplete='address-level2'
-                       placeholder='{STATIC_FORM_PROFILE_BILLING_CITY}*' required>
-                <div class='invalid-feedback'>
-                    Please enter your town or city
-                </div>
+                <input type='text' class='form-control required' name='txtFacturacionCiudad' id='txtFacturacionCiudad' value='{FORM_PROFILE_BILLING_CITY}' autocomplete='address-level2' placeholder='{STATIC_FORM_PROFILE_BILLING_CITY}'>
+                <span id='cityMessage' class='validationMessage'></span>
             </div>
         </div>
         <div class='form-row'>
-            <div class='col-12 col-md-6'>
+            <div class='col-12- col-md-6'>
                 <label class='sr-only' for='txtFacturacionProvincia'></label>
-                <input type='text' class='form-control' name='txtFacturacionProvincia' id='txtFacturacionProvincia'
-                       value='{FORM_PROFILE_BILLING_PROVINCE}'
-                       autocomplete='address-level1'
-                       placeholder='{STATIC_FORM_PROFILE_BILLING_PROVINCE}'>
+                <input type='text' class='form-control' name='txtFacturacionProvincia' id='txtFacturacionProvincia' value='{FORM_PROFILE_BILLING_PROVINCE}' autocomplete='address-level1' placeholder='{STATIC_FORM_PROFILE_BILLING_PROVINCE}'>
             </div>
-            <div class='col-12 col-md-6'>
+            <div class='col-12- col-md-6'>
                 <label class='sr-only' for='txtFacturacionPais'></label>
-                <input type='text' class='form-control' name='txtFacturacionPais' id='txtFacturacionPais'
-                       value='{FORM_PROFILE_BILLING_COUNTRY}'
-                       autocomplete='country-name'
-                       placeholder='{STATIC_FORM_PROFILE_BILLING_COUNTRY}*' required>
-                <div class='invalid-feedback'>
-                    Please enter your country
-                </div>
+                <input type='text' class='form-control required' name='txtFacturacionPais' id='txtFacturacionPais' value='{FORM_PROFILE_BILLING_COUNTRY}' autocomplete='country-name' placeholder='{STATIC_FORM_PROFILE_BILLING_COUNTRY}'>
+                <span id='billingCountryMessage' class='validationMessage'></span>
             </div>
         </div>
     </fieldset>
@@ -314,13 +274,13 @@
         <b>{STATIC_FORM_MEMBERSHIP_PAYMENT_METHOD}*</b>
         <div class='form-row' id='containerPaymentMethod'>
             <div class='form-check form-check-inline'>
-                <input type='radio' class='form-check-input paymentMethod' id='transfer' name='rdMetodoPago' value='1' required>
+                <input type='radio' class='form-check-input paymentMethod' id='transfer' name='rdMetodoPago' value='1'>
                 <label class='form-check-label' for='transfer'>
                     {STATIC_FORM_MEMBERSHIP_BANK_TRANSFER}
                 </label>
             </div>
             <div class='form-check form-check-inline'>
-                <input type='radio' class='form-check-input paymentMethod' id='paypal' name='rdMetodoPago' value='2' required>
+                <input type='radio' class='form-check-input paymentMethod' id='paypal' name='rdMetodoPago' value='2'>
                 <label class='form-check-label' for='paypal'>
                     {STATIC_FORM_MEMBERSHIP_PAYPAL}
                 </label>
@@ -368,13 +328,13 @@
         <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_PRIVACY}</legend>
         <div id='containerPrivacyCheck'>
             <div class='form-check'>
-                <input class='form-check-input' type='checkbox' value='' name='chkPrivacy' id='chkPrivacy' required>
+                <input class='form-check-input' type='checkbox' value='' name='chkPrivacy' id='chkPrivacy'>
                 <label class='form-check-label' for='chkPrivacy'>
                     {STATIC_FORM_MEMBERSHIP_PRIVACY_NOTE}
                 </label>
             </div>
         </div>
-        <span id='chkPrivacyMessage' class='validationMessage'></span>
+        <span id='privacyMessage' class='validationMessage'></span>
     </fieldset>
 
     <div class='form-row'>
@@ -392,11 +352,8 @@
                  title='{STATIC_CAPTCHA_RELOAD}'>&nbsp;
             </div>
             <div class='col-6'>
-            	<input type='text' class='form-control' id='txtCaptcha' name='txtCaptcha' maxlength='5' required>
+            	<input type='text' class='form-control' id='txtCaptcha' name='txtCaptcha' maxlength='5'>
                 <span id="captchaMessage" class="validationMessage"></span>
-                <div class='invalid-feedback captchaFeedback'>
-                    Please enter the text from the image
-                </div>
             </div>
           </div>
         </div>
