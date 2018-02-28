@@ -482,7 +482,7 @@
                     billingCountry.addClass("errorBorderColor error");
                     $("#billingCountryMessage").html("Please enter your country");
                 }
-                if (paymentMethod.prop("checked") === false) {
+                if (paymentMethod.prop("checked").length < 1) {
                     $("#containerPaymentMethod").addClass("errorBackgroundColor error");
                     $("#paymentMethodMessage").html("Please select a payment method");
                 }
@@ -492,7 +492,7 @@
                 }
 
                 //If any fields are invalid, scroll to first invalid input or checkbox, with animation
-                if (username.val() === "" || pass.val() === "" || rePass.val() === "" || pass.val() !== rePass.val() || firstName.val() === "" || lastName.val() === "" || country.val() < 0 || profActs.length < 1 || billingNif.val() === "" || billingName.val() === "" || billingAddress.val() === "" || billingPostcode.val() === "" || billingCity.val() === "" || billingCountry.val() === "" || paymentMethod.prop("checked") === false || privacy.prop("checked") === false) {
+                if (username.val() === "" || pass.val() === "" || rePass.val() === "" || pass.val() !== rePass.val() || firstName.val() === "" || lastName.val() === "" || country.val() < 0 || profActs.length < 1 || billingNif.val() === "" || billingName.val() === "" || billingAddress.val() === "" || billingPostcode.val() === "" || billingCity.val() === "" || billingCountry.val() === "" || paymentMethod.prop("checked").length < 1 || privacy.prop("checked") === false) {
                     var invalidInput = $(".error");
                     if (invalidInput.length > 0) {
                         $("html, body").animate({
@@ -889,7 +889,7 @@
                     billingCountry.addClass("errorBorderColor error");
                     $("#billingCountryMessage").html("Please enter your country");
                 }
-                if (paymentMethod.prop("checked") === false) {
+                if (paymentMethod.prop("checked").length < 1) {
                     $("#paymentMethodMessage").html("Please select a payment method");
                     $("#containerPaymentMethod").addClass("errorBackgroundColor error");
                 }
@@ -903,7 +903,7 @@
                 }
 
                 //If any fields are invalid, scroll to first invalid input or checkbox, with animation
-                if (email.val() === "" || firstName.val() === "" || lastName.val() === "" || workshopChoice.length < 1 || billingNif.val() === "" || billingName.val() === "" || billingAddress.val() === "" || billingPostcode.val() === "" || billingCity.val() === "" || billingCountry.val() === "" || paymentMethod.prop("checked") === false || privacy.prop("checked") === false || captchaText.val() === "") {
+                if (email.val() === "" || firstName.val() === "" || lastName.val() === "" || workshopChoice.length < 1 || billingNif.val() === "" || billingName.val() === "" || billingAddress.val() === "" || billingPostcode.val() === "" || billingCity.val() === "" || billingCountry.val() === "" || paymentMethod.prop("checked").length < 1 || privacy.prop("checked") === false || captchaText.val() === "") {
                     var invalidInput = $(".error");
                     if (invalidInput.length > 0) {
                         $("html, body").animate({
@@ -1234,7 +1234,7 @@
                 var billingPostcode = $("#txtFacturacionCodigoPostal");
                 var billingCity = $("#txtFacturacionCiudad");
                 var billingCountry = $("#txtFacturacionPais");
-                var paymentMethod = $(".paymentMethod");
+                var paymentMethod = $(".paymentMethod:checked");
                 var privacy = $("#chkPrivacy");
                 var captchaText = $("#txtCaptcha");
 
@@ -1295,7 +1295,7 @@
                     badge.addClass("errorBorderColor error");
                     $("#badgeMessage").html("Please enter your badge information");
                 }
-                if (paymentMethod.prop("checked") === false) {
+                if (paymentMethod.length < 1) {
                     $("#paymentMethodMessage").html("Please select a payment method");
                     $("#containerPaymentMethod").addClass("errorBackgroundColor error");
                 }
@@ -1309,7 +1309,7 @@
                 }
 
                 //If any fields are invalid, scroll to first invalid input or checkbox, with animation
-                if (firstName.val() === "" || lastName.val() === "" || (email.val() === "" || emailRegExp.test(email.val()) === false) || country.val() < 0 || (workshops.length < 1 && minisessions.length < 1) || minisessions.length > 2 || billingNif.val() === "" || billingName.val() === "" || billingAddress.val() === "" || billingPostcode.val() === "" || billingCity.val() === "" || billingCountry.val() === "" || paymentMethod.prop("checked") === false || privacy.prop("checked") === false || captchaText.val() === "") {
+                if (firstName.val() === "" || lastName.val() === "" || (email.val() === "" || emailRegExp.test(email.val()) === false) || country.val() < 0 || (workshops.length < 1 && minisessions.length < 1) || minisessions.length > 2 || billingNif.val() === "" || billingName.val() === "" || billingAddress.val() === "" || billingPostcode.val() === "" || billingCity.val() === "" || billingCountry.val() === "" || paymentMethod.length < 1 || privacy.prop("checked") === false || captchaText.val() === "") {
                     var invalidInput = $(".error");
                     if(invalidInput.length > 0) {
                         $("html, body").animate({

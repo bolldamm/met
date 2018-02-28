@@ -109,16 +109,13 @@
 	
 	}
 
-
-	//if($esFactura==1){
-		//Insertamos factura		
+		//Insert invoice
 		$resultadoFactura=$db->callProcedure("CALL ed_sp_web_factura_insertar('".$nifFactura."','".$nombreClienteFactura."','".$nombreEmpresaFactura."','".$direccionFactura."','".$codigoPostalFactura."','".$ciudadFactura."','".$provinciaFactura."','".$paisFactura."','".$emailUsuario."','".$nombreUsuario."')");		
 		$datoFactura=$db->getData($resultadoFactura);
 		$idFactura=$datoFactura["id_factura"];
 		
-		//Insertamos linea factura
+		//Insert invoice details (linea_factura)
 		$db->callProcedure("CALL ed_sp_web_linea_factura_insertar(".$idFactura.",".$idMovimiento.")");
-	//}
 	
 	
 	

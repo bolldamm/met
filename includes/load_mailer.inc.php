@@ -29,10 +29,6 @@
    	$mail->Timeout=30;
   	$mail->IsHTML(true);
   
-  	
-
-  	 
-  	
   	define("STATIC_MAIL_FROM", "noreply@metmeetings.org");
   	define("STATIC_MAIL_TO", "swaller111@gmail.com");
   	define("STATIC_MAIL_TO_TREASURER", "swaller111@gmail.com");
