@@ -29,7 +29,7 @@
     <input type='hidden' name='hdnPriceWineReceptionGuest' id='hdnPriceWineReceptionGuest'
            value='{CONFERENCE_PRICE_WINE_RECEPTION_GUEST}'>
     <input type='hidden' name='hdnBasePrice' id='hdnBasePrice' value='{FORM_CONFERENCE_PRECIO_TOTAL}'>
-    <input type='hidden' name='finalPrice' id='finalPrice' value=''>
+    <!--<input type='hidden' name='finalPrice' id='finalPrice' value=''>-->
     <input type='hidden' name='hdnIdTaller' id='hdnIdTaller'>
     <!-- BEGIN: input_logueado -->
     <input type='hidden' name='hdnIdLogin' id='hdnIdLogin'>
@@ -188,11 +188,17 @@
         <p class='form-text'>{STATIC_FORM_CONFERENCE_REGISTER_CONFERENCE_GUEST_1}&nbsp;{COMBO_GUEST}&nbsp;{STATIC_FORM_CONFERENCE_REGISTER_CONFERENCE_GUEST_2}</p>
         <p class='form-text'>{STATIC_FORM_CONFERENCE_REGISTER_DINNER_BODY}</p>
         <div class='form-check'>
-            <input class='form-check-input' type='checkbox' name='chkDinner' id='chkDinner' onclick='reinicializarPrecioTotal()'>
+            <input class='form-check-input' type='checkbox' name='chkDinner' id='chkDinner'>
             <label class='form-check-label' for='chkDinner'>
                 {STATIC_FORM_CONFERENCE_REGISTER_DINNER_AGREE}
             </label>
         </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>{STATIC_FORM_CONFERENCE_REGISTER_WINE_RECEPTION_TITLE}</legend>
+        <p class='form-text'>{STATIC_FORM_CONFERENCE_REGISTER_WINE_RECEPTION_BODY}</p>
+        <p class='form-text'>{STATIC_FORM_CONFERENCE_REGISTER_WINE_RECEPTION_GUEST_1}&nbsp;{COMBO_WINE_RECEPTION_GUEST}&nbsp;{STATIC_FORM_CONFERENCE_REGISTER_WINE_RECEPTION_GUEST_2}</p>
     </fieldset>
 
     <fieldset>

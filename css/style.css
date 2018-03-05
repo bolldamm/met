@@ -1,64 +1,62 @@
 @CHARSET "UTF-8";
 
-#logo { padding:40px 0px 0px 0px; height:173px; }
-#logo h1 a { display:block; background:transparent url('../images/pictures/logos/logo.met.png') no-repeat scroll 0 0; width:244px; height:173px; text-indent:-9999px; }
+/*
+Includes:
+Page header styles (background image, logo fade effect, etc.)
+Basic page layout styles
+Top horizontal dropdown menu styles
+Lefthand menu styles
+Login panel styles
+News panel styles
+Footer styles
+ */
 
-@media only screen and (min-device-width: 768px) {
-    body {
-        background: #cfe1e0 url(../files/backgrounds/54.jpg) no-repeat scroll 50% 0;
-    }
+/* Page header styles */
+#logo {
+    padding:40px 0px 0px 0px;
+    height:173px;
+}
+#logo h1 a {
+    display:block;
+    background:transparent url('../images/pictures/logos/logo.met.png') no-repeat scroll 0 0;
+    width:244px;
+    height:173px;
 }
 #backgroundBlue {
     position: absolute;
-    top: 212px;
+    top:212px;
     background: transparent url(../images/backgrounds/bkgrd.blueDegrade.png) repeat-x scroll 0 bottom;
     width: 100%;
     height: 244px;
 }
+
+/* Basic page layout styles */
 .wrapper {
     margin: auto;
     max-width: 1200px;
     position: relative; /*this is to hide the blue background degrade */
 }
+/* Background image only on larger screens */
+@media only screen and (min-device-width: 768px) {
+    body {
+        background: #cfe1e0 url(../files/backgrounds/54.jpg) no-repeat scroll 50% 0;
+    }
+}
 .page-area {
     background-color: white;
     padding-top: .3em;
 }
-.lefthand-menu, .main-content {
-  	margin-top: 25px;
+.lefthand-menu, .main-content, .sidepanel  {
+    /* margin-top: .2em; */
 }
-.sidepanel {
-    margin-top: 25px;
+.sidepanel  {
+    margin-top: .8em;
 }
-.sideBanner {
-    margin-top: .5em;
-}
-#loginTitle {
-  font-size:110%;
-  color:#8B1513;
+#breadcrumb {
     margin-bottom: .8em;
 }
-#btnLogin {
-    margin-top: 1em;
-}
-p#msgLoginError {
-    margin-top: .5em;
-    color: #dc3545;
-}
-#frmLogin #txtUsername {
-    margin-bottom: .5em;
-}
-h6.newsTitle {
-    color: #8B1513;
-    margin: .8em 0 0 0;
-}
-.topnav {
-  margin-top:20px;
-}
-.openboxText {
-    margin-bottom: 1em;
-}
-/* TOP MENU */
+
+/* Top horizontal dropdown menu */
 .navbar-custom {
     /*background-color: #1d4482;*/
     background-color: transparent;
@@ -96,6 +94,9 @@ h6.newsTitle {
         border-right: none;
     }
 }
+.topnav {
+    margin-top:20px;
+}
 .dropdown {
     /*background-color: #1d4482;*/
     margin: 1px 1px;
@@ -104,10 +105,7 @@ h6.newsTitle {
     margin: 0;
     padding: 0;
 }
-li.specialMenu {
-    color:white;
-    background-color: #C6D880;
-}
+/* Different styles for navbar expanded and navbar collapsed */
 @media only screen and (min-device-width: 768px) {
     .dropdown-menu a {
         margin-top: 1px;
@@ -141,13 +139,40 @@ li.specialMenu {
         border: 0;
     }
 }
-.dropdown-menu a.specialMenu {
-    color: white;
-    background-color: #8b1513;
+@media only screen and (min-device-width: 768px) {
+    .dropdown-menu a.specialMenu {
+        color: white;
+        background-color: #8b1513;
+    }
 }
-.footer {
-  margin-bottom: 30px;
+@media only screen and (min-device-width: 768px) {
+    li.specialMenu {
+        color:white;
+        background-color: #C6D880;
+    }
 }
+@media only screen and (max-device-width: 768px) {
+    .dropdown-menu a.specialMenu {
+        color: #8b1513;
+        background-color: white;
+    }
+}
+@media only screen and (max-device-width: 768px) {
+    li.specialMenu {
+        color: #8b1513;
+        background-color: white;
+    }
+}
+
+/* Styles for side panel and banners */
+.sidepanel {
+    margin-bottom: 1em;
+}
+.sideBanner {
+    margin-top: .5em;
+}
+
+/* Lefthand menu styles */
 .lefthand-menu {
   margin-bottom: 20px;
 }
@@ -193,3 +218,37 @@ nav a.four {
     padding: .2rem 4rem;
     border-bottom: white;
 }
+
+/* Login panel styles */
+#loginTitle {
+    font-size:110%;
+    color:#8B1513;
+    margin-bottom: .8em;
+}
+#btnLogin {
+    margin-top: 1em;
+}
+p#msgLoginError {
+    margin-top: .5em;
+    color: #dc3545;
+}
+#frmLogin #txtUsername {
+    margin-bottom: .5em;
+}
+
+/* Footer styles */
+.footer {
+    margin-bottom: 3em;
+}
+.copyright {
+    display: inline-block;
+    margin-right: 6em;
+}
+.footerItem {
+    display: inline-block;
+    margin-right: 2em;
+    margin-left: 2em;
+}
+
+
+/* Other styles */

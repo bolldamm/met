@@ -1,22 +1,52 @@
 @CHARSET "UTF-8";
 
-h3.councilName { display: block; font-size:140%; margin-bottom: 8px; font-weight:normal; color:#8B1513; }
-img.council { width: 100px; height: 140px; margin-top: .5em; }
-
 address a { color:#8B1513; }
-#councilMember { display:block; margin:0px 0px 0px 0px; font-size:100%; }
-#lstCouncilMembers { margin:3px 0px 0px 0px; list-style-type:disc; list-style-position: inside; padding-left: .2em; }
-#lstCouncilMembers li { padding:0px 0px 0px 0px; font-size: 100%; line-height: 1.2em; }
-#lstCouncilMembers li a { color:#375693; }
+
+
+.councilMember {
+    margin: 1em 0;
+    display:block;
+}
+.councilMember img {
+    width: 100px;
+    height: 140px;
+    margin-top: .5em;
+    float:left;
+    margin-right: 1em;
+}
+.councilPost {
+    display: block;
+    font-size:100%;
+    font-weight:normal;
+    color:#8B1513;
+    margin-bottom: 1.5em;
+}
+.councilName {
+    display: block;
+    font-size:120%;
+    font-weight:normal;
+    color:#8B1513;
+}
+.contactX {
+    display: block;
+    font-size:90%;
+    font-weight:normal;
+}
+.lstCouncilMembers {
+    margin:0;
+    font-size:80%;
+    display:block;
+    margin-top:10px;
+}
 .councilMember { margin: 1em 0; }
 
 #form .boxForm .errorInput,
 #form #captchaBox .errorInput { background:#F9EBEA; color:#8B1513; border:1px solid #8B1513; }
 
-#msgAlert, #msgAlertStatic { padding:4px 12px 4px 12px; border-radius:6px; }
+#msgAlert, #msgAlertStatic { padding:4px 12px; border-radius:6px; }
 .msgKOContact { color:#dc3545; }
 .msgOKContact { color:#348A88; }
 
-.captchaText {
-    margin-top: .5em;
+.txtaComentarios {
+    margin-bottom: .8em;
 }

@@ -54,7 +54,6 @@ table.tblConference .spacingWorkShop label { padding-left:20px; color:#898989; }
 #form .datepicker { background:#ffffff url('../../images/pictures/icons/icon.calendar.png') no-repeat scroll 90px 50%; width:90px; }
 
 /* captcha */
-
 #txtCaptcha { float:left; margin: 0 0 .5em 1em; text-transform:uppercase; padding-bottom: 1em; }
 #imageCaptcha { border:1px solid #B2B2B2; border-radius:6px; float:right; }
 #frmRecordarClave #imageCaptcha, #frmRecordarClave #reloadCaptcha { margin: .8em 3em 0 0; }
@@ -114,7 +113,6 @@ form#frmMembership {
     font-size: 80%;
     display: block;
 }
-/* FORMS */
 .form-control {
     margin-top:0.5em;
 }
@@ -148,4 +146,13 @@ label {
 }
 input.required {
     background: transparent url(../../images/pictures/icons/icon.required.png) no-repeat scroll 3px 5px;
+}
+.info1, .info2 {
+    color: red;
+}
+.info3 {
+    color: blue;
+}
+#img_destino {
+    border: 1px solid lightgrey;
 }

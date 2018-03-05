@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta property="og:url" content="http://test.metmeetings.org" />
+    <meta property="og:url" content="http://test.metmeetings.org"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{TITULO_WEB}, MET</title>
     <base href="{CURRENT_DOMAIN}/">
@@ -18,7 +18,8 @@
     <!-- END: metatag_concreto -->
 
     <!-- Bootstrap CSS framework -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+          integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
 
     <!-- Original MET website framework CSS -->
     <!--<link rel="stylesheet" href="css/style/reset.css" type="text/css" media="screen, projection">-->
@@ -32,20 +33,23 @@
     <!-- Jquery libraries -->
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://code.jquery.com/jquery-migrate-3.0.1.min.js"></script>
-    <script src="scripts/js/jquery.blockUI.js" ></script>
+    <script src="scripts/js/jquery.blockUI.js"></script>
 
     <!-- Bootstrap -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
 
     <!-- BEGIN: css_form -->
     <link rel="stylesheet" href="css/section/form.css" type="text/css" media="screen">
     <!-- END: css_form -->
 
     <!-- Personal Javascript -->
-    <script src="scripts/js/functions.js{HASH}" ></script>
+    <script src="scripts/js/functions.js{HASH}"></script>
 
     <!-- Google Web Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Advent+Pro:400,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto" rel="stylesheet">
 
     <!-- BEGIN: script_gmaps -->
     <!-- googleMaps Javascript -->
@@ -54,22 +58,22 @@
 
     <!-- BEGIN: script_nivoslider -->
     <!-- slider Javascript -->
-    <link rel="stylesheet" href="css/slider/nivo-slider.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="css/slider/nivo-slider.css" type="text/css" media="screen"/>
     <!--<script src="scripts/js/jquery.nivo.slider.js" ></script>-->
-    <script src="scripts/js/jquery.slider.min.js" ></script>
+    <script src="scripts/js/jquery.slider.min.js"></script>
     <!-- END: script_nivoslider -->
 
     <!-- BEGIN: script_colorbox -->
     <!-- modal box Javascript -->
     <link rel="stylesheet" href="/css/colorbox/colorbox.css" type="text/css">
-    <script src="scripts/js/jquery.colorbox-min.js" ></script>
+    <script src="scripts/js/jquery.colorbox-min.js"></script>
     <!-- END: script_colorbox -->
 
     <!-- BEGIN: script_calendar -->
     <!-- datapicker Javascript -->
     <link rel="stylesheet" href="css/datepicker/datepicker.css" type="text/css" media="screen">
-    <script src="scripts/js/jquery-ui.js" ></script>
-    <script src="scripts/js/jquery.datepicker.js" ></script>
+    <script src="scripts/js/jquery-ui.js"></script>
+    <script src="scripts/js/jquery.datepicker.js"></script>
     <!-- END: script_calendar -->
 
     <!-- BEGIN: editor_script -->
@@ -83,12 +87,12 @@
     <!-- END: script_multiselect -->
 
     <!-- BEGIN: placeholders_script -->
-    <script src="scripts/js/placeholders.min.js" ></script>
+    <script src="scripts/js/placeholders.min.js"></script>
     <!-- END: placeholders_script -->
 
     <!-- BEGIN: bloque_ready -->
     <script>
-        window.onload = function() {
+        window.onload = function () {
             <!-- BEGIN: bloque_anclar_elemento -->
             anclarElemento("{ELEMENTO_ANCLAR}");
             <!-- END: bloque_anclar_elemento -->
@@ -163,7 +167,7 @@
     <script>
         "use strict";
         <!-- BEGIN: validate_login -->
-            document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             var loginForm = document.getElementById("frmLogin");
             var validation = loginForm.addEventListener("submit", function (event) {
                 if (loginForm.checkValidity() === false) {
@@ -178,66 +182,67 @@
         <!-- END: validate_login -->
 
         <!-- BEGIN: validar_remember_password-->
-            function validarEnvioClave() {
-               var btnSubmit = document.frmRecordarClave.btnLogin;
-               var panelErrorLogin = document.getElementById("msgError");
-               panelErrorLogin.className = "";
-               var blError = false;
-               var txtErrors = "";
+        function validarEnvioClave() {
+            var btnSubmit = document.frmRecordarClave.btnLogin;
+            var panelErrorLogin = document.getElementById("msgError");
+            panelErrorLogin.className = "";
+            var blError = false;
+            var txtErrors = "";
 
-               btnSubmit.disabled = true;
-               mensajeCargando("{STATIC_GLOBAL_SENDING}...");
+            btnSubmit.disabled = true;
+            mensajeCargando("{STATIC_GLOBAL_SENDING}...");
 
 
-               if (!validarEmail(document.frmRecordarClave.txtEmail.value)) {
-                   txtErrors = "{STATIC_REMEMBER_PASSWORD_ERROR_EMAIL}";
-                   blError = true;
-               }
+            if (!validarEmail(document.frmRecordarClave.txtEmail.value)) {
+                txtErrors = "{STATIC_REMEMBER_PASSWORD_ERROR_EMAIL}";
+                blError = true;
+            }
 
-               if (blError) {
-                   panelErrorLogin.innerHTML = txtErrors;
-                   panelErrorLogin.style.display = "block";
-                   btnSubmit.disabled = false;
-                   $.unblockUI();
-               } else {
-                   panelErrorLogin.style.display = "none";
-                   var ajax = nuevoAjax();
-                   var respuesta;
-                   ajax.open("GET", "ajax/send_remember_password.php?mail=" + document.frmRecordarClave.txtEmail.value + "&captcha=" + document.frmRecordarClave.txtCaptcha.value);
-                   ajax.onreadystatechange = function () {
-                       if (ajax.readyState === 4) {
-                           respuesta = parseInt(ajax.responseText);
-                           txtErrors = "<span>";
-                           switch (respuesta) {
-                               case 1:
-                                   panelErrorLogin.className = "msgOK";
-                                   txtErrors += "{STATIC_REMEMBER_PASSWORD_OK}";
-                                   refrescarCaptcha();
-                                   break;
-                               case 2:
-                                   txtErrors += "{STATIC_REMEMBER_PASSWORD_NO_SENDED}";
-                                   break;
-                               case 3:
-                                   txtErrors += "{STATIC_REMEMBER_PASSWORD_MAIL_NO_EXISTS}";
-                                   break;
-                               case 4:
-                                   txtErrors += "{STATIC_REMEMBER_PASSWORD_CAPTCHA_KO}";
-                                   break;
-                           }
-                           txtErrors += "</span>";
-                           panelErrorLogin.innerHTML = txtErrors;
-                           panelErrorLogin.style.display = "block";
-                           btnSubmit.disabled = false;
-                           $.unblockUI();
-                       }
-                   };
-                   ajax.send(null);
-               }
-           }
+            if (blError) {
+                panelErrorLogin.innerHTML = txtErrors;
+                panelErrorLogin.style.display = "block";
+                btnSubmit.disabled = false;
+                $.unblockUI();
+            } else {
+                panelErrorLogin.style.display = "none";
+                var ajax = nuevoAjax();
+                var respuesta;
+                ajax.open("GET", "ajax/send_remember_password.php?mail=" + document.frmRecordarClave.txtEmail.value + "&captcha=" + document.frmRecordarClave.txtCaptcha.value);
+                ajax.onreadystatechange = function () {
+                    if (ajax.readyState === 4) {
+                        respuesta = parseInt(ajax.responseText);
+                        txtErrors = "<span>";
+                        switch (respuesta) {
+                            case 1:
+                                panelErrorLogin.className = "msgOK";
+                                txtErrors += "{STATIC_REMEMBER_PASSWORD_OK}";
+                                refrescarCaptcha();
+                                break;
+                            case 2:
+                                txtErrors += "{STATIC_REMEMBER_PASSWORD_NO_SENDED}";
+                                break;
+                            case 3:
+                                txtErrors += "{STATIC_REMEMBER_PASSWORD_MAIL_NO_EXISTS}";
+                                break;
+                            case 4:
+                                txtErrors += "{STATIC_REMEMBER_PASSWORD_CAPTCHA_KO}";
+                                break;
+                        }
+                        txtErrors += "</span>";
+                        panelErrorLogin.innerHTML = txtErrors;
+                        panelErrorLogin.style.display = "block";
+                        btnSubmit.disabled = false;
+                        $.unblockUI();
+                    }
+                };
+                ajax.send(null);
+            }
+        }
+
         <!-- END: validar_remember_password -->
 
         <!-- BEGIN: formulario_reiniciar_clave -->
-            function validarResetClave() {
+        function validarResetClave() {
             var btnSubmit = document.frmResetClave.btnLogin;
             var panelErrorLogin = document.getElementById("msgError");
             var blError = false;
@@ -245,28 +250,29 @@
 
             btnSubmit.disabled = true;
 
-            if(document.frmResetClave.txtPassword.value === "") {
+            if (document.frmResetClave.txtPassword.value === "") {
                 blError = true;
                 txtErrors += "{STATIC_RESET_PASSWORD_ERROR_PASS_EMPTY}";
-            }else if(document.frmResetClave.txtPassword.value !== document.frmResetClave.txtConfirmPassword.value) {
+            } else if (document.frmResetClave.txtPassword.value !== document.frmResetClave.txtConfirmPassword.value) {
                 blError = true;
                 txtErrors += "{STATIC_RESET_PASSWORD_ERROR_PASS_EQUAL}";
             }
 
-            if(blError) {
+            if (blError) {
                 txtErrors += "</span>";
                 panelErrorLogin.innerHTML = txtErrors;
                 panelErrorLogin.style.display = "block";
                 btnSubmit.disabled = false;
-            }else{
+            } else {
                 document.frmResetClave.submit();
             }
         }
+
         <!-- END: formulario_reiniciar_clave -->
 
         <!-- BEGIN: validate_membership_form -->
 
-        function removeUsernameAlert () {
+        function removeUsernameAlert() {
             $("#txtEmailUser").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
@@ -274,7 +280,8 @@
                 }
             });
         }
-        function removePasswordAlert () {
+
+        function removePasswordAlert() {
             $("#txtPasswd").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
@@ -282,7 +289,8 @@
                 }
             });
         }
-        function removeConfirmPasswordAlert () {
+
+        function removeConfirmPasswordAlert() {
             $("#txtRePasswd").on("keyup", function () {
                 if ($("#txtPasswd").val() !== "") {
                     $(this).removeClass("errorBorderColor error");
@@ -290,7 +298,8 @@
                 }
             });
         }
-        function removeMatchPasswordsAlert () {
+
+        function removeMatchPasswordsAlert() {
             $("#txtRePasswd").on("keyup", function () {
                 if ($(this).val() === $("#txtPasswd").val()) {
                     $(this).removeClass("errorBorderColor error");
@@ -301,23 +310,26 @@
                 }
             });
         }
-        function removeFirstNameAlert () {
-            $("#txtNombre").on("blur", function () {
+
+        function removeFirstNameAlert() {
+            $("#txtNombre").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#firstNameMessage").html("");
                 }
             });
         }
-        function removeLastNameameAlert () {
-            $("#txtApellidos").on("blur", function () {
+
+        function removeLastNameameAlert() {
+            $("#txtApellidos").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#lastNameMessage").html("");
                 }
             });
         }
-        function removeCountryAlert () {
+
+        function removeCountryAlert() {
             $("#cmbPais").on("change", function () {
                 if ($(this).val() > -1) {
                     $(this).removeClass("errorBorderColor error");
@@ -325,8 +337,9 @@
                 }
             });
         }
-        function removeProfActsAlert () {
-            $(".professionalActivity").each(function() {
+
+        function removeProfActsAlert() {
+            $(".professionalActivity").each(function () {
                 $(this).on("click", function () {
                     if ($(this).length > 0) {
                         $("#containerProfActs").removeClass("errorBackgroundColor error");
@@ -335,55 +348,62 @@
                 });
             });
         }
-        function removeNifAlert () {
-            $("#txtFacturacionNifCliente").on("blur", function () {
+
+        function removeNifAlert() {
+            $("#txtFacturacionNifCliente").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#nifMessage").html("");
                 }
             });
         }
-        function removeBillingNameAlert () {
-            $("#txtFacturacionNombreCliente").on("blur", function () {
+
+        function removeBillingNameAlert() {
+            $("#txtFacturacionNombreCliente").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#billingNameMessage").html("");
                 }
             });
         }
-        function removeBillingAddressAlert () {
-            $("#txtFacturacionDireccion").on("blur", function () {
+
+        function removeBillingAddressAlert() {
+            $("#txtFacturacionDireccion").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#addressMessage").html("");
                 }
             });
         }
-        function removeBillingPostcodeAlert () {
-            $("#txtFacturacionCodigoPostal").on("blur", function () {
+
+        function removeBillingPostcodeAlert() {
+            $("#txtFacturacionCodigoPostal").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#postcodeMessage").html("");
                 }
             });
         }
-        function removeBillingCityAlert () {
-            $("#txtFacturacionCiudad").on("blur", function () {
+
+        function removeBillingCityAlert() {
+            $("#txtFacturacionCiudad").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#cityMessage").html("");
                 }
             });
         }
-        function removeBillingCountryAlert () {
-            $("#txtFacturacionPais").on("blur", function () {
+
+        function removeBillingCountryAlert() {
+            $("#txtFacturacionPais").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#billingCountryMessage").html("");
                 }
             });
         }
-        function removePaymentAlert () {
+
+        function removePaymentAlert() {
             $(".paymentMethod").on("click", function () {
                 if ($(this).prop("checked") !== false) {
                     $("#containerPaymentMethod").removeClass("errorBackgroundColor error");
@@ -391,7 +411,8 @@
                 }
             });
         }
-        function removePrivacyAlert () {
+
+        function removePrivacyAlert() {
             $("#chkPrivacy").on("click", function () {
                 if ($(this).prop("checked") !== false) {
                     $("#containerPrivacyCheck").removeClass("errorBackgroundColor error");
@@ -499,7 +520,6 @@
                             scrollTop: invalidInput.first().offset().top
                         }, 800);
                     }
-
                 } else {
 
                     //Store choices (prof activities and work situations) in hidden element
@@ -528,7 +548,7 @@
         }
 
         //ON PAGE LOAD, add event listeners
-        $( document ).ready(function() {
+        $(document).ready(function () {
             removeUsernameAlert();
             removePasswordAlert();
             removeConfirmPasswordAlert();
@@ -549,32 +569,32 @@
             supports_input_placeholder();
         });
 
-        function generateMemberRegistration(){
-            var form=$("#frmMembership");
+        function generateMemberRegistration() {
+            var form = $("#frmMembership");
             var signupResult;
             $.ajax({
                 type: "POST",
                 url: "ajax/save_inscription.php",
                 data: form.serialize(),
-                success: function(data){
+                success: function (data) {
                     //Store serialised signup data in membership registration form
-                    document.getElementById("resultadoInscripcion").innerHTML=data;
+                    document.getElementById("resultadoInscripcion").innerHTML = data;
                     //Get result (1=transfer, 2=Paypal, or else error message) from "process_form.html"
-                    signupResult=document.getElementById("hdnTipoResultado");
+                    signupResult = document.getElementById("hdnTipoResultado");
 
                     //If bank transfer, call "inscripcion_finalizada.php"
                     //With parameter "tipo" (= payment method)
-                    if(signupResult.value==="1"){
-                        window.location="inscripcion_finalizada.php?tipo=1";
+                    if (signupResult.value === "1") {
+                        window.location = "inscripcion_finalizada.php?tipo=1";
 
-                    }else if(signupResult.value==="2"){
+                    } else if (signupResult.value === "2") {
                         //If Paypal, submit data to Paypal in paypal_form.html
                         document.frmPaypal.submit();
 
-                    }else if(signupResult.value==="4"){
-                        window.location="inscripcion_finalizada.php?tipo=4";
+                    } else if (signupResult.value === "4") {
+                        window.location = "inscripcion_finalizada.php?tipo=4";
 
-                    }else{
+                    } else {
                         //Otherwise, result = error message, so display message on registration form
                         var msgContenido = document.getElementById("msgAlert");
                         msgContenido.innerHTML = signupResult.value;
@@ -626,31 +646,31 @@
         }
 
         //ON PAGE LOAD, add event listeners
-        $( document ).ready(function() {
+        $(document).ready(function () {
             clearPaymentMethodWarning();
             validateRenewMembershipForm();
         });
 
-        function generateMembershipRenewal(){
-            var form=$("#frmMembership");
+        function generateMembershipRenewal() {
+            var form = $("#frmMembership");
             var renewalResult;
             $.ajax({
                 type: "POST",
                 url: "ajax/save_renew_inscription.php",
                 data: form.serialize(),
-                success: function(data){
+                success: function (data) {
                     //Si es correcto...
-                    document.getElementById("resultadoInscripcion").innerHTML=data;
+                    document.getElementById("resultadoInscripcion").innerHTML = data;
 
                     //Si encontramos la variable
-                    renewalResult=document.getElementById("hdnTipoResultado");
-                    if(renewalResult.value==="1"){
-                        window.location="inscripcion_finalizada.php?tipo=1";
-                    }else if(renewalResult.value==="2"){
+                    renewalResult = document.getElementById("hdnTipoResultado");
+                    if (renewalResult.value === "1") {
+                        window.location = "inscripcion_finalizada.php?tipo=1";
+                    } else if (renewalResult.value === "2") {
                         document.frmPaypal.submit();
-                    }else if(renewalResult.value==="4"){
-                        window.location="inscripcion_finalizada.php?tipo=4";
-                    }else{
+                    } else if (renewalResult.value === "4") {
+                        window.location = "inscripcion_finalizada.php?tipo=4";
+                    } else {
                         var msgContenido = document.getElementById("msgAlert");
                         msgContenido.innerHTML = renewalResult.value;
                         msgContenido.setAttribute("class", "msgKO");
@@ -661,6 +681,7 @@
                 }
             });
         }
+
         <!-- END: validate_renew_membership_form -->
 
         <!-- BEGIN: validate_workshop_registration_form -->
@@ -702,7 +723,7 @@
                     rateApplicable = "priceSister_";
                 }
                 //Get ID of each workshop and test if checked
-                $(".workshopChoice").each(function() {
+                $(".workshopChoice").each(function () {
                     var workshopId = this.name.split("_")[1];
                     if (this.checked) {
                         //Get price from form, converting string to number, and add to total
@@ -721,7 +742,7 @@
             });
         }
 
-        function clearEmailAlert () {
+        function clearEmailAlert() {
             $("#txtEmail").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
@@ -729,24 +750,27 @@
                 }
             });
         }
-        function clearFirstNameAlert () {
-            $("#txtNombre").on("blur", function () {
+
+        function clearFirstNameAlert() {
+            $("#txtNombre").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#firstNameMessage").html("");
                 }
             });
         }
-        function clearLastNameAlert () {
-            $("#txtApellidos").on("blur", function () {
+
+        function clearLastNameAlert() {
+            $("#txtApellidos").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#lastNameMessage").html("");
                 }
             });
         }
-        function clearWorkshopAlert () {
-            $(".workshopChoice").each(function() {
+
+        function clearWorkshopAlert() {
+            $(".workshopChoice").each(function () {
                 $(this).on("click", function (event) {
                     if ($(this).prop("checked") !== false) {
                         $(this).removeClass("errorBorderColor error");
@@ -755,55 +779,62 @@
                 });
             });
         }
-        function clearNifAlert () {
-            $("#txtFacturacionNifCliente").on("blur", function () {
+
+        function clearNifAlert() {
+            $("#txtFacturacionNifCliente").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#nifMessage").html("");
                 }
             });
         }
-        function clearBillingNameAlert () {
-            $("#txtFacturacionNombreCliente").on("blur", function () {
+
+        function clearBillingNameAlert() {
+            $("#txtFacturacionNombreCliente").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#billingNameMessage").html("");
                 }
             });
         }
-        function clearBillingAddressAlert () {
-            $("#txtFacturacionDireccion").on("blur", function () {
+
+        function clearBillingAddressAlert() {
+            $("#txtFacturacionDireccion").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#addressMessage").html("");
                 }
             });
         }
-        function clearBillingPostcodeAlert () {
-            $("#txtFacturacionCodigoPostal").on("blur", function () {
+
+        function clearBillingPostcodeAlert() {
+            $("#txtFacturacionCodigoPostal").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#postcodeMessage").html("");
                 }
             });
         }
-        function clearBillingCityAlert () {
-            $("#txtFacturacionCiudad").on("blur", function () {
+
+        function clearBillingCityAlert() {
+            $("#txtFacturacionCiudad").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#cityMessage").html("");
                 }
             });
         }
-        function clearBillingCountryAlert () {
-            $("#txtFacturacionPais").on("blur", function () {
+
+        function clearBillingCountryAlert() {
+            $("#txtFacturacionPais").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#billingCountryMessage").html("");
                 }
             });
         }
-        function clearPaymentAlert () {
+
+        function clearPaymentAlert() {
             $(".paymentMethod").on("click", function () {
                 if ($(this).prop("checked") !== false) {
                     $("#containerPaymentMethod").removeClass("errorBackgroundColor error");
@@ -811,7 +842,8 @@
                 }
             });
         }
-        function clearPrivacyAlert () {
+
+        function clearPrivacyAlert() {
             $("#chkPrivacy").on("click", function () {
                 if ($(this).prop("checked") !== false) {
                     $("#containerPrivacyCheck").removeClass("errorBackgroundColor error");
@@ -819,7 +851,8 @@
                 }
             });
         }
-        function clearCaptchaAlert () {
+
+        function clearCaptchaAlert() {
             $("#txtCaptcha").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
@@ -829,7 +862,7 @@
         }
 
         function validateWorkshopForm() {
-            $("#frmWorkshopRegister").on("submit", function(event) {
+            $("#frmWorkshopRegister").on("submit", function (event) {
                 event.preventDefault();
                 event.stopPropagation();
 
@@ -893,7 +926,7 @@
                     $("#paymentMethodMessage").html("Please select a payment method");
                     $("#containerPaymentMethod").addClass("errorBackgroundColor error");
                 }
-                 if (privacy.prop("checked") === false) {
+                if (privacy.prop("checked") === false) {
                     $("#privacyMessage").html("To submit the form, you must accept MET's privacy policy");
                     $("#containerPrivacyCheck").addClass("errorBackgroundColor error");
                 }
@@ -934,7 +967,7 @@
         }
 
         //ON PAGE LOAD, add event listeners
-        $( document ).ready(function() {
+        $(document).ready(function () {
             calculatePriceWorkshops();
             updatePriceSisterAssoc();
             refreshCaptchaWorkshop();
@@ -955,12 +988,12 @@
             supports_input_placeholder();
         });
 
-/*
-* Serialises form data and sends it to save_inscription_workshop.php
-* Stores the result (payment method or error message) in process_form.html
-* If bank transfer and success, calls inscripcion_finalizada.php
-* If Paypal, submits payment data to Paypal in paypal_form.html
-*/
+        /*
+        * Serialises form data and sends it to save_inscription_workshop.php
+        * Stores the result (payment method or error message) in process_form.html
+        * If bank transfer and success, calls inscripcion_finalizada.php
+        * If Paypal, submits payment data to Paypal in paypal_form.html
+        */
         function generateWorkshopRegistration(event) {
             var form = $("#frmWorkshopRegister");
             var signupResult;
@@ -980,11 +1013,11 @@
                     if (signupResult.value === "1") {
                         window.location = "inscripcion_finalizada.php?modo=2&tipo=1";
 
-                    //If Paypal, submit data to Paypal in paypal_form.html
+                        //If Paypal, submit data to Paypal in paypal_form.html
                     } else if (signupResult.value === "2") {
                         document.frmPaypal.submit();
 
-                    //Otherwise, the signup result is an error message
+                        //Otherwise, the signup result is an error message
                     } else {
                         var captchaMessage = document.getElementById("captchaMessage");
                         captchaMessage.innerHTML = signupResult.value;
@@ -993,37 +1026,36 @@
                 }
             });
         }
+
         <!-- END: validate_workshop_registration_form -->
 
         <!-- BEGIN: validate_conference_registration_form -->
 
-        function finalPrice() {
-            //Used in save_inscription_conference.php for sending price to Paypal
-            var totalPayable = document.getElementById("totalPayable").innerHTML;
-            document.getElementById("finalPrice").innerHTML = totalPayable;
-        }
         function reloadCaptchaConference() {
-            $("#reloadCaptcha").on("click", function() {
+            $("#reloadCaptcha").on("click", function () {
                 $("#imageCaptcha").attr("src", "classes/secureimage/securimage_show.php?sid=" + Math.random()).value = "";
             });
         }
-        function unsetFirstNameAlert () {
-            $("#txtNombre").on("blur", function () {
+
+        function unsetFirstNameAlert() {
+            $("#txtNombre").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#firstNameMessage").html("");
                 }
             });
         }
-        function unsetLastNameAlert () {
-            $("#txtApellidos").on("blur", function () {
+
+        function unsetLastNameAlert() {
+            $("#txtApellidos").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#lastNameMessage").html("");
                 }
             });
         }
-        function unsetEmailAlert () {
+
+        function unsetEmailAlert() {
             $("#txtEmail").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
@@ -1031,6 +1063,7 @@
                 }
             });
         }
+
         function unsetCountryAlert() {
             $("#cmbPais").on("change", function () {
                 if ($(this).val() > -1) {
@@ -1039,11 +1072,19 @@
                 }
             });
         }
+
         function updatePriceSister() {
             $("#cmbAsociacionHermana").on("change", function () {
                 recalculateTotalPrice();
             });
         }
+
+        function updatePriceSpeaker() {
+            $("#chkSpeaker").on("change", function () {
+                recalculateTotalPrice();
+            });
+        }
+
         function deselectRadioButtons() {
             //Add a click event listener to each workshop radio button
             $(".rdnWorkshop").each(function () {
@@ -1064,11 +1105,12 @@
                             //Set hidden value to empty
                             hidden.value = "";
                         }
-                        recalculateTotalPrice()
                     }
+                    recalculateTotalPrice()
                 });
             });
         }
+
         function disableMinisessions() {
             $(".rdnWorkshop").each(function () {
                 $(this).on("click", function (event) {
@@ -1087,17 +1129,19 @@
                 });
             });
         }
+
         function unsetWorkshopsAlert() {
             $(".chkMinisession").each(function () {
                 $(this).on("click", function (event) {
                     if ($(".chkMinisession:checked").length > 0) {
                         $("#workshopsMessage").html("");
                         $("#containerWorkshop").removeClass("errorBackgroundColor error");
-                        recalculateTotalPrice()
                     }
+                    recalculateTotalPrice()
                 });
             });
         }
+
         function setThreeMinisessionsAlert() {
             $(".chkMinisession").each(function () {
                 $(this).on("click", function (event) {
@@ -1114,6 +1158,7 @@
                 });
             });
         }
+
         function disableAllWorkshops() {
             $("#chkNotWorkshop").on("click", function () {
                 if (this.checked) {
@@ -1126,9 +1171,10 @@
                     $(".rdnWorkshop").prop("disabled", false);
                     $(".chkMinisession").prop("disabled", false);
                 }
-                //recalculateTotalPrice();
+                recalculateTotalPrice();
             });
         }
+
         function unsetBadgeAlert() {
             var badgeText = $("#txtaBadge");
             badgeText.on("keyup", function () {
@@ -1138,54 +1184,79 @@
                 }
             });
         }
-        function unsetNifAlert () {
-            $("#txtFacturacionNifCliente").on("blur", function () {
+
+        function priceDinnerGuests() {
+            $("#cmbInvitados").on("change", function () {
+                recalculateTotalPrice();
+            });
+        }
+
+        function priceDinnerOptout() {
+            $("#chkDinner").on("change", function () {
+                recalculateTotalPrice();
+            });
+        }
+
+        function priceWineReceptionGuests() {
+            $("#cmbWineReceptionGuests").on("change", function () {
+                recalculateTotalPrice();
+            });
+        }
+
+        function unsetNifAlert() {
+            $("#txtFacturacionNifCliente").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#nifMessage").html("");
                 }
             });
         }
-        function unsetBillingNameAlert () {
-            $("#txtFacturacionNombreCliente").on("blur", function () {
+
+        function unsetBillingNameAlert() {
+            $("#txtFacturacionNombreCliente").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#billingNameMessage").html("");
                 }
             });
         }
-        function unsetBillingAddressAlert () {
-            $("#txtFacturacionDireccion").on("blur", function () {
+
+        function unsetBillingAddressAlert() {
+            $("#txtFacturacionDireccion").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#addressMessage").html("");
                 }
             });
         }
-        function unsetBillingPostcodeAlert () {
-            $("#txtFacturacionCodigoPostal").on("blur", function () {
+
+        function unsetBillingPostcodeAlert() {
+            $("#txtFacturacionCodigoPostal").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#postcodeMessage").html("");
                 }
             });
         }
-        function unsetBillingCityAlert () {
-            $("#txtFacturacionCiudad").on("blur", function () {
+
+        function unsetBillingCityAlert() {
+            $("#txtFacturacionCiudad").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#cityMessage").html("");
                 }
             });
         }
-        function unsetBillingCountryAlert () {
-            $("#txtFacturacionPais").on("blur", function () {
+
+        function unsetBillingCountryAlert() {
+            $("#txtFacturacionPais").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#billingCountryMessage").html("");
                 }
             });
         }
+
         function unsetPaymentMethodAlert() {
             $(".paymentMethod").on("click", function () {
                 if ($(".paymentMethod:checked")) {
@@ -1194,6 +1265,7 @@
                 }
             });
         }
+
         function unsetPrivacyAlert() {
             $("#chkPrivacy").on("click", function () {
                 //ON CLICK,
@@ -1206,7 +1278,8 @@
                 }
             });
         }
-        function unsetCaptchaAlert () {
+
+        function unsetCaptchaAlert() {
             $("#txtCaptcha").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
@@ -1309,13 +1382,8 @@
                 }
 
                 //If any fields are invalid, scroll to first invalid input or checkbox, with animation
-                if (firstName.val() === "" || lastName.val() === "" || (email.val() === "" || emailRegExp.test(email.val()) === false) || country.val() < 0 || (workshops.length < 1 && minisessions.length < 1) || minisessions.length > 2 || billingNif.val() === "" || billingName.val() === "" || billingAddress.val() === "" || billingPostcode.val() === "" || billingCity.val() === "" || billingCountry.val() === "" || paymentMethod.length < 1 || privacy.prop("checked") === false || captchaText.val() === "") {
-                    var invalidInput = $(".error");
-                    if(invalidInput.length > 0) {
-                        $("html, body").animate({
-                            scrollTop: invalidInput.first().offset().top
-                        }, 800);
-                    }
+                if (firstName.val() === "" || lastName.val() === "" || (email.val() === "" || emailRegExp.test(email.val()) === false) || country.val() < 0 || (workshops.length < 1 && minisessions.length < 1) || (workshops.length === 1 && minisessions.length > 2) || (workshops.length === 2 && minisessions.length > 0) || billingNif.val() === "" || billingName.val() === "" || billingAddress.val() === "" || billingPostcode.val() === "" || billingCity.val() === "" || billingCountry.val() === "" || paymentMethod.length < 1 || privacy.prop("checked") === false || captchaText.val() === "") {
+
                 } else {
 
                     //Block user interface (blockUI,js) and display "Sending…" message
@@ -1324,87 +1392,99 @@
                     //Generate conference registration (AJAX call to save_inscription_conference.php)
                     generateConferenceRegistration();
                 }
+                var invalidInput = $(".error");
+                if (invalidInput.length > 0) {
+                    $("html, body").animate({
+                        scrollTop: invalidInput.first().offset().top
+                    }, 800);
+                }
             });
         }
 
-        function recalculateTotalPrice(){
-            var price=0;
-            var tallerSeleccionado=0;
-            var extraWorkshopPrice=parseFloat(document.getElementById("hdnPriceExtraWorkshop").value);
-            var extraMinisessionPrice=parseFloat(document.getElementById("hdnPriceExtraMinisession").value);
-            var dinnerGuestPrice=parseFloat(document.getElementById("hdnPriceDinnerGuest").value);
-            var dinnerOptoutDiscount=parseFloat(document.getElementById("hdnPriceDinnerOptoutDiscount").value);
+        function recalculateTotalPrice() {
+            var price = 0;
+            var extraWorkshopPrice = parseFloat(document.getElementById("hdnPriceExtraWorkshop").value);
+            var extraMinisessionPrice = parseFloat(document.getElementById("hdnPriceExtraMinisession").value);
+            var dinnerGuestPrice = parseFloat(document.getElementById("hdnPriceDinnerGuest").value);
+            var dinnerOptoutDiscount = parseFloat(document.getElementById("hdnPriceDinnerOptoutDiscount").value);
+            var wineReceptionGuestPrice = parseFloat(document.getElementById("hdnPriceWineReceptionGuest").value);
+            var speaker = document.getElementById("chkSpeaker").checked;
+            var earlyBird = document.getElementById("hdnEarlyBird");
+            var loggedIn = document.getElementById("hdnIdLogin");
+            var sisterAssociation = document.getElementById("cmbAsociacionHermana").value;
 
-            if(!document.getElementById("chkSpeaker").checked) {
-                if (!document.getElementById("hdnEarlyBird")) {
-                    if (!document.getElementById("hdnIdLogin")) {
-                        if (document.getElementById("cmbAsociacionHermana").value !== "-1") {
-                            price = parseFloat(document.getElementById("hdnPriceSisterLate").value);
-                        } else {
+
+            if (speaker === false) {
+                if (!earlyBird) {
+                    if (!loggedIn) {
+                        if (sisterAssociation === "-1") {
                             price = parseFloat(document.getElementById("hdnPriceNonMemberLate").value);
+                        } else {
+                            price = parseFloat(document.getElementById("hdnPriceSisterLate").value);
                         }
                     } else {
                         price = parseFloat(document.getElementById("hdnPriceMemberLate").value);
                     }
                 } else {
-                    if (!document.getElementById("hdnIdLogin")) {
-                        if (document.getElementById("cmbAsociacionHermana").value !== "-1") {
-                            price = parseFloat(document.getElementById("hdnPriceSisterEarly").value);
-                        } else {
+                    if (!loggedIn) {
+                        if (sisterAssociation === "-1") {
                             price = parseFloat(document.getElementById("hdnPriceNonMemberEarly").value);
+                        } else {
+                            price = parseFloat(document.getElementById("hdnPriceSisterEarly").value);
                         }
                     } else {
                         price = parseFloat(document.getElementById("hdnPriceMemberEarly").value);
                     }
                 }
             } else {
-                if (!document.getElementById("hdnIdLogin")) {
-                    if (document.getElementById("cmbAsociacionHermana").value !== "-1") {
-                        price=parseFloat(document.getElementById("hdnPriceSisterSpeaker").value);
+                if (!loggedIn) {
+                    if (sisterAssociation === "-1") {
+                        price = parseFloat(document.getElementById("hdnPriceNonMemberSpeaker").value);
                     } else {
-                        price=parseFloat(document.getElementById("hdnPriceNonMemberSpeaker").value);
+                        price = parseFloat(document.getElementById("hdnPriceSisterSpeaker").value);
                     }
                 } else {
-                    price=parseFloat(document.getElementById("hdnPriceMemberSpeaker").value);
+                    price = parseFloat(document.getElementById("hdnPriceMemberSpeaker").value);
                 }
             }
 
+            //Workshops and minisessions
+            var numberWorkshopsSelected = $(".rdnWorkshop:checked").length;
+            var numberMinisessionsSelected = $(".chkMinisession:checked").length;
 
-            //Deduct dinner opt-out discount from price if checkbox selected
-            if(document.getElementById("chkDinner").checked){
-                price-=dinnerOptoutDiscount;
+            if (numberWorkshopsSelected > 0) {
+                if (numberMinisessionsSelected > 0) {
+                    price += (extraMinisessionPrice * numberMinisessionsSelected)
+                } else if (numberWorkshopsSelected > 1) {
+                    price += extraWorkshopPrice;
+                }
+            } else if (numberMinisessionsSelected === 3) {
+                price += extraMinisessionPrice;
+            } else if (numberMinisessionsSelected === 4) {
+                price += 2 * extraMinisessionPrice;
+            }
+
+            //Dinner guests
+            var dinnerGuests = $("#cmbInvitados").val();
+            if (dinnerGuests > "0") {
+                price += (dinnerGuestPrice * dinnerGuests);
+            }
+
+            //Dinner optout
+            if (document.getElementById("chkDinner").checked) {
+                price -= dinnerOptoutDiscount;
             }//end if
 
-            //Workshops activados
-            $(".hiddenDate").each(function(index,valor){
-                if(valor.value!==""){
-                    tallerSeleccionado++;
-                }//end if
-            });//end workshop each
-
-            var tallerMiniSeleccionado=($(".chkMinisession:checked").length);
-
-            if (tallerSeleccionado>=1){
-                if(tallerMiniSeleccionado>0){
-                    price+=(extraMinisessionPrice*tallerMiniSeleccionado)
-                }else if(tallerSeleccionado>1){
-                    price+=((extraWorkshopPrice*tallerSeleccionado)-extraWorkshopPrice);
-                }
-            }else if(tallerMiniSeleccionado>2){
-                price+=((extraMinisessionPrice*tallerMiniSeleccionado)-extraWorkshopPrice);
-                if(tallerSeleccionado>0){
-                    price+=(extraWorkshopPrice*tallerSeleccionado);
-                }
-            }
-
-            if(document.getElementById("cmbInvitados").value>"0"){
-                price+=(dinnerGuestPrice*document.getElementById("cmbInvitados").value);
+            //Wine reception guests
+            var wineReceptionGuests = $("#cmbWineReceptionGuests").val();
+            if (wineReceptionGuests > "0") {
+                price += (wineReceptionGuestPrice * wineReceptionGuests);
             }
 
             /*document.getElementById("debug").innerHTML = price;*/
 
-            document.getElementById("totalPayable").innerHTML=price;
-            document.getElementById("finalPrice").value=price;
+            document.getElementById("totalPayable").innerHTML = price;
+            /*document.getElementById("finalPrice").value=price;*/
         }//end if
 
         /*
@@ -1413,29 +1493,29 @@
         * If bank transfer and success, calls inscripcion_finalizada.php
         * If Paypal, submits payment data to Paypal in paypal_form.html
         */
-        function generateConferenceRegistration(){
-            var form=$("#frmConferenceRegister");
+        function generateConferenceRegistration() {
+            var form = $("#frmConferenceRegister");
             var signupResult;
             $.ajax({
                 type: "POST",
                 url: "ajax/save_inscription_conference.php",
                 data: form.serialize(),
-                success: function(data){
+                success: function (data) {
                     //Store serialised signup data in conference registration form
-                    document.getElementById("resultadoInscripcion").innerHTML=data;
+                    document.getElementById("resultadoInscripcion").innerHTML = data;
                     //Get result (1=transfer, 2=Paypal, or else error message) from "process_form.html"
-                    signupResult=document.getElementById("hdnTipoResultado");
+                    signupResult = document.getElementById("hdnTipoResultado");
 
                     //If bank transfer, call "inscripcion_finalizada.php"
                     // Pass in parameters "modo" (1=conference, 2=workshop) and "tipo" (payment method)
-                    if(signupResult.value==="1"){
-                        window.location="inscripcion_finalizada.php?modo=1&tipo=1";
+                    if (signupResult.value === "1") {
+                        window.location = "inscripcion_finalizada.php?modo=1&tipo=1";
 
-                    }else if(signupResult.value==="2"){
+                    } else if (signupResult.value === "2") {
                         //If Paypal, submit data to Paypal in paypal_form.html
                         document.frmPaypal.submit();
 
-                    }else{
+                    } else {
                         //Otherwise, result = error message, so display message on registration form
                         var captchaMessage = document.getElementById("captchaMessage");
                         captchaMessage.innerHTML = signupResult.value;
@@ -1446,20 +1526,24 @@
         }
 
         //ON PAGE LOAD, call functions
-        $( document ).ready(function() {
-            finalPrice();
+        $(document).ready(function () {
+            /*finalPrice();*/
             reloadCaptchaConference();
             unsetFirstNameAlert();
             unsetLastNameAlert();
             unsetEmailAlert();
             unsetCountryAlert();
             updatePriceSister();
+            updatePriceSpeaker();
             deselectRadioButtons();
             disableMinisessions();
             unsetWorkshopsAlert();
             setThreeMinisessionsAlert();
             disableAllWorkshops();
             unsetBadgeAlert();
+            priceDinnerGuests();
+            priceDinnerOptout();
+            priceWineReceptionGuests();
             unsetNifAlert();
             unsetBillingNameAlert();
             unsetBillingAddressAlert();
@@ -1484,23 +1568,23 @@
             btn.disabled = true;
             limpiarErrores();
 
-            if(trim(document.frmJobOffer.txtNombre.value) === "" || document.frmJobOffer.txtNombre.value === "{STATIC_FORM_MEMBERSHIP_FIRST_NAME}") {
+            if (trim(document.frmJobOffer.txtNombre.value) === "" || document.frmJobOffer.txtNombre.value === "{STATIC_FORM_MEMBERSHIP_FIRST_NAME}") {
                 blError = false;
                 destacarError(document.frmJobOffer.txtNombre);
                 txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_FIRST_NAME}";
-            }else if(trim(document.frmJobOffer.txtApellidos.value) === "" || document.frmJobOffer.txtApellidos.value === "{STATIC_FORM_MEMBERSHIP_LAST_NAMES}") {
+            } else if (trim(document.frmJobOffer.txtApellidos.value) === "" || document.frmJobOffer.txtApellidos.value === "{STATIC_FORM_MEMBERSHIP_LAST_NAMES}") {
                 blError = false;
                 destacarError(document.frmJobOffer.txtApellidos);
                 txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_LAST_NAME}";
-            }else if(!validarEmail(document.frmJobOffer.txtEmail.value)) {
+            } else if (!validarEmail(document.frmJobOffer.txtEmail.value)) {
                 blError = false;
                 destacarError(document.frmJobOffer.txtEmail);
                 txtError = "{STATIC_FORM_MEMBERSHIP_ERROR_EMAIL}";
             }
 
-            if(blError) {
+            if (blError) {
                 document.frmJobOffer.submit();
-            }else{
+            } else {
                 msgContenido.innerHTML = txtError;
                 msgContenido.setAttribute("class", "msgKO alert alert-danger");
                 msgContenido.style.display = "block";
@@ -1508,6 +1592,7 @@
 
             btn.disabled = false;
         }
+
         <!-- END: validar_offer_interesed -->
 
         <!-- BEGIN: validate_edit_profile -->
@@ -1537,7 +1622,7 @@
 
         //ON CLICK, clear alert on country dropdown if country selected
         function clearCountryWarning() {
-            $("#cmbPais").on("click", function() {
+            $("#cmbPais").on("click", function () {
                 if ($(this).val() > 0) {
                     $(this).css("border-color", "");
                     $("#chkCountryMessage").html("");
@@ -1547,8 +1632,8 @@
 
         //ON CLICK, clear alert on professional activities if one selected
         function clearProfActsAlert() {
-            $(".professionalActivity").each(function() {
-                $(this).on("click", function() {
+            $(".professionalActivity").each(function () {
+                $(this).on("click", function () {
                     if (this.checked) {
                         $("#profActsMessage").html("");
                         $("#containerProfActs").removeClass("errorBackgroundColor error");
@@ -1592,19 +1677,19 @@
                     event.preventDefault();
                     event.stopPropagation();
                 } else {
-                    var cadenaActividades="";
-                    profActs.each(function(index,valor){
-                        cadenaActividades+=valor.value+",";
+                    var cadenaActividades = "";
+                    profActs.each(function (index, valor) {
+                        cadenaActividades += valor.value + ",";
                     });
-                    cadenaActividades=cadenaActividades.substring(0,cadenaActividades.length-1);
-                    document.frmMembership.hdnIdActividadProfesional.value=cadenaActividades;
+                    cadenaActividades = cadenaActividades.substring(0, cadenaActividades.length - 1);
+                    document.frmMembership.hdnIdActividadProfesional.value = cadenaActividades;
 
-                    var cadenaSituacionesLaborales="";
-                    $(".workSituation:checked").each(function(index,valor){
-                        cadenaSituacionesLaborales+=valor.value+",";
+                    var cadenaSituacionesLaborales = "";
+                    $(".workSituation:checked").each(function (index, valor) {
+                        cadenaSituacionesLaborales += valor.value + ",";
                     });
-                    cadenaSituacionesLaborales=cadenaSituacionesLaborales.substring(0,cadenaSituacionesLaborales.length-1);
-                    document.frmMembership.hdnIdSituacionLaboral.value=cadenaSituacionesLaborales;
+                    cadenaSituacionesLaborales = cadenaSituacionesLaborales.substring(0, cadenaSituacionesLaborales.length - 1);
+                    document.frmMembership.hdnIdSituacionLaboral.value = cadenaSituacionesLaborales;
 
                     //Run function to block user interface via blockUI.js and display "Sending…" message
                     mensajeCargando("{STATIC_GLOBAL_SENDING}...");
@@ -1613,7 +1698,7 @@
         }
 
         //ON PAGE LOAD, call functions
-        $( document ).ready(function() {
+        $(document).ready(function () {
             checkPwds();
             clearCountryWarning();
             clearProfActsAlert();
@@ -1633,23 +1718,23 @@
             btn.disabled = true;
             limpiarErrores();
 
-            if(trim(document.frmSubmitEvent.txtTitulo.value) === "" || document.frmSubmitEvent.txtTitulo.value === "{STATIC_FORM_MEMBERSHIP_TITLE}") {
+            if (trim(document.frmSubmitEvent.txtTitulo.value) === "" || document.frmSubmitEvent.txtTitulo.value === "{STATIC_FORM_MEMBERSHIP_TITLE}") {
                 blError = false;
                 destacarError(document.frmSubmitEvent.txtTitulo);
                 txtError = "{STATIC_FORM_EVENT_SUBMIT_TITLE_EMPTY}";
-            }else if(document.frmSubmitEvent.cmbTematica.value < 0) {
+            } else if (document.frmSubmitEvent.cmbTematica.value < 0) {
                 blError = false;
                 destacarError(document.frmSubmitEvent.cmbTematica);
                 txtError = "{STATIC_FORM_EVENT_SUBMIT_THEME}";
-            }else if(trim(document.frmSubmitEvent.txtResumen.value) === "" || document.frmSubmitEvent.txtResumen.value === "{STATIC_FORM_EVENT_SUBMIT_SUMMARY}") {
+            } else if (trim(document.frmSubmitEvent.txtResumen.value) === "" || document.frmSubmitEvent.txtResumen.value === "{STATIC_FORM_EVENT_SUBMIT_SUMMARY}") {
                 blError = false;
                 destacarError(document.frmSubmitEvent.txtResumen);
                 txtError = "{STATIC_FORM_EVENT_SUBMIT_SUMMARY_ERROR}";
             }
 
-            if(blError) {
+            if (blError) {
                 document.frmSubmitEvent.submit();
-            }else{
+            } else {
                 msgContenido.innerHTML = txtError;
                 msgContenido.setAttribute("class", "msgKO alert alert-danger");
                 msgContenido.style.display = "block";
@@ -1657,6 +1742,7 @@
 
             btn.disabled = false;
         }
+
         <!-- END: validar_submit_event -->
 
         <!-- BEGIN: validar_submit_job -->
@@ -1669,23 +1755,23 @@
             btn.disabled = true;
             limpiarErrores();
 
-            if(trim(document.frmSubmitJob.txtTitulo.value) === "" || document.frmSubmitJob.txtTitulo.value === "{STATIC_FORM_MEMBERSHIP_TITLE}") {
+            if (trim(document.frmSubmitJob.txtTitulo.value) === "" || document.frmSubmitJob.txtTitulo.value === "{STATIC_FORM_MEMBERSHIP_TITLE}") {
                 blError = false;
                 destacarError(document.frmSubmitJob.txtTitulo);
                 txtError = "{STATIC_FORM_EVENT_SUBMIT_TITLE_EMPTY}";
-            }else if(trim(document.frmSubmitJob.txtEmail.value) !== "" && document.frmSubmitJob.txtEmail.value !== "{STATIC_FORM_MEMBERSHIP_EMAIL}" && !validarEmail(document.frmSubmitJob.txtEmail.value)) {
+            } else if (trim(document.frmSubmitJob.txtEmail.value) !== "" && document.frmSubmitJob.txtEmail.value !== "{STATIC_FORM_MEMBERSHIP_EMAIL}" && !validarEmail(document.frmSubmitJob.txtEmail.value)) {
                 blError = false;
                 destacarError(document.frmSubmitJob.txtEmail);
                 txtError = "{STATIC_FORM_JOB_SUBMIT_MAIL_ERROR}";
-            }else if(trim(document.frmSubmitJob.txtResumen.value) === "" || document.frmSubmitJob.txtResumen.value === "{STATIC_FORM_EVENT_SUBMIT_SUMMARY}") {
+            } else if (trim(document.frmSubmitJob.txtResumen.value) === "" || document.frmSubmitJob.txtResumen.value === "{STATIC_FORM_EVENT_SUBMIT_SUMMARY}") {
                 blError = false;
                 destacarError(document.frmSubmitJob.txtResumen);
                 txtError = "{STATIC_FORM_EVENT_SUBMIT_SUMMARY_ERROR}";
             }
 
-            if(blError) {
+            if (blError) {
                 document.frmSubmitJob.submit();
-            }else{
+            } else {
                 msgContenido.innerHTML = txtError;
                 msgContenido.setAttribute("class", "msgKO alert alert-danger");
                 msgContenido.style.display = "block";
@@ -1693,6 +1779,7 @@
 
             btn.disabled = false;
         }
+
         <!-- END: validar_submit_job -->
 
         <!-- BEGIN: validar_formulario_contacto -->
@@ -1744,7 +1831,7 @@
         }
 
         //ON PAGE LOAD, add event listeners
-        $( document ).ready(function() {
+        $(document).ready(function () {
             refreshCaptchaContact();
             validateContactForm();
         });
@@ -1762,9 +1849,10 @@
                 this.classList.add("was-validated");
             });
         }
+
         //ON PAGE LOAD, call functions
-        $( document ).ready(function() {
-            $(".datepicker").attr("required","").addClass("required");
+        $(document).ready(function () {
+            $(".datepicker").attr("required", "").addClass("required");
             validateExpenseForm();
         });
         <!-- END: validate_expense_form -->
@@ -1775,97 +1863,107 @@
 <div id="backgroundImage" role="img" aria-label="Changing background image"></div>
 <div id="backgroundBlue" class="d-none d-lg-block"></div>
 <div class="container-fluid wrapper">
-<div class="row loginLink">
-    <div class="col-12 d-md-none w-100 bg-dark py-2">
-        <a href="#loginForm" class="loginLink" style="margin-left:20px;color:white;font-size:100%;">Login</a>
-    </div>
-</div>
-
-<div class="d-none d-md-block">
-    <a href="/met"><img src="images/pictures/logos/logo.met.png" width="244" height="125" alt="MET logo" style="margin-top: 3em;"></a>
-</div>
-
-<div class="row topnav">
-    <div class="col-12">
-        <nav class="navbar navbar-expand-md navbar-dark navbar-custom">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <a class="navbar-brand d-md-none" href="{CURRENT_DOMAIN}" style="padding-left: 0;">
-                <!--<img src="images/pictures/logos/logo.met.png" width="180" height="92" alt="">-->
-                <img src="images/pictures/logos/MET_color_transparent_180x92.png" width="180" height="92" alt="">
-            </a>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <!-- BEGIN: item_menu_superior -->
-                    <li class="nav-item dropdown {ITEM_MENU_SUPERIOR_PRIVATE}">
-                        <a class="nav-link dropdown-toggle" id="{ITEM_MENU_SUPERIOR_ID}" data-toggle="dropdown" href="{ITEM_MENU_SUPERIOR_URL}" role="button" aria-haspopup="true" aria-expanded="false">{ITEM_MENU_SUPERIOR_TITULO}</a>
-                        <!-- BEGIN: menu_superior_desplegable -->
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <!-- BEGIN: item_menu_superior_desplegable -->
-                            <a class="dropdown-item {ITEM_MENU_SUPERIOR_DESPLEGABLE_PRIVATE}" href="{ITEM_MENU_SUPERIOR_DESPLEGABLE_URL}">{ITEM_MENU_SUPERIOR_DESPLEGABLE_TITULO}</a>
-                            <!-- END: item_menu_superior_desplegable -->
-                        </div>
-                        <!-- END: menu_superior_desplegable -->
-                    </li>
-                    <!-- END: item_menu_superior -->
-                </ul>
-            </div>
-        </nav>
-    </div>
-</div>
-<div class="row page-area">
-    <div class="col-12 col-md-9">
-        <!-- BEGIN: control_superior -->
-        {BREADCRUMB}
-        {SLIDER}
-        <!-- END: control_superior -->
-        <div class="row content-area">
-            <!-- BEGIN: menu_left -->
-            <div class="col-12 col-sm-3 lefthand-menu order-2 order-sm-1">
-                {MENU_LEFT}
-            </div>
-            <div class="col-12 col-sm-9 main-content order-1 order-sm-2">
-                {CONTENIDO}
-            </div>
-            <!-- END: menu_left -->
-            <!-- BEGIN: home_page -->
-            <div class="col-12 main-content">
-                {CONTENIDO}
-            </div>
-            <!-- END: home_page -->
+    <div class="row loginLink">
+        <div class="col-12 d-md-none w-100 bg-dark py-2">
+            <a href="#loginForm" class="loginLink" style="margin-left:20px;color:white;font-size:100%;">Login</a>
         </div>
     </div>
-    <div class="col-12 col-md-3 sidepanel">
-        <div id="loginPanel">
-            <a name="loginForm"></a>
-            <div id="loginTitle">{STATIC_MEMBERS}</div>
-            <!-- BEGIN: panel_login -->
-            <form class="needs-validation" novalidate id="frmLogin" name="frmLogin" method="post" autocomplete="off" action="authentication.php">
-                <input type="hidden" name="hdnUrlActual" id="hdnUrlActual" value="{URL_ACTUAL}">
-                <label class="sr-only" for="txtUsername">Username</label>
-                <input class="form-control" type="text" name="txtUsername" id="txtUsername" placeholder="{STATIC_MAIL}" onfocus="window.scrollTo(0, 0);" autocomplete="username" required>
-                <div class="invalid-feedback">
-                    Please enter your email
-                </div>
-                <label class="sr-only" for="txtPassword">Password</label>
-                <input class="form-control" type="password" name="txtPassword" id="txtPassword" placeholder="{STATIC_PASSWORD}" autocomplete="current-password" onkeypress="ejecutarIntroLogin(event);" required>
-                <div class="invalid-feedback">
-                    Please enter your password
-                </div>
-                <p id="msgLoginError" style="{LOGIN_DISPLAY}">{LOGIN_ERROR_MENSAJE}</p>
-                <button class="btn btn-primary" type="submit" name="btnLogin" id="btnLogin">
-                    {STATIC_SIGN_IN}
-                </button>
-            </form>
 
-            <p class="form-text">{STATIC_I_FORGOT_MY_USER}
-            <a href="{URL_REMEMBER_PASSWORD}">{STATIC_PASSWORD}</a></p>
-            <!-- END: panel_login -->
-            <!-- BEGIN: datos_usuario -->
-            <div id="infoUserData">
-                {PANEL_LOGIN_USERNAME}
+    <div class="d-none d-md-block">
+        <a href="http://test.metmeetings.org"><img src="images/pictures/logos/logo.met.png" width="244" height="125" alt="MET logo"
+                            style="margin-top: 3em;"></a>
+    </div>
+
+    <div class="row topnav">
+        <div class="col-12">
+            <nav class="navbar navbar-expand-md navbar-dark navbar-custom">
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand d-md-none" href="{CURRENT_DOMAIN}" style="padding-left: 0;">
+                    <!--<img src="images/pictures/logos/logo.met.png" width="180" height="92" alt="">-->
+                    <img src="images/pictures/logos/MET_color_transparent_180x92.png" width="180" height="92" alt="">
+                </a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <!-- BEGIN: item_menu_superior -->
+                        <li class="nav-item dropdown {ITEM_MENU_SUPERIOR_PRIVATE}">
+                            <a class="nav-link dropdown-toggle" id="{ITEM_MENU_SUPERIOR_ID}" data-toggle="dropdown"
+                               href="{ITEM_MENU_SUPERIOR_URL}" role="button" aria-haspopup="true" aria-expanded="false">{ITEM_MENU_SUPERIOR_TITULO}</a>
+                            <!-- BEGIN: menu_superior_desplegable -->
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <!-- BEGIN: item_menu_superior_desplegable -->
+                                <a class="dropdown-item {ITEM_MENU_SUPERIOR_DESPLEGABLE_PRIVATE}"
+                                   href="{ITEM_MENU_SUPERIOR_DESPLEGABLE_URL}">{ITEM_MENU_SUPERIOR_DESPLEGABLE_TITULO}</a>
+                                <!-- END: item_menu_superior_desplegable -->
+                            </div>
+                            <!-- END: menu_superior_desplegable -->
+                        </li>
+                        <!-- END: item_menu_superior -->
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="row page-area">
+        <div class="col-12 col-md-9">
+            <!-- BEGIN: control_superior -->
+            {BREADCRUMB}
+            {SLIDER}
+            <!-- END: control_superior -->
+            <div class="row content-area">
+                <!-- BEGIN: menu_left -->
+                <div class="col-12 col-sm-3 lefthand-menu order-2 order-sm-1">
+                    {MENU_LEFT}
+                </div>
+                <div class="col-12 col-sm-9 main-content order-1 order-sm-2">
+                    {CONTENIDO}
+                </div>
+                <!-- END: menu_left -->
+                <!-- BEGIN: home_page -->
+                <div class="col-12 main-content">
+                    {CONTENIDO}
+                </div>
+                <!-- END: home_page -->
             </div>
+        </div>
+        <div class="col-12 col-md-3 sidepanel">
+            <div id="loginPanel">
+                <a name="loginForm"></a>
+                <div id="loginTitle">{STATIC_MEMBERS}</div>
+                <!-- BEGIN: panel_login -->
+                <form class="needs-validation" novalidate id="frmLogin" name="frmLogin" method="post" autocomplete="off"
+                      action="authentication.php">
+                    <input type="hidden" name="hdnUrlActual" id="hdnUrlActual" value="{URL_ACTUAL}">
+                    <label class="sr-only" for="txtUsername">Username</label>
+                    <input class="form-control" type="text" name="txtUsername" id="txtUsername"
+                           placeholder="{STATIC_MAIL}" onfocus="window.scrollTo(0, 0);" autocomplete="username"
+                           required>
+                    <div class="invalid-feedback">
+                        Please enter your email
+                    </div>
+                    <label class="sr-only" for="txtPassword">Password</label>
+                    <input class="form-control" type="password" name="txtPassword" id="txtPassword"
+                           placeholder="{STATIC_PASSWORD}" autocomplete="current-password"
+                           onkeypress="ejecutarIntroLogin(event);" required>
+                    <div class="invalid-feedback">
+                        Please enter your password
+                    </div>
+                    <p id="msgLoginError" style="{LOGIN_DISPLAY}">{LOGIN_ERROR_MENSAJE}</p>
+                    <button class="btn btn-primary" type="submit" name="btnLogin" id="btnLogin">
+                        {STATIC_SIGN_IN}
+                    </button>
+                </form>
+
+                <p class="form-text">{STATIC_I_FORGOT_MY_USER}
+                    <a href="{URL_REMEMBER_PASSWORD}">{STATIC_PASSWORD}</a></p>
+                <!-- END: panel_login -->
+                <!-- BEGIN: datos_usuario -->
+                <div id="infoUserData">
+                    {PANEL_LOGIN_USERNAME}
+                </div>
                 <!-- BEGIN: bloque_miembro_hasta -->
                 {STATIC_MEMBER_UNTIL} <strong>{MIEMBRO_FECHA_HASTA}</strong><br>
                 <!-- BEGIN: bloque_renew -->
@@ -1880,41 +1978,45 @@
                 <p><strong>{STATIC_PAYMENT_PENDING}</strong></p>
                 <!-- END: bloque_pago_pendiente -->
                 <p><a href="logout.php">{STATIC_DISCONNECT}</a></p>
-            <!-- END: datos_usuario -->
-        </div>
+                <!-- END: datos_usuario -->
+            </div>
 
-        <!-- BEGIN: item_boton_acceso -->
-        <!-- BEGIN: si_url -->
-                <a href="{ITEM_BOTON_ACCESO_URL}" target="{ITEM_BOTON_ACCESO_TARGET}">
-                    <img src="{ITEM_BOTON_ACCESO_IMAGEN}" class="sideBanner">
-                </a>
-        <!-- END: si_url -->
-        <!-- BEGIN: no_url -->
+            <!-- BEGIN: item_boton_acceso -->
+            <!-- BEGIN: si_url -->
+            <a href="{ITEM_BOTON_ACCESO_URL}" target="{ITEM_BOTON_ACCESO_TARGET}">
                 <img src="{ITEM_BOTON_ACCESO_IMAGEN}" class="sideBanner">
-        <!-- END: no_url -->
-        <!-- END: item_boton_acceso -->
+            </a>
+            <!-- END: si_url -->
+            <!-- BEGIN: no_url -->
+            <img src="{ITEM_BOTON_ACCESO_IMAGEN}" class="sideBanner">
+            <!-- END: no_url -->
+            <!-- END: item_boton_acceso -->
+        </div>
     </div>
-</div>
 
-<hr>
+    <hr>
 
-<div class="row footer">
-    <div class="mx-auto text-center">
+    <div class="row footer">
+        <div class="mx-auto">
+            <!--<table width="135" border="0" cellpadding="2" cellspacing="0" title="Click to Verify - This site chose GeoTrust SSL for secure e-commerce and confidential communications.">
+                <tr>
+                    <td width="135" align="center" valign="top"><script src="https://seal.geotrust.com/getgeotrustsslseal?host_name=www.metmeetings.org&amp;size=S&amp;lang=en"></script><br />
+                    <a href="http://www.geotrust.com/ssl/" target="_blank"  style="color:#000000; text-decoration:none; font:bold 7px verdana,sans-serif; letter-spacing:.5px; text-align:center; margin:0px; padding:0px;"></a>
+                    </td>
+                </tr>
+            </table>-->
 
-        <!--<table width="135" border="0" cellpadding="2" cellspacing="0" title="Click to Verify - This site chose GeoTrust SSL for secure e-commerce and confidential communications.">
-            <tr>
-                <td width="135" align="center" valign="top"><script src="https://seal.geotrust.com/getgeotrustsslseal?host_name=www.metmeetings.org&amp;size=S&amp;lang=en"></script><br />
-                <a href="http://www.geotrust.com/ssl/" target="_blank"  style="color:#000000; text-decoration:none; font:bold 7px verdana,sans-serif; letter-spacing:.5px; text-align:center; margin:0px; padding:0px;"></a>
-                </td>
-            </tr>
-        </table>-->
-        &copy; {STATIC_MEDITERRANEAN_EDITORS_AND_TRANSLATORS} &nbsp;
+            <div class="copyright">
+                &copy; {STATIC_MEDITERRANEAN_EDITORS_AND_TRANSLATORS}
+            </div>
 
-        <!-- BEGIN: item_menu_inferior -->
-        &nbsp;&nbsp;&nbsp;<a href="{ITEM_MENU_INFERIOR_URL}">{ITEM_MENU_INFERIOR_TITULO}</a>
-        <!-- END: item_menu_inferior -->
+            <!-- BEGIN: item_menu_inferior -->
+            <div class="footerItem">
+                <a href="{ITEM_MENU_INFERIOR_URL}">{ITEM_MENU_INFERIOR_TITULO}</a>
+            </div>
+            <!-- END: item_menu_inferior -->
 
-
+        </div>
     </div>
 </div>
 
@@ -1924,10 +2026,13 @@
     _gaq.push(['_setAccount', 'UA-39344050-1']);
     _gaq.push(['_trackPageview']);
 
-    (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    (function () {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
     })();
 
 </script>

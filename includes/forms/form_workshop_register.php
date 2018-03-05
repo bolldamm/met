@@ -64,7 +64,7 @@
 	$plantillaFormulario->assign("FORM_PROFILE_BILLING_COUNTRY","");
 	
 	
-	if(isset($_SESSION["met_user"])){
+	if(isset($_SESSION["met_user"]) && !generalUtils::esMiembroCaducado($_SESSION["met_user"]["fecha_finalizacion"])){
 		$resultadoUsuarioIndividual=$db->callProcedure("CALL ed_sp_web_usuario_web_individual_obtener_concreto(".$_SESSION["met_user"]["id"].")");
 		$datoUsuarioIndividual=$db->getData($resultadoUsuarioIndividual);	
 		

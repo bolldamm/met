@@ -18,18 +18,17 @@ $plantillaFormulario->assign("COMBO_ASOCIACIONES",
                 "id_asociacion_hermana",
                 STATIC_GLOBAL_COMBO_DEFAULT,
                 -1,
-                "onchange='reinicializarPrecioTotal()'",
+                "",
                 'class="form-control" style="color:slategray;"'));
 
 $plantillaFormulario->parse("contenido_principal.bloque_sister_association");
 
-//Retrieve details of current year's conference from the database
+//Get ID, date, early bird date and prices of current year's conference from database
 $resultadoConferencia = $db->callProcedure("CALL ed_sp_web_conferencia_actual()");
 
-//Get conference prices
 $datoConferencia = $db->getData($resultadoConferencia);
 
-//Assign conference prices from the Easygestor to placeholders (values of hidden fields in template)
+//Assign conference prices to placeholders in form template
 $plantillaFormulario->assign("CONFERENCE_PRICE_MEMBER_SPEAKER",
         $datoConferencia["price_member_speaker"]);
 $plantillaFormulario->assign("CONFERENCE_PRICE_SISTER_SPEAKER",
@@ -59,15 +58,15 @@ $plantillaFormulario->assign("CONFERENCE_PRICE_DINNER_OPTOUT_DISCOUNT",
 $plantillaFormulario->assign("CONFERENCE_PRICE_WINE_RECEPTION_GUEST",
         $datoConferencia["price_wine_reception_guest"]);
 
-// Before any options are selected, the total payable is either "member" or "non-member" (early or late)
+//Determine preliminary price (logged in/not logged in, early/late)
+//NB This is for displaying the total on the form before submitting
 if (isset($_SESSION["met_user"])) {
     if ($datoConferencia["es_early"] <= 0) {
         $preliminaryPrice = $datoConferencia["price_member_early"];
     } else {
         $preliminaryPrice = $datoConferencia["price_member_late"];
     }
-
-    // Elements with the "ifmember" attribute are hidden (e.g. the sister association dropdown)
+    //Logged in, so set "$ifmember" to display:none (so as to hide sister association dropdown)
     $ifmember = 'display:none;';
 } else {
     if ($datoConferencia["es_early"] <= 0) {
@@ -75,27 +74,28 @@ if (isset($_SESSION["met_user"])) {
     } else {
         $preliminaryPrice = $datoConferencia["price_non_member_late"];
     }
+    //Not logged in, so set "$ifmember" to display:block (so as to show sister association dropdown)
     $ifmember = 'display:block;';
 }
 
-// Assign the initial price (member or non-member) to the total payable field
+//Assign preliminary price to "Total payable" field on form
 $plantillaFormulario->assign("FORM_CONFERENCE_PRECIO_TOTAL",
         sprintf("%.0f",
                 $preliminaryPrice));
 
-//Assign other price variables
-$extraWorkshopPrice = $datoConferencia[price_extra_workshop];
-$extraMinisessionPrice = $datoConferencia[price_extra_minisession];
-$dinnerGuestPrice = $datoConferencia[price_dinner_guest];
-$dinnerOptoutDiscount = $dinnerOptoutDiscount = $datoConferencia[price_dinner_optout_discount];
-$wineReceptionGuestPrice = $datoConferencia[price_wine_reception_guest];
+//Store prices of extras in variables (for use in save_inscription_conference.php)
+$extraWorkshopPrice = $datoConferencia["price_extra_workshop"];
+$extraMinisessionPrice = $datoConferencia["price_extra_minisession"];
+$dinnerGuestPrice = $datoConferencia["price_dinner_guest"];
+$dinnerOptoutDiscount = $dinnerOptoutDiscount = $datoConferencia["price_dinner_optout_discount"];
+$wineReceptionGuestPrice = $datoConferencia["price_wine_reception_guest"];
 
 require "includes/load_format_date.inc.php";
 
-//Get list of workshops and minisessions for the currently active conference
-//with id_taller, id_taller_fecha, es_mini, workshop date, prices, num. registered and max. places
+//Get details of workshops and minisessions for the currently active conference
 $resultadoTallerConferencia = $db->callProcedure("CALL ed_sp_web_taller_conferencia_obtener_concreto(" . $_SESSION["id_idioma"] . ",-1)");
 
+//Get workshop dates, format dates, and assign workshops and minisessions to appropriate date
 $fechaActual = "";
 $esMini = false;
 while ($datoTallerConferencia = $db->getData($resultadoTallerConferencia)) {
@@ -242,12 +242,16 @@ $plantillaFormulario->assign("FORM_PROFILE_BILLING_COUNTRY",
         $plantillaFormulario->parse("contenido_principal.early_bird");
     }
 
-// if user is logged in (i.e. a paid-up member)	
-if (isset($_SESSION["met_user"])) {
+// if user is logged in AND paid-up)
+if (isset($_SESSION["met_user"]) && !generalUtils::esMiembroCaducado($_SESSION["met_user"]["fecha_finalizacion"])) {
     //get profile photo for attendee list
     $resultadoImagen = $db->callProcedure("CALL ed_sp_obtener_imagen(" . $_SESSION["met_user"]["id"] . ")");
     $datoImagen = $db->getData($resultadoImagen);
-    $imagen_miembro = "files/members/thumb/" . $datoImagen["imagen"];
+    if (!$datoImagen["imagen"] == "") {
+        $imagen_miembro = "files/members/thumb/" . $datoImagen["imagen"];
+    } else {
+        $imagen_miembro = "files/members/default.jpg";
+    }
     //$imagen_miembro = "https://www.metmeetings.org/files/members/thumb/" . $datoImagen["imagen"];
 
     // insert member details in form
@@ -369,7 +373,7 @@ $plantillaFormulario->assign("COMBO_GUEST",
                 0,
                 -1,
                 "",
-                'onclick="reinicializarPrecioTotal()" class="form-control-inline" style="width:2em; color:slategray;"'));
+                'class="form-control-inline" style="width:2em; color:slategray;"'));
 
 //Combo wine reception guests
 $matrizZrden[0]["descripcion"] = 0;
@@ -385,7 +389,7 @@ $plantillaFormulario->assign("COMBO_WINE_RECEPTION_GUEST",
                 0,
                 -1,
                 "",
-                'onclick="reinicializarPrecioTotal()" class="form-control" style="color:slategray;"'));
+                'class="form-control-inline" style="width:2em; color:slategray;"'));
 
 $plantillaFormulario->assign("COMBO_TITULOS",
         generalUtils::construirCombo($db,
@@ -397,7 +401,7 @@ $plantillaFormulario->assign("COMBO_TITULOS",
                 "id_tratamiento_usuario_web",
                 STATIC_FORM_MEMBERSHIP_TITLE,
                 -1,
-                'class="form-control" style="color:slategray;"'));
+                'class="form-control" style="color:slategray;" autocomplete="honorific-prefix"'));
 
 $subPlantilla->assign("SESSION_ID",
         md5(uniqid(time())));

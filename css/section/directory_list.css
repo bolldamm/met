@@ -1,5 +1,6 @@
 @CHARSET "UTF-8";
 
+/* Styles for Members Directory */
 #members_directory {
 	padding: 9px 9px 10px 10px;
 }
@@ -25,6 +26,7 @@ h3.subTitleSection {
 	height: 96px;
 }
 #lstResultsMemberDirectory .headshot {
+
 }
 #lstResultsMemberDirectory .headshot img {
 	margin: 5px 0 0 5px;
@@ -67,19 +69,16 @@ label.webMember {
 label.webMember a {
 	font-size:70%;
 	margin-left: 20px;
-
 }
 
-
-
-/* form */
+/* Styles for members directory search form */
 #form #btnSendForm { padding:4px 10px; margin:4px 10px; }
 
 #lstResultsMemberDirectory .itemMember .more {
 	position: absolute;
 	display: block;
-	top: 0px;
-	right: 0px;
+	top: 0;
+	right: 0;
 	padding: 4px 6px;
 	color: #8B1513;
 	font-size: 20px;
@@ -96,8 +95,8 @@ label.webMember a {
 	position: relative;
 	float: right;
 	display: block;
-	top: 0px;
-	right: 0px;
+	top: 0;
+	right: 0;
 	padding: 4px 6px;
 	color: #8B1513;
 	font-size: 20px;
@@ -107,3 +106,34 @@ label.webMember a {
 	color: #0097A8;
 }
 
+
+/* Styles for METM Attendee List */
+.card {
+	max-width: 22rem;
+	border-color: #cccccc;
+}
+.card-body {
+	padding: .25rem;
+}
+.attendee-image {
+	float:left;
+	max-width:83px;
+	max-height:90px;
+}
+.attendee-text {
+	padding-left: 90px;
+	font-family: Helvetica, sans-serif;
+	font-size: medium;
+}
+.attendee-name {
+	display: block;
+	font-size: 1.1em;
+	font-weight: 600;
+	margin-bottom: .3em;
+}
+.attendee-affiliation {
+	display: block;
+	font-size: .8em;
+	font-weight:400;
+	color:gray;
+}

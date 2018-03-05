@@ -77,9 +77,9 @@
 	//Plantilla secundaria
 	$subPlantilla=new XTemplate("html/sections/conference/manage_conference.html");
 	
-            $plantilla->assign("TEXTAREA_ID","txtToMet");
+/*            $plantilla->assign("TEXTAREA_ID","txtToMet");
             $plantilla->assign("TEXTAREA_TOOLBAR","Newsletter");
-            $plantilla->parse("contenido_principal.carga_inicial.inicializar_ckeditor");
+            $plantilla->parse("contenido_principal.carga_inicial.inicializar_ckeditor");*/
 
             $plantilla->assign("TEXTAREA_ID","txtToUserPaypalIntro");
             $plantilla->assign("TEXTAREA_TOOLBAR","Newsletter");

@@ -124,7 +124,7 @@
 		$plantilla->parse("contenido_principal.bloque_ready.bloque_anclar_elemento");
 	}
 	
-	$plantillaFormulario->assign("COMBO_TEMATICA", generalUtils::construirCombo($db, "CALL ed_sp_web_tematica_obtener_combo(".$_SESSION["id_idioma"].")", "cmbTematica", "cmbTematica", -1, "nombre", "id_tematica", STATIC_FORM_EVENT_SUBMIT_THEME, -1, "class='inputText left required'"));
+	$plantillaFormulario->assign("COMBO_TEMATICA", generalUtils::construirCombo($db, "CALL ed_sp_web_tematica_obtener_combo(".$_SESSION["id_idioma"].")", "cmbTematica", "cmbTematica", -1, "nombre", "id_tematica", STATIC_FORM_EVENT_SUBMIT_THEME, -1, "class='form-control required'"));
 	
 	//Editor
 	$plantilla->assign("TEXTAREA_ID","txtContenido");

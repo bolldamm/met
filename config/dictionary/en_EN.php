@@ -1071,7 +1071,7 @@ To upload a photo, first choose the image file, then click on “Upload”. Acce
   define("STATIC_FORM_CONFERENCE_REGISTER_FULL_MEMBER", "is full. To have you name put on a waiting list, please write to <a href='development@metmeetings.org'>development@metmeetings.org</a>");
   define("STATIC_FORM_CONFERENCE_REGISTER_LEGEND_COMMENTS", "Comments");
   define("STATIC_FORM_CONFERENCE_REGISTER_COMMENTS_EXPLAIN", "If you have any comments or special needs (e.g. regarding travel visas), please write them in the box below.");
-  define("STATIC_FORM_CONFERENCE_REGISTER_METHOD_OF_PAYMENT_TEXT", "We accept payment by bank transfer, credit card or Paypal. For payment by bank transfer, see <a href='http://www.metmeetings.org/en/met-bank-transfer-details:92' target='_blank'>MET’s bank details</a>. To pay by credit card, select “PayPal/credit card” below and, on the PayPal page, click on the “I don't have a PayPal account” option (or in the new interface click the “Pay by card” button). <br /><b>Important:</b> Whether you pay by bank transfer or by PayPal/credit card, please give “METM18 registration – [Your name]” as the reason for the payment.<br /><b>Refunds: </b>If you are unable to attend for unforeseen reasons, we will process a refund (subject to a €35 handling fee) if we receive written notification by 31 August 2018. <a href='https://www.metmeetings.org/en/conference-fees:956' target='_blank'>More details</a>.");
+  define("STATIC_FORM_CONFERENCE_REGISTER_METHOD_OF_PAYMENT_TEXT", "We accept payment by bank transfer (<a href='http://www.metmeetings.org/en/met-bank-transfer-details:92' target='_blank'>MET’s bank details</a>), credit card or Paypal. <br>Important: bank transfers must be received within 48 hours. <br>To pay by credit card, instead of logging in to PayPal click the “Pay by card” button. <br />Please give “METM18 registration – [Your name]” as the reason for the payment.<br /><b>Refunds: </b>If you are unable to attend for unforeseen reasons, we will process a refund (subject to a €35 handling fee) if we receive written notification by 31 August 2018 (<a href='https://www.metmeetings.org/en/conference-fees:956' target='_blank'>more details</a>).");
   define("STATIC_FORM_CONFERENCE_REGISTER_SPEAKER_HELPER", "I am a speaker/helper at the conference");
 
   define("STATIC_FORM_CONFERENCE_REGISTER_LEGEND_CODE", "PRISEAL");
@@ -1085,9 +1085,6 @@ To upload a photo, first choose the image file, then click on “Upload”. Acce
   
   define("STATIC_FORM_CONFERENCE_REGISTER_MINI_SESSION","Minisessions");
 
-  define("STATIC_FORM_CONFERENCE_REGISTER_SWALES_TITLE","Practical class (Prof. John Swales)");
-  define("STATIC_FORM_CONFERENCE_REGISTER_SWALES_WORKSHOP","I would like to attend Prof. Swales’ practical class on Thursday, 29 October (price €30)");
-  
   define("STATIC_FORM_CONFERENCE_REGISTER_CHECKBOX_NOT_REQUIRED","I will be unable to attend any of the workshops");
   
   define("STATIC_FORM_CONFERENCE_REGISTER_BADGE_TITLE","Conference badge");
@@ -1113,27 +1110,27 @@ To upload a photo, first choose the image file, then click on “Upload”. Acce
   
   define("STATIC_FORM_CONFERENCE_REGISTER_DINNER_TITLE","Closing dinner");
   define("STATIC_FORM_CONFERENCE_REGISTER_DINNER_BODY","
-    Check the box below to opt out of the closing dinner (reduction of €25 in the conference fee).
+    Check the box below to opt out of the closing dinner (reduction of €35 in the conference fee).
   ");
   
   
   define("STATIC_FORM_CONFERENCE_REGISTER_GUEST_DINNER_BODY","
-    The conference fee includes the Saturday closing dinner. If you will be bringing one or more guests to the dinner (€35 per guest), please indicate this below.
+    The conference fee includes the Saturday closing dinner. If you will be bringing one or more guests to the dinner (€45 per guest), please indicate this below.
   ");
 
-    define("STATIC_FORM_CONFERENCE_REGISTER_WINE_RECEPTION_TITLE","<i>Apericena</i>");
+    define("STATIC_FORM_CONFERENCE_REGISTER_WINE_RECEPTION_TITLE","Wine reception");
   define("STATIC_FORM_CONFERENCE_REGISTER_WINE_RECEPTION_BODY","
-    The conference fee includes the Friday evening <i>apericena</i>. If you will be bringing one or more guests to the <i>apericena</i> (€25 per guest), please indicate this below.
+    The conference fee includes the Friday evening wine reception. If you will be bringing one or more guests to the wine reception (€12 per guest), please indicate this below.
   ");
   define("STATIC_FORM_CONFERENCE_REGISTER_WINE_RECEPTION_GUEST_1","
     I will be bringing
   ");  
   define("STATIC_FORM_CONFERENCE_REGISTER_WINE_RECEPTION_GUEST_2","
-    guests to the <i>apericena</i> (€25 per person).
+    guests to the wine reception (€12 per person).
   ");
 
   define("STATIC_FORM_CONFERENCE_REGISTER_DINNER_AGREE","
-  I will not be attending the closing dinner (€25 reduction)
+  I will not be attending the closing dinner (€35 reduction)
   ");
   
   define("STATIC_FORM_CONFERENCE_REGISTER_EMAIL_PERMISSION_TITLE","Email permission");
@@ -1146,24 +1143,18 @@ To upload a photo, first choose the image file, then click on “Upload”. Acce
   define("STATIC_FORM_CONFERENCE_REGISTER_CERTIFICATES_BODY","Please check the appropriate box below if you require a certificate of attendance.");  
   define("STATIC_FORM_CONFERENCE_REGISTER_CERTIFICATES_NAME","I would like a certificate of attendance");
   define("STATIC_FORM_CONFERENCE_REGISTER_ACCOMODDATION_TITLE","Accommodation");
-   define("STATIC_FORM_CONFERENCE_REGISTER_ACCOMODDATION_BODY","
+  define("STATIC_FORM_CONFERENCE_REGISTER_ACCOMODDATION_BODY","
     - If you have already reserved accommodation through the <a href='http://www.metmeetings.org/en/accommodation-form:535' target='_blank'>accommodation reservation form</a>, we will confirm this on receipt of this registration form and the conference fee.<br> 
     - If your requirements change at any time (e.g. number of nights or room preference), please fill in the form again.<br>  
     - For queries, please contact <a href='mailto:vice-chair@metmeetings.org'>Anne Murray</a>.
    ");
   define("STATIC_FORM_CONFERENCE_REGISTER_CONFERENCE_EXTRA_TITLE","Conference extras");
   
-   define("STATIC_FORM_CONFERENCE_REGISTER_CONFERENCE_EXTRA_1","I want to sign up for a <a href='http://www.metmeetings.org/en/guided-tour:647' target='_blank'>guided visit of Poblet Monastery</a> on Friday at 12.30");
-   define("STATIC_FORM_CONFERENCE_REGISTER_CONFERENCE_EXTRA_2","I would like to have a portrait photo taken by a <a href='http://www.metmeetings.org/en/portrait-photograph:648' target='_blank'>professional photographer</a> during the conference");
-   define("STATIC_FORM_CONFERENCE_REGISTER_CONFERENCE_EXTRA_3","I am staying around on Sunday morning and would like to:");
-   define("STATIC_FORM_CONFERENCE_REGISTER_CONFERENCE_EXTRA_4","take part in a <a href='http://www.metmeetings.org/en/conference-extras:649' target='_blank'>group walk</a>");
-   define("STATIC_FORM_CONFERENCE_REGISTER_CONFERENCE_EXTRA_5","visit a <a href='http://www.metmeetings.org/en/conference-extras:649' target='_blank'>local castle and wine cellar</a>");
-  define("STATIC_FORM_CONFERENCE_REGISTER_CONFERENCE_EXTRA_6","take part in a <a href='http://www.metmeetings.org/en/conference-extras:649' target='_blank'>group walk</a>");
   define("STATIC_FORM_CONFERENCE_REGISTER_CONFERENCE_GUEST_1","I will be bringing");
-   define("STATIC_FORM_CONFERENCE_REGISTER_CONFERENCE_GUEST_2","guests to the closing dinner (€35 per person)");
+  define("STATIC_FORM_CONFERENCE_REGISTER_CONFERENCE_GUEST_2","guests to the closing dinner (€45 per person)");
   define("STATIC_FORM_CONFERENCE_REGISTER_CONFERENCE_BADGE_EMPTY","Please enter your conference badge information");
   define("STATIC_FORM_CONFERENCE_REGISTER_MEMBER_REQUIRED","To attend the conference you must be a member of MET or of one of MET's sister associations");
-  DEFINE("STATIC_FORM_CONFERENCE_REGISTER_NO_SELECTED","Please select at least one workshop or else check the ‘I will be unable to attend any workshops’ box");
+  define("STATIC_FORM_CONFERENCE_REGISTER_NO_SELECTED","Please select at least one workshop or else check the ‘I will be unable to attend any workshops’ box");
   /****************** FIN: FORM CONFERENCE ******************/
   
   
@@ -1176,13 +1167,8 @@ To upload a photo, first choose the image file, then click on “Upload”. Acce
   define("STATIC_MAIL_INSCRIPCION_CONFERENCE_NO_DINNER","no dinners");
   define("STATIC_MAIL_INSCRIPCION_CONFERENCE_EMAIL_PERMISSION","Email permission");
   define("STATIC_MAIL_INSCRIPCION_CONFERENCE_CERTIFICATE","Certificate");
-  define("STATIC_MAIL_INSCRIPCION_CONFERENCE_GUIDE_POBLET","<strong>Guided visit</strong> of Poblet monastery on Friday");
   define("STATIC_MAIL_INSCRIPCION_CONFERENCE_DINNER_GUEST","Dinner guests");
   define("STATIC_MAIL_INSCRIPCION_CONFERENCE_WINE_RECEPTION_GUEST","Wine reception guests");
-  define("STATIC_MAIL_INSCRIPCION_CONFERENCE_PHOTO_PORTRAIT","Portrait photo");
-  define("STATIC_MAIL_INSCRIPCION_CONFERENCE_MORNING_WALK","Sunday morning walk 1");
-  define("STATIC_MAIL_INSCRIPCION_CONFERENCE_MORNING_WALK_2","Sunday morning walk 2");
-  define("STATIC_MAIL_INSCRIPCION_CONFERENCE_WINE","Sunday morning visit to a wine cellar");
   define("STATIC_MAIL_INSCRIPCION_CONFERENCE_PAYMENT_METHOD","Payment method");
   define("STATIC_MAIL_INSCRIPCION_CONFERENCE_FEE","Conference fee");
   define("STATIC_MAIL_INSCRIPCION_CONFERENCE_DINNER_GUEST_COST","Dinner guest(s)");

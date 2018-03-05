@@ -12,6 +12,8 @@
 	position:relative;
 	max-width:100%;
 	overflow: hidden;
+	margin-top: .5em;
+	margin-bottom: 1em;
 }
 .nivoSlider img {
 	position:absolute;
