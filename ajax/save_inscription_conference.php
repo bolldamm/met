@@ -1,7 +1,10 @@
 <?php
 /**
  *
- * Es el script principal para realizar la inscripcion y generar el tpv
+ * This script validates the form data
+ * If all is OK, it creates a new signup in ed_tb_inscripcion_conferencia and returns the "Success" message
+ * If the payment method is Paypal, it encrypts and posts the necessary data to Paypal
+ * If there are errors, it returns an error message to the registration form
  *
  */
 
@@ -11,7 +14,7 @@ $esValido = true;
 $mensajeError = "";
 
 
-//Proceso donde nos indica si todo ha ido bien...
+//The template is a hidden input field to be injected back into the conference registration form
 $plantilla = new XTemplate("../html/ajax/process_form.html");
 
 //Get information from text inputs in form
@@ -54,7 +57,7 @@ if (!in_array($metodoPago, $vectorMetodoPago)) {
 }
 
 
-//Check captcha is correct
+//See if captcha is correct
 include("../classes/secureimage/securimage.php");
 $img = new Securimage();
 
@@ -148,11 +151,12 @@ if ($valid) {
                 $idPais = $_POST["cmbPais"];
             }
         }
+    //if no workshops selected, return error
     } else {
         $mensajeError = STATIC_FORM_CONFERENCE_REGISTER_NO_SELECTED;
         $esValido = false;
     }
-
+//if captcha is not valid, return error
 } else {
     $esValido = false;
     $mensajeError = STATIC_CAPTCHA_ENTER_LETTERS_NUMBERS_IMAGE;
@@ -187,7 +191,7 @@ if ($esValido) {
     $wineReceptionGuestPrice = $datoConferencia["price_wine_reception_guest"];
 
 
-    // Assign basic prices (member, sister association and non-member)
+    // Assign basic price (member, sister association and non-member)
     if (!isset($_POST["chkSpeaker"])) {
         if ($datoConferencia["es_early"] > 0) {
             if (!isset($_SESSION["met_user"])) {
@@ -226,7 +230,7 @@ if ($esValido) {
     //Total payable before any extra or any discount
     $totalPayable = $preliminaryPrice;
 
-    //Extras
+    //Add extras to total payable
     $esDinnerGuests = $_POST["cmbInvitados"];
     $esWineReceptionGuests = $_POST["cmbWineReceptionGuests"];
     $dinnerGuestSupplement = $esDinnerGuests * $dinnerGuestPrice;
@@ -325,22 +329,22 @@ if ($esValido) {
     //The database procedure returns the registration ID and registration number (codigo and numero_inscripcion)
     $datoInscripcion = $db->getData($resultadoInscripcion);
 
-            //Seems to be obsolete
-            //$id_foto = $db->callProcedure("CALL ed_sp_web_inscripcion_conferencia_last_id()");
+    //Seems to be obsolete
+    //$id_foto = $db->callProcedure("CALL ed_sp_web_inscripcion_conferencia_last_id()");
 
-            //Upload image to the folder /files/METM_attendees/
-            //Load phpthumb class
-            /*require "../classes/phpThumb/ThumbLib.inc.php";
-            $thumb=PhpThumbFactory::create($_FILES["fileImagen"]["tmp_name"]);
-            $extensionImagen=generalUtils::obtenerExtensionFichero($_FILES["fileImagen"]["name"]);
-            $nombreImagen=$id_foto.".".$extensionImagen;
+    //Upload image to the folder /files/METM_attendees/
+    //Load phpthumb class
+    /*require "../classes/phpThumb/ThumbLib.inc.php";
+    $thumb=PhpThumbFactory::create($_FILES["fileImagen"]["tmp_name"]);
+    $extensionImagen=generalUtils::obtenerExtensionFichero($_FILES["fileImagen"]["name"]);
+    $nombreImagen=$id_foto.".".$extensionImagen;
 
-            $thumb->resize(WIDTH_SIZE_MEMBER_INDIVIDUAL, HEIGHT_SIZE_MEMBER_INDIVIDUAL);
-            $thumb->save("../files/METM_attendees/".$nombreImagen);
+    $thumb->resize(WIDTH_SIZE_MEMBER_INDIVIDUAL, HEIGHT_SIZE_MEMBER_INDIVIDUAL);
+    $thumb->save("../files/METM_attendees/".$nombreImagen);
 
-            //Redimension la imagen
-            $thumb->resize(WIDTH_SIZE_MEMBER_INDIVIDUAL_THUMB, HEIGHT_SIZE_MEMBER_INDIVIDUAL_THUMB);
-            $thumb->save("../files/METM_attendees/thumb/".$nombreImagen);*/
+    //Redimension la imagen
+    $thumb->resize(WIDTH_SIZE_MEMBER_INDIVIDUAL_THUMB, HEIGHT_SIZE_MEMBER_INDIVIDUAL_THUMB);
+    $thumb->save("../files/METM_attendees/thumb/".$nombreImagen);*/
 
     //Insert workshop signups in ed_tb_inscripcion_conferencia_linea
     for ($i = 0; $i < $totalVectorTalleres; $i++) {
@@ -368,13 +372,22 @@ if ($esValido) {
     /************** FIN: EXTRAS **************/
 
     //Create variable to hold payment item ("concepto"). i.e. "METM+year registration"
-    $itemName = "METM" . date(y) . " registration";
-
-    //Paypal...
+    $item = "METM" . date(y) . " registration";
+    $email = $_POST["txtEmail"];
+    $custom = $datoInscripcion["numero_inscripcion"]."-".$datoInscripcion["codigo"]."-1";
+    //Store payment method ID in hidden field in process_form.html
     $plantilla->assign("TIPO_RESULTADO_INSCRIPCION", $metodoPago);
+    //If Paypal
     switch ($metodoPago) {
         case INSCRIPCION_TIPO_PAGO_PAYPAL:
-            $subPlantilla = new XTemplate("../html/ajax/paypal_form.html");
+            $plantilla->assign("ITEM", $item);
+            $plantilla->assign("AMOUNT", $totalPayable);
+            $plantilla->assign("EMAIL", $email);
+            $plantilla->assign("CUSTOM", $custom);
+            break;
+
+
+            /*$subPlantilla = new XTemplate("../html/ajax/paypal_form.html");
             $serverActual = "https://www.metmeetings.org/";
 
             //Generate encryption
@@ -417,14 +430,14 @@ if ($esValido) {
 
             //Export to main template
             $plantilla->assign("FORMULARIO_ADICIONAL", $subPlantilla->text("contenido_principal"));
-            break;
+            break;*/
         case INSCRIPCION_TIPO_PAGO_TRANSFERENCIA:
             $idUsuarioWebCorreo = $idUsuarioWeb;
             $numeroInscripcion = $datoInscripcion["numero_inscripcion"];
             $tipoInscripcion = 1;
             $idInscripcion = $datoInscripcion["codigo"];
 
-            //Send emails to MET and to user
+            //Send emails to MET and to user for bank transfer
             require "../includes/load_send_mail_inscription_conference.inc.php";
             break;
     }

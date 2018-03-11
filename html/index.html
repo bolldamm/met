@@ -443,7 +443,7 @@
                 var billingPostcode = $("#txtFacturacionCodigoPostal");
                 var billingCity = $("#txtFacturacionCiudad");
                 var billingCountry = $("#txtFacturacionPais");
-                var paymentMethod = $(".paymentMethod");
+                var paymentMethod = $(".paymentMethod:checked");
                 var privacy = $("#chkPrivacy");
 
                 //If any fields are invalid, display alert and message
@@ -503,7 +503,7 @@
                     billingCountry.addClass("errorBorderColor error");
                     $("#billingCountryMessage").html("Please enter your country");
                 }
-                if (paymentMethod.prop("checked").length < 1) {
+                if (paymentMethod.length < 1) {
                     $("#containerPaymentMethod").addClass("errorBackgroundColor error");
                     $("#paymentMethodMessage").html("Please select a payment method");
                 }
@@ -1501,9 +1501,9 @@
                 url: "ajax/save_inscription_conference.php",
                 data: form.serialize(),
                 success: function (data) {
-                    //Store serialised signup data in conference registration form
+                    //Store result (payment method or error message) in hidden input in conference registration form
                     document.getElementById("resultadoInscripcion").innerHTML = data;
-                    //Get result (1=transfer, 2=Paypal, or else error message) from "process_form.html"
+                    //Get that result (1=transfer, 2=Paypal, or else error message) from the hidden input
                     signupResult = document.getElementById("hdnTipoResultado");
 
                     //If bank transfer, call "inscripcion_finalizada.php"
@@ -1513,12 +1513,20 @@
 
                     } else if (signupResult.value === "2") {
                         //If Paypal, submit data to Paypal in paypal_form.html
-                        document.frmPaypal.submit();
+                        //document.frmPaypal.submit();
+                        //collect variables from reg form and pass them to stripe_form.php
+                        var item = document.getElementById("item").value;
+                        var amount = document.getElementById("amount").value;
+                        var email = document.getElementById("txtEmail").value;
+                        var custom = document.getElementById("custom").value;
+                        window.location = "stripe_form.php?it=" + item + "&am=" + amount + "&email=" + email;
+
+                    } else if (signupResult.value === "{STATIC_CAPTCHA_ENTER_LETTERS_NUMBERS_IMAGE}") {
+                        document.getElementById("captchaMessage").innerHTML = signupResult.value;
+                        $.unblockUI();
 
                     } else {
-                        //Otherwise, result = error message, so display message on registration form
-                        var captchaMessage = document.getElementById("captchaMessage");
-                        captchaMessage.innerHTML = signupResult.value;
+                        document.getElementById("msgAlert").innerHTML = signupResult.value;
                         $.unblockUI();
                     }
                 }
@@ -1871,7 +1879,7 @@
 
     <div class="d-none d-md-block">
         <a href="http://test.metmeetings.org"><img src="images/pictures/logos/logo.met.png" width="244" height="125" alt="MET logo"
-                            style="margin-top: 3em;"></a>
+                                                   style="margin-top: 3em;"></a>
     </div>
 
     <div class="row topnav">

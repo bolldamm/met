@@ -58,7 +58,7 @@
 			$esQuery=true;
 		}
 	}else{
-		$subPlantilla->assign("QUERY_VALUE", STATIC_FORM_NEW_SEARCH_TITLE_CONTENT_NEWS);
+		//$subPlantilla->assign("QUERY_VALUE", STATIC_FORM_NEW_SEARCH_TITLE_CONTENT_NEWS);
 	}
 	
 	//Fecha
@@ -72,7 +72,7 @@
 		
 	}else{
 		$fechaBusquedaAux="";
-		$subPlantilla->assign("FECHA_VALUE", STATIC_FORM_NEW_SEARCH_DATE);
+		//$subPlantilla->assign("FECHA_VALUE", STATIC_FORM_NEW_SEARCH_DATE);
 	}
 	
 	//Tematica
@@ -174,7 +174,7 @@
 		
 	
 	//Combo actividad profesional
-	$subPlantilla->assign("COMBO_TEMATICA", generalUtils::construirCombo($db, "CALL ed_sp_web_tematica_noticia_obtener_combo(".$_SESSION["id_idioma"].")", "t", "cmbTematica", $idTematica, "nombre", "id_tematica", STATIC_NEWS_COMBO_TOPIC_TITLE, 0, "class='inputText left' style='width:142px;'"));
+	$subPlantilla->assign("COMBO_TEMATICA", generalUtils::construirCombo($db, "CALL ed_sp_web_tematica_noticia_obtener_combo(".$_SESSION["id_idioma"].")", "t", "cmbTematica", $idTematica, "nombre", "id_tematica", STATIC_NEWS_COMBO_TOPIC_TITLE, 0, "class='form-control'"));
 	
 	
 	

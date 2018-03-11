@@ -68,8 +68,8 @@ div.sex {
     margin-bottom: .5em;
 }
 #frmExpense input.datepicker {
-    width: 150px;
-    /*background-position: 120px;*/
+    /*width: 100px;*/
+    /*background-position: 120px;^*/
 }
 .errorBackgroundColor {
     background-color: #ffe4e4;
