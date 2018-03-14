@@ -179,16 +179,14 @@ require "includes/load_main_components.inc.php";
 	$subPlantilla->assign("CONTENIDO_DESCRIPCION",$datoMenuSeo["descripcion"]);
 	        
 	//Listamos los miembros del directorio
-	//if($descripcionBuscador != "" || $idPais > 0 || $idActividadProfesional > 0 || $ciudad!="") {
-		$codeProcedure = "CALL ed_sp_web_usuario_web_obtener_listado(".$idMenuTipo.",".$idActividadProfesional.",'".$areaExpertise."','".$sourceLanguage."','".$targetLanguage."',".$idPais.",'".$ciudad."','".$descripcionBuscador."',".$wholeWord.",";
-		$totalItemsPagina = 300;
-		//$totalItemsPagina = 2;
-		$totalPaginasMostrar = 8;
+    $codeProcedure = "CALL ed_sp_web_usuario_web_obtener_listado(".$idMenuTipo.",".$idActividadProfesional.",'".$areaExpertise."','".$sourceLanguage."','".$targetLanguage."',".$idPais.",'".$ciudad."','".$descripcionBuscador."',".$wholeWord.",";
+
+		$totalItemsPagina = 20;
+        $totalPaginasMostrar = 8;
 		
 		if($filtro!=""){
 			$urlBusqueda="-".$filtro;
 		}
-	
 		
 		$urlActual= $urlActualAux."-";
 		//$urlActual = "directory_list.php.php?menu=".$idMenu.$urlBusqueda."&";

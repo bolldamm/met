@@ -1300,6 +1300,7 @@
                 var country = $("#cmbPais");
                 var workshops = $(".rdnWorkshop:checked");
                 var minisessions = $(".chkMinisession:checked");
+                var noWorkshop = $("#chkNotWorkshop");
                 var badge = $("#txtaBadge");
                 var billingNif = $("#txtFacturacionNifCliente");
                 var billingName = $("#txtFacturacionNombreCliente");
@@ -1327,7 +1328,7 @@
                     country.addClass("errorBorderColor error");
                     $("#countryMessage").html("Please select a country");
                 }
-                if (workshops.length < 1 && minisessions.length < 1) {
+                if (workshops.length < 1 && minisessions.length < 1 && noWorkshop.prop("checked") === false) {
                     $("#workshopsMessage").html("Registration for one workshop or two minisessions is included in the conference fee. If you do not wish to register for any of the workshops, please check the appropriate box before submitting the form");
                     $("#containerWorkshop").addClass("errorBackgroundColor error");
                 }
@@ -1381,22 +1382,22 @@
                     $("#captchaMessage").html("Please enter the characters from the image");
                 }
 
-                //If any fields are invalid, scroll to first invalid input or checkbox, with animation
-                if (firstName.val() === "" || lastName.val() === "" || (email.val() === "" || emailRegExp.test(email.val()) === false) || country.val() < 0 || (workshops.length < 1 && minisessions.length < 1) || (workshops.length === 1 && minisessions.length > 2) || (workshops.length === 2 && minisessions.length > 0) || billingNif.val() === "" || billingName.val() === "" || billingAddress.val() === "" || billingPostcode.val() === "" || billingCity.val() === "" || billingCountry.val() === "" || paymentMethod.length < 1 || privacy.prop("checked") === false || captchaText.val() === "") {
-
+                //If any fields are invalid
+                if (firstName.val() === "" || lastName.val() === "" || (email.val() === "" || emailRegExp.test(email.val()) === false) || country.val() < 0 || (workshops.length < 1 && minisessions.length < 1 && noWorkshop.prop("checked") === false) || (workshops.length === 1 && minisessions.length > 2) || (workshops.length === 2 && minisessions.length > 0) || billingNif.val() === "" || billingName.val() === "" || billingAddress.val() === "" || billingPostcode.val() === "" || billingCity.val() === "" || billingCountry.val() === "" || paymentMethod.length < 1 || privacy.prop("checked") === false || captchaText.val() === "") {
+                    //Scroll to first invalid input or checkbox, with animation
+                    var invalidInput = $(".error");
+                    if (invalidInput.length > 0) {
+                        $("html, body").animate({
+                            scrollTop: invalidInput.first().offset().top
+                        }, 800);
+                    }
                 } else {
 
                     //Block user interface (blockUI,js) and display "Sending…" message
                     mensajeCargando("{STATIC_GLOBAL_SENDING}...");
 
-                    //Generate conference registration (AJAX call to save_inscription_conference.php)
+                    //Call script (save_inscription_conference.php) to generate conference registration
                     generateConferenceRegistration();
-                }
-                var invalidInput = $(".error");
-                if (invalidInput.length > 0) {
-                    $("html, body").animate({
-                        scrollTop: invalidInput.first().offset().top
-                    }, 800);
                 }
             });
         }
@@ -1518,15 +1519,20 @@
                         var item = document.getElementById("item").value;
                         var amount = document.getElementById("amount").value;
                         var email = document.getElementById("txtEmail").value;
-                        var custom = document.getElementById("custom").value;
-                        window.location = "stripe_form.php?it=" + item + "&am=" + amount + "&email=" + email;
+                        var regId = document.getElementById("regId").value;
+                        window.location = "stripe_form.php?it=" + item + "&am=" + amount + "&eml=" + email + "&reg=" + regId;
 
                     } else if (signupResult.value === "{STATIC_CAPTCHA_ENTER_LETTERS_NUMBERS_IMAGE}") {
                         document.getElementById("captchaMessage").innerHTML = signupResult.value;
                         $.unblockUI();
 
                     } else {
+                        /*var captchaMessage = document.getElementById("captchaMessage");
+                        captchaMessage.innerHTML = signupResult.value;*/
                         document.getElementById("msgAlert").innerHTML = signupResult.value;
+                        document.getElementById("msgAlert").setAttribute("class", "msgKO");
+                        document.getElementById("msgAlert").style.display = "block";
+                        moverWeb();
                         $.unblockUI();
                     }
                 }
@@ -1873,7 +1879,9 @@
 <div class="container-fluid wrapper">
     <div class="row loginLink">
         <div class="col-12 d-md-none w-100 bg-dark py-2">
-            <a href="#loginForm" class="loginLink" style="margin-left:20px;color:white;font-size:100%;">Login</a>
+            <a href="#loginForm" class="loginLink" style="margin-left:20px;color:white;font-size:100%;">{PANEL_LOGIN_USERNAME} </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="profile_edit.php?menu=42" style="color:white;font-size:100%;">{EDIT_MY_PROFILE}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="logout.php" style="color:white;font-size:100%;">{LOGOUT}</a>
         </div>
     </div>
 

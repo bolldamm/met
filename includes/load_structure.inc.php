@@ -141,6 +141,8 @@ if (isset($_SESSION["met_user"])) {
 
     //Display the user panel with username and details
     $plantilla->assign("PANEL_LOGIN_USERNAME", $_SESSION["met_user"]["username"]);
+    $plantilla->assign("EDIT_MY_PROFILE", "Edit profile");
+    $plantilla->assign("LOGOUT", "Log out");
     $plantilla->parse("contenido_principal.datos_usuario");
 
     /*
@@ -149,7 +151,7 @@ if (isset($_SESSION["met_user"])) {
 } else {
     // Set user type for menu display purposes to "non-member" (-1)
     $idMenuTipo = -1;
-
+    $plantilla->assign("PANEL_LOGIN_USERNAME", "Log in");
     // If session variable "loginErrorMessage" is set (from authentication.php redirect), display message
     if (isset($_SESSION['loginErrorMessage'])) {
         $plantilla->assign("LOGIN_ERROR_MENSAJE", $_SESSION['loginErrorMessage']);

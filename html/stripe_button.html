@@ -1,17 +1,13 @@
 <!-- BEGIN: contenido_principal -->
-<div id="openbox">
-
-    <h2 class="titleSection">Pay by credit card using Stripe</h2>
-    <p>Amount: {AMOUNT}</p>
-    <p>Item: {ITEM}</p>
-    <p>Key: {KEY}</p>
-    <p>Email: {EMAIL}</p>
-    <br><br>
-
+<div id="openbox" class="stripe_button">
 
     <form action="charge.php" method="post">
         <input type="hidden" id="amount" name="amount" value="{AMOUNT}">
-        <input type="hidden" id="custom" name="custom" value="{CUSTOM}">
+        <input type="hidden" id="regId" name="regId" value="{REGID}">
+        <input type="hidden" id="item" name="item" value="{ITEM}">
+
+        {STATIC_FORM_STRIPE_BUTTON_INTRO_TEXT}
+
         <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                 data-image="images/pictures/logos/MET_logo_color_SQUARE_256x256.png"
                 data-name="Mediterranean Editors and translators"
@@ -25,6 +21,8 @@
                 data-label="Pay by card"></script>
 
     </form>
+    <br><br><br>
+    <hr class="green_line"/>
 
 </div>
 <!-- END: contenido_principal -->

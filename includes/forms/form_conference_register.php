@@ -350,9 +350,9 @@ if (isset($_SESSION["met_user"]) && !generalUtils::esMiembroCaducado($_SESSION["
                     -1,
                     "nombre_original",
                     "id_pais",
-                    STATIC_FORM_MEMBERSHIP_COUNTRY_OF_RESIDENCE."*",
+                    STATIC_FORM_MEMBERSHIP_COUNTRY_OF_RESIDENCE,
                     -1,
-                    "class='form-control' style='color:slategray;' autocomplete='country-name'"));
+                    "class='form-control required' style='color:slategray;' autocomplete='country-name'"));
 
     $plantillaFormulario->parse("contenido_principal.bloque_pais");
     $plantilla->parse("contenido_principal.validar_conference_register.validacion_pais");

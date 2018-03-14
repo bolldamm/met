@@ -118,7 +118,7 @@ if ($valid) {
             //Check whether workshop is full and if so, post error message
             if ($datoTaller["total_inscritos"] >= $datoTaller["plazas"]) {
                 $esValido = false;
-                $mensajeError .= "<li style='padding-top:5px'>' " . $datoTaller["nombre"] . " ' " . STATIC_FORM_WORKSHOP_REGISTER_FULL_MEMBER . "</li>";
+                $mensajeError .= "<li style='padding-top:5px'>'" . $datoTaller["nombre"] . "' " . STATIC_FORM_WORKSHOP_REGISTER_FULL_MEMBER . "</li>";
             }
             $i++;
         }//end while
@@ -374,7 +374,7 @@ if ($esValido) {
     //Create variable to hold payment item ("concepto"). i.e. "METM+year registration"
     $item = "METM" . date(y) . " registration";
     $email = $_POST["txtEmail"];
-    $custom = $datoInscripcion["numero_inscripcion"]."-".$datoInscripcion["codigo"]."-1";
+    $registrationId = $datoInscripcion["numero_inscripcion"]."-".$datoInscripcion["codigo"]."-1";
     //Store payment method ID in hidden field in process_form.html
     $plantilla->assign("TIPO_RESULTADO_INSCRIPCION", $metodoPago);
     //If Paypal
@@ -383,54 +383,9 @@ if ($esValido) {
             $plantilla->assign("ITEM", $item);
             $plantilla->assign("AMOUNT", $totalPayable);
             $plantilla->assign("EMAIL", $email);
-            $plantilla->assign("CUSTOM", $custom);
+            $plantilla->assign("REGID", $registrationId);
             break;
 
-
-            /*$subPlantilla = new XTemplate("../html/ajax/paypal_form.html");
-            $serverActual = "https://www.metmeetings.org/";
-
-            //Generate encryption
-            require "../classes/paypal/clase.paypal.php";
-            $config = array(
-                "cert_id" => "PR3V5CJ4DN4BA",
-                "business" => "metmember@gmail.com",
-                "openssl" => "/usr/bin/openssl",
-                "my_cert" => "../classes/paypal/certificados/8708ec99f0a753dddea0757b7d35297d-pubcert.pem",
-                "my_key" => "../classes/paypal/certificados/8708ec99f0a753dddea0757b7d35297d-prvkey.pem",
-                "paypal_cert" => "../classes/paypal/certificados/paypal_cert.pem"
-            );
-
-            //Create array of information for insertion into Paypal form
-            $form["charset"] = "UTF-8";
-            $form["cmd"] = "_xclick";
-
-            //$itemName is the payment item ("concepto"), e.g. "METM18 registration"
-            $form["item_name"] = $itemName;
-            //$form["amount"] = $totalPayable;
-            $form["amount"]="0.01";
-
-            $paypal = new PayPal($config);
-
-            $form["return"] = $serverActual . "inscripcion_finalizada.php?modo=1&tipo=2";
-            $form["notify_url"] = $serverActual . "ajax/last_step_inscription_conference_paypal.php";
-            $form["return_cancel"] = $serverActual . "inscripcion_finalizada.php?tipo=0";
-            $form["rb"] = "2";
-            $form["bn"] = $itemName;
-            $form["upload"] = "1";
-            $form["business"] = "metmember@gmail.com";
-            $form["currency_code"] = "EUR";
-            $form["custom"] = $datoInscripcion["numero_inscripcion"] . "-" . $datoInscripcion["codigo"] . "-1";
-
-            //Encrypt the form
-            $subPlantilla->assign("ENCRYPT", $paypal->encrypt($form));
-
-            //Parse all the info
-            $subPlantilla->parse("contenido_principal");
-
-            //Export to main template
-            $plantilla->assign("FORMULARIO_ADICIONAL", $subPlantilla->text("contenido_principal"));
-            break;*/
         case INSCRIPCION_TIPO_PAGO_TRANSFERENCIA:
             $idUsuarioWebCorreo = $idUsuarioWeb;
             $numeroInscripcion = $datoInscripcion["numero_inscripcion"];

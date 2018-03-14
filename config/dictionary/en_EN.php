@@ -158,7 +158,12 @@
   define("STATIC_DIRECTORY_MEMBER_IMAGE", "Image");
   define("STATIC_DIRECTORY_MEMBER_WHOLE_WORD", "Whole word only");
 
-  
+  /**** STRIPE ****/
+  define("STATIC_FORM_STRIPE_BUTTON_INTRO_TEXT", "<h3>Pay by debit or credit card</h3>
+
+        <p>Click on the button below to pay by credit or debit card. MET does not record or store your card details, which are sent directly from your device to the Stripe system.</p>
+
+        <p>Lorem fistrum sed commodo reprehenderit. Laboris aute laboris dolore aliqua. Tempor de la pradera voluptate nisi amatomaa amatomaa te va a hasé pupitaa. Te va a hasé pupitaa va usté muy cargadoo nisi está la cosa muy malar et ese pedazo de quietooor aute.</p>");
   
   define("STATIC_FORM_MEMBERSHIP_LEGEND_ACCOUNT_DETAILS", "Account details");
   define("STATIC_FORM_MEMBERSHIP_LEGEND_PERSONAL_DETAILS", "Personal details");

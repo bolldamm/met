@@ -22,13 +22,13 @@ Footer styles
     width:244px;
     height:173px;
 }
-#backgroundBlue {
+/*#backgroundBlue {
     position: absolute;
     top:212px;
     background: transparent url(../images/backgrounds/bkgrd.blueDegrade.png) repeat-x scroll 0 bottom;
     width: 100%;
     height: 244px;
-}
+}*/
 
 /* Basic page layout styles */
 .wrapper {
@@ -36,10 +36,10 @@ Footer styles
     max-width: 1200px;
     position: relative; /*this is to hide the blue background degrade */
 }
-/* Background image only on larger screens */
+/* Background image only on larger screens  Original pale blue background-colour #cfe1e0  */
 @media only screen and (min-device-width: 768px) {
     body {
-        background: #cfe1e0 url(../files/backgrounds/54.jpg) no-repeat scroll 50% 0;
+        background: #ffffff url(../files/backgrounds/54.jpg) no-repeat scroll 50% 0;
     }
 }
 .page-area {
@@ -67,8 +67,9 @@ Footer styles
 }
 @media only screen and (min-device-width: 768px) {
     .navbar-dark .navbar-nav {
-        background-color: #1d4482;
-        background:transparent url('../images/backgrounds/bkgrd.blue50.png') repeat scroll 0 0;
+        background-color: #348A88; /*#1d4482;*/
+        opacity: 0.8;
+        /*background:transparent url('../images/backgrounds/bkgrd.blue50.png') repeat scroll 0 0;*/
     }
     .navbar-dark .navbar-nav .nav-link {
         color: #ffffff;
@@ -102,7 +103,7 @@ Footer styles
     margin-top:20px;
 }
 .dropdown {
-    /*background-color: #1d4482;*/
+    background-color: #1d4482;
     margin: 1px 1px;
 }
 .dropdown-menu {
@@ -115,7 +116,7 @@ Footer styles
 }
 .dropdown-menu a.specialMenu {
     color: white;
-    background-color: #530c0b; /*#610e0d;  #8b1513; */
+    background-color: #8b1513;
 }
 .dropdown-menu a.specialMenu:hover {
 	color: #16181b;;
@@ -123,7 +124,7 @@ Footer styles
 }
 li.specialMenu {
     color:white;
-    background-color: #C6D880;
+    /*background-color: #C6D880;*/
 }
 /* Different styles for navbar expanded and navbar collapsed */
 @media only screen and (min-device-width: 768px) {
@@ -184,6 +185,7 @@ li.specialMenu {
         background-color: white;
     }
 }
+
 
 /* Styles for side panel and banners */
 .sidepanel {
@@ -281,5 +283,21 @@ p#msgLoginError {
     margin-left: 2em;
 }
 
+hr.green_line {
+    display: block;
+    height: 0.5em;
+    background-color: #348A88;
+    border: 0;
+    margin: 0.5em auto;
+}
 
 /* Other styles */
+/* ## pager ## */
+#pager { text-align:right; border-top:1px solid #B2B2B2; padding-top:7px; margin:0px 15px; }
+#pager ul { display:inline table; margin:0px 8px 0px; }
+#pager ul li { float:left; list-style-type:none; }
+#pager ul li a { color:#8B1513; text-align:center; padding:0px 6px 3px; font-size:11px; }
+#pager ul li a:hover { color:#348A88; }
+#pager ul li a.current { color:#4D4D4D; font-weight:bold; }
+#pager ul li a#nextPage, #pager ul li a#prevPage { display:inline; }
+

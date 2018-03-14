@@ -19,8 +19,8 @@ require_once('config.php');
 $item = $_GET["it"];
 $amount = $_GET["am"];
 $amountInCents = $amount * 100;
-$email = $_GET["email"];
-$custom = $_GET["custom"];
+$email = $_GET["eml"];
+$regId = $_GET["reg"];
 
 
 /**** INICIO: breadcrumb ****/
@@ -28,12 +28,12 @@ $breadCrumbUrlDetalle = "stripe_form.php";
 $breadCrumbDescripcionDetalle = STATIC_INSCRIPTION_LAST_STEP_TITLE;
 /**** FINAL: breadcrumb ****/
 
-$subPlantilla->assign("ITEM_MENU_TITULO","We've done it!");
+$subPlantilla->assign("ITEM_MENU_TITULO","Needs a title!");
 $subPlantilla->assign("KEY", $stripe["publishable_key"]);
 $subPlantilla->assign("AMOUNT",$amountInCents);
 $subPlantilla->assign("ITEM",$item);
 $subPlantilla->assign("EMAIL",$email);
-$subPlantilla->assign("CUSTOM",$custom);
+$subPlantilla->assign("REGID",$regId);
 
 
 $idMenu=null;
