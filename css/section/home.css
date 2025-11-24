@@ -1,0 +1,79 @@
+@CHARSET "UTF-8";
+
+/* Styles for home page in general */
+.titleHomePage {
+    font-family: Georgia, Times, "Times New Roman", serif;
+    font-size:1.5rem;
+    color:#8B1513;
+    font-weight:500;
+    padding: 4px 10px;
+    margin:0;
+}
+.titleHomePage a {
+    float:right;
+    color:#0dbabe;
+    text-transform:none;
+    font-size:1rem;
+}
+.titleHomePage a:hover {
+    color:#348A88;
+}
+.contentHomePage {
+    padding:10px 10px;
+}
+.contentHomePage a {
+    color:#0dbabe;
+}
+.contentHomePage a:hover, .contentHomePage a:focus {
+    color:#348A88;
+}
+
+/* Styles for home page header image */
+.home_page_header_image {
+	margin:8px 0;
+}
+
+/* Styles for feedback carousel */
+#feedback {
+    color: #6F100F; /*  #8B1513; rgba(29, 68, 130, 0.8);   #008080;*/
+    /* font-style: italic; */
+    font-weight: 400;
+    width:90%;
+    height: 100%;
+    padding: 6px 12px;
+    margin: 0 auto 20px;
+    text-align: center;
+}
+@media only screen and (min-width: 1100px) {
+    .carousel-inner {
+        height: 48px;
+    }
+}
+
+/* Styles for home page News section */
+h6.newsTitle {
+    margin: .8em 0 0 0;
+    font-weight: 500;
+}
+ul#lstHomePageNews {
+    margin-top: 10px;
+    padding-left: 0;
+    list-style-type: none;
+}
+ul#lstHomePageNews li {
+    margin-bottom:15px;
+}
+
+/* Styles for home page Hive section */
+.contentHomePageHive {
+    padding-top:10px;
+}
+
+hr.thin {
+    height: 1px;
+    border: 0;
+    color: #333;
+    background-color: #333;
+    width: 100%;
+    margin-top: -0.2em;
+}

@@ -1,0 +1,22 @@
+<!-- BEGIN: contenido_principal -->
+<div id='form'>
+	<p id='msgAlert' class='{MENSAJE_ACCION_CLASS}' style='{MENSAJE_ACCION_DISPLAY}'>{MENSAJE_ACCION_PERFIL}</p>
+	<a name='anclaExito'></a>
+	<form name='frmSubmitEvent' id='frmSubmitEvent' action='' method='post'>
+		<input type='text' class='form-control required' name='txtTitulo' placeholder='{STATIC_FORM_MEMBERSHIP_TITLE}'>
+
+		<input type='email' class='form-control' name='txtEmail' placeholder='{STATIC_FORM_MEMBERSHIP_EMAIL}'>
+
+		{COMBO_TEMATICA}
+
+		<input type='text' class='form-control required' name='txtResumen' placeholder='{STATIC_FORM_EVENT_SUBMIT_SUMMARY}' maxlength='230'>
+
+		{STATIC_FORM_EVENT_SUBMIT_CONTENT}
+		<textarea class='form-control required' name='txtContenido'></textarea>
+
+		<input type='button' class='btn btn-primary float-right' id='btnSendForm' value='{TITLE_BUTTON_FORM}' onclick='validarFormularioSubmitEvent()'>
+
+	</form>
+</div>
+<br><br><br>
+<!-- END: contenido_principal -->

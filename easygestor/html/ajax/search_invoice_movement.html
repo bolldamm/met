@@ -1,0 +1,48 @@
+<!-- BEGIN: contenido_principal -->
+<div class="streamsbox" style="display:block; height:auto;">
+	<div class="resultscontainer">
+		<table border="0" cellspacing="0" cellpadding="0" style="width:100%;" class="streamsbox-results">
+			<thead>
+				<tr class="streamsbox-header">
+					<td></td>
+					<td style="padding-left:10px;"><h2><strong>{STATIC_VIEW_MOVEMENT_PERSON}</strong></h2></td>
+					<td><h2><strong>{STATIC_VIEW_MOVEMENT_CONCEPT}</strong></h2></td>
+					<td><h2><strong>{STATIC_VIEW_MOVEMENT_PAYMENT_TYPE}</strong></h2></td>
+					<td><h2><strong>{STATIC_VIEW_MOVEMENT_DATE}</strong></h2></td>
+					<td style="text-align:right;"><h2><strong>{STATIC_VIEW_MOVEMENT_IMPORT}</strong></h2></td>
+					<td style="text-align:right;padding-right:10px;"><h2><strong>{STATIC_VIEW_MOVEMENT_PAYED}</strong></h2></td>
+					<td></td>
+				</tr>
+			</thead>
+			<tbody class="real-results" id="tblListItem">
+			<!-- BEGIN: item_movimiento -->
+				<tr id="fila_{MOVEMENT.ID}" {TR_STYLE}>
+					<td>
+						<input type="checkbox" style="width:20px;" name="chkMovimiento_{MOVEMENT.ID}" id="chkMovimiento_{MOVEMENT.ID}" onclick="gestionSeleccionMovimientos(this);" {CHECKED_MOVIMIENTO}>
+					</td>
+					<td style="vertical-align:top;padding-left:10px;" id="movementType_{MOVEMENT.ID}">
+						{MOVEMENT.PERSON}
+					</td>
+					<td style="vertical-align:top;" id="movementConcept_{MOVEMENT.ID}">
+						{MOVEMENT.CONCEPT}
+					</td>
+					<td style="vertical-align:top;" id="movementPaymentType_{MOVEMENT.ID}">
+						{MOVEMENT.TIPO_PAGO}
+					</td>
+					<td style="vertical-align:top;" id="movementDate_{MOVEMENT.ID}">
+						{MOVEMENT.DATE}
+					</td>
+					<td style="vertical-align:top;text-align:right;" id="movementImport_{MOVEMENT.ID}"> 
+						{MOVEMENT.IMPORT}
+					</td>
+					<td style="vertical-align:top;text-align:right;padding-right:10px;" id="movementPayed_{MOVEMENT.ID}">
+						{MOVEMENT.PAYED}
+					</td>
+					<td><a href="main_app.php?section=movement&action=edit&id_movimiento={MOVEMENT.ID}" target="_blank" title="{STATIC_VIEW_MOVEMENT_VIEW_DETAILS}"><img src="images/view.png"></a></td>
+				</tr>
+			<!-- END: item_movimiento -->
+			</tbody>
+		</table>
+	</div>
+</div>
+<!-- END: contenido_principal -->

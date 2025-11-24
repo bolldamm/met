@@ -1,0 +1,106 @@
+<!-- BEGIN: contenido_principal -->
+<div id="textExplication">
+	<h2>{STATIC_GLOBAL_WELCOME_EASYGESTOR}</h2>
+</div>
+<ul id="controlModButtons">
+	<!-- BEGIN: item_crear_menu -->
+	<li>
+		<a href="main_app.php?section=menu&action=create{PARAMETRO_ID_PADRE}&posicion={MENU_ID_POSICION}" class="OptionAdd cufon">{STATIC_GLOBAL_BUTTON_CREATE} </a>
+		<img src="images/pictures/icons/home.icon.png" />
+	</li>
+	<!-- END: item_crear_menu -->
+	<li><a href="javascript:editarElemento('menu')" class="OptionEdit cufon">{STATIC_GLOBAL_BUTTON_EDIT} </a><img src="images/pictures/icons/home.icon.png" /></li>
+	<!-- BEGIN: item_eliminar_menu -->
+	<li><a href="javascript:eliminarElemento('{STATIC_DELETE_MENU_TITLE}','{STATIC_DELETE_MENU_BODY}','{STATIC_GLOBAL_BUTTON_YES}','{STATIC_GLOBAL_BUTTON_NO}','frmListaMenu','tblListItem')" class="OptionDelete cufon">{STATIC_GLOBAL_BUTTON_DELETE} </a><img src="images/pictures/icons/home.icon.png" /></li>
+	<!-- END: item_eliminar_menu -->
+	<li><a href="javascript:modificarEstadoElemento('frmListaMenu','tblListItem')" class="OptionDisable cufon">{STATIC_GLOBAL_BUTTON_CHANGE_STATE}</a><img src="images/pictures/icons/home.icon.png" /></li>
+</ul>
+<div class="catbox">
+	<div class="leftBorder"></div>
+	{PAGINADOR_INFORMACION}
+	<div class="left">
+	<span class="Nbuoyancy">{STATIC_FILTER_SHOW}:</span>
+	{COMBO_NUMERO_REGISTROS}
+	</div>
+	<div class="left">
+	<span class="Nbuoyancy">{STATIC_FILTER_ORDER_BY_FIELD}:</span>
+	{COMBO_ORDEN}
+	</div>
+   	{PAGINADOR_NAVEGACION_SUPERIOR}
+   	{PAGINADOR}
+   	<!-- BEGIN: item_filter_position -->
+    <div class="right">
+    <span class="Nbuoyancy">{STATIC_VIEW_MENU_POSITION}:</span>
+   	{COMBO_POSICION}
+   	</div>
+   	<!-- END: item_filter_position -->
+</div>
+<div class="streamsbox" style="display:block; height:auto; width:637px;">
+	<div class="resultscontainer">
+		<div id="permisoEscrituraFraseTitulo" style="display:none;">{STATIC_PRIVILEGE_NO_ALLOW_TITLE}</div>
+		<div id="permisoEscrituraFraseDescripcion" style="display:none;">{STATIC_PRIVILEGE_NO_ALLOW_DESCRIPTION}</div>
+		<form name="frmListaMenu" id="frmListaMenu">
+			<input type="hidden" name="section" id="section" value="menu">
+			<input type="hidden" name="action" id="action" value="view">
+			<input type="hidden" name="pagina" id="pagina" value="{PAGINA_ACTUAL}">
+			<input type="hidden" name="hdnOrden" id="hdnOrden" value="{ORDEN_SELECCIONADO}">
+			<input type="hidden" name="hdnRegistros" id="hdnRegistros" value="{NUMERO_REGISTROS_SELECCIONADOS}">
+			<input type="hidden" name="id_padre" id="id_padre" value="{MENU_ID_PADRE}">
+			<input type="hidden" name="hdnIdPosicion" id="hdnIdPosicion" value="{MENU_ID_POSICION}">
+			<input type="hidden" name="hdnId" id="hdnId">
+		</form>
+		<table border="0" cellspacing="0" cellpadding="0" style="width:100%;" id="tblList" class="streamsbox-results">
+			<thead>
+				<tr class="streamsbox-header nodrag">
+					<td id="checkAll" class="unCheckAll" onclick="seleccionarTodo(this)"></td>
+					<td style="width:200px;"><h2><strong>{STATIC_VIEW_MENU_TITLE}</strong></h2></td>
+					<td><h2><strong>{STATIC_VIEW_MENU_MODULE}</strong></h2></td>
+					<td><h2><strong>{STATIC_MANAGE_MENU_TIPE_MEMBER}</strong></h2></td>
+					<td></td>
+				</tr>
+			</thead>
+			<tbody class="real-results" id="tblListItem">
+			<!-- BEGIN: item_menu -->
+				<tr {NODRAG} id="fila_{MENU.ID}" {TR_STYLE} onclick="seleccionarFila(this)" ondblclick="window.location='main_app.php?section=menu&action=edit&id_menu={MENU.ID}'">
+					<td id="icon_{MENU.ID}" class="unChecked"></td>
+					<td style="width:200px;">
+						{MENU.TITLE}
+					</td>
+					<td>
+						{MENU.MODULE}
+					</td>
+					<td>
+						{MENU.ID_TYPE_MEMBER}
+					</td>
+					<td {STATE_STYLE} class="containerToolTip"></td>
+					<td id="order_{MENU.ID}" style="display:none;">{MENU.ORDER}</td>
+					<td style="display:none;">
+						<input type="hidden" name="hdnSeleccionado_{MENU.ID}" id="hdnSeleccionado_{MENU.ID}" value="0">
+						<input type="hidden" name="hdnPermisoEscritura_{MENU.ID}" id="hdnPermisoEscritura_{MENU.ID}" value="{PRIVILEGE_ALLOW}"> 
+					</td>
+				</tr>
+			<!-- END: item_menu -->
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="combar">
+	<div class="cb1">
+    	<div class="cb2">
+    		<span>{PAGINADOR_INFORMACION}</span>
+      		<div class="left">
+				<span class="Nbuoyancy">{STATIC_FILTER_SHOW}:</span>
+				{COMBO_NUMERO_REGISTROS}
+			</div>
+			<div class="left">
+				<span class="Nbuoyancy">{STATIC_FILTER_ORDER_BY_FIELD}:</span>
+				{COMBO_ORDEN}
+			</div>
+			
+			{PAGINADOR_NAVEGACION_INFERIOR}
+			{PAGINADOR}
+	      	<span class="streams-up"></span>
+    	</div>
+  	</div>
+</div>
+<!-- END: contenido_principal -->

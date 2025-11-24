@@ -1,0 +1,17 @@
+<!-- BEGIN: contenido_principal -->
+<h2 class='titleSection'>{ATTENDEE_NAME}</h2>
+<div id='form'>
+	<form name='frmSubmitAttendee' id='frmSubmitAttendee' action='register-confirm.php' method='post'>
+		Notes
+		<textarea class='form-control' id='attendeeNote' name='txtContenido'>{ATTENDEE_NOTES}</textarea>
+        <input type='hidden' id='attendeeId' name='attendeeId' value='{ATTENDEE_NUMBER}'>
+      	<input type='button' class='btn btn-primary float-left' id='btnSendForm' value='Clear'
+			   onclick='document.getElementById("attendeeNote").value = null'>
+		<input type='button' class='btn btn-primary float-center' id='btnSendForm' value='Back' onclick="window.location='https://www.metmeetings.org/en/registration:1408'">
+		<input type='button' class='btn btn-primary float-right' id='btnSendForm' value='Register'
+			   onclick='submit()'>
+		<div class='clear'></div>
+	</form>
+</div>
+<br><br><br>
+<!-- END: contenido_principal -->

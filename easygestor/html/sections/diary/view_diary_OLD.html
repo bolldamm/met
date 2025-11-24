@@ -1,0 +1,92 @@
+<!-- BEGIN: contenido_principal -->
+<div id="textExplication">
+	<h2>{STATIC_GLOBAL_WELCOME_EASYGESTOR}</h2>
+</div>
+<ul id="controlModButtons">
+	<li>
+		<a href="main_app.php?section=diary&action=create" class="OptionAdd cufon">{STATIC_GLOBAL_BUTTON_CREATE} </a>
+		<img src="images/pictures/icons/event.icon.png" />
+	</li>
+	<li><a href="javascript:editarElemento('diary')" class="OptionEdit cufon">{STATIC_GLOBAL_BUTTON_EDIT} </a><img src="images/pictures/icons/event.icon.png" /></li>
+	<li><a href="javascript:eliminarElemento('{STATIC_DELETE_DIARY_TITLE}','{STATIC_DELETE_DIARY_BODY}','{STATIC_GLOBAL_BUTTON_YES}','{STATIC_GLOBAL_BUTTON_NO}','frmListaDiary','tblListItem')"" class="OptionDelete cufon">{STATIC_GLOBAL_BUTTON_DELETE} </a><img src="images/pictures/icons/event.icon.png" /></li>
+	<li><a href="javascript:modificarEstadoElemento('frmListaDiary','tblListItem')" class="OptionDisable cufon">{STATIC_GLOBAL_BUTTON_CHANGE_STATE}</a><img src="images/pictures/icons/event.icon.png" /></li>
+</ul>
+<div class="catbox">
+	<div class="leftBorder"></div>
+	{PAGINADOR_INFORMACION}
+	<div class="left">
+	<span class="Nbuoyancy">{STATIC_FILTER_SHOW}:</span>
+	{COMBO_NUMERO_REGISTROS}
+	</div>
+	<div class="left">
+	<span class="Nbuoyancy">{STATIC_FILTER_ORDER_BY_FIELD}:</span>
+	{COMBO_ORDEN}
+	</div>
+   	{PAGINADOR_NAVEGACION_SUPERIOR}
+   	{PAGINADOR}
+</div>
+<div class="streamsbox" style="display:block; height:auto; width:637px;">
+	<div class="resultscontainer">
+		<form name="frmListaDiary" id="frmListaDiary">
+			<input type="hidden" name="section" id="section" value="diary">
+			<input type="hidden" name="action" id="action" value="view">
+			<input type="hidden" name="pagina" id="pagina" value="{PAGINA_ACTUAL}">
+			<input type="hidden" name="hdnOrden" id="hdnOrden" value="{ORDEN_SELECCIONADO}">
+			<input type="hidden" name="hdnRegistros" id="hdnRegistros" value="{NUMERO_REGISTROS_SELECCIONADOS}">
+			<input type="hidden" name="hdnId" id="hdnId">
+		</form>
+		<table border="0" cellspacing="0" cellpadding="0" style="width:100%;" id="tblList" class="streamsbox-results">
+			<thead>
+				<tr class="streamsbox-header nodrag">
+					<td id="checkAll" class="unCheckAll" onclick="seleccionarTodo(this)"></td>
+					<td><h2><strong>{STATIC_VIEW_DIARY_TITLE}</strong></h2></td>
+					<td><h2><strong>{STATIC_VIEW_DIARY_DATE}</strong></h2></td>
+					<td><h2><strong>{STATIC_VIEW_DIARY_THEMATIC}</strong></h2></td>
+					<td><h2><strong>{STATIC_VIEW_DIARY_USER}</strong></h2></td>
+					<td></td>
+				</tr>
+			</thead>
+			<tbody class="real-results" id="tblListItem">
+			<!-- BEGIN: item_agenda -->
+				<tr id="fila_{DIARY.ID}" {TR_STYLE} onclick="seleccionarFila(this)" ondblclick="window.location='main_app.php?section=diary&action=edit&id_agenda={DIARY.ID}'">
+					<td id="icon_{DIARY.ID}" class="unChecked"></td>
+					<td style="width:200px;">
+						{DIARY.TITLE}
+					</td>
+					<td>
+						{DIARY.DATE}
+					</td>
+					<td>
+						{DIARY.THEMATIC}
+					</td>
+					<td>
+						{DIARY.USER}
+					</td>
+					<td {STATE_STYLE} class="containerToolTip"></td>
+					<td style="display:none;"><input type="hidden" name="hdnSeleccionado_{DIARY.ID}" id="hdnSeleccionado_{DIARY.ID}" value="0"></td>
+				</tr>
+			<!-- END: item_agenda -->
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="combar">
+	<div class="cb1">
+    	<div class="cb2">
+    		<span>{PAGINADOR_INFORMACION}</span>
+      		<div class="left">
+				<span class="Nbuoyancy">{STATIC_FILTER_SHOW}:</span>
+				{COMBO_NUMERO_REGISTROS}
+			</div>
+			<div class="left">
+				<span class="Nbuoyancy">{STATIC_FILTER_ORDER_BY_FIELD}:</span>
+				{COMBO_ORDEN}
+			</div>
+			
+			{PAGINADOR_NAVEGACION_INFERIOR}
+			{PAGINADOR}
+	      	<span class="streams-up"></span>
+    	</div>
+  	</div>
+</div>
+<!-- END: contenido_principal -->

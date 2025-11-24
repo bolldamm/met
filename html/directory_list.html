@@ -1,0 +1,96 @@
+<!-- BEGIN: contenido_principal -->
+<div id="members_directory">
+	{CONTENIDO_DESCRIPCION}
+		<form name="frmSearchMember" id="frmSearchMember" action="directory_list.php" method="get">
+			<input type="hidden" value="{MENU_ID}" name="menu">
+			<fieldset>
+				<div class="form-row">
+					<div class="col-12 col-md-6">
+						{COMBO_ACTIVIDAD_PROFESIONAL}
+					</div>
+					<div class="col-12 col-md-6">
+						{COMBO_AREAS_OF_EXPERTISE}
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="col-12 col-md-6">
+						{COMBO_SOURCE_LANGUAGES}
+					</div>
+					<div class="col-12 col-md-6">
+						{COMBO_TARGET_LANGUAGES}
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="col-12 col-md-6">
+						{COMBO_PAISES}
+					</div>
+					<div class="col-12 col-md-6">
+						<input type="text" class="form-control" value="{CITY_VALUE}" name="ci" placeholder="{STATIC_DIRECTORY_MEMBER_DATABASE_SEARCH_CITY}">
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="col-12 col-md-6">
+						<input type="text" class="form-control" value="{QUERY_VALUE}" name="t" placeholder="{STATIC_DIRECTORY_MEMBER_DATABASE_SEARCH_TEXT_SEARCH}">
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="col-12 col-md-6">
+						<div class="form-group">
+							<div class="form-check whole-word">
+								<input class="form-check-input align-middle" type="checkbox" name="w" id="wholeWord" {CHECKED_WHOLE_WORD}>
+								<label class="form-check-label align-middle" for="wholeWord">
+									{STATIC_DIRECTORY_MEMBER_WHOLE_WORD}
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-md-6">
+						<button type="submit" id="btnSendForm" class="btn btn-primary float-right">{STATIC_FORM_NEW_SEARCH}</button>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+		<!-- BEGIN: listado_miembros -->
+		<div class="row" id="lstResultsMemberDirectory">
+			<!-- BEGIN: item_miembro -->
+			<div class="col-12 col-xl-6">
+				<div class="itemMember">
+					<div class="row">
+						<div class="col-4 headshot">
+							<a href="{ITEM_MIEMBRO_URL}"><img src="{ITEM_MIEMBRO_IMAGEN}" class="img-fluid align-middle"></a>
+						</div>
+						<div class="col-8 description">
+							<div class="nameMember"><a href="{ITEM_MIEMBRO_URL}">{ITEM_MIEMBRO_NOMBRE}</a></div>
+							<!-- BEGIN: mail -->
+                          	<label class="mailMember">{ITEM_MIEMBRO_MAIL}</label>
+							<!-- END: mail -->
+							<!-- BEGIN: web -->
+							<label class="webMember"><a href="{ITEM_MIEMBRO_WEB}" target="_blank">{ITEM_MIEMBRO_WEB_CORTAR}</a></label>
+							<!-- END: web -->
+						</div>
+						<a href="{ITEM_MIEMBRO_URL}" class="more">+</a>
+					</div>
+				</div>
+			</div>
+			<!-- END: item_miembro -->
+		</div>
+		<!-- END: listado_miembros -->
+				<!-- BEGIN: no_miembros -->
+				<p style="text-align:center;">{STATIC_NO_MEMBERS_DIRECTORY}</p>
+				<!-- END: no_miembros -->
+				<!-- BEGIN: listado_noticias -->
+				<ul id="lstNews">
+					<!-- BEGIN: item_noticia -->
+					<li>
+						<h3><a href="{ITEM_NOTICIA_URL}" class="titleNew">{ITEM_NOTICIA_TITULO}</a> {ITEM_NOTICIA_FECHA}</h3>
+						{ITEM_NOTICIA_DESCRIPCION}
+						<a href="{ITEM_NOTICIA_URL}" class="seeMore">(+)</a>
+					</li>
+					<!-- END: item_noticia -->
+				</ul>
+				<!-- END: listado_noticias -->
+				{PAGINADOR}
+</div>
+
+<br><br><br>
+<!-- END: contenido_principal -->

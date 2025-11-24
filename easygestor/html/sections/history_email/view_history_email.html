@@ -1,0 +1,119 @@
+<!-- BEGIN: contenido_principal -->
+<script type="text/javascript">
+	function buscarHistorialEmail(){
+		document.frmListaHistoryEmail.submit();
+	}
+</script>
+<div id="textExplication">
+	<h2>{STATIC_GLOBAL_WELCOME_EASYGESTOR}</h2>
+</div>
+<ul id="controlModButtons">
+	<li><a href="javascript:editarElemento('history_email')" class="OptionEdit cufon">{STATIC_GLOBAL_BUTTON_SEE} </a><img src="images/pictures/icons/temas.icon.png" /></li>
+</ul>
+<form name="frmListaHistoryEmail" id="frmListaHistoryEmail">
+	<input type="hidden" name="section" id="section" value="history_email">
+	<input type="hidden" name="action" id="action" value="view">
+	<input type="hidden" name="pagina" id="pagina" value="{PAGINA_ACTUAL}">
+	<input type="hidden" name="hdnOrden" id="hdnOrden" value="{ORDEN_SELECCIONADO}">
+	<input type="hidden" name="hdnRegistros" id="hdnRegistros" value="{NUMERO_REGISTROS_SELECCIONADOS}">
+	<input type="hidden" name="hdnId" id="hdnId">
+	<div class="headerSectionForm">
+		<div class="leftBorder"></div>
+		<div class="titleSectionForm">{STATIC_VIEW_MOVEMENT_SEARCH}</div>
+		<div class="rightBorder"></div>
+	</div>
+	<div class="containerSection" id="generalContent">
+		<div class="contentSectionForm">
+			<table border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td>{STATIC_VIEW_HISTORY_EMAIL_DATE_FROM_SEARCH}</td>
+					<td><input type="text" style="width:80px;" class="dateArea" name="from" id="txtFechaDesde" value="{VIEW_HISTORY_EMAIL_DATE_FROM_SEARCH_VALUE}"></td>
+					<td>{STATIC_VIEW_HISTORY_EMAIL_DATE_TO_SEARCH}</td>
+					<td><input type="text" style="width:80px;" class="dateArea" name="to" id="txtFechaHasta" value="{VIEW_HISTORY_EMAIL_DATE_TO_SEARCH_VALUE}"></td>
+					<td style="text-align:right">{STATIC_VIEW_HISTORY_EMAIL_EMAIL_TYPE_TO_SEARCH}&nbsp;&nbsp;</td>
+					<td>{COMBO_TIPO_EMAIL}</td>
+				</tr>
+                <tr>
+                    <td>{STATIC_VIEW_HISTORY_EMAIL_KEYWORD_TO_SEARCH_VALUE}</td>
+                    <td colspan="5"><input type="text" style="width:200px;" name="keyword" id="keyword" value="{VIEW_HISTORY_EMAIL_KEYWORD_TO_SEARCH_VALUE}"></td>
+				</tr>
+				<tr>
+					<td colspan="6" style="padding-top:10px;text-align:right;">
+						<button type="button" onclick="buscarHistorialEmail(0);" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"><span class="ui-button-text">{STATIC_GLOBAL_BUTTON_SEARCH}</span></button>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>	
+</form>
+<div class="catbox">
+	<div class="leftBorder"></div>
+	{PAGINADOR_INFORMACION}
+	<div class="left">
+	<span class="Nbuoyancy">{STATIC_FILTER_SHOW}:</span>
+	{COMBO_NUMERO_REGISTROS}
+	</div>
+	<div class="left">
+	<span class="Nbuoyancy">{STATIC_FILTER_ORDER_BY_FIELD}:</span>
+	{COMBO_ORDEN}
+	</div>
+   	{PAGINADOR_NAVEGACION_SUPERIOR}
+   	{PAGINADOR}
+</div>
+<div class="streamsbox" style="display:block; height:auto; width:637px;">
+	<div class="resultscontainer">
+		<table border="0" cellspacing="0" cellpadding="0" style="width:100%;" id="tblList" class="streamsbox-results">
+			<thead>
+				<tr class="streamsbox-header nodrag">
+					<td id="checkAll" class="unCheckAll" onclick="seleccionarTodo(this)"></td>
+					<td><h2><strong>{STATIC_VIEW_HISTORY_EMAIL_SUBJECT}</strong></h2></td>
+					<td><h2><strong>{STATIC_VIEW_HISTORY_EMAIL_EMAIL_NAME}</strong></h2></td>
+					<td><h2><strong>{STATIC_VIEW_HISTORY_EMAIL_EMAIL_TYPE}</strong></h2></td>
+					<td><h2><strong>{STATIC_VIEW_HISTORY_EMAIL_SENT_DATE}</strong></h2></td>
+
+				</tr>
+			</thead>
+			<tbody class="real-results" id="tblListItem">
+			<!-- BEGIN: item_history_email -->
+				<tr id="fila_{HISTORY_EMAIL.ID}" {TR_STYLE} onclick="seleccionarFila(this)" ondblclick="window.location='main_app.php?section=history_email&action=edit&id_history_email={HISTORY_EMAIL.ID}'">
+					<td id="icon_{HISTORY_EMAIL.ID}" class="unChecked"></td>
+					<td>
+						{HISTORY_EMAIL.SUBJECT}
+					</td>
+					<td>
+						{HISTORY_EMAIL.NAME}
+					</td>
+					<td>
+						{HISTORY_EMAIL.EMAIL_TYPE}
+					</td>
+					<td>
+						{HISTORY_EMAIL.SENT_DATE}
+					</td>
+
+					<td style="display:none;"><input type="hidden" name="hdnSeleccionado_{HISTORY_EMAIL.ID}" id="hdnSeleccionado_{HISTORY_EMAIL.ID}" value="0"></td>
+				</tr>
+			<!-- END: item_history_email -->
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="combar">
+	<div class="cb1">
+    	<div class="cb2">
+    		<span>{PAGINADOR_INFORMACION}</span>
+      		<div class="left">
+				<span class="Nbuoyancy">{STATIC_FILTER_SHOW}:</span>
+				{COMBO_NUMERO_REGISTROS}
+			</div>
+			<div class="left">
+				<span class="Nbuoyancy">{STATIC_FILTER_ORDER_BY_FIELD}:</span>
+				{COMBO_ORDEN}
+			</div>
+			
+			{PAGINADOR_NAVEGACION_INFERIOR}
+			{PAGINADOR}
+	      	<span class="streams-up"></span>
+    	</div>
+  	</div>
+</div>
+<!-- END: contenido_principal -->

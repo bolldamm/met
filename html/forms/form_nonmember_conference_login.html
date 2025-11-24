@@ -1,0 +1,31 @@
+<!-- BEGIN: contenido_principal -->
+<h2 class="titleSection">{STATIC_CONFERENCE_OPTIONS_PAGE_TITLE}</h2>
+<p>{STATIC_CONFERENCE_OPTIONS_LOGIN_INSTRUCTIONS}</p>
+<form class='needs-validation' name='frmNonMemberLogin' id='frmNonMemberLogin' autocomplete='off'
+          action='conference_login.php' method='post' enctype='multipart/form-data'>
+    <fieldset>
+        <legend>{STATIC_CONFERENCE_OPTIONS_LOGIN_TITLE}</legend>
+        <div class='form-row'>
+            <div class='col-12 col-md-6'>
+                <input type='email' class='form-control' name='confemail' id='confemail'
+                       value=''
+                       autocomplete=''
+                       placeholder='Email'>
+                <span id='firstNameMessage' class='validationMessage'></span>
+            </div>
+            <div class='col-12 col-md-6'>
+                <input type='password' class='form-control' name='confpassword' id='confpassword'
+                       value=''
+                       autocomplete=''
+                       placeholder='Conference password'>
+                <span id='lastNameMessage' class='validationMessage'></span>
+            </div>
+        </div>
+    </fieldset>
+	    <div class='clearfix'>
+            <button id='btnSendForm' type='submit' class='btn btn-primary float-right'>
+                {STATIC_CONFERENCE_OPTIONS_LOGIN_BUTTON}
+            </button>
+        </div>
+</form>
+<!-- END: contenido_principal -->

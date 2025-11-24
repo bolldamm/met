@@ -1,0 +1,160 @@
+<!-- BEGIN: contenido_principal -->
+<div id="textExplication">
+	<h2>{STATIC_GLOBAL_WELCOME_EASYGESTOR}</h2>
+</div>
+<ul id="controlModButtons">
+	<li>
+		<a href="main_app.php?section=movement&action=view" class="OptionEdit cufon">{STATIC_GLOBAL_BUTTON_RETURN} </a>
+		<img src="images/pictures/icons/news.icon.png" />
+	</li>
+</ul>
+
+	<div class="boxFormEasyNotify"><div id="containerEasyNotify" class="layoutFormEasyNotify"></div></div>
+
+<!-- SECTION HEADER -->
+
+    <div class="headerSectionForm" onclick="expandirSeccion('generalIcon','generalContent');">
+        <div class="leftBorder"></div>
+        <div class="titleSectionForm">Failed Stripe payment and institution operations</div>
+    <div id="generalIcon" class="iconExpand"></div>
+        <div class="rightBorder"></div>
+    </div>
+
+<!-- SECTION CONTENTS -->
+
+    <div class="containerSection" id="generalContent">
+        <div class="contentSectionForm">
+          
+              <table border="0" cellspacing="0" cellpadding="0">
+                <tr><td colspan="2"><b>WARNING: Reg ID = Membership Reg ID <u>only</u>.</b> This is the number you find in the Reg. ID column of the Movements page when the movement type is Membership | Membership current year.</td></tr>                
+                                   <tr>
+                <td style="vertical-align:bottom;width:50%;">
+                        <fieldset>
+                            <legend>Get email address</legend>
+                          <form action="https://www.metmeetings.org/metCustom/get_email_from_stripe_id.php" method="get"><label for="registration_id">Reg ID</label>&nbsp;&nbsp;<input style="width:50px" name="registration_id" type="number" value="" />&nbsp;&nbsp;<button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"><span class="ui-button-text">Find</span></button></form>
+                          </fieldset>
+                  </td>
+                                                     <td style="vertical-align:bottom;width:50%;">
+                        <fieldset>
+                            <legend>Confirm registration</legend>
+                          <form action="https://www.metmeetings.org/metCustom/set_confirmed_from_stripe_id.php" method="get"><label for="registration_id">Reg ID</label>&nbsp;&nbsp;<input style="width:50px" name="registration_id" type="number" value="" />&nbsp;&nbsp;<button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"><span class="ui-button-text">Set</span></button></form>
+                          </fieldset>
+                  </td>
+                </tr>
+                <tr>
+                <td style="vertical-align:bottom;width:50%;">
+                        <fieldset>
+                            <legend>Link latest movement to</legend>
+                          <form action="https://www.metmeetings.org/metCustom/link_last_movement_to_stripe_id.php" method="get"><label for="registration_id">Reg ID</label>&nbsp;&nbsp;<input style="width:50px" name="registration_id" type="number" value="" />&nbsp;&nbsp;<button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"><span class="ui-button-text">Link</span></button></form>                          
+                           </fieldset>
+                  </td>
+                <td style="vertical-align:bottom;width:50%;">
+                        <fieldset>
+                            <legend>Delete failed new member</legend>
+                          <form action="https://www.metmeetings.org/metCustom/delete_failed_member.php" method="get"><label for="email">Email</label>&nbsp;&nbsp;<input style="width:150px" name="email" type="email" value="" />&nbsp;&nbsp;<button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"><span class="ui-button-text">Delete</span></button></form>                          
+                           </fieldset>
+                  </td>                
+                </tr>
+                <tr><td colspan="2">Note that deletions from the database made using these buttons are irreversible!</td></tr>                
+          </table>
+          </div>
+</div>
+
+<!-- SECTION HEADER -->
+
+    <div class="headerSectionForm" onclick="expandirSeccion('generalIcon','generalContent2');">
+        <div class="leftBorder"></div>
+        <div class="titleSectionForm">Edit member records</div>
+    <div id="generalIcon" class="iconExpand"></div>
+        <div class="rightBorder"></div>
+    </div>
+
+<!-- SECTION CONTENTS -->
+
+    <div class="containerSection" id="generalContent2">
+        <div class="contentSectionForm">
+          
+              <table border="0" cellspacing="0" cellpadding="0">
+                <tr><td colspan="2">Find the member ID in the list of members in the Easygestor and the member's registration ID (or registration IDs) in the "Previous registrations" section at the bottom of the member's profile. If there is more than one registration ID, separate the IDs by commas. N.B. This does not delete the movement or the invoice, only the record in the member profile.</td></tr>
+                                                                   <tr>
+                <td style="vertical-align:bottom;width:50%;">
+                        <fieldset>
+                            <legend>Delete a registration record from a member’s profile</legend>
+                          <form action="https://www.metmeetings.org/metCustom/delete_member_registration.php" method="get"><label for="regid">Registration ID</label>&nbsp;&nbsp;<input maxlength="5" name="regid" placeholder="0000" type="text" />&nbsp;&nbsp;<button>Update</button></form>
+                          </fieldset>
+                  </td>
+                                                     <td style="vertical-align:bottom;width:50%;">
+                        <fieldset>
+                            <legend>Delete a member profile and all registration records</legend>
+                          <form action="https://www.metmeetings.org/metCustom/delete_member.php" method="get"><label for="id">Member ID</label>&nbsp;&nbsp;<input maxlength="4" name="id" placeholder="0000" type="text" />&nbsp;&nbsp;<label for="regid">Registration ID</label>&nbsp;&nbsp;<input name="regid" placeholder="0000" type="text" />&nbsp;&nbsp;<button>Update</button></form>
+                          </fieldset>
+                  </td>
+                </tr>
+                                <tr><td colspan="2">Note that deletions from the database made using these buttons are irreversible!</td></tr>
+              </table>
+          </div>
+</div>
+
+<!-- SECTION HEADER -->
+
+    <div class="headerSectionForm" onclick="expandirSeccion('generalIcon','generalContent3');">
+        <div class="leftBorder"></div>
+        <div class="titleSectionForm">Get new members by ID</div>
+    <div id="generalIcon" class="iconExpand"></div>
+        <div class="rightBorder"></div>
+    </div>
+
+<!-- SECTION CONTENTS -->
+
+    <div class="containerSection" id="generalContent3">
+        <div class="contentSectionForm">
+          <fieldset>
+            <legend>Press Send to download a text file with names of new members with ID greater than...</legend>
+              <table border="0" cellspacing="0" cellpadding="0">
+               <tr>
+                <td style="vertical-align:bottom;width:50%;">
+                        
+                          <form action="https://www.metmeetings.org/metCustom/get_list_of_new_members2.php" method="get"><label for="date_p">ID</label>&nbsp;&nbsp;<input name="id_p" type="number" value="2098" />&nbsp;&nbsp;&nbsp;<br><button>Send</button></form>
+                          
+                  </td>
+                                                     </tr>
+              </table>
+            </fieldset>
+          </div>
+</div>
+
+<!-- SECTION HEADER -->
+
+    <div class="headerSectionForm" onclick="expandirSeccion('generalIcon','generalContent4');">
+        <div class="leftBorder"></div>
+        <div class="titleSectionForm">Clear out zero-euro movements and invoices</div>
+    <div id="generalIcon" class="iconExpand"></div>
+        <div class="rightBorder"></div>
+    </div>
+
+<!-- SECTION CONTENTS -->
+
+    <div class="containerSection" id="generalContent4">
+        <div class="contentSectionForm">
+          <fieldset>
+            <legend>Permanently clear out zero-euro movements and invoices</legend>
+              <table border="0" cellspacing="0" cellpadding="0">
+               <tr>
+                <td style="vertical-align:bottom;width:50%;">
+                        
+                          <form action="https://www.metmeetings.org/metCustom/factura_zero_borrar.php" method="get"><button>Clear out</button></form>
+                  </td>
+                                                     </tr>
+              </table>
+            </fieldset>
+          </div>
+</div>
+
+<!-- FOOTER -->
+
+  	<div class="footerSection">
+		<div class="footerSectionLeft">
+			<div class="footerSectionRight"></div>
+		</div>
+	</div>
+<!-- END: contenido_principal -->

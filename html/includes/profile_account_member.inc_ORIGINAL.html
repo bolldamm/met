@@ -1,0 +1,20 @@
+<!-- BEGIN: contenido_principal -->
+<div class="left"><a class="specialTarget" href="{ENLACE_PERFIL}">{STATIC_FORM_PROFILE_VIEW_PROFILE}</a></div>
+<div style="padding-left:120px;"><input type="checkbox" name="chkPublico" {PERFIL_VALOR_PUBLICO}>{STATIC_FORM_PROFILE_PUBLIC_PROFILE}</div>
+<div class="clear"></div>
+<div class="boxForm">
+	<label class="textBoxForm">{STATIC_FORM_PROFILE_CHANGE_PASSWORD}</label>
+	<table border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td>
+				<input type="text" name="txtCurrentPasswordText" id="txtCurrentPasswordText"  value="{STATIC_FORM_PROFILE_CHANGE_OLD_PASSWORD}" class="inputText" onfocus="limpiarInputPassword(this,'txtCurrentPassword')">
+				<input type="password"  id="txtCurrentPassword" name="txtCurrentPassword" class="inputText" onblur="restaurarInputPassword(this,'txtCurrentPasswordText','{STATIC_FORM_PROFILE_CHANGE_OLD_PASSWORD}')"  style="display:none;" />
+				<input type="text" name="txtPasswordText" id="txtPasswordText"  value="{STATIC_FORM_PROFILE_CHANGE_NEW_PASSWORD}" class="inputText left" onfocus="limpiarInputPassword(this,'txtPassword')">
+				<input type="password"  id="txtPassword" name="txtPassword" class="inputText left" onblur="restaurarInputPassword(this,'txtPasswordText','{STATIC_PASSWORD}')"  style="display:none;" />
+				<input type="text" name="txtRePasswordText" id="txtRePasswordText"  value="{STATIC_RE_PASSWORD}" class="inputText left" onfocus="limpiarInputPassword(this,'txtRePassword')">
+				<input type="password"  id="txtRePassword" name="txtRePassword" class="inputText left" onblur="restaurarInputPassword(this,'txtRePasswordText','{STATIC_RE_PASSWORD}')"  style="display:none;" />
+			</td>
+		</tr>
+	</table>
+</div>
+<!-- END: contenido_principal -->

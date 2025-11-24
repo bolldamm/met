@@ -1,0 +1,61 @@
+<!-- BEGIN: contenido_principal -->
+<div id="openbox">
+
+{BREADCRUMB}
+<h2>{STATIC_CONTACT_WITH} MET</h2>
+
+{OPENBOX_DESCRIPCION}
+</div>
+
+<div class="row">
+	<div class="col-12 col-lg-7">
+		<h5>{STATIC_CONTACT_FORM}</h5>
+		<form name="formContact" id="formContact" method="post" action="">
+			<input type="hidden" name="hdnIdMenu" value="{ID_MENU}">
+			<p id="msgAlert" class="msg{CLASE_MENSAJE_ESTADO}Contact" style="display:{DISPLAY_MENSAJE_ESTADO}">{MENSAJE_ESTADO}</p>
+			<div class="form-row">
+				<div class="col-12 col-xl-6">
+					<input class="form-control" type="text" name="txtNombre" id="txtNombre" placeholder="{STATIC_CONTACT_FIRST_NAME}*" required>
+				</div>
+				<div class="col-12 col-xl-6">
+					<input class="form-control" type="text" name="txtApellidos" placeholder="{STATIC_CONTACT_LAST_NAME}*" required>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="col-12 col-xl-6">
+					<input class="form-control" type="email" name="txtEmail" id="txtEmail" placeholder="{STATIC_CONTACT_EMAIL}*" required>
+				</div>
+				<div class="col-12 col-xl-6">
+					<input class="form-control" type="text" name="txtTelefono" placeholder="{STATIC_CONTACT_PHONE}">
+				</div>
+			</div>
+			<textarea class="form-control txtaComentarios" name="txtaComentarios" placeholder="{STATIC_CONTACT_COMMENTS}*" required></textarea><p>{STATIC_CONTACT_PRIVACY}</p>
+			<div class="form-row">
+				<div class="col-12 col-sm-6 captchaText">
+					{STATIC_CAPTCHA_ENTER_LETTERS_NUMBERS_IMAGE}
+				</div>
+				<div class="col-12 col-sm-6" id="captchaBox">
+					<div class="form-row captchaImage">
+						<div class="col-xs-6">
+							<img id="imageCaptcha" src="classes/securimage/securimage_show.php?sid={SESSION_ID}" alt="CAPTCHA Image" /><img id="reloadCaptcha"
+								 src="images/pictures/icons/icon.reloadCaptcha.png"
+								 title="{STATIC_CAPTCHA_RELOAD}"
+								 style="margin-left:1em;">&nbsp;
+						</div>
+						<div class="col-xs-6">
+							<input type="text" class="form-control float-right" name="txtCaptcha" size="7" maxlength="6" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<button class="btn btn-primary float-right" type="submit" id="btnSendForm">{STATIC_SEND}</button>
+		</form>
+	</div>
+	<div class="col-12 col-lg-5">
+		<h5>Address</h5>
+		{STATIC_CONTACT_MET_ADDRESS}
+	</div>
+</div>
+
+<br><br>
+<!-- END: contenido_principal -->

@@ -1,0 +1,249 @@
+# ============================================
+# MET Project .gitignore
+# ============================================
+
+# ============================================
+# Environment & Configuration Files
+# ============================================
+# Local environment configuration
+environment_config.php
+
+# Database connection with credentials
+database/connection.php
+
+# ============================================
+# IDE & Editor Files
+# ============================================
+# PhpStorm / IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Eclipse
+.project
+.buildpath
+.settings/
+
+# NetBeans
+nbproject/
+
+# ============================================
+# Dependency Directories
+# ============================================
+# Composer
+/vendor/
+composer.phar
+composer.lock
+
+# NPM / Node
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# ============================================
+# User Uploaded Files & Dynamic Content
+# ============================================
+# All uploads except the .htaccess protection files
+uploads/*
+!uploads/.htaccess
+uploads/images/*
+!uploads/images/.htaccess
+# Keep MET static branding assets
+!uploads/images/MET/
+uploads/images/MET/*
+!uploads/images/MET/.htaccess
+juicebox_gallery/
+
+# CKFinder user files
+easygestor/ckfinder/userfiles/*
+!easygestor/ckfinder/userfiles/.htaccess
+
+# Documentation files
+documentacion/*
+!documentacion/.htaccess
+
+# File manager uploads
+files/*
+!files/.htaccess
+
+# Jobs files
+jobs/*
+!jobs/.htaccess
+
+# ============================================
+# Backup & Temporary Files
+# ============================================
+# Backup directory
+backup/*
+!backup/.htaccess
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+logs/
+error_log
+debug.log
+
+# Cache files
+cache/
+*.cache
+
+# ============================================
+# Generated & Compiled Files
+# ============================================
+# Thumbnails
+**/thumb_*
+
+# PDF generated files
+*.pdf
+
+# Excel exports
+excel/*
+!excel/.htaccess
+
+# ============================================
+# Sensitive & Security Files
+# ============================================
+# Credentials and secrets
+**/essential_string.php
+.env
+.env.local
+.env.*.local
+
+# SSH keys
+*.pem
+*.key
+id_rsa
+id_rsa.pub
+
+# SSL certificates
+*.crt
+*.cer
+*.p12
+
+# Configuration with sensitive data
+config/credentials.php
+config/secrets.php
+
+# ============================================
+# Audio files (if not needed in repo)
+# ============================================
+audio/*
+!audio/.htaccess
+
+# ============================================
+# Database Files
+# ============================================
+# SQL dumps
+*.sql
+*.sqlite
+*.db
+
+# ============================================
+# System & Build Files
+# ============================================
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini
+
+# Build files
+dist/
+build/
+
+# ============================================
+# Version Control
+# ============================================
+# Git
+.git/
+*.orig
+
+# SVN
+.svn/
+
+# ============================================
+# Testing & Development
+# ============================================
+# Test files (keep test structure, ignore outputs)
+test_*.php
+debug_*.php
+phpunit.xml
+.phpunit.result.cache
+
+# Development tools
+.php_cs.cache
+.php-cs-fixer.cache
+
+# ============================================
+# Payment & Third-party Integration
+# ============================================
+# PayPal/Stripe test files
+paypal_test.php
+stripe_test.php
+
+# ============================================
+# Email Testing
+# ============================================
+# Mailhog, MailCatcher outputs
+.mailcatcher
+
+# ============================================
+# Project Specific
+# ============================================
+# RSS generated files
+rss/*.xml
+
+# CGI scripts (if dynamically generated)
+cgi-bin/*
+!cgi-bin/.htaccess
+
+# Juicebox galleries (if dynamically created)
+juicebox_gallery/galleries/*
+!juicebox_gallery/.htaccess
+
+# Session files
+sessions/
+tmp/
+
+
+# ============================================
+# Keep Important Files
+# ============================================
+# Force include important .htaccess files
+!.htaccess
+!**/.htaccess
+
+# Keep important readme files
+!README.md
+!readme.md
+
+# Keep example/template files
+!*.example
+!*.template
+!*.sample
+
+#EasyGestor

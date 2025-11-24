@@ -1,0 +1,33 @@
+@CHARSET "UTF-8";
+
+#directory { padding:0; }
+
+h2.profileName { display:inline; color:#8B1513; font:400 30px/24px 'Arial', sans-serif; margin:0px 0px 15px; }
+.contactDetailsSection { margin-top: 1.2em; }
+.profileSectionTitle { font-weight:bold; font-size:1.2em; border-bottom:1px solid #B2B2B2; margin-top: 1.2em; }
+.profileSectionSubtitle { color:#8B1513; font-weight:bold; font-size: 1em; margin-top: 0.8em; }
+
+#headshot { margin:0px 25px 15px 0px; }
+
+.contactDetails { padding-left: 25px; }
+.contactDetails a {
+    width: 100%;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.telephone { display:block; background:transparent url('../../images/pictures/icons/icon.telephone.png') no-repeat scroll top left 0; }
+.mail { display:block; background:transparent url('../../images/pictures/icons/icon.mail.png') no-repeat scroll top left 0; }
+.mail a { color:#0097A8; }
+.web { display:block; background:transparent url('../../images/pictures/icons/icon.web.png') no-repeat scroll top left 0; }
+.web a { color:#0097A8; }
+.address { background:transparent url('../../images/pictures/icons/icon.address.png') no-repeat scroll top left 0; }
+
+#lstWorkshops { display:inline-table; list-style:disc; margin-left:15px; }
+#lstWorkshops li { float:left; padding-right:35px; }
+
+.lstList { list-style:disc; margin-left:15px;}
+.lstList a { color:#0097A8;}
+.containerConferences a { color:#0097A8;}
+

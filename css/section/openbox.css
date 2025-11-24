@@ -1,0 +1,175 @@
+@CHARSET "UTF-8";
+
+/* Basic text --- NOT SURE IF THIS IS NEEDED!! */
+.openboxText {
+	margin-bottom: 1em;
+}
+
+/* Headers */
+h2.titleSection {
+	color: #8B1513;
+	/*font-family: "Times", Times, serif;*/
+	font-family: Georgia, Times, "Times New Roman", serif;
+	font-size: 1.8rem
+}
+h3.subTitleSection {
+	color: #348A88;
+	/*font-family: "Times", Times, serif;*/
+	font-family: Georgia, Times, "Times New Roman", serif;
+	font-size: 1.4rem;
+	margin-top: 1.3em;
+}
+
+/* Links */
+#openbox a {
+	color: #0dbabe;
+}
+
+#openbox a:hover {
+	color: #348A88;
+}
+
+/* Lists - unordered */
+#openbox ul {
+	list-style: disc;
+	padding-left: 32px;
+	margin: 10px 0px;
+}
+
+/* Tables */
+#openbox table {
+	border: solid #CCC 1px;
+	border-spacing: 0;
+	border-collapse: separate;
+	border-spacing: 0;
+	width: 100%;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+	-webkit-box-shadow: 0 1px 1px #CCC;
+	-moz-box-shadow: 0 1px 1px #ccc;
+	box-shadow: 0 1px 1px #CCC;
+}
+#openbox thead {
+	display: table-header-group;
+	vertical-align: middle;
+	border-color: inherit;
+}
+#openbox tbody {
+	display: table-row-group;
+	vertical-align: middle;
+	border-color: inherit;
+}
+#openbox tr {
+	display: table-row;
+	vertical-align: inherit;
+	border-color: inherit;
+}
+#openbox th {
+	font-weight: bold;
+	background-color: #DCE9F9;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#EBF3FC), to(#DCE9F9));
+	background-image: -webkit-linear-gradient(top, #EBF3FC, #DCE9F9);
+	background-image: -moz-linear-gradient(top, #EBF3FC, #DCE9F9);
+	background-image: -ms-linear-gradient(top, #EBF3FC, #DCE9F9);
+	background-image: -o-linear-gradient(top, #EBF3FC, #DCE9F9);
+	background-image: linear-gradient(top, #EBF3FC, #DCE9F9);
+	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .8) inset;
+	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, .8) inset;
+	box-shadow: 0 1px 0 rgba(255, 255, 255, .8) inset;
+	border-top: none;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+}
+#openbox td, #openbox th {
+	border-left: 1px solid #CCC;
+	border-top: 1px solid #CCC;
+	padding: 10px;
+	text-align: left;
+	display: table-cell;
+	vertical-align: inherit;
+}
+#openbox th:first-child {
+	-moz-border-radius: 6px 0 0 0;
+	-webkit-border-radius: 6px 0 0 0;
+	border-radius: 6px 0 0 0;
+}
+#openbox td:first-child, #openbox th:first-child {
+	border-left: 1px solid #CCC;
+}
+#openbox #form td:first-child, #openbox th:first-child {
+	border-left: none;
+}
+
+/* MET Guidelines -- tabbed content + accordion */
+.tab-controls div {
+	cursor: pointer;
+	display: inline-block;
+	background-color: rgba(0, 0, 0, .2);
+	padding: 5px 4px;
+	transition: background-color .2s, color .2s;
+}
+.tab-controls div:hover {
+	color: white;
+	background-color: rgba(0, 0, 0, .8);
+}
+.tab {
+	display: none;
+}
+.tab.active {
+	display: block;
+}
+/* FAQ */
+h3[data-faq] {
+	cursor: pointer;
+}
+h3[data-faq]:hover {
+	text-decoration: underline;
+}
+div[data-faq] {
+	display: none;
+}
+div[data-faq].active {
+	display: block;
+}
+
+/* 
+* Bootstrap modals in page content 
+* Prevent default modal dropdown effect (but keep fade-in) 
+*/
+.modal.fade .modal-dialog
+{
+	-moz-transition: none !important;
+	-o-transition: none !important;
+	-webkit-transition: none !important;
+	transition: none !important;
+
+	-moz-transform: none !important;
+	-ms-transform: none !important;
+	-o-transform: none !important;
+	-webkit-transform: none !important;
+	transform: none !important;
+}
+/*
+* Prevent lateral shift in header image or page content
+* due to removal of side scrollbar when modal is open
+*/
+.modal-open {
+	overflow: initial;
+	padding: 0 !important;
+}
+
+
+
+/* MailChimp signup form (newsletter) */
+#mc-embedded-subscribe-form h2 { color: #8B1513; font-family: Georgia, Times, "Times New Roman", serif; font-size: 1.8rem; }
+#mc_embed_signup{background:#fff; clear:left; }
+#mc-embedded-subscribe-form input[type=checkbox]{display: inline; width: auto;margin-right: 10px;}
+#mergeRow-gdpr {margin-top: 20px;}
+#mergeRow-gdpr fieldset label {font-weight: normal;}
+.content__gdpr label {color: #348A88; font-family: Georgia, Times, "Times New Roman", serif; }
+.gdprRequired label { font-family:initial; color:initial; }
+#mc-embedded-subscribe-form .mc_fieldset{border:none;min-height: 0px;padding-bottom:0px;}
+
+
+/* Membership statistics */
+h3.extraMargin {margin-top: 3em;}

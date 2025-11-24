@@ -1,0 +1,128 @@
+<!-- BEGIN: contenido_principal -->
+<script type="text/javascript">
+	function validarEletter(){
+		var ficheroValor=document.frmEletter.fileExcel.value;
+		if(ficheroValor!="" && ficheroValor.substring(ficheroValor.lastIndexOf(".")+1).toLowerCase()!="xls"){
+			loadEasyNotify("{STATIC_MANAGE_ELETTER_WRONG_FILE}",1);
+		}else{
+			
+			
+			var idUsuarioWeb="";
+			$("#listMembers input[type=hidden]").each(function(){
+				idUsuarioWeb+=$(this).attr("id").split("_")[1]+",";
+			});
+			
+			idUsuarioWeb=idUsuarioWeb.substring(0,idUsuarioWeb.length-1);
+			document.frmEletter.hdnUsuariosSeleccionados.value=idUsuarioWeb;
+
+			document.frmEletter.submit();
+		}
+	}
+</script>
+<div id="textExplication">
+	<h2>{STATIC_GLOBAL_WELCOME_EASYGESTOR}</h2>
+</div>
+<ul id="controlModButtons">
+	<li><a href="javascript:validarEletter();" class="OptionAdd cufon">{STATIC_GLOBAL_BUTTON_SEND} </a><img src="images/pictures/icons/temas.icon.png" /></li>
+	<li>
+		<a href="{SECCION_VOLVER}" class="OptionEdit cufon">{STATIC_GLOBAL_BUTTON_RETURN} </a>
+		<img src="images/pictures/icons/temas.icon.png" />
+	</li>
+</ul>
+<form name="frmEletter" id="frmEletter" method="post" enctype="multipart/form-data">
+	<div class="boxFormEasyNotify"><div id="containerEasyNotify" class="layoutFormEasyNotify"></div></div>
+	<input type="hidden" name="section" id="section" value="eletter">
+	<input type="hidden" name="action" id="action" value="{ACTION}">
+	<input type="hidden" name="hdnIdTipo" id="hdnIdTipo" value="{ID_TIPO}" />
+	<input type="hidden" name="hdnIdElemento" id="hdnIdElemento" value="{ID_ELEMENTO}" />
+	<input type="hidden" name="hdnSection" id="hdnSection" value="{SECCION_PREVIA}" />
+	<input type="hidden" name="htnTipoEletter" id="htnTipoEletter" value="{ELETTER_TIPO}" />
+	<input type="hidden" name="htnUrlEletter" id="htnUrlEletter" value="{ELETTER_URL}" />
+	<input type="hidden" name="htnUrlEletterCat" id="htnUrlEletter" value="{ELETTER_URL_CAT}" />
+	<input type="hidden" name="htnUrlEletterEng" id="htnUrlEletter" value="{ELETTER_URL_ENG}" />
+	<input type="hidden" name="hdnUsuariosSeleccionados" id="hdnUsuariosSeleccionados" value="">
+	<div class="headerSectionForm" onclick="expandirSeccion('generalIcon','generalContent');">
+		<div class="leftBorder"></div>
+		<div class="titleSectionForm">{STATIC_GLOBAL_GENERAL_SECTION}</div>
+		<div id="generalIcon" class="iconExpand"></div>
+		<div class="rightBorder"></div>
+	</div>
+	<div class="containerSection" id="generalContent">
+		<div class="contentSectionForm">
+			<table border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td>
+						<div id="containerSelectedMembers">
+							<input type="hidden" name="hdnDeseleccionados" id="hdnDeseleccionados" value="">
+							<strong>{STATIC_MANAGE_CONFERENCE_MEMBER_SELECTEDS}</strong><br>
+							<ul style="padding-left:20px;" id="listMembers">
+								<!-- BEGIN: item_usuario_seleccionado -->
+								<li>
+									<input type="hidden" name="hdnIdMiembroActivo_{ID_MIEMBRO}" id="hdnIdMiembroActivo_{ID_MIEMBRO}">
+									<span>{CONFERENCIA_CORREO_ELECTRONICO} ({CONFERENCIA_NOMBRE_MIEMBRO}) </span>
+									<img src="images/delete.png" onclick="deseleccionarUsuario({ID_MIEMBRO});" style="cursor:pointer;">
+								</li>
+								<!-- END: item_usuario_seleccionado -->
+							</ul>
+						</div>
+						<div id="containerSearchMembers">
+							<strong>{STATIC_MANAGE_CONFERENCE_MEMBER_SEARCH}</strong><br>
+							<fieldset>
+								<legend>{STATIC_MANAGE_CONFERENCE_MEMBER_SEARCH_FORM}</legend>
+								<table border="0" cellspacing="0" cellpadding="0">
+									<tr>
+										<td>
+											<strong>({STATIC_MANAGE_CONFERENCE_MEMBER_SEARCH_QUERY_TEXT}):</strong> <input type="text" name="txtQuery" style="width:200px;">
+											<button type="button" onclick="buscarMiembrosEletter()" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"><span class="ui-button-text">{STATIC_GLOBAL_BUTTON_SEARCH}</span></button>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<div id="contenidoBusqueda"></div>
+										</td>
+									</tr>
+								</table>
+							</fieldset>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>{STATIC_MANAGE_ELETTER_FROM} ({STATIC_MANAGE_ELETTER_FROM_INSTRUCTION})</td>
+				</tr>
+				<tr>
+					<td><input type="text" name="txtPara" id="txtPara"></td>
+				</tr>
+				<tr>
+					<td>{STATIC_MANAGE_ELETTER_EXCEL} ({STATIC_MANAGE_ELETTER_EXCEL_INSTRUCTION})</td>
+				</tr>
+				<tr>
+					<td><input type="file" name="fileExcel"></td>
+				</tr>
+				<tr>
+					<td>{STATIC_MANAGE_ELETTER_SUBJECT}</td>
+				</tr>
+				<tr>
+					<td><input type="text" maxlength="255" name="txtNombre" value="{ELETTER_ASUNTO}"></td>
+				</tr>
+              	<tr>
+					<td>Preview teaser</td>
+				</tr>
+				<tr>
+					<td><input type="text" maxlength="255" name="txtPreview" value="{ELETTER_PREVIEW}"></td>
+				</tr>
+				<tr>
+					<td>{STATIC_MANAGE_ELETTER_DESCRIPTION}</td>
+				</tr>
+				<tr>
+					<td><textarea name="txtaDescripcion" id="txtaDescripcion">{ELETTER_DESCRIPCION}</textarea></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="footerSection">
+		<div class="footerSectionLeft">
+			<div class="footerSectionRight"></div>
+		</div>
+	</div>
+</form>
+<!-- END: contenido_principal -->

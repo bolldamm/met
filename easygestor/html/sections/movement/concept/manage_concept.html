@@ -1,0 +1,78 @@
+<!-- BEGIN: contenido_principal -->
+<script type="text/javascript">
+	function validarConcepto(volver){		
+		//No hay validaciones por el momento
+		document.frmConcepto.hdnVolver.value=volver;
+		document.frmConcepto.submit();
+	}
+</script>
+<div id="textExplication">
+	<h2>{STATIC_GLOBAL_WELCOME_EASYGESTOR}</h2>
+</div>
+<ul id="controlModButtons">
+	<li><a href="javascript:validarConcepto(1);" class="OptionAdd cufon">{STATIC_GLOBAL_BUTTON_SAVE} </a><img src="images/pictures/icons/tematica.icon.png" /></li>
+	<!-- BEGIN: item_button_close -->
+	<li><a href="javascript:validarConcepto(0);" class="OptionAdd cufon">{STATIC_GLOBAL_BUTTON_SAVE_AND_CLOSE} </a><img src="images/pictures/icons/baner.icon.png" /></li>
+	<!-- END: item_button_close -->
+	<!-- BEGIN: item_subconcepto -->
+	<li><a href="main_app.php?section=concept&action=view&id_padre={ID_CONCEPTO}" class="OptionAdd cufon">{STATIC_MANAGE_MOVEMENT_SUB_CONCEPT} </a><img src="images/pictures/icons/home.icon.png" /></li>
+	<!-- END: item_subconcepto -->
+	<li>
+		<a href="main_app.php?section=concept&action=view{PARAMETRO_ID_PADRE}" class="OptionEdit cufon">{STATIC_GLOBAL_BUTTON_RETURN} </a>
+		<img src="images/pictures/icons/tematica.icon.png" />
+	</li>
+</ul>
+<form name="frmConcepto" method="post" enctype="multipart/form-data">
+	<div class="boxFormEasyNotify"><div id="containerEasyNotify" class="layoutFormEasyNotify"></div></div>
+	<input type="hidden" name="hdnVolver" id="hdnVolver">
+	<input type="hidden" name="section" id="section" value="concept">
+	<input type="hidden" name="action" id="action" value="{ACTION}">
+	<input type="hidden" name="hdnIdConcepto" id="hdnIdConcepto" value="{ID_CONCEPTO}" />
+	<input type="hidden" name="hdnIdPadre" id="hdnIdPadre" value="{ID_PADRE}" />
+	<div class="headerSectionForm" onclick="expandirSeccion('generalIcon','generalContent');">
+		<div class="leftBorder"></div>
+		<div class="titleSectionForm">{STATIC_GLOBAL_GENERAL_SECTION}</div>
+		<div id="generalIcon" class="iconExpand"></div>
+		<div class="rightBorder"></div>
+	</div>
+	<div class="containerSection" id="generalContent">
+		<div class="contentSectionForm">
+			<table border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td>{STATIC_MANAGE_CONCEPT_APPEAR_WEB}</td>
+				</tr>
+				<tr>
+					<td class="{WEB_VISIBLE_CLASE}" onclick="activarCheck(this,'hdnVisible')">
+						<input type="hidden" name="hdnVisible" id="hdnVisible" value="{CONCEPTO_WEB_VISIBLE}">
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<!-- BEGIN: item_contenido_idioma  -->
+	<div class="headerSectionForm" onclick="expandirSeccion('idiomaIcon_{IDIOMA_ID}','idiomaContent_{IDIOMA_ID}');">
+		<div class="leftBorder"></div>
+		<div class="titleSectionForm">{IDIOMA_DESCRIPCION}</div>
+		<div id="idiomaIcon_{IDIOMA_ID}" class="iconExpand"></div>
+		<div class="rightBorder"></div>
+	</div>
+	<div class="containerSection" id="idiomaContent_{IDIOMA_ID}">
+		<div class="contentSectionForm">
+			<table border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td>{STATIC_MANAGE_CONCEPT_TITLE}</td>
+				</tr>
+				<tr>
+					<td><input type="text" maxlength="255" name="txtNombre_{IDIOMA_ID}" value="{CONCEPTO_NOMBRE}"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<!-- END: item_contenido_idioma  -->
+	<div class="footerSection">
+		<div class="footerSectionLeft">
+			<div class="footerSectionRight"></div>
+		</div>
+	</div>
+</form>
+<!-- END: contenido_principal -->

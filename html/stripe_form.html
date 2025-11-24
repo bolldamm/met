@@ -1,0 +1,157 @@
+<!-- BEGIN: contenido_principal -->
+<div id="openbox">
+
+    <h2 class="titleSection">{STATIC_STRIPE_TITLE} {STATIC_TEST_MODE}</h2>
+
+    <p>{STATIC_STRIPE_INTRO}</p>
+
+    <div class="container">
+        <div class="row stripeLogo">
+            <img src="images/pictures/logos/powered_by_stripe@2x.png">
+        </div>
+
+        <div class="row stripe-form-amount text-info font-weight-bold">
+            <p>{STATIC_STRIPE_PAY1}{PRICE} {STATIC_STRIPE_PAY2} {PRODUCT}</p>
+        </div>
+
+        <div class="row stripe-form-name">
+            <div class="col-12">
+                <label for="cardholder-name">{STATIC_STRIPE_NAME}</label>
+                <input id="cardholder-name" class="form-control" type="text" autocomplete="off" required>
+            </div>
+        </div>
+
+        <!-- placeholder for Elements -->
+        <div class="row stripe-form-card">
+            <div class="col-12">
+                <label for="card-element">{STATIC_STRIPE_DETAILS}</label>
+                <div id="card-element" class="form-control">
+                    <!-- Stripe Card Element -->
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div id="card-errors">
+                    <!-- Stripe Error Message -->
+                </div>
+            </div>
+        </div>
+
+        <button id="card-button" class="btn btn-primary" type="submit" data-secret="{CLIENT_SECRET}">
+            {STATIC_STRIPE_SUBMIT}
+        </button>
+    </div>
+</div>
+
+<!--
+The script first creates an instance of the Stripe object (client side),
+using the publishable key, which identifies the MET site to Stripe.
+It then creates an instance of the Elements object, adding styles,
+and uses it to mount a Card element in <div id="card-element">.
+
+The script retrieves the client secret from the card button and
+adds a click event listener to the card button
+On click, stripe.handleCardPayment sends payment details and client secret to the Stripe server.
+The stripe.handleCardPayment method handles fraud checks and SCA checks
+If authentication is required, it opens a modal for the user to authenticate.
+
+The handleCardPayment method resolves with a promise, which returns a result.
+The result is either an error or a payment intent (with status succeeded).
+If error, displays error message; otherwise, calls stripe_result.php
+-->
+<script>
+    let stripe = Stripe('{STRIPE_PK}', {
+    });
+
+    let elements = stripe.elements({
+        fonts: [
+            {
+                cssSrc: 'https://fonts.googleapis.com/css?family=Quicksand',
+            },
+        ],
+    });
+
+    let elementStyles = {
+        base: {
+            color: '#1A1E21',
+            fontWeight: 500,
+            fontFamily: 'Quicksand, Open Sans, Segoe UI, sans-serif',
+            fontSize: '16px',
+            fontSmoothing: 'antialiased',
+
+            ':focus': {
+                color: '#3A4160',
+            },
+
+            '::placeholder': {
+                color: '#7F91B2',
+            },
+
+            ':focus::placeholder': {
+                color: '#A9B6C6',
+            },
+        },
+        invalid: {
+            color: '#fff',
+            ':focus': {
+                color: '#FA755A',
+            },
+            '::placeholder': {
+                color: '#FFCCA5',
+            },
+        },
+    };
+
+    let elementClasses = {
+        focus: 'focus',
+        empty: 'empty',
+        invalid: 'invalid',
+    };
+
+    let cardElement = elements.create('card', {
+        style: elementStyles,
+        classes: elementClasses,
+        hideIcon: false,
+    });
+    cardElement.mount('#card-element');
+
+    let cardholderName = document.getElementById('cardholder-name');
+    let cardButton = document.getElementById('card-button');
+    let clientSecret = cardButton.dataset.secret;
+    let errorPanel = document.getElementById('card-errors');
+
+    cardButton.addEventListener('click', function (ev) {
+        if (cardholderName.value === '') {
+            errorPanel.textContent = 'Please enter the cardholder’s name';
+            errorPanel.style.display = "block";
+            return;
+        }
+        mensajeCargando("{STATIC_GLOBAL_SENDING}...");
+
+        stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: cardElement,
+                billing_details: {
+                    name: cardholderName.value,
+                },
+            },
+        }).then(function (result) {
+                if (result.error) {
+                    errorPanel.textContent = result.error.message;
+                    errorPanel.style.display = 'block';
+                    $.unblockUI();
+                } else {
+                    errorPanel.textContent = '';
+                    errorPanel.style.display = 'none';
+                    window.location = 'procedure_outcome.php';
+                }
+            }
+        )
+    })
+
+      
+</script>
+
+<!-- END: contenido_principal -->

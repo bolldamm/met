@@ -1,0 +1,259 @@
+<!-- BEGIN: contenido_principal -->
+<script>
+  window.onload = function(){
+document.querySelectorAll("INPUT[type='radio']").forEach(function(rd){rd.addEventListener("mousedown",
+	function(){
+		if (this.checked) {this.onclick=function(){this.checked=false}} else{this.onclick=null}
+	})})}
+  
+function disableSection(inputname,idprefix,tot){
+var radios = document.getElementsByName(inputname);
+for (j = 1; j < tot; j++) {
+document.getElementById(idprefix + j).disabled = false;
+ }
+for (var i = 0, length = radios.length; i < length; i++)
+{
+ if (radios[i].checked)
+ {
+for (j = 1; j < tot; j++) {
+document.getElementById(idprefix + j).disabled = true;
+	}
+}
+}
+}
+</script>
+<!-- Temporarily disabled for METM21
+<script src="https://www.metmeetings.org/scripts/js/jquery.are-you-sure.js"></script>
+<script>
+    $(function() {
+    $('form').areYouSure();
+});
+</script>
+-->
+<script>
+    function pickRaffleTicket() {
+        document.getElementById("txtRaffle").value = 1;
+        document.getElementById("frmEditConfOptions").submit();
+    }
+</script>
+
+<h2 class="titleSection">{STATIC_CONFERENCE_OPTIONS_PAGE_TITLE}</h2>
+
+<form class='needs-validation' name='frmEditConfOptions' id='frmEditConfOptions' autocomplete='off'
+          action='conference_options.php' method='post' enctype='multipart/form-data'>
+  
+      <input type='hidden' name='txtRaffle' id='txtRaffle'
+           value=0>  
+      <input type='hidden' name='OldPhoto' id='OldPhoto'
+           value='{OLD_CONFERENCE_PICTURE}'>
+      <input type='hidden' name='TotalGuests' id='TotalGuests'
+           value='{TOTAL_GUESTS}'>
+      <input type='hidden' name='HostName' id='HostName'
+           value='{CONFERENCE_NAME} {CONFERENCE_SURNAME}'>
+      <input type='hidden' name='DinnerClosed' id='DinnerClosed'
+           value='{DINNER_CLOSED}'>
+  
+      <fieldset>
+        <legend>Catch up on all the attendee updates here</legend>
+  <style type="text/css">
+<!--
+.display_archive {class='form-text';}
+.campaign {line-height: 125%; margin: 5px;}
+//-->
+</style>
+<script language="javascript" src="//metmeetings.us15.list-manage.com/generate-js/?u=ce57b490ae2eef0ea986a4006&fid=8987&show=10" type="text/javascript"></script>
+  </fieldset>
+  
+    <fieldset {FORM_EVENT2}>
+        <legend>{STATIC_CONFERENCE_OPTIONS_IMPORTANT}</legend>
+      <div class='form-text' >{STATIC_PRESS_SAVE}</div>
+    </fieldset>
+  
+    <fieldset>
+        <legend>{STATIC_CONFERENCE_DETAILS_TITLE}</legend>
+      <div class='form-text' {FORM_EVENT2}>{MET_PROFILE_WARNING}</div>
+        <div class='form-row'>
+            <div class='col-12 col-md-6'>
+                <input type='text' class='form-control' name='txtNombre' id='txtNombre' disabled
+                       value='{CONFERENCE_NAME}'
+                       autocomplete='given-name'
+                       placeholder='{STATIC_FORM_MEMBERSHIP_FIRST_NAME}'>
+                <span id='firstNameMessage' class='validationMessage'></span>
+            </div>
+            <div class='col-12 col-md-6'>
+                <input type='text' class='form-control' name='txtApellidos' id='txtApellidos' disabled
+                       value='{CONFERENCE_SURNAME}'
+                       autocomplete='family-name'
+                       placeholder='{STATIC_FORM_MEMBERSHIP_LAST_NAMES}'>
+                <span id='lastNameMessage' class='validationMessage'></span>
+            </div>
+        </div>
+        <div class='form-row'>
+            <div class='col-12 col-md-6'>
+                <input type='email' class='form-control required' name='txtEmail' id='txtEmail' required {FORM_EVENT}
+                       value='{CONFERENCE_EMAIL}'
+                       autocomplete='email'
+                       placeholder='{STATIC_FORM_MEMBERSHIP_EMAIL}'>
+                <span id='emailMessage' class='validationMessage'></span>
+            </div>
+            <div class='col-12 col-md-6'>
+                <input style='display: none' type='text' class='form-control' name='txtTelefono' id='txtTelefono' {FORM_EVENT}
+                       value='{CONFERENCE_TELEPHONE}'
+                       autocomplete='tel-national'
+                       placeholder='{STATIC_FORM_WORKSHOP_REGISTER_CONTACT_PHONE_NO}'>
+            </div>
+          <div class='form-text' {FORM_EVENT2}>{STATIC_INDICATE_FREQUENT_EMAIL}</div>
+          <div style='display: none' class='form-text' {FORM_EVENT2}>{STATIC_FORM_CONFERENCE_REGISTER_CONTACT_DETAILS_TEXT}</div>
+        </div>
+    </fieldset>
+  
+    <fieldset id="ticket">
+        <legend>RAFFLE TICKET NUMBER</legend>
+        <p class='form-text'>{RAFFLE_TICKET_NUMBER}</p>
+    </fieldset>
+  
+    <fieldset style='display:none;'>
+        <legend>{STATIC_WORKSHOPS_SECTION_TITLE}</legend>
+        <p class='form-text'>{STATIC_CONFERENCE_WORKSHOPS_SIGNUPS}</p>
+        <p class='form-text'><strong>{CONFERENCE_WORKSHOP_1}</strong></p>
+        <p class='form-text'>{PROGRAMME_W}</p>
+        <p class='form-text'>{WORKSHOP_CHANGE}</p>
+    </fieldset>
+  
+    <fieldset style='display:none;'>
+        <legend>{STATIC_FORM_CONFERENCE_REGISTER_DINNER_TITLE}</legend>
+        <p class='form-text'>{CONFERENCE_DINNER_OPT_OUT}</p>
+        <p class='form-text'>{CONFERENCE_DINNER_COMING_SOON}</p>
+        <p class='form-text'>{COMBO_DISH10}</p>
+        <p class='form-text'>{COMBO_DISH20}</p>
+        <p class='form-text'>{COMBO_DISH30}</p>
+        <p class='form-text'>{COMBO_DISH40}</p>
+        <p class='form-text'>{COMBO_DISH50}</p>
+        <p class='form-text'>{COMBO_DISH60}</p>
+        <p class='form-text'>{COMBO_DISH70}</p>
+        <p class='form-text'>{COMBO_DISH80}</p>
+        <p class='form-text'>{DINNER_GUESTS}</p>
+  		<p class='form-text'>{GUEST_NAME1}</p>
+        <p class='form-text'>{COMBO_DISH11}</p>
+        <p class='form-text'>{COMBO_DISH21}</p>
+        <p class='form-text'>{COMBO_DISH31}</p>
+        <p class='form-text'>{COMBO_DISH41}</p>
+        <p class='form-text'>{COMBO_DISH51}</p>
+        <p class='form-text'>{COMBO_DISH61}</p>
+        <p class='form-text'>{COMBO_DISH71}</p>
+        <p class='form-text'>{COMBO_DISH81}</p>      
+		<p class='form-text'>{GUEST_NAME2}</p>
+        <p class='form-text'>{COMBO_DISH12}</p>
+        <p class='form-text'>{COMBO_DISH22}</p>
+        <p class='form-text'>{COMBO_DISH32}</p>
+        <p class='form-text'>{COMBO_DISH42}</p>
+        <p class='form-text'>{COMBO_DISH52}</p>
+        <p class='form-text'>{COMBO_DISH62}</p>
+        <p class='form-text'>{COMBO_DISH72}</p>
+        <p class='form-text'>{COMBO_DISH82}</p>       
+		<p class='form-text'>{GUEST_NAME3}</p>
+        <p class='form-text'>{COMBO_DISH13}</p>
+        <p class='form-text'>{COMBO_DISH23}</p>
+        <p class='form-text'>{COMBO_DISH33}</p>
+        <p class='form-text'>{COMBO_DISH43}</p>
+        <p class='form-text'>{COMBO_DISH53}</p>
+        <p class='form-text'>{COMBO_DISH63}</p>
+        <p class='form-text'>{COMBO_DISH73}</p>
+        <p class='form-text'>{COMBO_DISH83}</p>        
+		<p class='form-text'>{GUEST_NAME4}</p>
+        <p class='form-text'>{COMBO_DISH14}</p>
+        <p class='form-text'>{COMBO_DISH24}</p>
+        <p class='form-text'>{COMBO_DISH34}</p>
+        <p class='form-text'>{COMBO_DISH44}</p>
+        <p class='form-text'>{COMBO_DISH54}</p>
+        <p class='form-text'>{COMBO_DISH64}</p>
+        <p class='form-text'>{COMBO_DISH74}</p>
+        <p class='form-text'>{COMBO_DISH84}</p>         
+        <p class='form-text'>{DINNER_CHANGE}</p>
+    </fieldset>
+
+    <fieldset style='display:none;'>
+        <legend>{STATIC_FORM_CONFERENCE_REGISTER_WINE_RECEPTION_TITLE}</legend>
+        <p class='form-text'>{STATIC_CONFERENCE_OPTIONS_BRINGING}&nbsp;{RECEPTION_GUESTS}&nbsp;{STATIC_FORM_CONFERENCE_REGISTER_WINE_RECEPTION_GUEST_2}</p>
+        <p class='form-text'>{RECEPTION_CHANGE}</p>
+    </fieldset>
+  
+    <fieldset style='display:none;'>
+        <legend>{STATIC_CONFERENCE_OFFMETM_TITLE}</legend>
+        <p class='form-text'>{COMING_SOON}</p>
+        <p class='form-text'>{OFFMETM_HEAD1}</p>
+        <p class='form-text'>{OFF_METM_BAND1}</p>
+        <p class='form-text'>{OFFMETM_HEAD2}</p>
+        <p class='form-text'>{OFF_METM_BAND2}</p>
+		<p class='form-text'>{OFFMETM_HEAD3}</p>
+        <div {OFF_METM_BAND3_EXCL}>
+        <p class='form-text'>{OFF_METM_BAND3}</p>
+        </div>
+		<p class='form-text'>{OFFMETM_HEAD4}</p>
+        <div {OFF_METM_BAND4_EXCL}>
+        <p class='form-text'>{OFF_METM_BAND4}</p>        
+        </div>
+        <p class='form-text'>{OFFMETM_HEAD5}</p>
+        <p class='form-text'>{OFF_METM_BAND5}</p>
+        <p class='form-text'>{OFFMETM_HEAD6}</p>
+        <p class='form-text'>{OFF_METM_BAND6}</p>
+        <p style='display:none;' class='form-text'>{STATIC_DIET}</p>
+        <p style='display:none;' class='form-text'>{COMBO_DIET}</p>
+        <p style='display:none;' class='form-text'>{STATIC_DIET2}</p>
+        <p style='display:none;' class='form-text'>{COMBO_ALLERGIES}</p>     
+        <p class='form-text'>{OFFMETM_FOOTNOTE}</p>
+        <p class='form-text'>{PROGRAMME}</p>
+    </fieldset>
+  
+    <fieldset class='form-group' {FORM_EVENT2}>
+        <legend>{STATIC_FORM_CONFERENCE_REGISTER_ATTENDEE_LIST_PICTURE}</legend>
+        <p class='form-text'>{STATIC_FORM_CONFERENCE_REGISTER_ATTENDEE_TEXT1}</p>
+        <div class='form-check'>
+            <input class='form-check-input' type='checkbox' {ATTENDEE_LIST} class='form-check-input' name='chkAttendeeList' id='chkAttendeeList'>
+            <label class='form-check-label' for='chkAttendeeList'>
+                {STATIC_FORM_CONFERENCE_REGISTER_ATTENDEE_LIST_PERMISSION}
+            </label>
+        </div>
+              <p class='form-text'>{STATIC_FORM_CONFERENCE_REGISTER_BADGE_BODY}</p>
+        <div class='form-row'>
+            <div class='col-12 col-md-6 form-text'>
+                <p>{STATIC_FORM_CONFERENCE_REGISTER_BADGE_BODY_EXAMPLE_2}</p>
+            </div>
+            <div class='col-12 col-md-6 form-text'>
+                <p>{STATIC_FORM_CONFERENCE_REGISTER_BADGE_BODY_EXAMPLE_3}</p>
+            </div>
+        </div>
+        <p class='form-text' style='display:none;'>{STATIC_FORM_CONFERENCE_REGISTER_BADGE_BODY_ACLARATION}</p>
+        <textarea class='form-control'
+                  name='txtaBadge'
+                  id='txtaBadge'
+                  placeholder='{STATIC_FORM_CONFERENCE_REGISTER_BADGE_PROMPT}'
+                  rows='3'>{CONFERENCE_BADGE}</textarea>
+        <span id='badgeMessage' class='validationMessage'></span>
+        <p class='form-text'>{STATIC_FORM_CONFERENCE_REGISTER_ATTENDEE_TEXT2}</p>
+        <div class='form-row'>
+            <div class='col-12 col-md-6'>
+                <input type='file' class='form-control-file' id='fileimagen' name='fileImagen'>
+                <div class='info1'>{STATIC_GLOBAL_IMAGE_ALLOW_EXTENSION}</div>
+                <div class='info2'>{STATIC_GLOBAL_IMAGE_ALLOW_SIZE}</div>
+                <div class='info3'>{STATIC_GLOBAL_IMAGE_UPLOAD}</div>
+            </div>
+            <div class='col-12 col-md-6 imgUpload'>
+                <img id='img_destino' src='{CONFERENCE_PICTURE}' alt='Your photo'>
+                <!--div para visualizar en el caso de imagen-->
+                <div class='showImage'></div>
+                <input type='button' style='display:none;' class='btn btn-primary' value='Upload' name='subirimagen'
+                       id='subirimagen'>
+                <input type='hidden' name='valorimagen' id='valorimagen'>
+            </div>
+        </div>
+    </fieldset>
+	<div class='clearfix' {FORM_EVENT2}>
+            <button id='btnSendForm' type='submit' class='btn btn-primary float-right'>
+                {STATIC_CONFERENCE_OPTIONS_FORM_SAVE}
+            </button>
+    </div>
+</form>
+
+<p>{CLOSE_CONFERENCE_PAGE}</p>
+<!-- END: contenido_principal -->

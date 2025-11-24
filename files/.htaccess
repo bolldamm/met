@@ -1,0 +1,12 @@
+# Block PHP execution in this folder
+<FilesMatch "\.php$">
+    Require all denied
+</FilesMatch>
+
+# Optional: also block other script types attackers might upload
+<FilesMatch "\.(php\d?|phtml|phar|pht|phtm)$">
+    Require all denied
+</FilesMatch>
+
+# Optional: prevent directory listing (in case there’s no index file)
+Options -Indexes

@@ -1,0 +1,288 @@
+<!-- BEGIN: contenido_principal -->
+<script type="text/javascript">
+	function validarFactura(volver){
+		//Por el momento no hay validaciones
+		esValido=true;
+		/*var importe=document.frmFactura.txtImporte;
+		if(importe.value!=""){
+			importe.value=importe.value.replace(",",".");
+			if(isNaN(parseFloat(importe.value,10))){
+				loadEasyNotify("{STATIC_MANAGE_INVOICE_IMPORT_WRONG}",1);
+				esValido=false;
+			}else{
+				importe.value=parseFloat(importe.value,10);
+			}
+		}*/
+		
+		if(esValido){
+			
+			var idMovimiento="";
+			$("#listMovements input[type=hidden]").each(function(){
+				idMovimiento+=$(this).attr("id").split("_")[1]+",";
+			});
+			
+			idMovimiento=idMovimiento.substring(0,idMovimiento.length-1);
+			document.frmFactura.hdnMovimientosSeleccionados.value=idMovimiento;
+			
+			document.frmFactura.hdnVolver.value=volver;
+			document.frmFactura.submit();
+		}
+	}
+</script>
+<div id="textExplication">
+	<h2>{STATIC_GLOBAL_WELCOME_EASYGESTOR}</h2>
+</div>
+<ul id="controlModButtons">
+	<li><a href="javascript:validarFactura(1);" class="OptionAdd cufon">{STATIC_GLOBAL_BUTTON_SAVE} </a><img src="images/pictures/icons/news.icon.png" /></li>
+	<!-- BEGIN: item_button_close -->
+	<li><a href="javascript:validarFactura(0);" class="OptionAdd cufon">{STATIC_GLOBAL_BUTTON_SAVE_AND_CLOSE} </a><img src="images/pictures/icons/baner.icon.png" /></li>
+	<!-- END: item_button_close -->
+	<!-- BEGIN: boton_pdf_factura -->
+	<li>
+		<a href="main_app.php?section=invoice&action=generate&id_factura={ID_INVOICE}" class="OptionEdit cufon">{STATIC_MANAGE_INVOICE_PDF_GENERATE_BUTTON} </a>
+		<img src="images/pictures/icons/news.icon.png" />
+	</li>
+	<!-- END: boton_pdf_factura -->
+	<!-- BEGIN: boton_download_factura -->
+	<li>
+		<a href="main_app.php?section=invoice&action=download&hash={HASH_FACTURA}" class="OptionEdit cufon">{STATIC_MANAGE_INVOICE_PDF_DOWNLOAD_BUTTON} </a>
+		<img src="images/pictures/icons/news.icon.png" />
+	</li>
+	<!-- END: boton_download_factura -->
+</ul>
+<!-- BEGIN: bloque_usuarios  -->
+<form name="frmBuscadorUsuario" id="frmBuscadorUsuario">
+	<input type="hidden" name="hdnIdFacturaUsuario" id="hdnIdFacturaUsuario" value="{ID_FACTURA}" />
+	<div class="headerSectionForm" onclick="expandirSeccion('userIcon','userContent');">
+		<div class="leftBorder"></div>
+		<div class="titleSectionForm">{STATIC_MANAGE_INVOICE_MEMBER_SECTION}</div>
+		<div id="userIcon" class="iconExpand"></div>
+		<div class="rightBorder"></div>
+	</div>
+	<div class="containerSection" id="userContent">
+		<div class="contentSectionForm">
+			<div id="containerSearchUsers">
+				<strong>{STATIC_MANAGE_INVOICE_MEMBER_SEARCH}</strong><br>
+				<fieldset>
+					<legend>{STATIC_MANAGE_INVOICE_MEMBER_SEARCH_FORM}</legend>
+						<table border="0" cellspacing="0" cellpadding="0" border="1">
+							<tr>
+								<td>
+									<table border="0" cellspacing="0" cellpadding="0">
+										<tr>
+											<td>{STATIC_MANAGE_INVOICE_MEMBER_NAME_SEARCH}</td>
+											<td><input type="text" name="txtNombre" id="txtNombre" style="width:220px" value="{MANAGE_INVOICE_MEMBER_NAME_SEARCH_VALUE}"></td>
+											<td>{STATIC_MANAGE_INVOICE_MEMBER_EMAIL_SEARCH}</td>
+											<td><input type="text" name="txtEmail" id="txtEmail" style="width:220px" value="{MANAGE_INVOICE_MEMBER_EMAIL_SEARCH_VALUE}"></td>
+										</tr>
+										<tr>
+											<td colspan="6" style="padding-top:10px;text-align:right;">
+												<button type="button" onclick="buscarMiembrosInvoice()" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"><span class="ui-button-text">{STATIC_GLOBAL_BUTTON_SEARCH}</span></button>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div id="contenidoBusquedaMiembro"></div>
+								</td>
+							</tr>
+						</table>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+</form>
+<!-- END: bloque_usuarios  -->
+<form name="frmFactura" method="post" enctype="multipart/form-data">
+	<input type="hidden" name="hdnVolver" id="hdnVolver">
+	<input type="hidden" name="section" id="section" value="invoice">
+	<input type="hidden" name="action" id="action" value="{ACTION}">
+	<input type="hidden" name="hdnMovimientosSeleccionados" id="hdnMovimientosSeleccionados" value="">
+	<input type="hidden" name="hdnIdFactura" id="hdnIdFactura" value="{ID_FACTURA}" />
+	<div class="headerSectionForm" onclick="expandirSeccion('generalIcon','generalContent');">
+		<div class="leftBorder"></div>
+		<div class="titleSectionForm">{STATIC_GLOBAL_GENERAL_SECTION}</div>
+		<div id="generalIcon" class="iconExpand"></div>
+		<div class="rightBorder"></div>
+	</div>
+	<div class="containerSection" id="generalContent">
+		<div class="contentSectionForm">
+			<table border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td colspan="6">{STATIC_MANAGE_INVOICE_DATE}</td>
+				</tr>
+				<tr>
+					<td colspan="6"><input type="text" style="width:100px;" class="dateArea" name="txtFechaFactura" id="txtFechaFactura" value="{FACTURA_FECHA}"></td>
+				</tr>
+                
+				<tr>
+					<td colspan="6">{STATIC_MANAGE_INVOICE_PAYMENT_DATE}</td>
+				</tr>
+				<tr>
+					<td colspan="6"><input type="text" style="width:100px;" class="dateArea" name="txtFechaPagoFactura" id="txtFechaPagoFactura" value="{FACTURA_FECHA_PAGO}"></td>
+				</tr>
+				<tr>
+                  <td>{STATIC_MANAGE_INVOICE_NUMBER}</td><td colspan="7">(invoices = [Year]-NNN / pro formas = PF-[Year]-NNN / credit notes = CN-[Year]-NNN)</td>
+				</tr>
+				<tr>
+					<td colspan="6"><input type="text" style="width:140px;" name="txtNumeroFactura" id="txtNumeroFactura" value="{FACTURA_NUMERO_FACTURA}"></td>
+				</tr>
+                <tr>
+<!-- 					<td><input type="checkbox" style="width:100px;" class="fac_proform" name="checkProformaFactura" id="checkProformaFactura" {CHECKED_FACTURA_PROFORMA} value="{FACTURA_PROFORMA}"></td> -->
+                  <td style="width:60px;">Invoice:</td><td style="width:60px;"><input type="radio" {CHECKED_FACTURA_PROFORMA} id="invoice" name="checkProformaFactura" value="0"></td><td>&nbsp;</td><td style="width:60px;">
+  Pro Forma:</td><td style="width:60px;"><input type="radio" {CHECKED_FACTURA_PROFORMA1} id="proforma" name="checkProformaFactura" value="1">
+  </td><td>&nbsp;</td><td style="width:70px;">
+  Credit Note:</td><td style="width:60px;"><input type="radio" {CHECKED_FACTURA_PROFORMA2} id="creditnote" name="checkProformaFactura" value="2"></td>
+              </tr>
+				<tr>
+					<td colspan="6"><br>{STATIC_MANAGE_INVOICE_CUSTOMER_NIF}</td>
+				</tr>
+				<tr>
+					<td colspan="6"><input type="text"  name="txtNif" id="txtNif" value="{FACTURA_NIF_CLIENTE}"></td>
+				</tr>
+				<tr>
+					<td colspan="6">{STATIC_MANAGE_INVOICE_NAME_CUSTOMER}</td>
+				</tr>
+				<tr>
+					<td colspan="6"><input type="text" name="txtNombreCliente" id="txtNombreCliente" value="{FACTURA_NOMBRE_CLIENTE}"></td>
+				</tr>
+				<tr>
+					<td colspan="6" style="padding-bottom:10px;">
+						{STATIC_MANAGE_INVOICE_SHOW_PDF}
+						<input type="checkbox" name="chkVisibleNombreCliente" id="chkVisibleNombreCliente" {CHECKED_NOMBRE_CLIENTE} style="width:20px;">
+					</td>
+				</tr>
+				<tr>
+					<td colspan="6">{STATIC_MANAGE_INVOICE_NAME_COMPANY}</td>
+				</tr>
+				<tr>
+					<td colspan="6"><input type="text" name="txtNombreEmpresa" id="txtNombreEmpresa" value="{FACTURA_NOMBRE_EMPRESA}"></td>
+				</tr>
+				<tr>
+					<td colspan="6" style="padding-bottom:10px;">
+						{STATIC_MANAGE_INVOICE_SHOW_PDF}
+						<input type="checkbox" name="chkVisibleNombreEmpresa" id="chkVisibleNombreEmpresa" {CHECKED_NOMBRE_EMPRESA} style="width:20px;">
+					</td>
+				</tr>
+				<tr>
+					<td colspan="6">{STATIC_MANAGE_INVOICE_ADDRESS}</td>
+				</tr>
+				<tr>
+					<td colspan="6"><input type="text" name="txtDireccion" id="txtDireccion" value="{FACTURA_DIRECCION}"></td>
+				</tr>
+				<tr>
+					<td colspan="6">{STATIC_MANAGE_INVOICE_ZIPCODE}</td>
+				</tr>
+				<tr>
+					<td colspan="6"><input type="text" name="txtCodigoPostal" id="txtCodigoPostal" value="{FACTURA_CODIGO_POSTAL}"></td>
+				</tr>
+				<tr>
+					<td colspan="6">{STATIC_MANAGE_INVOICE_CITY}</td>
+				</tr>
+				<tr>
+					<td colspan="6"><input type="text" name="txtCiudad" id="txtCiudad" value="{FACTURA_CIUDAD}"></td>
+				</tr>
+				<tr>
+					<td colspan="6">{STATIC_MANAGE_INVOICE_PROVINCE}</td>
+				</tr>
+				<tr>
+					<td colspan="6"><input type="text" name="txtProvincia" id="txtProvincia" value="{FACTURA_PROVINCIA}"></td>
+				</tr>
+				<tr>
+					<td colspan="6">{STATIC_MANAGE_INVOICE_COUNTRY}</td>
+				</tr>
+				<tr>
+					<td colspan="6"><input type="text" name="txtPais" id="txtPais" value="{FACTURA_PAIS}"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</form>
+<!-- BEGIN: bloque_movimientos  -->
+<form name="frmBuscadorMovimiento" id="frmBuscadorMovimiento">
+	<input type="hidden" name="hdnIdFacturaMovimiento" id="hdnIdFacturaMovimiento" value="{ID_FACTURA}" />
+	<div class="headerSectionForm" onclick="expandirSeccion('movementIcon','movementContent');">
+		<div class="leftBorder"></div>
+		<div class="titleSectionForm">{STATIC_MANAGE_INVOICE_MOVEMENT_SECTION}</div>
+		<div id="movementIcon" class="iconExpand"></div>
+		<div class="rightBorder"></div>
+	</div>
+	<div class="containerSection" id="movementContent">
+		<div class="contentSectionForm">
+			<div id="containerSelectedMovements">
+				<input type="hidden" name="hdnDeseleccionados" id="hdnDeseleccionados" value="">
+				<strong>{STATIC_MANAGE_INVOICE_MOVEMENT_SELECTEDS}</strong><br>
+				<ul style="padding-left:20px;" id="listMovements">
+					<!-- BEGIN: item_movimiento_seleccionado -->
+					<li>
+						<input type="hidden" name="hdnMovimientoActivo_{ID_MOVIMIENTO}" id="hdnIdMovimientoActivo_{ID_MOVIMIENTO}">
+						<span><a href="main_app.php?section=movement&action=edit&id_movimiento={ID_MOVIMIENTO}" target="_blank">{MOVIMIENTO_CONCEPTO}-{MOVIMIENTO_TIPO}</a></span>
+						<img src="images/delete.png" onclick="deseleccionarMovimiento({ID_MOVIMIENTO});" style="cursor:pointer;">
+					</li>
+					<!-- END: item_movimiento_seleccionado -->
+				</ul>
+			</div>
+			<div id="containerSearchMovements">
+				<strong>{STATIC_MANAGE_INVOICE_MOVEMENT_SEARCH}</strong><br>
+				<fieldset>
+					<legend>{STATIC_MANAGE_INVOICE_MOVEMENT_SEARCH_FORM}</legend>
+						<table border="0" cellspacing="0" cellpadding="0" border="1">
+							<tr>
+								<td>
+									<table border="0" cellspacing="0" cellpadding="0">
+										<tr>
+											<td>{STATIC_VIEW_MOVEMENT_ACCOUNT_TYPE_SEARCH}</td>
+											<td>{COMBO_CONCEPTO}</td>
+											<td class="contenedorSubConcepto" {DISPLAY_SUBCONCEPTO}>{STATIC_VIEW_MOVEMENT_SUBACCOUNT_TYPE_SEARCH}</td>
+											<td class="contenedorSubConcepto" {DISPLAY_SUBCONCEPTO} id="comboConcepto" colspan="4">{COMBO_SUBCONCEPTO}</td>
+										</tr>
+										<tr>
+											<td>{STATIC_VIEW_MOVEMENT_TYPE_SEARCH}</td>
+											<td>{COMBO_TIPO}</td>
+											<td>{STATIC_VIEW_MOVEMENT_PAYED_SEARCH}</td>
+											<td colspan="3">{COMBO_PAGADO}</td>
+										</tr>
+										<tr>
+											<td>{STATIC_VIEW_MOVEMENT_DATE_FROM_SEARCH}</td>
+											<td><input type="text" style="width:80px;" class="dateArea" name="from" id="txtFechaDesde" value="{VIEW_MOVEMENT_DATE_FROM_SEARCH_VALUE}"></td>
+											<td>{STATIC_VIEW_MOVEMENT_DATE_TO_SEARCH}</td>
+											<td><input type="text" style="width:80px;" class="dateArea" name="to" id="txtFechaHasta" value="{VIEW_MOVEMENT_DATE_TO_SEARCH_VALUE}"></td>
+											<td>{STATIC_VIEW_MOVEMENT_PAYMENT_TYPE_SEARCH}</td>
+											<td>{COMBO_TIPO_PAGO}</td>
+										</tr>
+										<tr>
+											<td>{STATIC_VIEW_MOVEMENT_IMPORT_FROM_SEARCH}</td>
+											<td><input type="text" style="width:80px;"  name="txtImporteDesde" id="txtImporteDesde" value="{VIEW_MOVEMENT_IMPORT_FROM_SEARCH_VALUE}"></td>
+											<td>{STATIC_VIEW_MOVEMENT_IMPORT_TO_SEARCH}</td>
+											<td><input type="text" style="width:80px;" name="txtImporteHasta" id="txtImporteHasta" value="{VIEW_MOVEMENT_IMPORT_TO_SEARCH_VALUE}"></td>
+											<td>{STATIC_VIEW_MOVEMENT_PERSON_SEARCH}</td>
+											<td><input type="text" name="txtPersona" id="txtPersona" style="width:120px" value="{VIEW_MOVEMENT_PERSON_SEARCH_VALUE}"></td>
+										</tr>
+										<tr>
+											<td colspan="6" style="padding-top:10px;text-align:right;">
+												<button type="button" onclick="buscarMovimientosInvoice()" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"><span class="ui-button-text">{STATIC_GLOBAL_BUTTON_SEARCH}</span></button>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div id="contenidoBusqueda"></div>
+								</td>
+							</tr>
+						</table>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+</form>
+<!-- END: bloque_movimientos  -->
+<div class="footerSection">
+	<div class="footerSectionLeft">
+		<div class="footerSectionRight"></div>
+	</div>
+</div>
+<!-- END: contenido_principal -->
