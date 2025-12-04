@@ -1,11 +1,6 @@
 <?php
-	//define("CURRENT_DOMAIN","https://".$_SERVER["HTTP_HOST"]"/");
-
-if (defined('MET_ENV') && constant('MET_ENV') == 'LOCAL') {
-    define("CURRENT_DOMAIN","https://metmeetings.local");
-}else{
-    define("CURRENT_DOMAIN","https://www.metmeetings.org/");
-}
+	// CURRENT_DOMAIN is now defined in includes/load_environment.inc.php
+	// This ensures it's available everywhere, including index.php and authentication.php
 
 
 	//Tipos usuario

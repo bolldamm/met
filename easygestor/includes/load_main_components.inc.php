@@ -1,10 +1,12 @@
 <?php
 	/**
-	 * 
+	 *
 	 * Incluimos los componentes mas comunes para evitar el exceso de codigo redundante.
-	 * 
+	 *
 	 */
-	session_start();
+	if (session_status() === PHP_SESSION_NONE) {
+		session_start();
+	}
 	header("Content-Type: text/html; charset=utf-8");
 	/**
 	 * 

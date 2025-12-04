@@ -2,7 +2,9 @@
 /****************** INICIO: COUNCIL ******************/
 // These are now defined in settings.php (ie. ed_tb_settings)
 $absolutePath=dirname(__FILE__);
-require $absolutePath."/../../includes/settings.php";
+// This line changed before first commit to Git repository
+// Remote version has "../../../includes/settings.php";
+require_once $absolutePath."/../../includes/settings.php";
 /****************** FIN: COUNCIL ******************/
 /****************** INICIO: 404 page ******************/
 define("STATIC_404_MESSAGE", "Sorry, the page that you are trying to access does not exist or is not available at this moment. You can go back to the <a href='javascript:history.back()'>previous page</a> or return to the <a href='/'>home page</a>.");
@@ -199,6 +201,9 @@ define("STATIC_FORM_MEMBERSHIP_LEGEND_CONTACT_WARNING_2", "Fields here are shown
 define("STATIC_FORM_MEMBERSHIP_LEGEND_CONTACT_DETAILS", "Contact details visible on your profile");
 define("STATIC_FORM_PICTURE", "Attendee list");
 define("STATIC_FORM_MEMBERSHIP_LEGEND_BILLING_INFORMATION", "Billing information");
+define("STATIC_FORM_MEMBERSHIP_SIGNING_UP_AS", "I am signing up as...");
+define("STATIC_FORM_MEMBERSHIP_PRIVATE_INDIVIDUAL", "A private individual (unrelated to any business or professional activity)");
+define("STATIC_FORM_MEMBERSHIP_BUSINESS_PROFESSIONAL", "A business or professional");
 define("STATIC_FORM_MEMBERSHIP_LEGEND_PROFESSIONAL_INFORMATION", "Professional information");
 define("STATIC_FORM_MEMBERSHIP_LEGEND_ADDITIONAL_INFORMATION", "Other personal information (optional)");
 define("STATIC_FORM_MEMBERSHIP_LEGEND_OTHER_CPD", "Other CPD");

@@ -8,7 +8,7 @@ require $absolutePath . "/load_mailer.inc.php";
 
 require $absolutePath . "/load_format_date.inc.php";
 
-require $absolutePath . "/settings.php";
+require_once $absolutePath . "/settings.php";
 
 
 //Set language to English (id_idioma=3)
@@ -149,8 +149,14 @@ if (isset($stripeFee)) {
     $db->callProcedure("CALL ed_sp_web_movimiento_inscripcion_taller_insertar(" . $idMovimientoComision . "," . $idInscripcion . ")");
 }
 
-//Insert invoice
-$resultadoFactura = $db->callProcedure("CALL ed_sp_web_factura_insertar('" . $nifFactura . "','" . $nombreClienteFactura . "','" . $nombreEmpresaFactura . "','" . $direccionFactura . "','" . $codigoPostalFactura . "','" . $ciudadFactura . "','" . $provinciaFactura . "','" . $paisFactura . "','" . $emailClienteFactura . "','" . $firstName . "')");
+//Insert invoice (with tax ID fields for Verifactu - workshops are always F1)
+// Get tax ID from session if available, otherwise empty (workshop forms may not collect this)
+$taxIdCountry = isset($_SESSION["taxIdCountry"]) ? $_SESSION["taxIdCountry"] : "";
+$taxIdType = isset($_SESSION["taxIdType"]) ? $_SESSION["taxIdType"] : "";
+$taxIdNumber = isset($_SESSION["taxIdNumber"]) ? $_SESSION["taxIdNumber"] : "";
+$tipoFacturaVerifactu = "F1"; // Workshops are always standard invoices
+
+$resultadoFactura = $db->callProcedure("CALL ed_sp_web_factura_insertar('" . $nifFactura . "','" . $nombreClienteFactura . "','" . $nombreEmpresaFactura . "','" . $direccionFactura . "','" . $codigoPostalFactura . "','" . $ciudadFactura . "','" . $provinciaFactura . "','" . $paisFactura . "','" . $emailClienteFactura . "','" . $firstName . "','" . $taxIdCountry . "','" . $taxIdType . "','" . $taxIdNumber . "','" . $tipoFacturaVerifactu . "')");
 
 $datoFactura = $db->getData($resultadoFactura);
 $idFactura = $datoFactura["id_factura"];

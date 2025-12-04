@@ -6,8 +6,8 @@
 	 * 
 	 */
 $absolutePath=dirname(__FILE__);
-require_once $absolutePath."../../classes/databaseConnection.php";
-require_once $absolutePath."../../database/connection.php";
+require_once $absolutePath."/../classes/databaseConnection.php";
+require_once $absolutePath."/../database/connection.php";
 
 	//Obtenemos datos	
 	$resultado=$db->callProcedure("CALL ed_pr_get_settings()");
@@ -54,6 +54,15 @@ if ($dato['conference_test_mode']==1) {
 
 
 //	  $txtmembershipForms=$dato['membership_forms'];
+// Added by SW to avoid warnings while testing locally
+$txtmembershipForms = '';
+$txtmembershipForms2 = '';
+$txtmembershipForms0 = '';
+if (isset($dato['membership_forms'])) {
+    $txtmembershipForms = $dato['membership_forms'];
+    $txtmembershipForms2 = $dato['membership_forms'];
+    $txtmembershipForms0 = $dato['membership_forms'];
+}
 
  define("STATIC_CHAIR", $txtChair);
  define("STATIC_VICE_CHAIR", $txtVicechair);
@@ -81,4 +90,5 @@ if ($dato['conference_test_mode']==1) {
  define("STATIC_EMAIL_PASSWORD", $txtNoreplypassword);
  define("STATIC_CONFERENCE_FORM_TEST", $txtStatictest);
  define("STATIC_CONFERENCE_TEST", $txtConferencetestmode);
+
 ?>

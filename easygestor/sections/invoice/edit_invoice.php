@@ -37,8 +37,14 @@
 //		}
 		
 
+		//Get Verifactu tax ID fields from form
+		$taxIdCountry = isset($_POST["cmbTaxIdCountry"]) ? generalUtils::escaparCadena($_POST["cmbTaxIdCountry"]) : "";
+		$taxIdType = isset($_POST["cmbTaxIdType"]) ? generalUtils::escaparCadena($_POST["cmbTaxIdType"]) : "";
+		$taxIdNumber = isset($_POST["txtTaxIdNumber"]) ? generalUtils::escaparCadena($_POST["txtTaxIdNumber"]) : "";
+		$tipoFacturaVerifactu = isset($_POST["cmbTipoFacturaVerifactu"]) ? generalUtils::escaparCadena($_POST["cmbTipoFacturaVerifactu"]) : "";
+
 		//Guardamos factura...
-		$resultadoFactura=$db->callProcedure("CALL ".OBJECT_DB_ACRONYM."_sp_factura_editar(".$idFactura.",".$fechaFactura.",".$fechaPagoFactura.",'".generalUtils::escaparCadena($_POST["txtNumeroFactura"])."','".generalUtils::escaparCadena($_POST["txtNif"])."','".generalUtils::escaparCadena($_POST["txtNombreCliente"])."',".$visibleNombreCliente.",'".generalUtils::escaparCadena($_POST["txtNombreEmpresa"])."',".$visibleNombreEmpresa.",'".generalUtils::escaparCadena($_POST["txtDireccion"])."','".generalUtils::escaparCadena($_POST["txtCodigoPostal"])."','".generalUtils::escaparCadena($_POST["txtCiudad"])."','".generalUtils::escaparCadena($_POST["txtProvincia"])."','".generalUtils::escaparCadena($_POST["txtPais"])."','".$_POST["checkProformaFactura"]."')");
+		$resultadoFactura=$db->callProcedure("CALL ".OBJECT_DB_ACRONYM."_sp_factura_editar(".$idFactura.",".$fechaFactura.",".$fechaPagoFactura.",'".generalUtils::escaparCadena($_POST["txtNumeroFactura"])."','".generalUtils::escaparCadena($_POST["txtNif"])."','".generalUtils::escaparCadena($_POST["txtNombreCliente"])."',".$visibleNombreCliente.",'".generalUtils::escaparCadena($_POST["txtNombreEmpresa"])."',".$visibleNombreEmpresa.",'".generalUtils::escaparCadena($_POST["txtDireccion"])."','".generalUtils::escaparCadena($_POST["txtCodigoPostal"])."','".generalUtils::escaparCadena($_POST["txtCiudad"])."','".generalUtils::escaparCadena($_POST["txtProvincia"])."','".generalUtils::escaparCadena($_POST["txtPais"])."','".$_POST["checkProformaFactura"]."','".$taxIdCountry."','".$taxIdType."','".$taxIdNumber."','".$tipoFacturaVerifactu."')");
 		require "line_invoice.php";
 
 
@@ -88,14 +94,89 @@
 	$subPlantilla->assign("FACTURA_CIUDAD",$datoFactura["ciudad_factura"]);
 	$subPlantilla->assign("FACTURA_PROVINCIA",$datoFactura["provincia_factura"]);
 	$subPlantilla->assign("FACTURA_PAIS",$datoFactura["pais_factura"]);
-	$subPlantilla->assign("FACTURA_IMPORTE",$datoFactura["precio"]);
+	$subPlantilla->assign("FACTURA_IMPORTE",isset($datoFactura["precio"]) ? $datoFactura["precio"] : "");
 	$subPlantilla->assign("ID_INVOICE",$datoFactura["id_factura"]);
-	
+
+	//Verifactu tax ID fields - dropdown selects
+	$subPlantilla->assign("FACTURA_TAX_ID_NUMBER", isset($datoFactura["tax_id_number"]) ? $datoFactura["tax_id_number"] : "");
+
+	//Combo tax ID country - uses ISO2 code as value
+	$selectedCountry = isset($datoFactura["tax_id_country"]) ? $datoFactura["tax_id_country"] : "";
+	$subPlantilla->assign("COMBO_TAX_ID_COUNTRY", generalUtils::construirCombo($db, "CALL ed_sp_web_pais_iso_obtener_combo()", "cmbTaxIdCountry", "cmbTaxIdCountry", $selectedCountry, "nombre_original", "iso2", "-- Country --", -1, 'style="width:150px;"'));
+
+	//Combo tax ID type
+	$selectedType = isset($datoFactura["tax_id_type"]) ? $datoFactura["tax_id_type"] : "";
+	$subPlantilla->assign("COMBO_TAX_ID_TYPE", generalUtils::construirCombo($db, "CALL ed_sp_web_tax_id_type_obtener_combo()", "cmbTaxIdType", "cmbTaxIdType", $selectedType, "description", "tax_id_type", "-- ID Type --", -1, 'style="width:150px;"'));
+
+	//Combo Verifactu invoice type - full list matching create_invoice.php
+	$tipoFacturaValue = isset($datoFactura["tipo_factura_verifactu"]) ? $datoFactura["tipo_factura_verifactu"] : "F1";
+	$comboTipoFactura = '<select name="cmbTipoFacturaVerifactu" id="cmbTipoFacturaVerifactu" style="width:350px;">';
+	$comboTipoFactura .= '<option value="F1"' . ($tipoFacturaValue == "F1" ? " selected" : "") . '>F1 - Standard Invoice</option>';
+	$comboTipoFactura .= '<option value="F2"' . ($tipoFacturaValue == "F2" ? " selected" : "") . '>F2 - Simplified Invoice</option>';
+	$comboTipoFactura .= '<option value="F3"' . ($tipoFacturaValue == "F3" ? " selected" : "") . '>F3 - Invoice replacing simplified invoices</option>';
+	$comboTipoFactura .= '<optgroup label="Rectificativa (Corrective Invoices)">';
+	$comboTipoFactura .= '<option value="R1"' . ($tipoFacturaValue == "R1" ? " selected" : "") . '>R1 - Rectificativa (Art. 80.1, 80.2, 80.6 LIVA)</option>';
+	$comboTipoFactura .= '<option value="R2"' . ($tipoFacturaValue == "R2" ? " selected" : "") . '>R2 - Rectificativa (Art. 80.3 LIVA - Bankruptcy)</option>';
+	$comboTipoFactura .= '<option value="R3"' . ($tipoFacturaValue == "R3" ? " selected" : "") . '>R3 - Rectificativa (Art. 80.4 LIVA - Bad debt)</option>';
+	$comboTipoFactura .= '<option value="R4"' . ($tipoFacturaValue == "R4" ? " selected" : "") . '>R4 - Rectificativa (Other causes)</option>';
+	$comboTipoFactura .= '<option value="R5"' . ($tipoFacturaValue == "R5" ? " selected" : "") . '>R5 - Rectificativa in simplified invoices</option>';
+	$comboTipoFactura .= '</optgroup>';
+	$comboTipoFactura .= '</select>';
+	$subPlantilla->assign("COMBO_TIPO_FACTURA_VERIFACTU", $comboTipoFactura);
+
+	//Verifactu status display (only show if invoice has been processed)
+	if (!empty($datoFactura["verifactu_uuid"]) || !empty($datoFactura["verifactu_status"])) {
+		$estado = isset($datoFactura["verifactu_status"]) ? $datoFactura["verifactu_status"] : "pending";
+		switch ($estado) {
+			case "anulada":
+				$subPlantilla->assign("VERIFACTU_STATUS_TEXT", "Anulada (Cancelled)");
+				$subPlantilla->assign("VERIFACTU_STATUS_STYLE", "color:#dc3545;");
+				break;
+			case "error":
+				$subPlantilla->assign("VERIFACTU_STATUS_TEXT", "Error");
+				$subPlantilla->assign("VERIFACTU_STATUS_STYLE", "color:#dc3545;");
+				break;
+			case "confirmed":
+			case "Correcto":
+				$subPlantilla->assign("VERIFACTU_STATUS_TEXT", "Confirmed");
+				$subPlantilla->assign("VERIFACTU_STATUS_STYLE", "color:#28a745;");
+				break;
+			default:
+				$subPlantilla->assign("VERIFACTU_STATUS_TEXT", "Pending");
+				$subPlantilla->assign("VERIFACTU_STATUS_STYLE", "color:#ffc107;");
+		}
+
+		// Show UUID if available
+		if (!empty($datoFactura["verifactu_uuid"])) {
+			$subPlantilla->assign("VERIFACTU_UUID", $datoFactura["verifactu_uuid"]);
+			$subPlantilla->parse("contenido_principal.verifactu_status_section.verifactu_uuid_display");
+		}
+
+		// Show error message if available
+		if (!empty($datoFactura["verifactu_error"])) {
+			$subPlantilla->assign("VERIFACTU_ERROR", $datoFactura["verifactu_error"]);
+			$subPlantilla->parse("contenido_principal.verifactu_status_section.verifactu_error_display");
+		}
+
+		$subPlantilla->parse("contenido_principal.verifactu_status_section");
+	}
+
 	//Parseamos boton generar pdf
 	$subPlantilla->parse("contenido_principal.boton_pdf_factura");
 	if($datoFactura["hash_generado"]){
 		$subPlantilla->assign("HASH_FACTURA",$datoFactura["hash_generado"]);
 		$subPlantilla->parse("contenido_principal.boton_download_factura");
+	}
+
+	//Show "Anular Verifacti" button only if invoice was submitted and not already cancelled
+	if(!empty($datoFactura["verifactu_uuid"]) &&
+	   (!isset($datoFactura["verifactu_status"]) || $datoFactura["verifactu_status"] != "anulada")){
+		$subPlantilla->parse("contenido_principal.boton_anular_verifacti");
+	}
+
+	//Show "Refresh Verifacti" button if invoice has been submitted (has UUID)
+	if(!empty($datoFactura["verifactu_uuid"])){
+		$subPlantilla->parse("contenido_principal.boton_refresh_verifacti");
 	}
 	
 	if($datoFactura["visible_nombre_cliente_factura"]){
@@ -129,8 +210,9 @@
 
 	//Combo tipo pago
 	$subPlantilla->assign("COMBO_TIPO_PAGO",generalUtils::construirCombo($db,"CALL ".OBJECT_DB_ACRONYM."_sp_tipo_pago_movimiento_buscador_obtener_combo(".$_SESSION["user"]["language_id"].")","cmbTipoPago","cmbTipoPago",-1,"nombre","id_tipo_pago_movimiento",STATIC_GLOBAL_COMBO_DEFAULT,0,"style='width:100px;'"));
-	
+
 	//Combo concepto
+	$idConcepto = -1; // Initialize variable to avoid undefined warning
 	$subPlantilla->assign("COMBO_CONCEPTO",generalUtils::construirCombo($db,"CALL ".OBJECT_DB_ACRONYM."_sp_concepto_movimiento_obtener_combo(null,".$_SESSION["user"]["language_id"].")","cmbConcepto","cmbConcepto",$idConcepto,"nombre","id_concepto_movimiento",STATIC_GLOBAL_COMBO_DEFAULT,0,"onchange='obtenerComboSubConcepto(this)'","style='width:100px;'"));
 	
 	//Combo subconcepto

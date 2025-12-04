@@ -147,24 +147,6 @@
                 {COMBO_ANYOS}
             </div>
             <div class='col-12 col-md-8'>
-                <!--{STATIC_FORM_MEMBERSHIP_SEX}
-                <div class='form-row'>
-                    <div class='form-check form-check-inline'>
-                        <input type='radio' class='form-check-input' id='chkSex1' name='chkSex' value='1'>
-                        <label class='form-check-label' for='chkSex1'>
-                            {STATIC_FORM_MEMBERSHIP_MALE}
-                        </label>
-                    </div>
-                    <div class='form-check form-check-inline'>
-                        <input type='radio' class='form-check-input' id='chkSex2' name='chkSex' value='2'>
-                        <label class='form-check-label' for='chkSex2'>
-                            {STATIC_FORM_MEMBERSHIP_FEMALE}
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class='form-row'>-->
             	<textarea class='form-control' name='txtSobreMet' placeholder='{STATIC_FORM_MEMBERSHIP_HOW_DID_YOU_HEAR_ABOUT_MET}'></textarea>
         	</div>
       	</div>
@@ -172,29 +154,40 @@
 
     <fieldset>
         <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_BILLING_INFORMATION}</legend>
-        <div class='form-row'>
-            <div class='col-12 col-md-6'>
-                <input type='text' class='form-control required' name='txtFacturacionNifCliente' id='txtFacturacionNifCliente' placeholder='{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}'>
-                <span id='nifMessage' class='validationMessage'></span>
+
+        <!-- Invoice Type Selection -->
+        <div class='form-group'>
+            <label><strong>{STATIC_FORM_MEMBERSHIP_SIGNING_UP_AS}</strong></label>
+            <div class='form-check'>
+                <input type='radio' class='form-check-input' name='invoiceType' id='invoiceTypeIndividual' value='individual'>
+                <label class='form-check-label' for='invoiceTypeIndividual'>
+                    {STATIC_FORM_MEMBERSHIP_PRIVATE_INDIVIDUAL}
+                </label>
             </div>
+            <div class='form-check'>
+                <input type='radio' class='form-check-input' name='invoiceType' id='invoiceTypeBusiness' value='business' checked>
+                <label class='form-check-label' for='invoiceTypeBusiness'>
+                    {STATIC_FORM_MEMBERSHIP_BUSINESS_PROFESSIONAL}
+                </label>
+            </div>
+        </div>
+
+        <!-- Billing Details Container (hidden when individual is selected) -->
+        <div id='billingDetailsContainer'>
+        <!-- Address Section -->
+        <div class='form-row'>
             <div class='col-12 col-md-6'>
                 <input type='text' class='form-control required' name='txtFacturacionNombreCliente' id='txtFacturacionNombreCliente' autocomplete='name' placeholder='{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}'>
                 <span id='billingNameMessage' class='validationMessage'></span>
             </div>
-        </div>
-        <div class='form-row'>
             <div class='col-12 col-md-6'>
                 <input type='text' class='form-control' name='txtFacturacionNombreEmpresa' autocomplete='organization' placeholder='{STATIC_FORM_PROFILE_BILLING_NAME_COMPANY}'>
             </div>
-            <div class='col-12 col-md-6'>
-                <input type='text' class='form-control required' name='txtFacturacionDireccion' id='txtFacturacionDireccion' autocomplete='address-line1' placeholder='{STATIC_FORM_PROFILE_BILLING_ADDRESS}'>
-                <span id='addressMessage' class='validationMessage'></span>
-            </div>
         </div>
         <div class='form-row'>
             <div class='col-12 col-md-6'>
-                <input type='text' class='form-control required' name='txtFacturacionCodigoPostal' id='txtFacturacionCodigoPostal' autocomplete='postal-code' placeholder='{STATIC_FORM_PROFILE_BILLING_ZIPCODE}'>
-                <span id='postcodeMessage' class='validationMessage'></span>
+                <input type='text' class='form-control required' name='txtFacturacionDireccion' id='txtFacturacionDireccion' autocomplete='address-line1' placeholder='{STATIC_FORM_PROFILE_BILLING_ADDRESS}'>
+                <span id='addressMessage' class='validationMessage'></span>
             </div>
             <div class='col-12 col-md-6'>
                 <input type='text' class='form-control required' name='txtFacturacionCiudad' id='txtFacturacionCiudad' autocomplete='address-level2' placeholder='{STATIC_FORM_PROFILE_BILLING_CITY}'>
@@ -202,14 +195,55 @@
             </div>
         </div>
         <div class='form-row'>
-            <div class='col-12 col-md-6'>
+            <div class='col-12 col-md-3'>
                 <input type='text' class='form-control' name='txtFacturacionProvincia' autocomplete='address-level1' placeholder='{STATIC_FORM_PROFILE_BILLING_PROVINCE}'>
             </div>
+            <div class='col-12 col-md-3'>
+                <input type='text' class='form-control required' name='txtFacturacionCodigoPostal' id='txtFacturacionCodigoPostal' autocomplete='postal-code' placeholder='{STATIC_FORM_PROFILE_BILLING_ZIPCODE}'>
+                <span id='postcodeMessage' class='validationMessage'></span>
+            </div>
             <div class='col-12 col-md-6'>
-                <input type='text' class='form-control required' name='txtFacturacionPais' id='txtFacturacionPais' autocomplete='country-name' placeholder='{STATIC_FORM_PROFILE_BILLING_COUNTRY}'>
-                <span id='billingCountryMessage' class='validationMessage'></span>
+                {COMBO_BILLING_COUNTRY}
             </div>
         </div>
+
+        <!-- Tax Identification Section -->
+        <div class='form-row' style='margin-top: 1em;'>
+            <div class='col-12'>
+                <label>
+                    <input type='checkbox' id='hasSpanishNif' name='hasSpanishNif' value='1'>
+                    I have a Spanish NIF/NIE
+                </label>
+            </div>
+        </div>
+
+        <!-- Spanish NIF/NIE Field (shown when checkbox is checked) -->
+        <div class='form-row' id='spanishNifField' style='display: none;'>
+            <div class='col-12 col-md-6'>
+                <input type='text' class='form-control' name='spanishNifNumber' id='spanishNifNumber'
+                       placeholder='Spanish NIF/NIE number'>
+                <span id='spanishNifMessage' class='validationMessage'></span>
+            </div>
+        </div>
+
+            <!-- Foreign Tax ID Fields (shown when checkbox is NOT checked) -->
+            <!-- <div id='foreignTaxIdFields'> -->
+        <div class='form-row' id='foreignTaxIdFields'>
+            <div class='col-12 col-md-4'>
+                {COMBO_TAX_ID_COUNTRY}
+                <span id='billingTaxIdCountryMessage' class='validationMessage'></span>
+            </div>
+            <div class='col-12 col-md-4'>
+                {COMBO_TAX_ID_TYPE}
+                <span id='billingTaxIdTypeMessage' class='validationMessage'></span>
+            </div>
+            <div class='col-12 col-md-4'>
+                <input type='text' class='form-control required' name='tax_id_number' id='tax_id_number'
+                       autocomplete='tax-id-number' placeholder='{STATIC_FORM_PROFILE_BILLING_TAX_ID_NUMBER}'>
+                    <span id='billingTaxIdNumberMessage' class='validationMessage'></span>
+            </div>
+        </div>
+        </div><!-- /billingDetailsContainer -->
     </fieldset>
 
     <fieldset>

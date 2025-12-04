@@ -1,7 +1,7 @@
 <?php
 /******** INICIO: COUNCIL ********/
 $absolutePath=dirname(__FILE__);
-require $absolutePath."../../../../includes/settings.php";
+require_once $absolutePath."../../../../includes/settings.php";
 // This are now defined in settings.php (ie. ed_tb_settings)
 /******** FIN: COUNCIL ********/
 /******** INICIO: BREADCUMB ********/
@@ -911,9 +911,9 @@ define("STATIC_MANAGE_INVOICE_MEMBER_ADD", "Autocomplete with this member's deta
 /******** INICIO: INVOICE_PDF ********/
 define("STATIC_INVOICE_PDF_TITLE_INVOICE", "INVOICE");
 define("STATIC_INVOICE_PDF_MET_ADDRESS", "
-		Carrer Major 17<br>
-		43422 Barberà de la Conca<br>
-        Tarragona<br>
+		Sant Valentí, 1-3, entresòl 2a<br>
+		08242 Manresa<br>
+        Barcelona<br>
         Email: metchair@metmeetings.org<br>");
 define("STATIC_INVOICE_PDF_DATE", "DATE");
 define("STATIC_INVOICE_PDF_INVOICE_NUMBER", "NO.");

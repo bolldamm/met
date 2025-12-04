@@ -75,7 +75,7 @@
 			generalUtils::redirigir("main_app.php?section=menu&action=view");
 		}else{
 			//Usuario no valido
-			generalUtils::redirigir("https://www.metmeetings.org/easygestor/");
+			generalUtils::redirigir(CURRENT_DOMAIN_EASYGESTOR);
 		}
 	}
 ?>

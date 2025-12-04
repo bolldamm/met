@@ -42,7 +42,7 @@
 	 */
 	$descripcionBuscador = "";
 	$urlBusqueda = "";
-	$fechaBusqueda = 0;
+	$fechaBusqueda = '';
 	$fechaBusquedaAux = "";
 	$idTematica = 0;
 	$filtro="#q_#d_#t";

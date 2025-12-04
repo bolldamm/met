@@ -15,7 +15,7 @@
 			$_SESSION["diccio"] = $datoIdioma["diccionario"];
 		}
 	}else{
-		if(!isset($_SESSION["id_idioma"])) {
+		if(!isset($_SESSION["id_idioma"]) || !isset($_SESSION["diccio"])) {
 			$_SESSION["id_idioma"] = 3;
 			$_SESSION["siglas"] = "en";
 			$_SESSION["diccio"] = "en_EN.php";

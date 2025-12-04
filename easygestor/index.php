@@ -8,10 +8,10 @@
 	 */
 	require "includes/load_main_components.inc.php";
 
-	
+
 	//Si el usuario no existe, entonces redirigimos a la pagina principal
 	if(isset($_SESSION["user"])){
-		generalUtils::redirigir("https://www.metmeetings.org");
+		generalUtils::redirigir(CURRENT_DOMAIN);
 	}
 	
 	require "config/dictionary/default.php";

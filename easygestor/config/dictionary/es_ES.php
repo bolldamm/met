@@ -810,9 +810,10 @@
 	/******** INICIO: INVOICE_PDF ********/
 	define("STATIC_INVOICE_PDF_TITLE_INVOICE","INVOICE");
 	define("STATIC_INVOICE_PDF_MET_ADDRESS","
-		C/ Indústria 331, At. 2ª<br>
-		08027 BARCELONA<br>
-		Tel.: 93 408 09 97<br>"
+		Sant Valentí, 1-3, entresòl 2a<br>
+		08242 Manresa<br>
+		Barcelona<br>
+		Email: metchair@metmeetings.org<br>"
 	);
 	define("STATIC_INVOICE_PDF_DATE","DATE");
 	define("STATIC_INVOICE_PDF_INVOICE_NUMBER","INVOICE NO.");

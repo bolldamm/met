@@ -97,6 +97,37 @@
 				</table>
               <p>&nbsp;</p>
               <p style="text-align:center;font-size:8px;">{STATIC_INVOICE_PDF_VAT_EXEMPT}</p>
+              <!-- BEGIN: verifactu_qr_section -->
+              <div style="margin-top:30px;text-align:center;border-top:1px solid #dcdcdc;padding-top:15px;">
+                <table border="0" cellspacing="0" cellpadding="0" style="width:100%;">
+                  <tr>
+                    <td style="width:70%;text-align:left;vertical-align:top;font-size:9px;">
+                      <strong>Verifactu Registration</strong><br>
+                      UUID: {VERIFACTU_UUID}<br>
+                      Huella: {VERIFACTU_HUELLA}
+                    </td>
+                    <td style="width:30%;text-align:right;">
+                      <img src="{VERIFACTU_QR_IMAGE}" style="width:80px;height:80px;" />
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <!-- END: verifactu_qr_section -->
+              <!-- BEGIN: verifactu_placeholder_section -->
+              <div style="margin-top:30px;text-align:center;border-top:1px solid #dcdcdc;padding-top:15px;">
+                <table border="0" cellspacing="0" cellpadding="0" style="width:100%;">
+                  <tr>
+                    <td style="width:70%;text-align:left;vertical-align:top;font-size:9px;color:#999;">
+                      <strong>Verifactu Registration</strong><br>
+                      <em>Pending - will be registered when invoice is sent</em>
+                    </td>
+                    <td style="width:30%;text-align:right;">
+                      <div style="width:80px;height:80px;border:2px dashed #ccc;display:inline-block;line-height:80px;font-size:10px;color:#999;">QR</div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <!-- END: verifactu_placeholder_section -->
 			</div>
 		</div>
 	</body>

@@ -43,8 +43,8 @@
 	
 	//Buscador
 	$idTipo=0;
-	$fechaDesde="0000-00-00";
-	$fechaHasta="0000-00-00";
+	$fechaDesde="";
+	$fechaHasta="";
 	$keyword="";
 	$filtroPaginador="";
 	if(isset($_GET["cmbTipo"])){

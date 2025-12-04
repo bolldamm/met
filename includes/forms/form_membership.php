@@ -13,9 +13,17 @@ $plantillaFormulario->assign("COMBO_TITULOS", generalUtils::construirCombo($db, 
 //Combo paises
 $plantillaFormulario->assign("COMBO_PAIS", generalUtils::construirCombo($db, "CALL ed_sp_web_pais_obtener_combo()", "cmbPais", "cmbPais", -1, "nombre_original", "id_pais", STATIC_FORM_MEMBERSHIP_COUNTRY_OF_RESIDENCE."*", -1, 'class="form-control" style="width:100%; color:lightslategray;" autocomplete="country-name" '));
 
+//Combo billing country
+$plantillaFormulario->assign("COMBO_BILLING_COUNTRY", generalUtils::construirCombo($db, "CALL ed_sp_web_pais_obtener_combo()", "billing_country", "billing_country", -1, "nombre_original", "id_pais",STATIC_FORM_PROFILE_BILLING_COUNTRY, -1, 'class="required form-control" style="width:100%; color:lightslategray;" '));
+
+//Combo tax ID country - uses iso2 as value for Verifactu, displays country name only
+$plantillaFormulario->assign("COMBO_TAX_ID_COUNTRY", generalUtils::construirCombo($db, "CALL ed_sp_web_pais_iso_obtener_combo()", "tax_id_country", "tax_id_country", -1, "nombre_original", "iso2",STATIC_FORM_PROFILE_BILLING_TAX_ID_COUNTRY, -1, 'class="required form-control" style="width:100%; color:lightslategray;" '));
+
+//Combo tax ID type - uses tax_id_type code as value for Verifactu
+$plantillaFormulario->assign("COMBO_TAX_ID_TYPE", generalUtils::construirCombo($db, "CALL ed_sp_web_tax_id_type_obtener_combo()", "tax_id_type", "tax_id_type", -1, "description", "tax_id_type", STATIC_FORM_PROFILE_BILLING_TAX_ID_TYPE, -1, 'class="required form-control" style="width:100%; color:lightslategray;" '));
+
 //Combo años
 $plantillaFormulario->assign("COMBO_ANYOS", generalUtils::construirCombo($db, "CALL ed_sp_web_edad_usuario_web_obtener_combo(".$_SESSION["id_idioma"].")", "cmbAnyos", "cmbAnyos", -1, "nombre", "id_edad_usuario_web", STATIC_FORM_MEMBERSHIP_AGE, -1, 'class="form-control" style="width:5em; color:lightslategray;"'));
-
 
 //Combo situacion adicional
 $plantillaFormulario->assign("COMBO_SITUACION_ADICIONAL", generalUtils::construirCombo($db, "CALL ed_sp_web_situacion_adicional_obtener_combo(".$_SESSION["id_idioma"].")", "cmbSituacionAdicional", "cmbSituacionAdicional", -1, "nombre", "id_situacion_adicional", "Standard", -1, 'class="form-control" style="width:100%; margin-top:1em; color:lightslategray;"' ));

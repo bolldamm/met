@@ -81,8 +81,13 @@
 	
 
 	//if($esFactura==1){
-		//Insertamos factura		
-		$resultadoFactura=$db->callProcedure("CALL ed_sp_web_factura_insertar('".$nifFactura."','".$nombreClienteFactura."','".$nombreEmpresaFactura."','".$direccionFactura."','".$codigoPostalFactura."','".$ciudadFactura."','".$provinciaFactura."','".$paisFactura."','".$emailUsuario."','".$nombreUsuario."')");		
+		//Insertamos factura (with tax ID fields for Verifactu)
+		$taxIdCountry = isset($_SESSION["taxIdCountry"]) ? $_SESSION["taxIdCountry"] : "";
+		$taxIdType = isset($_SESSION["taxIdType"]) ? $_SESSION["taxIdType"] : "";
+		$taxIdNumber = isset($_SESSION["taxIdNumber"]) ? $_SESSION["taxIdNumber"] : "";
+		$tipoFacturaVerifactu = isset($_SESSION["tipoFacturaVerifactu"]) ? $_SESSION["tipoFacturaVerifactu"] : "F1";
+
+		$resultadoFactura=$db->callProcedure("CALL ed_sp_web_factura_insertar('".$nifFactura."','".$nombreClienteFactura."','".$nombreEmpresaFactura."','".$direccionFactura."','".$codigoPostalFactura."','".$ciudadFactura."','".$provinciaFactura."','".$paisFactura."','".$emailUsuario."','".$nombreUsuario."','".$taxIdCountry."','".$taxIdType."','".$taxIdNumber."','".$tipoFacturaVerifactu."')");
 		$datoFactura=$db->getData($resultadoFactura);
 		$idFactura=$datoFactura["id_factura"];
 		

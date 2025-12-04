@@ -11,8 +11,8 @@
 	$idConceptoQuery=0;
 	$idTipoPago=0;
 	$pagado=-1;
-	$fechaDesde="0000-00-00";
-	$fechaHasta="0000-00-00";
+	$fechaDesde="";
+	$fechaHasta="";
 	$importeDesde="-1";
 	$importeHasta="-1";
 	$persona="";

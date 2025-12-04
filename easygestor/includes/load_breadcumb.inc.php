@@ -24,7 +24,7 @@
 	 */
 	$i=0;
 	for($i=0;$i<$totalMigas;$i++){
-        $vectorMigas[$i]["texto"] = strip_tags($vectorMigas[$i]["texto"]);
+        $vectorMigas[$i]["texto"] = strip_tags($vectorMigas[$i]["texto"] ?? "");
 		$plantillaBreadCumb->assign("BREADCUMB_TEXTO",$vectorMigas[$i]["texto"]);
 		$plantillaBreadCumb->assign("BREADCUMB_ENLACE",$vectorMigas[$i]["url"]);
 		if($i==$totalMigas-1){

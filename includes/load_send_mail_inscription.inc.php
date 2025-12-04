@@ -147,8 +147,10 @@ if (isset($stripeFee)) {
 
 }
 
-//Insert invoice
-$resultadoFactura = $db->callProcedure("CALL ed_sp_web_factura_insertar('" . $nifFactura . "','" . $nombreClienteFactura . "','" . $nombreEmpresaFactura . "','" . $direccionFactura . "','" . $codigoPostalFactura . "','" . $ciudadFactura . "','" . $provinciaFactura . "','" . $paisFactura . "','" . $emailUsuario . "','" . $nombreUsuario . "')");
+//Insert invoice (with tax ID fields for Verifactu)
+// Get invoice type from session (F2 for simplified/individual, F1 for standard/business)
+$tipoFacturaVerifactu = isset($_SESSION["tipoFacturaVerifactu"]) ? $_SESSION["tipoFacturaVerifactu"] : "F1";
+$resultadoFactura = $db->callProcedure("CALL ed_sp_web_factura_insertar('" . $nifFactura . "','" . $nombreClienteFactura . "','" . $nombreEmpresaFactura . "','" . $direccionFactura . "','" . $codigoPostalFactura . "','" . $ciudadFactura . "','" . $provinciaFactura . "','" . $paisFactura . "','" . $emailUsuario . "','" . $nombreUsuario . "','" . $taxIdCountry . "','" . $taxIdType . "','" . $taxIdNumber . "','" . $tipoFacturaVerifactu . "')");
 $datoFactura = $db->getData($resultadoFactura);
 $idFactura = $datoFactura["id_factura"];
 

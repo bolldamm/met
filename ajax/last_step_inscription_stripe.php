@@ -33,6 +33,11 @@ $ciudadFactura=generalUtils::escaparCadena($datosInscripcion["ciudad_factura"]);
 $provinciaFactura=generalUtils::escaparCadena($datosInscripcion["provincia_factura"]);
 $paisFactura=generalUtils::escaparCadena($datosInscripcion["pais_factura"]);
 
+//Tax ID fields for Verifactu (from session, set in save_inscription.php)
+$taxIdCountry = isset($_SESSION["taxIdCountry"]) ? $_SESSION["taxIdCountry"] : "";
+$taxIdType = isset($_SESSION["taxIdType"]) ? $_SESSION["taxIdType"] : "";
+$taxIdNumber = isset($_SESSION["taxIdNumber"]) ? $_SESSION["taxIdNumber"] : "";
+
 //Store name in variables
 $nombreUsuario=$datosInscripcion["nombre"];
 $apellidosUsuario=$datosInscripcion["apellidos"];

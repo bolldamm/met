@@ -220,10 +220,12 @@
 			$subPlantilla->assign("STYLE_DISPLAY","display:none;");
 		}
 		$subPlantilla->assign("MENU_TITULO",$datoMenu["nombre"]);
-//		$webify = true;
+/*
+		$webify = true;
 		if ($webify) {
-			$datoMenu["descripcion"] = "WEBIFIED" . $datoMenu["descripcion"]; 
-		}       
+			$datoMenu["descripcion"] = "WEBIFIED" . $datoMenu["descripcion"];
+		}
+*/       
 		$subPlantilla->assign("MENU_DESCRIPCION",$datoMenu["descripcion"]);
 		/*$subPlantilla->assign("MENU_DESCRIPCION_SLIDER",$datoMenu["descripcion_slider"]);*/
 		
@@ -325,7 +327,7 @@
 	
 	if($idPosicion!=3){
 		//Obtenemos todos los menus padres del menu actual, incluido el actual
-		$resultado=$db->callProcedure("CALL ".OBJECT_DB_ACRONYM."_sp_menu_obtener_jerarquia('',".$idPadreAux.",'')");
+		$resultado=$db->callProcedure("CALL ".OBJECT_DB_ACRONYM."_sp_menu_obtener_jerarquia(null,".$idPadreAux.",'')");
 		$dato=$db->getData($resultado);
 		
 		

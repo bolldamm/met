@@ -337,7 +337,7 @@
 
         <!-- END: formulario_reiniciar_clave -->
 
-        <!-- BEGIN: validate_membership_form_TEST -->
+        <!-- BEGIN: validate_membership_form -->
 
         function removeUsernameAlert() {
             $("#txtEmailUser").on("keyup", function () {
@@ -514,7 +514,7 @@
         }
 
         function removeTaxIdNumberAlert() {
-            $("#taxIdNumber").on("keyup", function () {
+            $("#tax_id_number").on("keyup", function () {
                 if ($(this).val() !== "") {
                     $(this).removeClass("errorBorderColor error");
                     $("#billingTaxIdNumberMessage").html("");
@@ -607,57 +607,64 @@
                     $("#containerProfActs").addClass("errorBackgroundColor error");
                     $("#profActsMessage").html("Please select at least one activity");
                 }
-                if (billingNif.val() === "") {
-                    billingNif.addClass("errorBorderColor error");
-                    $("#nifMessage").html("Please enter your tax ID or VAT number");
-                }
-                if (billingName.val() === "") {
-                    billingName.addClass("errorBorderColor error");
-                    $("#billingNameMessage").html("Please enter your name for billing purposes");
-                }
-                if (billingAddress.val() === "") {
-                    billingAddress.addClass("errorBorderColor error");
-                    $("#addressMessage").html("Please enter your address");
-                }
-                if (billingPostcode.val() === "") {
-                    billingPostcode.addClass("errorBorderColor error");
-                    $("#postcodeMessage").html("Please enter your postal code");
-                }
-                if (billingCity.val() === "") {
-                    billingCity.addClass("errorBorderColor error");
-                    $("#cityMessage").html("Please enter your town or city");
-                }
-                if (billingCountry.val() === "") {
-                    billingCountry.addClass("errorBorderColor error");
-                    $("#billingCountryMessage").html("Please enter your country");
-                }
 
-                // Conditional validation for Tax ID fields
+                // Only validate billing fields if invoice type is "business"
+                let invoiceType = $('input[name="invoiceType"]:checked').val();
+
+                // Declare tax ID variables outside the if block so they're accessible later
                 let hasSpanishNif = $("#hasSpanishNif");
                 let spanishNifNumber = $("#spanishNifNumber");
                 let taxIdCountry = $("#tax_id_country");
                 let taxIdType = $("#tax_id_type");
                 let taxIdNumber = $("#tax_id_number");
 
-                if (hasSpanishNif.is(':checked')) {
-                    // Validate Spanish NIF/NIE field
-                    if (spanishNifNumber.val() === "") {
-                        spanishNifNumber.addClass("errorBorderColor error");
-                        $("#spanishNifMessage").html("Please enter your Spanish NIF/NIE number");
+                if (invoiceType !== 'individual') {
+                    if (billingNif.val() === "") {
+                        billingNif.addClass("errorBorderColor error");
+                        $("#nifMessage").html("Please enter your tax ID or VAT number");
                     }
-                } else {
-                    // Validate Foreign Tax ID fields
-                    if (taxIdCountry.val() === "-1" || taxIdCountry.val() === null) {
-                        taxIdCountry.addClass("errorBorderColor error");
-                        $("#billingTaxIdCountryMessage").html("Please select your tax ID country");
+                    if (billingName.val() === "") {
+                        billingName.addClass("errorBorderColor error");
+                        $("#billingNameMessage").html("Please enter your name for billing purposes");
                     }
-                    if (taxIdType.val() === "-1" || taxIdType.val() === null) {
-                        taxIdType.addClass("errorBorderColor error");
-                        $("#billingTaxIdTypeMessage").html("Please select your tax ID type");
+                    if (billingAddress.val() === "") {
+                        billingAddress.addClass("errorBorderColor error");
+                        $("#addressMessage").html("Please enter your address");
                     }
-                    if (taxIdNumber.val() === "") {
-                        taxIdNumber.addClass("errorBorderColor error");
-                        $("#billingTaxIdNumberMessage").html("Please enter your tax ID number");
+                    if (billingPostcode.val() === "") {
+                        billingPostcode.addClass("errorBorderColor error");
+                        $("#postcodeMessage").html("Please enter your postal code");
+                    }
+                    if (billingCity.val() === "") {
+                        billingCity.addClass("errorBorderColor error");
+                        $("#cityMessage").html("Please enter your town or city");
+                    }
+                    if (billingCountry.val() === "") {
+                        billingCountry.addClass("errorBorderColor error");
+                        $("#billingCountryMessage").html("Please enter your country");
+                    }
+
+                    // Conditional validation for Tax ID fields
+                    if (hasSpanishNif.is(':checked')) {
+                        // Validate Spanish NIF/NIE field
+                        if (spanishNifNumber.val() === "") {
+                            spanishNifNumber.addClass("errorBorderColor error");
+                            $("#spanishNifMessage").html("Please enter your Spanish NIF/NIE number");
+                        }
+                    } else {
+                        // Validate Foreign Tax ID fields
+                        if (taxIdCountry.val() === "-1" || taxIdCountry.val() === null) {
+                            taxIdCountry.addClass("errorBorderColor error");
+                            $("#billingTaxIdCountryMessage").html("Please select your tax ID country");
+                        }
+                        if (taxIdType.val() === "-1" || taxIdType.val() === null) {
+                            taxIdType.addClass("errorBorderColor error");
+                            $("#billingTaxIdTypeMessage").html("Please select your tax ID type");
+                        }
+                        if (taxIdNumber.val() === "") {
+                            taxIdNumber.addClass("errorBorderColor error");
+                            $("#billingTaxIdNumberMessage").html("Please enter your tax ID number");
+                        }
                     }
                 }
 
@@ -744,13 +751,10 @@
 var taxTouched = false;
       
 // Sync Tax-ID value from Billing unless user already changed it
+// Note: Disabled - billing_country uses id_pais values while tax_id_country uses iso2 codes
 function syncValueFromBilling() {
-    var $billing = $('#billing_country');
-    var $tax     = $('#tax_id_country');
-
-    if ($billing.length && $tax.length && !taxTouched) {
-        $tax.val($billing.val());
-    }
+    // Disabled - different value systems between dropdowns
+    return;
 }
 
 $(function () {
@@ -843,12 +847,49 @@ $(function () {
   }
 });
 
+// Invoice type toggle (individual vs business) functionality
+$(function () {
+    var $invoiceTypeRadios = $('input[name="invoiceType"]');
+    var $billingContainer = $('#billingDetailsContainer');
+    var $billingFields = $billingContainer.find('input, select');
+
+    function toggleBillingDetails() {
+        var selectedType = $('input[name="invoiceType"]:checked').val();
+
+        if (selectedType === 'individual') {
+            // Hide billing details for private individuals
+            $billingContainer.hide();
+
+            // Remove required class from all billing fields
+            $billingContainer.find('.required').removeClass('required').addClass('was-required');
+            $billingContainer.find('[required]').removeAttr('required').addClass('was-required-attr');
+
+            // Clear validation messages
+            $billingContainer.find('.validationMessage').html('');
+            $billingContainer.find('.error').removeClass('error errorBorderColor');
+        } else {
+            // Show billing details for business/professional
+            $billingContainer.show();
+
+            // Restore required class to billing fields
+            $billingContainer.find('.was-required').removeClass('was-required').addClass('required');
+            $billingContainer.find('.was-required-attr').attr('required', true).removeClass('was-required-attr');
+        }
+    }
+
+    // Initialize on page load
+    toggleBillingDetails();
+
+    // Toggle on radio change
+    $invoiceTypeRadios.on('change', toggleBillingDetails);
+});
+
         function generateMemberRegistration() {
             let form = $("#frmMembership");
             let signupResult;
             $.ajax({
                 type: "POST",
-                url: "ajax/save_inscription_TEST",
+                url: "ajax/save_inscription",
                 data: form.serialize(),
                 success: function (data) {
                     document.getElementById("resultadoInscripcion").innerHTML = data;
@@ -861,8 +902,7 @@ $(function () {
 
                     } else if (signupResult.value === "2") {
                         let item = document.getElementById("item").value;
-                        //window.location = "/proceed?it=" + item;
-                        window.location = "/proceed_TEST?it=" + item + "&test=1";
+                        window.location = "/proceed?it=" + item;
 
 
                     } else if (signupResult.value === "4") {
@@ -881,9 +921,9 @@ $(function () {
             });
         }
 
-        <!-- END: validate_membership_form_TEST -->
+        <!-- END: validate_membership_form -->
 
-        <!-- BEGIN: validate_renew_membership_form_TEST -->
+        <!-- BEGIN: validate_renew_membership_form -->
         //Default HTML5 validation is used because the form is much simpler
 
 $(function () {
@@ -894,17 +934,18 @@ $(function () {
   var $billing        = $('#billing_country');
   var $tax            = $('#tax_id_country');
   var $taxType        = $('#tax_id_type');
-  var $taxNumber      = $('#taxIdNumber');
+  var $taxNumber      = $('#tax_id_number');
   var $hasSpanishNif  = $('#hasSpanishNif');
   var $spanishField   = $('#spanishNifField');
   var $foreignFields  = $('#foreignTaxIdFields');
   var $spanishInput   = $('#spanishNifNumber');
 
   // 2) Helpers
+  // Note: syncValueFromBilling disabled - billing_country uses id_pais values
+  // while tax_id_country uses iso2 codes, so they can't be synced directly
   function syncValueFromBilling() {
-    if ($billing.length && $tax.length && !taxTouched) {
-      $tax.val($billing.val());
-    }
+    // Disabled - different value systems between dropdowns
+    return;
   }
 
   function toggleTaxIdFields() {
@@ -952,6 +993,40 @@ $(function () {
     syncValueFromBilling();
   }
   toggleTaxIdFields();
+
+  // Invoice type toggle (individual vs business)
+  var $invoiceTypeRadios = $('input[name="invoiceType"]');
+  var $billingContainer = $('#billingDetailsContainer');
+
+  function toggleBillingDetails() {
+    var selectedType = $('input[name="invoiceType"]:checked').val();
+
+    if (selectedType === 'individual') {
+      // Hide billing details for private individuals
+      $billingContainer.hide();
+
+      // Remove required attribute from billing fields
+      $billingContainer.find('[required]').removeAttr('required').addClass('was-required-attr');
+      $billingContainer.find('.required').removeClass('required').addClass('was-required');
+
+      // Clear validation messages and errors
+      $billingContainer.find('.validationMessage').html('');
+      $billingContainer.find('.invalid-feedback').hide();
+      $billingContainer.find('.error').removeClass('error errorBorderColor');
+    } else {
+      // Show billing details for business/professional
+      $billingContainer.show();
+
+      // Restore required attribute to billing fields
+      $billingContainer.find('.was-required-attr').attr('required', true).removeClass('was-required-attr');
+      $billingContainer.find('.was-required').addClass('required').removeClass('was-required');
+      // Note: Don't show .invalid-feedback here - Bootstrap handles that based on validation state
+    }
+  }
+
+  // Initialize and bind
+  toggleBillingDetails();
+  $invoiceTypeRadios.on('change', toggleBillingDetails);
 
   // 4) Event listeners
   clearPaymentMethodWarning();
@@ -1002,34 +1077,37 @@ $(function () {
     $('#billingTaxIdNumberMessage').html('');
     $taxNumber.removeClass('errorBorderColor error');
 
-    // Validate Tax ID
+    // Validate Tax ID (only if invoice type is not individual)
     var isValidTaxId = true;
+    var selectedInvoiceType = $('input[name="invoiceType"]:checked').val();
 
-    if ($hasSpanishNif.is(':checked')) {
-      if (!$spanishInput.val() || !$spanishInput.val().trim()) {
-        $spanishInput.addClass('errorBorderColor error');
-        $('#spanishNifMessage').html('Please enter your Spanish NIF/NIE number');
-        isValidTaxId = false;
+    if (selectedInvoiceType !== 'individual') {
+      if ($hasSpanishNif.is(':checked')) {
+        if (!$spanishInput.val() || !$spanishInput.val().trim()) {
+          $spanishInput.addClass('errorBorderColor error');
+          $('#spanishNifMessage').html('Please enter your Spanish NIF/NIE number');
+          isValidTaxId = false;
+        } else {
+          // Copy to generic field for backend and set country = Spain (209)
+          $taxNumber.val($spanishInput.val());
+          $tax.val('209');
+        }
       } else {
-        // Copy to generic field for backend and set country = Spain (209)
-        $taxNumber.val($spanishInput.val());
-        $tax.val('209');
-      }
-    } else {
-      if ($tax.val() === '-1' || $tax.val() === null || $tax.val() === '') {
-        $tax.addClass('errorBorderColor error');
-        $('#billingTaxIdCountryMessage').html('Please select your tax ID country');
-        isValidTaxId = false;
-      }
-      if ($taxType.val() === '-1' || $taxType.val() === null || $taxType.val() === '') {
-        $taxType.addClass('errorBorderColor error');
-        $('#billingTaxIdTypeMessage').html('Please select your tax ID type');
-        isValidTaxId = false;
-      }
-      if (!$taxNumber.val() || !$taxNumber.val().trim()) {
-        $taxNumber.addClass('errorBorderColor error');
-        $('#billingTaxIdNumberMessage').html('Please enter your tax ID number');
-        isValidTaxId = false;
+        if ($tax.val() === '-1' || $tax.val() === null || $tax.val() === '') {
+          $tax.addClass('errorBorderColor error');
+          $('#billingTaxIdCountryMessage').html('Please select your tax ID country');
+          isValidTaxId = false;
+        }
+        if ($taxType.val() === '-1' || $taxType.val() === null || $taxType.val() === '') {
+          $taxType.addClass('errorBorderColor error');
+          $('#billingTaxIdTypeMessage').html('Please select your tax ID type');
+          isValidTaxId = false;
+        }
+        if (!$taxNumber.val() || !$taxNumber.val().trim()) {
+          $taxNumber.addClass('errorBorderColor error');
+          $('#billingTaxIdNumberMessage').html('Please enter your tax ID number');
+          isValidTaxId = false;
+        }
       }
     }
 
@@ -1051,7 +1129,7 @@ $(function () {
     var renewalResult;
     $.ajax({
       type: 'POST',
-      url: 'ajax/save_renew_inscription_TEST',
+      url: 'ajax/save_renew_inscription',
       data: $form.serialize(),
       success: function (data) {
         $('#resultadoInscripcion').html(data);
@@ -1062,7 +1140,7 @@ $(function () {
 
         } else if (renewalResult && renewalResult.value === '2') {
           var item = $('#item').val();
-          window.location = '/proceed_TEST?it=' + item + '&test=1';
+          window.location = '/proceed?it=' + item;
 
         } else if (renewalResult && renewalResult.value === '4') {
           window.location = 'inscripcion_finalizada?tipo=4';
@@ -1082,464 +1160,7 @@ $(function () {
 });
 </script>
 
-        <!-- END: validate_renew_membership_form_TEST -->
-          
-          <!-- BEGIN: validate_membership_form -->
-
-        function removeUsernameAlert() {
-            $("#txtEmailUser").on("keyup", function () {
-                if ($(this).val() !== "") {
-                    $(this).removeClass("errorBorderColor error");
-                    $("#emailUserMessage").html("");
-                }
-            });
-        }
-
-        function removePasswordAlert() {
-            $("#txtPasswd").on("keyup", function () {
-                if ($(this).val() !== "") {
-                    $(this).removeClass("errorBorderColor error");
-                    $("#passwordMessage").html("");
-                }
-            });
-        }
-
-        function removeConfirmPasswordAlert() {
-            $("#txtRePasswd").on("keyup", function () {
-                if ($("#txtPasswd").val() !== "") {
-                    $(this).removeClass("errorBorderColor error");
-                    $("#confirmPasswordMessage").html("");
-                }
-            });
-        }
-
-        function removeMatchPasswordsAlert() {
-            $("#txtRePasswd").on("keyup", function () {
-                let password = $("#txtPasswd");
-                if ($(this).val() === password.val()) {
-                    $(this).removeClass("errorBorderColor error");
-                    password.removeClass("errorBorderColor error");
-                    $("#passwordMatchMessage").html("");
-                } else {
-                    $(this).addClass("errorBorderColor error");
-                    $("#passwordMatchMessage").html("Passwords must match");
-                }
-            });
-        }
-
-        function removeMatchPasswordsAlertReverse() {
-            $("#txtPasswd").on("keyup", function () {
-                let confirmPassword = $("#txtRePasswd");
-                if ($(this).val() === confirmPassword.val()) {
-                    $(this).removeClass("errorBorderColor error");
-                    confirmPassword.removeClass("errorBorderColor error");
-                    $("#passwordMatchMessage").html("");
-                } else {
-                    $(this).addClass("errorBorderColor error");
-                    $("#passwordMatchMessage").html("Passwords must match");
-                }
-            });
-        }
-
-        function removeFirstNameAlert() {
-            $("#txtNombre").on("keyup", function () {
-                if ($(this).val() !== "") {
-                    $(this).removeClass("errorBorderColor error");
-                    $("#firstNameMessage").html("");
-                }
-            });
-        }
-
-        function removeLastNameameAlert() {
-            $("#txtApellidos").on("keyup", function () {
-                if ($(this).val() !== "") {
-                    $(this).removeClass("errorBorderColor error");
-                    $("#lastNameMessage").html("");
-                }
-            });
-        }
-
-        function removeCountryAlert() {
-            $("#cmbPais").on("change", function () {
-                if ($(this).val() > -1) {
-                    $(this).removeClass("errorBorderColor error");
-                    $("#countryMessage").html("");
-                }
-            });
-        }
-
-        function removeProfActsAlert() {
-            $(".professionalActivity").each(function () {
-                $(this).on("click", function () {
-                    if ($(this).length > 0) {
-                        $("#containerProfActs").removeClass("errorBackgroundColor error");
-                        $("#profActsMessage").html("");
-                    }
-                });
-            });
-        }
-
-        function removeNifAlert() {
-            $("#txtFacturacionNifCliente").on("keyup", function () {
-                if ($(this).val() !== "") {
-                    $(this).removeClass("errorBorderColor error");
-                    $("#nifMessage").html("");
-                }
-            });
-        }
-
-        function removeBillingNameAlert() {
-            $("#txtFacturacionNombreCliente").on("keyup", function () {
-                if ($(this).val() !== "") {
-                    $(this).removeClass("errorBorderColor error");
-                    $("#billingNameMessage").html("");
-                }
-            });
-        }
-
-        function removeBillingAddressAlert() {
-            $("#txtFacturacionDireccion").on("keyup", function () {
-                if ($(this).val() !== "") {
-                    $(this).removeClass("errorBorderColor error");
-                    $("#addressMessage").html("");
-                }
-            });
-        }
-
-        function removeBillingPostcodeAlert() {
-            $("#txtFacturacionCodigoPostal").on("keyup", function () {
-                if ($(this).val() !== "") {
-                    $(this).removeClass("errorBorderColor error");
-                    $("#postcodeMessage").html("");
-                }
-            });
-        }
-
-        function removeBillingCityAlert() {
-            $("#txtFacturacionCiudad").on("keyup", function () {
-                if ($(this).val() !== "") {
-                    $(this).removeClass("errorBorderColor error");
-                    $("#cityMessage").html("");
-                }
-            });
-        }
-
-        function removeBillingCountryAlert() {
-            $("#txtFacturacionPais").on("keyup", function () {
-                if ($(this).val() !== "") {
-                    $(this).removeClass("errorBorderColor error");
-                    $("#billingCountryMessage").html("");
-                }
-            });
-        }
-
-        function removePaymentAlert() {
-            $(".paymentMethod").on("click", function () {
-                if ($(this).prop("checked") !== false) {
-                    $("#containerPaymentMethod").removeClass("errorBackgroundColor error");
-                    $("#paymentMethodMessage").html("");
-                }
-            });
-        }
-
-        function removePrivacyAlert() {
-            $("#chkPrivacy").on("click", function () {
-                if ($(this).prop("checked") !== false) {
-                    $("#containerPrivacyCheck").removeClass("errorBackgroundColor error");
-                    $("#privacyMessage").html("");
-                }
-            });
-        }
-
-        //ON SUBMIT, validate required fields
-        function validateMembershipForm() {
-            $("#frmMembership").on("submit", function (event) {
-
-                // Stop form submission
-                event.preventDefault();
-                event.stopPropagation();
-
-                let username = $("#txtEmailUser");
-                let emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-                let pass = $("#txtPasswd");
-                let rePass = $("#txtRePasswd");
-                let firstName = $("#txtNombre");
-                let lastName = $("#txtApellidos");
-                let country = $("#cmbPais");
-                let profActs = $(".professionalActivity:checked");
-                let billingNif = $("#txtFacturacionNifCliente");
-                let billingName = $("#txtFacturacionNombreCliente");
-                let billingAddress = $("#txtFacturacionDireccion");
-                let billingPostcode = $("#txtFacturacionCodigoPostal");
-                let billingCity = $("#txtFacturacionCiudad");
-                let billingCountry = $("#txtFacturacionPais");
-                let paymentMethod = $(".paymentMethod:checked");
-                let privacy = $("#chkPrivacy");
-               	let payCode = $("#paymentCode");
-              
-              	if (payCode.val().toLowerCase().trim() === "{STATIC_DISCOUNT_MEMBERSHIP}") {                  
-					document.getElementById("transfer").checked = true;
-					document.getElementById("paypal").checked = false;
-				} else {
-					document.getElementById("transfer").checked = false;
-					document.getElementById("paypal").checked = true;
-				}
-
-                //If any fields are invalid, display alert and message
-                if (username.val() === "" || emailRegExp.test(username.val()) === false) {
-                    username.addClass("errorBorderColor error");
-                    $("#emailUserMessage").html("Please enter a valid email address");
-                }
-                if (pass.val() === "") {
-                    pass.addClass("errorBorderColor error");
-                    $("#passwordMessage").html("Please enter password");
-                }
-                if (rePass.val() === "") {
-                    rePass.addClass("errorBorderColor error");
-                    $("#confirmPasswordMessage").html("Please confirm password");
-                }
-                if (pass.val() !== "" && rePass.val() !== "" && pass.val() !== rePass.val()) {
-                    rePass.addClass("errorBorderColor error");
-                    $("#passwordMatchMessage").html("Passwords must match");
-                }
-                if (firstName.val() === "") {
-                    firstName.addClass("errorBorderColor error");
-                    $("#firstNameMessage").html("Please enter your first name");
-                }
-                if (lastName.val() === "") {
-                    lastName.addClass("errorBorderColor error");
-                    $("#lastNameMessage").html("Please enter your last name(s)");
-                }
-                if (country.val() < 0) {
-                    country.addClass("errorBorderColor error");
-                    $("#countryMessage").html("Please select a country");
-                }
-                if (profActs.length < 1) {
-                    $("#containerProfActs").addClass("errorBackgroundColor error");
-                    $("#profActsMessage").html("Please select at least one activity");
-                }
-                if (billingNif.val() === "") {
-                    billingNif.addClass("errorBorderColor error");
-                    $("#nifMessage").html("Please enter your tax ID or VAT number");
-                }
-                if (billingName.val() === "") {
-                    billingName.addClass("errorBorderColor error");
-                    $("#billingNameMessage").html("Please enter your name for billing purposes");
-                }
-                if (billingAddress.val() === "") {
-                    billingAddress.addClass("errorBorderColor error");
-                    $("#addressMessage").html("Please enter your address");
-                }
-                if (billingPostcode.val() === "") {
-                    billingPostcode.addClass("errorBorderColor error");
-                    $("#postcodeMessage").html("Please enter your postal code");
-                }
-                if (billingCity.val() === "") {
-                    billingCity.addClass("errorBorderColor error");
-                    $("#cityMessage").html("Please enter your town or city");
-                }
-                if (billingCountry.val() === "") {
-                    billingCountry.addClass("errorBorderColor error");
-                    $("#billingCountryMessage").html("Please enter your country");
-                }
-                if (paymentMethod.length < 1) {
-                    $("#containerPaymentMethod").addClass("errorBackgroundColor error");
-                    $("#paymentMethodMessage").html("Please select a payment method");
-                }
-                if (privacy.prop("checked") === false) {
-                    $("#containerPrivacyCheck").addClass("errorBackgroundColor error");
-                    $("#privacyMessage").html("To submit the form, you must accept MET's privacy policy");
-                }
-
-                //If any fields are invalid, scroll to first invalid input or checkbox, with animation
-//                if (username.val() === "" || pass.val() === "" || rePass.val() === "" || pass.val() !== rePass.val() || firstName.val() === "" || lastName.val() === "" || country.val() < 0 || profActs.length < 1 || billingNif.val() === "" || billingName.val() === "" || billingAddress.val() === "" || billingPostcode.val() === "" || billingCity.val() === "" || billingCountry.val() === "" || paymentMethod.prop("checked").length < 1 || privacy.prop("checked") === false) {
-                if (username.val() === "" || emailRegExp.test(username.val()) === false || pass.val() === "" || rePass.val() === "" || pass.val() !== rePass.val() || firstName.val() === "" || lastName.val() === "" || country.val() < 0 || profActs.length < 1 || billingNif.val() === "" || billingName.val() === "" || billingAddress.val() === "" || billingPostcode.val() === "" || billingCity.val() === "" || billingCountry.val() === "" || paymentMethod.prop("checked").length < 1 || privacy.prop("checked") === false) {
-                    let invalidInput = $(".error");
-                    if (invalidInput.length > 0) {
-                        $("html, body").animate({
-                            scrollTop: invalidInput.first().offset().top - 20
-                        }, 800);
-                    }
-                } else {
-
-                    //Store choices (prof activities and work situations) in hidden element
-                    let cadenaActividades = "";
-                    profActs.each(function (index, valor) {
-                        cadenaActividades += valor.value + ",";
-                    });
-                    cadenaActividades = cadenaActividades.substring(0, cadenaActividades.length - 1);
-                    document.frmMembership.hdnIdActividadProfesional.value = cadenaActividades;
-
-                    let cadenaSituacionesLaborales = "";
-                    $(".workSituation:checked").each(function (index, valor) {
-                        cadenaSituacionesLaborales += valor.value + ",";
-                    });
-                    cadenaSituacionesLaborales = cadenaSituacionesLaborales.substring(0, cadenaSituacionesLaborales.length - 1);
-                    document.frmMembership.hdnIdSituacionLaboral.value = cadenaSituacionesLaborales;
-
-                    //Run function to block user interface via blockUI.js and display Sending… message
-                    mensajeCargando("{STATIC_GLOBAL_SENDING}...");
-
-                    //Run function to generate registration (AJAX call to save_inscription)
-                    generateMemberRegistration();
-                }
-
-            });
-        }
-
-        //ON PAGE LOAD, add event listeners
-        $(document).ready(function () {
-            removeUsernameAlert();
-            removePasswordAlert();
-            removeConfirmPasswordAlert();
-            removeMatchPasswordsAlert();
-            removeMatchPasswordsAlertReverse();
-            removeFirstNameAlert();
-            removeLastNameameAlert();
-            removeCountryAlert();
-            removeProfActsAlert();
-            removeNifAlert();
-            removeBillingNameAlert();
-            removeBillingAddressAlert();
-            removeBillingPostcodeAlert();
-            removeBillingCityAlert();
-            removeBillingCountryAlert();
-            removePaymentAlert();
-            removePrivacyAlert();
-            validateMembershipForm();
-            supports_input_placeholder();
-        });
-
-        function generateMemberRegistration() {
-            let form = $("#frmMembership");
-            let signupResult;
-            $.ajax({
-                type: "POST",
-                url: "ajax/save_inscription",
-                data: form.serialize(),
-                success: function (data) {
-                    document.getElementById("resultadoInscripcion").innerHTML = data;
-                    signupResult = document.getElementById("hdnTipoResultado");
-
-
-                    if (signupResult.value === "1") {
-                        window.location = "inscripcion_finalizada?tipo=1";
-
-
-                    } else if (signupResult.value === "2") {
-                        let item = document.getElementById("item").value;
-                        window.location = "/proceed?it=" + item;
-
-
-                    } else if (signupResult.value === "4") {
-                        window.location = "inscripcion_finalizada?tipo=4";
-
-
-                    } else {
-                        let msgContenido = document.getElementById("msgAlert");
-                        msgContenido.innerHTML = signupResult.value;
-                        msgContenido.setAttribute("class", "msgKO");
-                        msgContenido.style.display = "block";
-                        moverWeb();
-                        $.unblockUI();
-                    }
-                }
-            });
-        }
-
-        <!-- END: validate_membership_form -->
-
-        <!-- BEGIN: validate_renew_membership_form -->
-        //Default HTML5 validation is used because the form is much simpler
-
-        //ON CLICK, clear "Payment methods" warning
-        function clearPaymentMethodWarning() {
-            $(".paymentMethod").on("click", function () {
-                if ($(this).prop("checked") === true) {
-                    $("#paymentMethodMessage").html("");
-                    $("#containerPaymentMethod").removeClass("errorBackgroundColor");
-                }
-            });
-        }
-
-        //ON SUBMIT, stop submission, validate required fields, then submit
-        function validateRenewMembershipForm() {
-            $("#frmMembership").on("submit", function (event) {
-                // Stop form submission
-                event.preventDefault();
-                event.stopPropagation();
-              
-                let payCode = $("#paymentCode");
-              
-              	if (payCode.val().toLowerCase().trim() === "{STATIC_DISCOUNT_RENEW_MEMBERSHIP}") {                  
-					document.getElementById("transfer").checked = true;
-					document.getElementById("paypal").checked = false;
-				} else {
-					document.getElementById("transfer").checked = false;
-					document.getElementById("paypal").checked = true;
-				}
-
-                if ($(".paymentMethod").prop("checked").length < 1) {
-                    $("#paymentMethodMessage").html("Please select a payment method");
-                    $("#containerPaymentMethod").addClass("errorBackgroundColor");
-                }
-
-                if (this.checkValidity() === false) {
-                    this.classList.add("was-validated");
-                } else {
-                    //Block user interface (blockUI,js) and display "Sending…" message
-                    mensajeCargando("{STATIC_GLOBAL_SENDING}...");
-                    //Generate conference registration (AJAX call to save_inscription_conference)
-                    generateMembershipRenewal();
-                }
-            });
-        }
-
-        //ON PAGE LOAD, add event listeners
-        $(document).ready(function () {
-            clearPaymentMethodWarning();
-            validateRenewMembershipForm();
-        });
-
-        function generateMembershipRenewal() {
-            let form = $("#frmMembership");
-            let renewalResult;
-            $.ajax({
-                type: "POST",
-                url: "ajax/save_renew_inscription",
-                data: form.serialize(),
-                success: function (data) {
-                    document.getElementById("resultadoInscripcion").innerHTML = data;
-                    renewalResult = document.getElementById("hdnTipoResultado");
-
-
-                    if (renewalResult.value === "1") {
-                        window.location = "inscripcion_finalizada?tipo=1";
-
-
-                    } else if (renewalResult.value === "2") {
-                        let item = document.getElementById("item").value;
-                        window.location = "/proceed?it=" + item;
-
-
-                    } else if (renewalResult.value === "4") {
-                        window.location = "inscripcion_finalizada?tipo=4";
-
-
-                    } else {
-                        let msgContenido = document.getElementById("msgAlert");
-                        msgContenido.innerHTML = renewalResult.value;
-                        msgContenido.setAttribute("class", "msgKO");
-                        msgContenido.style.display = "block";
-                        moverWeb();
-                        $.unblockUI();
-                    }
-                }
-            });
-        }
-
         <!-- END: validate_renew_membership_form -->
-
         <!-- BEGIN: validate_workshop_registration_form -->
 
         //ON CLICK in any workshop checkbox, recalculate total price

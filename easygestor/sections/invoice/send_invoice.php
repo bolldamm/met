@@ -1,53 +1,119 @@
 <?php
 	/**
-	 * 
+	 *
 	 * Script que muestra y realiza un evio
 	 * @Author eData
-	 * 
+	 *
 	 */
-	
+
+	require_once(dirname(__FILE__) . '/../../../includes/VerifactiService.php');
+
 	//Si hemos enviado el formulario...
 	if(count($_POST)>0){
+		$idFactura = intval($_POST["hdnIdElemento"]);
+
+		//Get invoice data to check if it needs Verifacti registration
+		$resultadoFacturaCheck = $db->callProcedure("CALL ".OBJECT_DB_ACRONYM."_sp_factura_obtener_concreto(".$idFactura.")");
+		$datoFacturaCheck = $db->getData($resultadoFacturaCheck);
+
+		//Initialize Verifacti service
+		$verifactiService = new VerifactiService($db);
+
+		//Register with Verifacti if enabled, not a proforma, and not already registered
+		$verifactiError = null;
+		if ($verifactiService->isEnabled() && $datoFacturaCheck["proforma"] != 1) {
+			if (empty($datoFacturaCheck["verifactu_uuid"])) {
+				//Submit to Verifacti API
+				$submitResult = $verifactiService->submitInvoice($idFactura);
+
+				if ($submitResult === false) {
+					$verifactiError = $verifactiService->getLastError();
+				} else {
+					//Regenerate PDF with real QR code
+					//Use internal request to generate_invoice.php with ioutput flag
+					$_GET["id_factura"] = $idFactura;
+					$_GET["ioutput"] = 1; //Output to file only, not screen
+
+					//Capture output to prevent any display
+					ob_start();
+					include "generate_invoice.php";
+					ob_end_clean();
+				}
+			}
+		}
+
+		//If Verifacti registration failed, show error and redirect
+		if ($verifactiError !== null) {
+			$_SESSION["verifacti_error"] = "Verifacti registration failed: " . $verifactiError;
+			generalUtils::redirigir("main_app.php?section=invoice&action=edit&id_factura=".$idFactura."&verifacti_error=1");
+			exit;
+		}
+
 		$destinatarios=Array();
 		//Introducimos todos los destinatarios existentes en el para
 		$destinatarios=array_merge($destinatarios,array_filter(explode(";",$_POST["txtPara"])));
 		$destinatarios=array_unique($destinatarios);
 		$totalDestinatarios=count($destinatarios);
-		
+
 
 		require "../includes/load_mailer.inc.php";
 
+		//Enable SMTP debugging for LOCAL environment
+		$emailErrors = array();
+		if (defined('MET_ENV') && MET_ENV === 'LOCAL') {
+			$mail->SMTPDebug = 0; // Set to 2 for verbose debug output
+			$mail->Debugoutput = function($str, $level) use (&$emailErrors) {
+				$emailErrors[] = "[$level] $str";
+			};
+		}
+
 		$plantilla=new XTemplate("../html/mail/mail_invoice.html");
-		
+
 		$_POST["txtaDescripcion"]=str_replace("/documentacion/","http://www.metmeetings.org/documentacion/",$_POST["txtaDescripcion"]);
-		
+
 		$plantilla->assign("CONTENIDO",$_POST["txtaDescripcion"]);
-		
+
 		$plantilla->parse("contenido_principal");
-		
+
 		$mail->From = STATIC_MAIL_FROM;
-	  	$mail->FromName = "MET";
-	  	$mail->Subject = $_POST["txtNombre"];
-	  	$mail->Body = $plantilla->text("contenido_principal");
+		$mail->FromName = "MET";
+		$mail->Subject = $_POST["txtNombre"];
+		$mail->Body = $plantilla->text("contenido_principal");
 
-	  	$vectorDestinatario=Array();
-	  	foreach($destinatarios as $valor){
+		$vectorDestinatario=Array();
+		$sendErrors = array();
+
+		foreach($destinatarios as $valor){
 			// Mail a donde enviar
-	  		$mail->AddAddress($valor);
+			$mail->AddAddress($valor);
 
-
-	  		if($mail->Send()){		
+			if($mail->Send()){
 				//Destinatario
-				
 				array_push($vectorDestinatario,$valor);
+			} else {
+				//Capture error
+				$sendErrors[] = "Failed to send to $valor: " . $mail->ErrorInfo;
+			}
+			//Limpiamos address
+			$mail->ClearAllRecipients();
+		}
 
-				
-	  		}
-	  		//Limpiamos address
-	  		$mail->ClearAllRecipients();
-	  	}
-	  	
-	  	$idFactura=$_POST["hdnIdElemento"];
+		//If there were errors and we're in LOCAL mode, show them
+		if (count($sendErrors) > 0 && defined('MET_ENV') && MET_ENV === 'LOCAL') {
+			$_SESSION["email_error"] = implode("<br>", $sendErrors);
+		}
+
+		//If no emails were sent successfully, redirect with error
+		if (count($vectorDestinatario) == 0 && count($destinatarios) > 0) {
+			$_SESSION["email_error"] = "Email sending failed: " . $mail->ErrorInfo;
+			generalUtils::redirigir("main_app.php?section=invoice&action=view");
+			exit;
+		}
+
+		//If emails were sent successfully (LOCAL mode), show success message
+		if (count($vectorDestinatario) > 0 && defined('MET_ENV') && MET_ENV === 'LOCAL') {
+			$_SESSION["email_success"] = "Email sent successfully to: " . implode(", ", $vectorDestinatario);
+		}
 
 		/****** Guardamos el log del correo electronico ******/
 		$idUsuarioWebCorreo="null";
@@ -68,7 +134,7 @@
 		generalUtils::redirigir("main_app.php?section=invoice&action=view");
 	}
 
-	if($_GET["send"]) {
+	if(isset($_GET["send"]) && $_GET["send"]) {
       define("AUTOSEND_JAVASCRIPT","<script type='text/javascript'>document.getElementById('send-button').click();</script>");
 	} else {
       define("AUTOSEND_JAVASCRIPT","");
@@ -115,7 +181,7 @@
 	if($datoFactura["hash_generado"]==""){
 		exit;
 	}else{
-		$enlace=CURRENT_DOMAIN."get_invoice.php?hash=".$datoFactura["hash_generado"];
+		$enlace=CURRENT_DOMAIN."/get_invoice.php?hash=".$datoFactura["hash_generado"];
 	}
 
         if($datoFactura["first_name"]!=""){

@@ -18,6 +18,16 @@ RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 #RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
 
 # ----------------------------
+# Maintenance Mode
+# ----------------------------
+# If maintenance.html exists, redirect all requests to it
+# (except requests for maintenance.html itself and static assets)
+RewriteCond %{DOCUMENT_ROOT}/maintenance.html -f
+RewriteCond %{REQUEST_URI} !^/maintenance\.html$
+RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|gif|ico)$
+RewriteRule ^.*$ /maintenance.html [R=503,L]
+
+# ----------------------------
 # Block specific IP block
 # ----------------------------
 Order Allow,Deny
@@ -106,8 +116,8 @@ RewriteRule .* - [F]
 # php files are not mentioned so that the site does not crash
 
 #menu
-RewriteRule ^(.*)/detail/.*:([0-9]+)-([0-9]+)$ controller_menu.php?idioma=$1&menu=$2&elemento=$3&detalle=1 [NC,L]
-RewriteRule ^(.*)/.*:([0-9]+)-?([0-9]+)?-?q?=?(.*)?$ controller_menu.php?idioma=$1&menu=$2&pagina=$3&filtro=$4&detalle=0 [NC,L]
+RewriteRule ^(.*)/detail/.*:([0-9]+)-([0-9]+)$ controller_menu.php?idioma=$1&menu=$2&elemento=$3&detalle=1 [NC,L,QSA]
+RewriteRule ^(.*)/.*:([0-9]+)-?([0-9]+)?-?q?=?(.*)?$ controller_menu.php?idioma=$1&menu=$2&pagina=$3&filtro=$4&detalle=0 [NC,L,QSA]
 
 #idiomas
 RewriteRule ^(es|en|ca)/$ index.php?idioma=$1 [NC,L]

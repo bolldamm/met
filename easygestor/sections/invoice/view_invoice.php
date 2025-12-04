@@ -1,16 +1,37 @@
 <?php
 	/**
-	 * 
+	 *
 	 * Listamos todos los menus existentes en el sistema
 	 * @Author eData
-	 * 
+	 *
 	 */
 
 	//Plantilla principal
 	$plantilla=new XTemplate("html/principal.html");
-		
+
 	//Plantilla secundaria
 	$subPlantilla=new XTemplate("html/sections/invoice/view_invoice.html");
+
+	//Check for Verifactu warning messages in session
+	if (isset($_SESSION["verifactu_warning"])) {
+		$subPlantilla->assign("VERIFACTU_WARNING_MESSAGE", $_SESSION["verifactu_warning"]);
+		$subPlantilla->parse("contenido_principal.verifactu_warning");
+		unset($_SESSION["verifactu_warning"]);
+	}
+
+	//Check for email error messages in session
+	if (isset($_SESSION["email_error"])) {
+		$subPlantilla->assign("EMAIL_ERROR_MESSAGE", $_SESSION["email_error"]);
+		$subPlantilla->parse("contenido_principal.email_error");
+		unset($_SESSION["email_error"]);
+	}
+
+	//Check for email success messages in session
+	if (isset($_SESSION["email_success"])) {
+		$subPlantilla->assign("EMAIL_SUCCESS_MESSAGE", $_SESSION["email_success"]);
+		$subPlantilla->parse("contenido_principal.email_success");
+		unset($_SESSION["email_success"]);
+	}
 	
 	$mostrarPaginador=true;
 	$valorDefecto=4;
@@ -44,7 +65,7 @@
 	//Gestion del campo de orden y filtro de numero de registros
 	$campoOrdenDefecto="";
 	require "includes/load_filter_list.inc.php";
-	if($campoOrden!="fecha_factura" && $campoOrden!="id_factura"){
+	if($campoOrden!="fecha_factura" && $campoOrden!="id_factura" && $campoOrden!="numero_factura"){
 		$direccionOrden="ASC";
 	}
 	
@@ -117,6 +138,27 @@
         $vectorFactura["SENT"] = ($dato["hash_generado"] ? ($dato["enviado"]==1 ? STATIC_VIEW_MOVEMENT_PAYED_YES : STATIC_VIEW_MOVEMENT_PAYED_NO) : "");
 //      $vectorFactura["SENT"] = ($dato["hash_generado"] ? $dato["enviado"] : "");
 		$vectorFactura["HASH"]=$dato["hash_generado"];
+
+		// Verifactu status display
+		$verifactuStatus = "";
+		if (!empty($dato["verifactu_uuid"])) {
+			$estado = isset($dato["verifactu_status"]) ? $dato["verifactu_status"] : "pending";
+			switch ($estado) {
+				case "anulada":
+					$verifactuStatus = '<span style="color:#dc3545;">Anulada</span>';
+					break;
+				case "error":
+					$verifactuStatus = '<span style="color:#dc3545;">Error</span>';
+					break;
+				case "confirmed":
+				case "Correcto":
+					$verifactuStatus = '<span style="color:#28a745;">OK</span>';
+					break;
+				default:
+					$verifactuStatus = '<span style="color:#ffc107;">Pending</span>';
+			}
+		}
+		$vectorFactura["VERIFACTU"] = $verifactuStatus;
 
 		$subPlantilla->assign("INVOICE",$vectorFactura);
 	

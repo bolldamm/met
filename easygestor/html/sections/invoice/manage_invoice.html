@@ -1,29 +1,332 @@
 <!-- BEGIN: contenido_principal -->
 <script type="text/javascript">
-	function validarFactura(volver){
-		//Por el momento no hay validaciones
-		esValido=true;
-		/*var importe=document.frmFactura.txtImporte;
-		if(importe.value!=""){
-			importe.value=importe.value.replace(",",".");
-			if(isNaN(parseFloat(importe.value,10))){
-				loadEasyNotify("{STATIC_MANAGE_INVOICE_IMPORT_WRONG}",1);
-				esValido=false;
-			}else{
-				importe.value=parseFloat(importe.value,10);
+	function refreshVerifactiStatus(idFactura){
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', 'ajax/refresh_invoice_verifacti_status.php?id_factura=' + idFactura, true);
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState === 4){
+				if(xhr.status === 200){
+					var response = JSON.parse(xhr.responseText);
+					if(response.success){
+						alert('Status updated: ' + response.status);
+						location.reload();
+					} else {
+						alert('Error: ' + response.error);
+					}
+				} else {
+					alert('Error communicating with server.');
+				}
 			}
-		}*/
-		
+		};
+		xhr.send();
+	}
+
+	function anularFacturaVerifacti(idFactura){
+		if(!confirm('Are you sure you want to cancel this invoice in Verifacti?\n\nThis action cannot be undone. The invoice will be marked as "anulada" in the AEAT system.')){
+			return;
+		}
+
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', 'ajax/cancel_invoice_verifacti.php', true);
+		xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState === 4){
+				if(xhr.status === 200){
+					var response = JSON.parse(xhr.responseText);
+					if(response.success){
+						alert('Invoice cancelled successfully in Verifacti.');
+						location.reload();
+					} else {
+						alert('Error: ' + response.error);
+					}
+				} else {
+					alert('Error communicating with server.');
+				}
+			}
+		};
+		xhr.send('id_factura=' + idFactura);
+	}
+
+	function suggestInvoiceNumber(){
+		// Determine type based on radio button selection
+		var type = 'invoice';
+		if(document.getElementById('proforma') && document.getElementById('proforma').checked){
+			type = 'proforma';
+		} else if(document.getElementById('creditnote') && document.getElementById('creditnote').checked){
+			type = 'creditnote';
+		}
+
+		// AJAX call to get next number
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', 'ajax/get_next_invoice_number.php?type=' + type, true);
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState === 4 && xhr.status === 200){
+				var response = JSON.parse(xhr.responseText);
+				if(response.success){
+					document.getElementById('txtNumeroFactura').value = response.number;
+				}
+			}
+		};
+		xhr.send();
+	}
+
+	// Rectificativa functions
+	function handleVerifactuTypeChange(){
+		var tipoFactura = document.getElementById('cmbTipoFacturaVerifactu').value;
+		var isRectificativa = (tipoFactura === 'R1' || tipoFactura === 'R2' || tipoFactura === 'R3' || tipoFactura === 'R4' || tipoFactura === 'R5');
+
+		// Only show rectificativa configuration for Create, not Edit
+		var actionField = document.getElementById('action');
+		var isCreateAction = actionField && actionField.value === 'create';
+
+		// Show/hide rectificativa section (only in create mode)
+		var showSection = isRectificativa && isCreateAction;
+		document.getElementById('rectificativaSection').style.display = showSection ? '' : 'none';
+		document.getElementById('rectificativaTipoRow').style.display = showSection ? '' : 'none';
+
+		if(!showSection){
+			// Reset and hide all rectificativa fields
+			document.getElementById('rectificativaSearchRow').style.display = 'none';
+			document.getElementById('rectificativaDiferenciaRow').style.display = 'none';
+			if(isCreateAction){
+				document.getElementById('cmbTipoRectificativa').value = '';
+				clearOriginalInvoice();
+			}
+		}
+	}
+
+	function handleTipoRectificativaChange(){
+		var tipo = document.getElementById('cmbTipoRectificativa').value;
+
+		// Show search row for type S (Sustitución)
+		document.getElementById('rectificativaSearchRow').style.display = (tipo === 'S') ? '' : 'none';
+
+		// Show difference amounts row for type I (Por diferencia)
+		document.getElementById('rectificativaDiferenciaRow').style.display = (tipo === 'I') ? '' : 'none';
+
+		if(tipo !== 'S'){
+			clearOriginalInvoice();
+		}
+	}
+
+	// Store invoice data for auto-population
+	var originalInvoiceData = {};
+
+	function searchOriginalInvoice(){
+		var searchText = document.getElementById('txtSearchOriginalInvoice').value;
+		if(searchText.length < 2){
+			alert('Please enter at least 2 characters to search.');
+			return;
+		}
+
+		var resultsDiv = document.getElementById('originalInvoiceResults');
+		resultsDiv.innerHTML = '<em>Searching...</em>';
+
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', 'ajax/search_original_invoice.php?q=' + encodeURIComponent(searchText), true);
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState === 4){
+				if(xhr.status === 200){
+					var response = JSON.parse(xhr.responseText);
+					if(response.success && response.invoices.length > 0){
+						// Store all invoice data for later use
+						originalInvoiceData = {};
+						for(var i = 0; i < response.invoices.length; i++){
+							originalInvoiceData[response.invoices[i].id] = response.invoices[i];
+						}
+
+						var html = '<table border="1" cellpadding="5" cellspacing="0" style="width:100%;font-size:12px;">';
+						html += '<tr style="background:#f4f4f4;"><th>Invoice #</th><th>Date</th><th>Customer</th><th>NIF</th><th>Total</th><th>Action</th></tr>';
+						for(var i = 0; i < response.invoices.length; i++){
+							var inv = response.invoices[i];
+							html += '<tr>';
+							html += '<td>' + inv.numero + '</td>';
+							html += '<td>' + inv.fecha + '</td>';
+							html += '<td>' + inv.customer + '</td>';
+							html += '<td>' + inv.nif + '</td>';
+							html += '<td>€' + inv.total + '</td>';
+							html += '<td><button type="button" onclick="selectOriginalInvoice(' + inv.id + ');">Select</button></td>';
+							html += '</tr>';
+						}
+						html += '</table>';
+						resultsDiv.innerHTML = html;
+					} else if(response.success){
+						resultsDiv.innerHTML = '<em>No invoices found matching your search.</em>';
+					} else {
+						resultsDiv.innerHTML = '<em style="color:red;">Error: ' + response.error + '</em>';
+					}
+				} else {
+					resultsDiv.innerHTML = '<em style="color:red;">Error communicating with server.</em>';
+				}
+			}
+		};
+		xhr.send();
+	}
+
+	function escapeHtml(text){
+		var div = document.createElement('div');
+		div.appendChild(document.createTextNode(text));
+		return div.innerHTML;
+	}
+
+	function selectOriginalInvoice(id){
+		// Get stored invoice data
+		var inv = originalInvoiceData[id];
+		if(!inv){
+			alert('Error: Invoice data not found. Please search again.');
+			return;
+		}
+
+		var numero = inv.numero;
+		var fecha = inv.fecha;
+		var customer = inv.customer;
+
+		// Parse serie and numero from invoice number (e.g., "2024-123" -> serie="2024", numero="123")
+		var serie = '';
+		var num = numero;
+		var parts = numero.match(/^([A-Za-z]*-?)(\d{4})-(\d+)$/);
+		if(parts){
+			serie = (parts[1] || '') + parts[2];
+			num = parts[3];
+		} else {
+			// Try simpler format "2024-123"
+			parts = numero.split('-');
+			if(parts.length >= 2){
+				serie = parts[0];
+				num = parts.slice(1).join('-');
+			}
+		}
+
+		document.getElementById('hdnIdFacturaRectificada').value = id;
+		document.getElementById('hdnSerieFacturaRectificada').value = serie;
+		document.getElementById('hdnNumeroFacturaRectificada').value = num;
+		document.getElementById('hdnFechaFacturaRectificada').value = fecha;
+
+		document.getElementById('selectedOriginalInvoiceDisplay').innerHTML =
+			'<strong>' + numero + '</strong> - ' + fecha + ' - ' + customer;
+		document.getElementById('selectedOriginalInvoiceRow').style.display = '';
+		document.getElementById('originalInvoiceResults').innerHTML = '';
+		document.getElementById('txtSearchOriginalInvoice').value = '';
+
+		// Auto-populate customer fields from original invoice
+		if(inv.nif) document.getElementById('txtNif').value = inv.nif;
+		if(inv.nombre_cliente) document.getElementById('txtNombreCliente').value = inv.nombre_cliente;
+		if(inv.nombre_empresa) document.getElementById('txtNombreEmpresa').value = inv.nombre_empresa;
+		if(inv.direccion) document.getElementById('txtDireccion').value = inv.direccion;
+		if(inv.codigo_postal) document.getElementById('txtCodigoPostal').value = inv.codigo_postal;
+		if(inv.ciudad) document.getElementById('txtCiudad').value = inv.ciudad;
+		if(inv.provincia) document.getElementById('txtProvincia').value = inv.provincia;
+		if(inv.pais) document.getElementById('txtPais').value = inv.pais;
+
+		// Auto-populate Verifactu tax ID fields
+		if(inv.tax_id_country){
+			var countrySelect = document.getElementById('cmbTaxIdCountry');
+			if(countrySelect){
+				for(var i = 0; i < countrySelect.options.length; i++){
+					if(countrySelect.options[i].value === inv.tax_id_country){
+						countrySelect.selectedIndex = i;
+						break;
+					}
+				}
+			}
+		}
+		if(inv.tax_id_type){
+			var typeSelect = document.getElementById('cmbTaxIdType');
+			if(typeSelect){
+				for(var i = 0; i < typeSelect.options.length; i++){
+					if(typeSelect.options[i].value === inv.tax_id_type){
+						typeSelect.selectedIndex = i;
+						break;
+					}
+				}
+			}
+		}
+		if(inv.tax_id_number) document.getElementById('txtTaxIdNumber').value = inv.tax_id_number;
+	}
+
+	function clearOriginalInvoice(){
+		document.getElementById('hdnIdFacturaRectificada').value = '';
+		document.getElementById('hdnSerieFacturaRectificada').value = '';
+		document.getElementById('hdnNumeroFacturaRectificada').value = '';
+		document.getElementById('hdnFechaFacturaRectificada').value = '';
+		document.getElementById('selectedOriginalInvoiceDisplay').innerHTML = '';
+		document.getElementById('selectedOriginalInvoiceRow').style.display = 'none';
+		document.getElementById('originalInvoiceResults').innerHTML = '';
+	}
+
+	// Attach event listener to Verifactu type dropdown when page loads
+	document.addEventListener('DOMContentLoaded', function(){
+		var tipoSelect = document.getElementById('cmbTipoFacturaVerifactu');
+		if(tipoSelect){
+			tipoSelect.addEventListener('change', handleVerifactuTypeChange);
+			// Check initial state
+			handleVerifactuTypeChange();
+		}
+	});
+
+	function validarFactura(volver){
+		var esValido=true;
+
+		// Validate rectificativa requirements (only for Create, not Edit)
+		var actionField = document.getElementById('action');
+		var isCreateAction = actionField && actionField.value === 'create';
+
+		var tipoFactura = document.getElementById('cmbTipoFacturaVerifactu').value;
+		var isRectificativa = (tipoFactura === 'R1' || tipoFactura === 'R2' || tipoFactura === 'R3' || tipoFactura === 'R4' || tipoFactura === 'R5');
+
+		// Only validate rectificativa details when creating new invoices
+		if(isRectificativa && isCreateAction){
+			var tipoRectificativa = document.getElementById('cmbTipoRectificativa').value;
+
+			if(!tipoRectificativa){
+				alert('Please select a Correction Type (Sustitución or Por diferencia) for rectificativa invoices.');
+				esValido = false;
+			} else if(tipoRectificativa === 'S'){
+				// Type S requires original invoice selection
+				var idFacturaRectificada = document.getElementById('hdnIdFacturaRectificada').value;
+				if(!idFacturaRectificada){
+					alert('Please select the original invoice to be replaced (Sustitución type).');
+					esValido = false;
+				}
+			} else if(tipoRectificativa === 'I'){
+				// Type I requires correction amounts
+				var importe = parseFloat(document.getElementById('txtImporteRectificativa').value.replace(',', '.')) || 0;
+				var cuota = parseFloat(document.getElementById('txtCuotaRectificativa').value.replace(',', '.')) || 0;
+				if(importe === 0 && cuota === 0){
+					alert('Please enter at least one correction amount (Base Amount or Tax Amount) for Por diferencia type.');
+					esValido = false;
+				}
+			}
+		}
+
+		// Validate required customer fields for non-proforma, non-simplified invoices
+		// F2 (simplified) invoices don't require customer details
+		var isProforma = document.getElementById('proforma') && document.getElementById('proforma').checked;
+		var isSimplified = (tipoFactura === 'F2');
+		if(!isProforma && !isSimplified && esValido){
+			var nif = document.getElementById('txtNif').value.trim();
+			var nombreCliente = document.getElementById('txtNombreCliente').value.trim();
+			var nombreEmpresa = document.getElementById('txtNombreEmpresa').value.trim();
+
+			if(!nif){
+				alert('Please enter the customer NIF/Tax ID.');
+				esValido = false;
+			} else if(!nombreCliente && !nombreEmpresa){
+				alert('Please enter at least a Customer Name or Company Name.');
+				esValido = false;
+			}
+		}
+
 		if(esValido){
-			
+
 			var idMovimiento="";
 			$("#listMovements input[type=hidden]").each(function(){
 				idMovimiento+=$(this).attr("id").split("_")[1]+",";
 			});
-			
+
 			idMovimiento=idMovimiento.substring(0,idMovimiento.length-1);
 			document.frmFactura.hdnMovimientosSeleccionados.value=idMovimiento;
-			
+
 			document.frmFactura.hdnVolver.value=volver;
 			document.frmFactura.submit();
 		}
@@ -49,6 +352,18 @@
 		<img src="images/pictures/icons/news.icon.png" />
 	</li>
 	<!-- END: boton_download_factura -->
+	<!-- BEGIN: boton_anular_verifacti -->
+	<li>
+		<a href="javascript:anularFacturaVerifacti({ID_INVOICE});" class="OptionDelete cufon">Anular Verifacti</a>
+		<img src="images/pictures/icons/news.icon.png" />
+	</li>
+	<!-- END: boton_anular_verifacti -->
+	<!-- BEGIN: boton_refresh_verifacti -->
+	<li>
+		<a href="javascript:refreshVerifactiStatus({ID_INVOICE});" class="OptionEdit cufon">Refresh Verifacti</a>
+		<img src="images/pictures/icons/news.icon.png" />
+	</li>
+	<!-- END: boton_refresh_verifacti -->
 </ul>
 <!-- BEGIN: bloque_usuarios  -->
 <form name="frmBuscadorUsuario" id="frmBuscadorUsuario">
@@ -127,7 +442,10 @@
                   <td>{STATIC_MANAGE_INVOICE_NUMBER}</td><td colspan="7">(invoices = [Year]-NNN / pro formas = PF-[Year]-NNN / credit notes = CN-[Year]-NNN)</td>
 				</tr>
 				<tr>
-					<td colspan="6"><input type="text" style="width:140px;" name="txtNumeroFactura" id="txtNumeroFactura" value="{FACTURA_NUMERO_FACTURA}"></td>
+					<td colspan="6">
+						<input type="text" style="width:140px;" name="txtNumeroFactura" id="txtNumeroFactura" value="{FACTURA_NUMERO_FACTURA}">
+						<button type="button" onclick="suggestInvoiceNumber();" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" style="margin-left:10px;padding:2px 8px;"><span class="ui-button-text">Suggest</span></button>
+					</td>
 				</tr>
                 <tr>
 <!-- 					<td><input type="checkbox" style="width:100px;" class="fac_proform" name="checkProformaFactura" id="checkProformaFactura" {CHECKED_FACTURA_PROFORMA} value="{FACTURA_PROFORMA}"></td> -->
@@ -196,6 +514,110 @@
 				<tr>
 					<td colspan="6"><input type="text" name="txtPais" id="txtPais" value="{FACTURA_PAIS}"></td>
 				</tr>
+				<tr>
+					<td colspan="6"><br><strong>Verifactu Tax ID (for non-Spanish customers)</strong></td>
+				</tr>
+				<tr>
+					<td colspan="2">Country (ISO)</td>
+					<td colspan="2">ID Type</td>
+					<td colspan="2">Tax ID Number</td>
+				</tr>
+				<tr>
+					<td colspan="2">{COMBO_TAX_ID_COUNTRY}</td>
+					<td colspan="2">{COMBO_TAX_ID_TYPE}</td>
+					<td colspan="2"><input type="text" name="txtTaxIdNumber" id="txtTaxIdNumber" value="{FACTURA_TAX_ID_NUMBER}"></td>
+				</tr>
+				<tr>
+					<td colspan="6"><br><strong>Verifactu invoice type</strong></td>
+				</tr>
+				<tr>
+					<td colspan="6">{COMBO_TIPO_FACTURA_VERIFACTU}</td>
+				</tr>
+				<tr id="rectificativaSection" style="display:none;">
+					<td colspan="6"><br><strong>Factura rectificativa details</strong></td>
+				</tr>
+				<tr id="rectificativaTipoRow" style="display:none;">
+					<td colspan="2">Correction type:</td>
+					<td colspan="4">
+						<select name="cmbTipoRectificativa" id="cmbTipoRectificativa" onchange="handleTipoRectificativaChange();" style="width:250px;">
+							<option value="">-- Select --</option>
+							<option value="S">S - Sustitución (replaces original)</option>
+							<option value="I">I - Por diferencia (adjusts amount only)</option>
+						</select>
+					</td>
+				</tr>
+				<tr id="rectificativaSearchRow" style="display:none;">
+					<td colspan="6">
+						<fieldset style="margin-top:10px;">
+							<legend>Select original invoice (for Sustitución)</legend>
+							<table border="0" cellspacing="0" cellpadding="5">
+								<tr>
+									<td>Search:</td>
+									<td>
+										<input type="text" id="txtSearchOriginalInvoice" style="width:250px;" placeholder="Invoice number, customer name, or NIF">
+									</td>
+									<td>
+										<button type="button" onclick="searchOriginalInvoice();" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+											<span class="ui-button-text">Search</span>
+										</button>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="3">
+										<div id="originalInvoiceResults" style="max-height:200px;overflow-y:auto;margin-top:10px;"></div>
+									</td>
+								</tr>
+								<tr id="selectedOriginalInvoiceRow" style="display:none;">
+									<td colspan="3" style="padding-top:10px;">
+										<strong>Selected Original Invoice:</strong><br>
+										<span id="selectedOriginalInvoiceDisplay"></span>
+										<input type="hidden" name="hdnIdFacturaRectificada" id="hdnIdFacturaRectificada" value="">
+										<input type="hidden" name="hdnSerieFacturaRectificada" id="hdnSerieFacturaRectificada" value="">
+										<input type="hidden" name="hdnNumeroFacturaRectificada" id="hdnNumeroFacturaRectificada" value="">
+										<input type="hidden" name="hdnFechaFacturaRectificada" id="hdnFechaFacturaRectificada" value="">
+										<button type="button" onclick="clearOriginalInvoice();" style="margin-left:10px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+											<span class="ui-button-text">Clear</span>
+										</button>
+									</td>
+								</tr>
+							</table>
+						</fieldset>
+					</td>
+				</tr>
+				<tr id="rectificativaDiferenciaRow" style="display:none;">
+					<td colspan="6">
+						<fieldset style="margin-top:10px;">
+							<legend>Correction amounts (for Por Diferencia)</legend>
+							<table border="0" cellspacing="0" cellpadding="5">
+								<tr>
+									<td>Base amount corrected (€):</td>
+									<td><input type="text" name="txtImporteRectificativa" id="txtImporteRectificativa" style="width:100px;" value="0.00"></td>
+								</tr>
+								<tr>
+									<td>Tax amount corrected (€):</td>
+									<td><input type="text" name="txtCuotaRectificativa" id="txtCuotaRectificativa" style="width:100px;" value="0.00"></td>
+								</tr>
+							</table>
+							<small>Note: Enter the amounts from the original invoice being corrected.</small>
+						</fieldset>
+					</td>
+				</tr>
+				<!-- BEGIN: verifactu_status_section -->
+				<tr>
+					<td colspan="6"><br><strong>Verifactu status</strong></td>
+				</tr>
+				<tr>
+					<td colspan="6">
+						<span style="font-weight:bold;{VERIFACTU_STATUS_STYLE}">{VERIFACTU_STATUS_TEXT}</span>
+						<!-- BEGIN: verifactu_uuid_display -->
+						<br><small>UUID: {VERIFACTU_UUID}</small>
+						<!-- END: verifactu_uuid_display -->
+						<!-- BEGIN: verifactu_error_display -->
+						<br><small style="color:#dc3545;">Error: {VERIFACTU_ERROR}</small>
+						<!-- END: verifactu_error_display -->
+					</td>
+				</tr>
+				<!-- END: verifactu_status_section -->
 			</table>
 		</div>
 	</div>

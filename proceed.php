@@ -23,20 +23,26 @@ if (isset($_GET['test'])) {
 // $environment = require('/home/metmeetings/private/environment_variables.php');
 // $stripeEnv = $environment['STRIPE_ENV'];
 require_once('vendor/autoload.php');
-$keys = require('/home/metmeetings/private/stripe_keys.php');
+if (defined('MET_ENV') && constant('MET_ENV') == 'LOCAL') {
+    $keys = require(__DIR__ . '/private/stripe_keys.php');
+} else {
+    $keys = require('/home/metmeetings/private/stripe_keys.php');
+}
 
-/**
- * Get variables needed for Stripe payment intent and Stripe form
- */
+// Get item from URL parameter or fallback to session variable
+$item = isset($_GET["it"]) && !empty($_GET["it"]) ? $_GET["it"] : (isset($_SESSION["item"]) ? $_SESSION["item"] : "");
 
-$item = $_GET["it"]; //payment item ("concepto") to display on Stripe form
-// $item = strtolower($item);
+// Check if item is still empty after fallback
+if (empty($item)) {
+    die("Error: Payment item not specified. Please go back and submit the form again.");
+}
+
 $_SESSION["regType"] = $item; //store in session variable
 
 $price = $_SESSION["amount"]; //price to display on Stripe form (in euros)
 
-//get reg ID, reg number and type (new vs renewal) from "regCode" session variable
-//and store them back individually in the session
+//get registration ID, registration number and type (new vs renewal) from session variable
+//and store them back individually in separate session variables
 $regCode = $_SESSION["regCode"];
 $datosInscripcion = explode("-", $regCode);
 $numeroPedidoInscripcion = $datosInscripcion[0]; //varchar
@@ -60,54 +66,88 @@ switch ($item) {
     case STATIC_FORM_STRIPE_ITEM_MEMBERSHIP_RENEWAL:
         $registrationResult = $db->callProcedure("CALL ed_sp_inscripcion_get_details(" . $idInscripcion . ")");
         $regDetails = $db->getData($registrationResult);
-        $fullName = $regDetails['nombre'] . " " . $regDetails['apellidos'];
-        $description = $item . ": " . $fullName;
-        $amount = $regDetails['importe'] * 100; //price in cents for paymentintent
-        $receiptEmail = $regDetails['correo_electronico'];
+
+        // Check if we got valid data
+        if (!$regDetails || !is_array($regDetails)) {
+            die("Error: Registration details not found for ID: " . $idInscripcion);
+        }
+
+        $fullName = ($regDetails['nombre'] ?? '') . " " . ($regDetails['apellidos'] ?? '');
+        $description = $item . ": " . $fullName; // Full details for Stripe Dashboard
+        $statementDescriptor = 'Membership'; // Short descriptor for card statement
+        $amount = ($regDetails['importe'] ?? 0) * 100; //price in cents for paymentintent
+        $receiptEmail = $regDetails['correo_electronico'] ?? '';
         break;
     case STATIC_FORM_STRIPE_ITEM_WORKSHOP_REGISTRATION:
         $registrationResult = $db->callProcedure("CALL ed_sp_inscripcion_taller_get_details(" . $idInscripcion . ")");
         $regDetails = $db->getData($registrationResult);
-        $fullName = $regDetails['nombre'] . " " . $regDetails['apellidos'];
-        $description = $item . ": " . $fullName;
+
+        // Check if we got valid data
+        if (!$regDetails || !is_array($regDetails)) {
+            die("Error: Workshop registration details not found for ID: " . $idInscripcion);
+        }
+
+        $fullName = ($regDetails['nombre'] ?? '') . " " . ($regDetails['apellidos'] ?? '');
+        $description = $item . ": " . $fullName; // Full details for Stripe Dashboard
+        $statementDescriptor = 'Workshop'; // Short descriptor for card statement
         $amount = $price * 100; //price in cents (from session variable)
-        $receiptEmail = $regDetails['correo_electronico'];
+        $receiptEmail = $regDetails['correo_electronico'] ?? '';
         break;
     case STATIC_FORM_STRIPE_ITEM_CONFERENCE_REGISTRATION:
         $registrationResult = $db->callProcedure("CALL ed_sp_inscripcion_conferencia_get_details(" . $idInscripcion . ")");
         $regDetails = $db->getData($registrationResult);
-        $fullName = $regDetails['nombre'] . " " . $regDetails['apellidos'];
-        $description = $item . ": " . $fullName;
-        $amount = $regDetails['importe_total'] * 100; //price in cents (NB "importe_total" from ed_tb_inscr_conf)
-        $receiptEmail = $regDetails['correo_electronico'];
+
+        // Check if we got valid data
+        if (!$regDetails || !is_array($regDetails)) {
+            die("Error: Conference registration details not found for ID: " . $idInscripcion);
+        }
+
+        $fullName = ($regDetails['nombre'] ?? '') . " " . ($regDetails['apellidos'] ?? '');
+        $description = $item . ": " . $fullName; // Full details for Stripe Dashboard
+        $statementDescriptor = 'Conference'; // Short descriptor for card statement
+        $amount = ($regDetails['importe_total'] ?? 0) * 100; //price in cents (NB "importe_total" from ed_tb_inscr_conf)
+        $receiptEmail = $regDetails['correo_electronico'] ?? '';
         break;
 }
 
-\Stripe\Stripe::setApiKey($keys['secret_key']);
-$publishable = $keys['publishable_key'];
-$subPlantilla->assign('STRIPE_PK', $publishable); //goes to stripe_form.html
+try {
+$stripe = new \Stripe\StripeClient([
+    'api_key' => $keys['secret_key'],
+    'stripe_version' => '2025-02-24.acacia',
+]);
 
-//Set API version (IMPORTANT: this needs to be updated if we switch to a newer API version)
-\Stripe\Stripe::setApiVersion("2020-08-27");
+$intent = $stripe->paymentIntents->create([
+    'amount' => $amount,
+    'currency' => 'eur',
+    'automatic_payment_methods' => ['enabled' => true],
+    'description' => $description, // Full details visible in Stripe Dashboard
+    'statement_descriptor_suffix' => $statementDescriptor, // Short text for card statement (22 char max)
+    'receipt_email' => $receiptEmail,
+    'metadata' => [
+        'payer' => $fullName, // Do we need this??
+        'subaccount' => $item,
+        'registration_id' => $idInscripcion,
+    ],
+]);
 
-/*
- * The "create" method builds the URL for the API request and posts the data to Stripe
- * The request returns a PaymentIntent object which includes a key (the "client secret")
- * The payment intent is stored in a variable in order to access the client_secret and the intent ID
- */
-$intent = \Stripe\PaymentIntent::create([
-    "amount" => $amount,
-    "currency" => "eur",
-    "payment_method_types" => ["card"],
-    "description" => $description,
-    "statement_descriptor" => $item,
-    "receipt_email" => $receiptEmail,
-    "metadata" => [
-        "payer" => $fullName,
-        "subaccount" => $item,
-        "registration_id" => $idInscripcion
-    ]
-    ]);
+} catch (\Stripe\Exception\ApiErrorException $e) {
+    http_response_code(400);
+    error_log("Stripe API error:
+      http_status=" . $e->getHttpStatus() . "
+      type=" . ($e->getError()->type ?? '') . "
+      code=" . ($e->getError()->code ?? '') . "
+      param=" . ($e->getError()->param ?? '') . "
+      message=" . ($e->getError()->message ?? '') . "
+      request_id=" . ($e->getRequestId() ?? '') . "
+    ");
+    exit;
+
+} catch (\Throwable $e) {
+    http_response_code(500);
+    error_log('Unexpected: '.$e->getMessage());
+    echo 'Unexpected error. Please try again.';
+    exit;
+}
 
 
 $plantilla->assign("SECTION_FILE_CSS", "openbox.css");
@@ -144,6 +184,9 @@ $subPlantilla->assign("CLIENT_SECRET", $intent->client_secret);
 //Store payment intent ID and client secret in session variables
 $_SESSION["payment_intent"] = $intent->id;
 //$_SESSION["client_secret"] = $intent->client_secret; //this appears to be superfluous
+
+// Assign publishable key to stripe_form.html
+$subPlantilla->assign("STRIPE_PK", $keys['publishable_key']);
 
 $idMenu = null;
 require "includes/load_breadcrumb.inc.php";

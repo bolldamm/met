@@ -4,6 +4,21 @@
 		document.frmListaInvoice.submit();
 	}
 </script>
+<!-- BEGIN: verifactu_warning -->
+<div style="background-color:#fff3cd;border:1px solid #ffc107;color:#856404;padding:15px;margin:10px 0;border-radius:4px;">
+	<strong>Warning:</strong> {VERIFACTU_WARNING_MESSAGE}
+</div>
+<!-- END: verifactu_warning -->
+<!-- BEGIN: email_error -->
+<div style="background-color:#f8d7da;border:1px solid #f5c6cb;color:#721c24;padding:15px;margin:10px 0;border-radius:4px;">
+	<strong>Email Error:</strong> {EMAIL_ERROR_MESSAGE}
+</div>
+<!-- END: email_error -->
+<!-- BEGIN: email_success -->
+<div style="background-color:#d4edda;border:1px solid #c3e6cb;color:#155724;padding:15px;margin:10px 0;border-radius:4px;">
+	<strong>Success:</strong> {EMAIL_SUCCESS_MESSAGE}
+</div>
+<!-- END: email_success -->
 <div id="textExplication">
 	<h2>{STATIC_GLOBAL_WELCOME_EASYGESTOR}</h2>
 </div>
@@ -26,8 +41,16 @@
       	<a href="javascript:multiItem('Unlink PDFs','Are you sure you want to unlink all the selected invoice PDFs?','{STATIC_GLOBAL_BUTTON_YES}','{STATIC_GLOBAL_BUTTON_NO}','frmListaInvoice','tblListItem','sections/invoice/delete_pdfs.php')" class="OptionPDF cufon">Unlink PDFs</a>
 		<img src="images/pictures/icons/news.icon.png" />
 	</li>
-    <li>		
+    <li>
       	<a href="https://www.metmeetings.org/files/customers/invoice/pdf/" class="OptionPDF cufon">PDF archive</a>
+		<img src="images/pictures/icons/news.icon.png" />
+	</li>
+	<li>
+		<a href="javascript:multiItem('Refresh Verifacti','Refresh Verifacti status for all selected invoices?','{STATIC_GLOBAL_BUTTON_YES}','{STATIC_GLOBAL_BUTTON_NO}','frmListaInvoice','tblListItem','sections/invoice/refresh_batch_verifacti.php')" class="OptionEdit cufon">Refresh Verifacti</a>
+		<img src="images/pictures/icons/news.icon.png" />
+	</li>
+	<li>
+		<a href="main_app.php?section=invoice&action=verifacti_log" target="_blank" class="OptionEdit cufon">Verifacti Log</a>
 		<img src="images/pictures/icons/news.icon.png" />
 	</li>
 </ul>
@@ -90,6 +113,7 @@
 					<td><h2><strong>{STATIC_VIEW_INVOICE_INVOICE_PERSON_NAME}</strong></h2></td>
 					<td><h2><strong>Paid</strong></h2></td>
                     <td><h2><strong>Sent</strong></h2></td>
+					<td><h2><strong>Verifactu</strong></h2></td>
 					<td></td>
 				</tr>
 			</thead>
@@ -114,6 +138,9 @@
 					</td>
                   	<td style="vertical-align:top;">
 						{INVOICE.SENT}
+					</td>
+					<td style="vertical-align:top;">
+						{INVOICE.VERIFACTU}
 					</td>
 					<td>
 						<!-- BEGIN: item_pdf -->

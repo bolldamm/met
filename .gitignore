@@ -124,6 +124,10 @@ excel/*
 # ============================================
 # Sensitive & Security Files
 # ============================================
+# Private directory (API keys, webhook secrets)
+# IMPORTANT: Local and production have separate files - never sync
+private/
+
 # Credentials and secrets
 **/essential_string.php
 .env
@@ -247,3 +251,6 @@ tmp/
 !*.sample
 
 #EasyGestor
+
+
+nul

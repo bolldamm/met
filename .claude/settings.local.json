@@ -1,7 +1,26 @@
 {
   "permissions": {
     "allow": [
-      "Bash(test:*)"
+      "Bash(test:*)",
+      "Bash(find:*)",
+      "Bash(git add:*)",
+      "WebFetch(domain:www.verifacti.com)",
+      "WebSearch",
+      "Bash(dir:*)",
+      "Bash(php -l:*)",
+      "Bash(F:\\laragon\\bin\\mysql\\mysql-8.0.30-winx64\\bin\\mysql.exe:*)",
+      "Bash(cmd /c \"F:\\laragon\\bin\\mysql\\mysql-8.0.30-winx64\\bin\\mysql.exe -u root met < F:\\laragon\\www\\Database_migration_scripts_v2.sql\")",
+      "Bash(cmd /c \"F:\\laragon\\bin\\mysql\\mysql-8.0.30-winx64\\bin\\mysql.exe -u root -e \"\"SELECT 1\"\"\")",
+      "Bash(cmd /c \"tasklist | findstr mysql\")",
+      "Bash(F:laragonbinmysqlmysql-8.0.30-winx64binmysql.exe -u root met -e \"DESCRIBE ed_tb_factura;\")",
+      "Bash(F:laragonbinmysqlmysql-8.0.30-winx64binmysql.exe -u root met -e \"SHOW INDEX FROM ed_tb_factura WHERE Key_name=''idx_factura_rectificada'';\")",
+      "Bash(cmd /c \"F:\\laragon\\bin\\mysql\\mysql-8.0.30-winx64\\bin\\mysql.exe -u root met -e \"\"DESCRIBE ed_tb_factura;\"\"\")",
+      "Bash(cmd /c \"F:\\laragon\\bin\\mysql\\mysql-8.0.30-winx64\\bin\\mysql.exe -u root met -e \"\"SHOW PROCEDURE STATUS WHERE Db=''met'' AND Name LIKE ''ed_sp_factura%'';\"\"\")",
+      "Bash(cmd:*)",
+      "Bash(powershell -Command \"& ''F:\\laragon\\bin\\mysql\\mysql-8.0.30-winx64\\bin\\mysql.exe'' -u root met -e ''DESCRIBE ed_tb_factura;''\")",
+      "Bash(/f/laragon/bin/mysql/mysql-8.0.40-winx64/bin/mysql.exe:*)",
+      "WebFetch(domain:www.metmeetings.org)",
+      "WebFetch(domain:metmeetings.org)"
     ],
     "deny": [],
     "ask": []

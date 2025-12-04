@@ -1,13 +1,17 @@
 <?php
 /**
+ * Triggered by generateMemberRegistration() in index.html
  * Validates form data and displays error message in form where applicable
  * If form is valid, stores registration data in database
- * Depending on the chosen payment method:
- * Initiates payment process (Stripe)
- * Initiates emailing process (bank transfer, direct debit)
+ * Stores payment method and "item" in process_form.html
+ * generateMemberRegistration() gets payment method and "item" from process_form.html
+ * Since payment method is always Stripe/Paypal,
+ * generateMemberRegistration() redirects to proceed.php with "item" in URL
+ * and so initiates the payment process (Stripe)
  */
 
 require "../includes/load_main_components.inc.php";
+require_once "../includes/settings.php";
 
 $esValido = true;
 $mensajeError = "";
@@ -24,6 +28,10 @@ if ($_POST["hdnIdModalidad"] == MODALIDAD_USUARIO_INDIVIDUAL) {
         $_POST["cmbAnyos"] = "null";
     }
 
+    // Address fields commented out in form - set defaults
+    $_POST["txtDireccion1"] = isset($_POST["txtDireccion1"]) ? $_POST["txtDireccion1"] : "";
+    $_POST["txtDireccion2"] = isset($_POST["txtDireccion2"]) ? $_POST["txtDireccion2"] : "";
+
     $_POST["txtEmailUser"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_EMAIL_USER, $_POST["txtEmailUser"]));
     $_POST["txtNombre"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_FIRST_NAME, $_POST["txtNombre"]));
     $_POST["txtApellidos"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_LAST_NAMES, $_POST["txtApellidos"]));
@@ -39,8 +47,6 @@ if ($_POST["hdnIdModalidad"] == MODALIDAD_USUARIO_INDIVIDUAL) {
     $_POST["txtTelefonoTrabajo"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_WORK_PHONE, $_POST["txtTelefonoTrabajo"]));
     $_POST["txtFax"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_FAX, $_POST["txtFax"]));
     $_POST["txtTelefonoMobil"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_MOBILE_PHONE, $_POST["txtTelefonoMobil"]));
-    $_POST["txtSpecifyOther"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_IF_OTHER_SPECIFY, $_POST["txtSpecifyOther"]));
-    $_POST["txtSpecifyStudy"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_IF_STUDENT_SUBJECT, $_POST["txtSpecifyStudy"]));
     $_POST["txtProfesionQualificacion"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_DEGREES_QUALIFICATIONS, $_POST["txtProfesionQualificacion"]));
     $_POST["txtSobreMet"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_HOW_DID_YOU_HEAR_ABOUT_MET, $_POST["txtSobreMet"]));
     $_POST["txtOtherSpecification"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_IF_OTHER_SPECIFY, $_POST["txtOtherSpecification"]));
@@ -70,14 +76,20 @@ if ($_POST["hdnIdModalidad"] == MODALIDAD_USUARIO_INDIVIDUAL) {
 }
 
 //Get billing details
-$_POST["txtFacturacionNifCliente"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF, $_POST["txtFacturacionNifCliente"]));
+// Handle tax ID: either Spanish NIF or foreign tax ID
+if (isset($_POST["hasSpanishNif"]) && $_POST["hasSpanishNif"] == 1 && !empty($_POST["spanishNifNumber"])) {
+    $_POST["txtFacturacionNifCliente"] = generalUtils::escaparCadena($_POST["spanishNifNumber"]);
+} else {
+    $_POST["txtFacturacionNifCliente"] = isset($_POST["tax_id_number"]) ? generalUtils::escaparCadena($_POST["tax_id_number"]) : "";
+}
 $_POST["txtFacturacionNombreCliente"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER, $_POST["txtFacturacionNombreCliente"]));
 $_POST["txtFacturacionNombreEmpresa"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_NAME_COMPANY, $_POST["txtFacturacionNombreEmpresa"]));
 $_POST["txtFacturacionDireccion"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_ADDRESS, $_POST["txtFacturacionDireccion"]));
 $_POST["txtFacturacionCodigoPostal"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_ZIPCODE, $_POST["txtFacturacionCodigoPostal"]));
 $_POST["txtFacturacionCiudad"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_CITY, $_POST["txtFacturacionCiudad"]));
 $_POST["txtFacturacionProvincia"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_PROVINCE, $_POST["txtFacturacionProvincia"]));
-$_POST["txtFacturacionPais"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_COUNTRY, $_POST["txtFacturacionPais"]));
+// Billing country comes from combo as billing_country
+$_POST["txtFacturacionPais"] = isset($_POST["billing_country"]) ? generalUtils::escaparCadena($_POST["billing_country"]) : "";
 
 //Assign billing details to variables for sending to database
 $nifFactura = $_POST["txtFacturacionNifCliente"];
@@ -88,6 +100,38 @@ $codigoPostalFactura = $_POST["txtFacturacionCodigoPostal"];
 $ciudadFactura = $_POST["txtFacturacionCiudad"];
 $provinciaFactura = $_POST["txtFacturacionProvincia"];
 $paisFactura = $_POST["txtFacturacionPais"];
+
+//Tax ID fields for Verifactu (non-Spanish customers)
+$taxIdCountry = isset($_POST["tax_id_country"]) ? generalUtils::escaparCadena($_POST["tax_id_country"]) : "";
+$taxIdType = isset($_POST["tax_id_type"]) ? generalUtils::escaparCadena($_POST["tax_id_type"]) : "";
+$taxIdNumber = isset($_POST["tax_id_number"]) ? generalUtils::escaparCadena($_POST["tax_id_number"]) : "";
+
+//Store tax ID in session for Stripe payment flow
+$_SESSION["taxIdCountry"] = $taxIdCountry;
+$_SESSION["taxIdType"] = $taxIdType;
+$_SESSION["taxIdNumber"] = $taxIdNumber;
+
+// Handle invoice type (individual = F2 simplified invoice, business = F1 standard invoice)
+$invoiceType = isset($_POST["invoiceType"]) ? $_POST["invoiceType"] : "business";
+if ($invoiceType === "individual") {
+    // For private individuals, set billing fields to empty and use F2 (simplified invoice)
+    $nifFactura = "";
+    $nombreClienteFactura = "";
+    $nombreEmpresaFactura = "";
+    $direccionFactura = "";
+    $codigoPostalFactura = "";
+    $ciudadFactura = "";
+    $provinciaFactura = "";
+    $paisFactura = "";
+    $taxIdCountry = "";
+    $taxIdType = "";
+    $taxIdNumber = "";
+    $_SESSION["tipoFacturaVerifactu"] = "F2";
+} else {
+    $_SESSION["tipoFacturaVerifactu"] = "F1";
+}
+// Store invoice type in session for use during invoice creation
+$_SESSION["invoiceType"] = $invoiceType;
 
 //Make the sure the Privacy checkbox is checked
 if (!isset($_POST["chkPrivacy"])) {
@@ -188,6 +232,7 @@ if ($esValido) {
     //Determine price (regular, student or over-65)
     if (isset($_POST["hdnIdModalidad"]) && $_POST["hdnIdModalidad"] == MODALIDAD_USUARIO_INDIVIDUAL) {
         $idSituacionAdicional = "null";
+        $esHombre = 0; // Gender field not in form, default to 0
         $vectorSituacionAdicional = Array(SITUACION_ADICIONAL_JUBILADO, SITUACION_ADICIONAL_ESTUDIANTE);
 
         $importe = PRECIO_MODALIDAD_USUARIO_INDIVIDUAL;

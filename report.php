@@ -1,29 +1,40 @@
 <?php
 //Stripe webhook endpoint
 
+require_once __DIR__ . '/includes/load_environment.inc.php';
 require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/home/metmeetings/private/stripe_keys.php';
-require_once __DIR__ . '/home/metmeetings/private/webhook_secret.php';
+
+if (defined('MET_ENV') && constant('MET_ENV') == 'LOCAL') {
+    $keys = require(__DIR__ . '/private/stripe_keys.php');
+} else {
+    $keys = require('/home/metmeetings/private/stripe_keys.php');
+}
 
 $payload   = @file_get_contents('php://input');
 $sigHeader = $_SERVER['HTTP_STRIPE_SIGNATURE'] ?? '';
 
-$endpointSecret = STRIPE_WEBHOOK_SECRET;
-if (!$endpointSecret) { 
-  error_log('No STRIPE_WEBHOOK_SECRET'); 
-  http_response_code(500); exit; 
+// Try both test and production webhook secrets to support test mode on production
+$webhookSecrets = [
+    'whsec_dojNSEiEjoqWF2XXOTPHtzvTGElm9Vl6',  // test
+    'whsec_8XIgjzIE3JqhuS4vYy1msBDCvoXvM4dL'   // live
+];
+
+$event = null;
+foreach ($webhookSecrets as $secret) {
+    try {
+        $event = \Stripe\Webhook::constructEvent($payload, $sigHeader, $secret);
+        break; // Success - exit loop
+    } catch (\Stripe\Exception\SignatureVerificationException $e) {
+        continue; // Try next secret
+    } catch (\UnexpectedValueException $e) {
+        http_response_code(400);
+        exit('Invalid payload');
+    }
 }
 
-try {
-    $event = \Stripe\Webhook::constructEvent(
-        $payload,
-        $sigHeader,
-        $endpointSecret   
-    );
-} catch (\UnexpectedValueException $e) {
-    http_response_code(400); exit('Invalid payload');
-} catch (\Stripe\Exception\SignatureVerificationException $e) {
-    http_response_code(400); exit('Invalid signature');
+if (!$event) {
+    http_response_code(400);
+    exit('Invalid signature');
 }
 
 // Handle the events you care about

@@ -16,6 +16,7 @@
 
 require "../includes/load_main_components.inc.php";
 require "../includes/load_validate_user_web.inc.php";
+require_once "../includes/settings.php";
 
 $esValido = true;
 $mensajeError = "";
@@ -53,8 +54,48 @@ if (in_array($_POST["cmbSituacionAdicional"], $vectorSituacionAdicional)) {
     $idConceptoMovimiento=MOVIMIENTO_CONCEPTO_NEW_MEMBERSHIP_INSTITUTIONAL;
 }
 
+// Handle invoice type (individual = F2 simplified invoice, business = F1 standard invoice)
+$invoiceType = isset($_POST["invoiceType"]) ? $_POST["invoiceType"] : "business";
+
 //Get billing details from form
-$_POST["txtFacturacionNifCliente"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF, $_POST["txtFacturacionNifCliente"]));
+// Handle tax ID: either Spanish NIF or foreign tax ID
+if (isset($_POST["hasSpanishNif"]) && $_POST["hasSpanishNif"] == 1 && !empty($_POST["spanishNifNumber"])) {
+    // Spanish NIF/NIE selected
+    $nifFactura = generalUtils::escaparCadena($_POST["spanishNifNumber"]);
+} else {
+    // Foreign tax ID selected
+    $nifFactura = generalUtils::escaparCadena($_POST["tax_id_number"]);
+}
+
+// Validate required billing fields (only for business invoices)
+if ($invoiceType !== "individual") {
+    // Validate tax ID
+    if (empty($nifFactura) || trim($nifFactura) === "") {
+        $esValido = false;
+        $mensajeError = "Please provide your tax identification number";
+    }
+    // Validate billing name
+    if (empty($_POST["txtFacturacionNombreCliente"]) || trim($_POST["txtFacturacionNombreCliente"]) === "") {
+        $esValido = false;
+        $mensajeError = "Please provide your name for billing purposes";
+    }
+    // Validate billing address
+    if (empty($_POST["txtFacturacionDireccion"]) || trim($_POST["txtFacturacionDireccion"]) === "") {
+        $esValido = false;
+        $mensajeError = "Please provide your billing address";
+    }
+    // Validate billing city
+    if (empty($_POST["txtFacturacionCiudad"]) || trim($_POST["txtFacturacionCiudad"]) === "") {
+        $esValido = false;
+        $mensajeError = "Please provide your city";
+    }
+    // Validate billing postal code
+    if (empty($_POST["txtFacturacionCodigoPostal"]) || trim($_POST["txtFacturacionCodigoPostal"]) === "") {
+        $esValido = false;
+        $mensajeError = "Please provide your postal code";
+    }
+}
+
 $_POST["txtFacturacionNombreCliente"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER, $_POST["txtFacturacionNombreCliente"]));
 $_POST["txtFacturacionNombreEmpresa"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_NAME_COMPANY, $_POST["txtFacturacionNombreEmpresa"]));
 $_POST["txtFacturacionDireccion"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_ADDRESS, $_POST["txtFacturacionDireccion"]));
@@ -64,7 +105,7 @@ $_POST["txtFacturacionProvincia"] = generalUtils::escaparCadena(generalUtils::sk
 $_POST["txtFacturacionPais"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_COUNTRY, $_POST["txtFacturacionPais"]));
 
 //Store billing details in variables to be stored in DB later
-$nifFactura = $_POST["txtFacturacionNifCliente"];
+// $nifFactura already set above based on Spanish NIF or foreign tax ID
 $nombreClienteFactura = $_POST["txtFacturacionNombreCliente"];
 $nombreEmpresaFactura = $_POST["txtFacturacionNombreEmpresa"];
 $direccionFactura = $_POST["txtFacturacionDireccion"];
@@ -73,6 +114,36 @@ $ciudadFactura = $_POST["txtFacturacionCiudad"];
 $provinciaFactura = $_POST["txtFacturacionProvincia"];
 $paisFactura = $_POST["txtFacturacionPais"];
 
+//Tax ID fields for Verifactu (non-Spanish customers)
+$taxIdCountry = isset($_POST["tax_id_country"]) ? generalUtils::escaparCadena($_POST["tax_id_country"]) : "";
+$taxIdType = isset($_POST["tax_id_type"]) ? generalUtils::escaparCadena($_POST["tax_id_type"]) : "";
+$taxIdNumber = isset($_POST["tax_id_number"]) ? generalUtils::escaparCadena($_POST["tax_id_number"]) : "";
+
+//Store tax ID in session for Stripe payment flow
+$_SESSION["taxIdCountry"] = $taxIdCountry;
+$_SESSION["taxIdType"] = $taxIdType;
+$_SESSION["taxIdNumber"] = $taxIdNumber;
+
+// Handle invoice type and clear billing fields for private individuals
+if ($invoiceType === "individual") {
+    // For private individuals, set billing fields to empty and use F2 (simplified invoice)
+    $nifFactura = "";
+    $nombreClienteFactura = "";
+    $nombreEmpresaFactura = "";
+    $direccionFactura = "";
+    $codigoPostalFactura = "";
+    $ciudadFactura = "";
+    $provinciaFactura = "";
+    $paisFactura = "";
+    $taxIdCountry = "";
+    $taxIdType = "";
+    $taxIdNumber = "";
+    $_SESSION["tipoFacturaVerifactu"] = "F2";
+} else {
+    $_SESSION["tipoFacturaVerifactu"] = "F1";
+}
+// Store invoice type in session for use during invoice creation
+$_SESSION["invoiceType"] = $invoiceType;
 
 //Get payment method from form
 $metodoPago = $_POST["rdMetodoPago"];
@@ -103,7 +174,7 @@ if ($esValido) {
     $idUsuarioWeb = $_SESSION["met_user"]["id"];
 
     //Update billing details
-    $db->callProcedure("CALL ed_sp_web_usuario_web_actualizar(" . $idUsuarioWeb . ",'" . $_POST["txtFacturacionNifCliente"] . "','" . $_POST["txtFacturacionNombreCliente"] . "','" . $_POST["txtFacturacionNombreEmpresa"] . "','" . $_POST["txtFacturacionDireccion"] . "','" . $_POST["txtFacturacionCodigoPostal"] . "','" . $_POST["txtFacturacionCiudad"] . "','" . $_POST["txtFacturacionProvincia"] . "','" . $_POST["txtFacturacionPais"] . "')");
+    $db->callProcedure("CALL ed_sp_web_usuario_web_actualizar(" . $idUsuarioWeb . ",'" . $nifFactura . "','" . $_POST["txtFacturacionNombreCliente"] . "','" . $_POST["txtFacturacionNombreEmpresa"] . "','" . $_POST["txtFacturacionDireccion"] . "','" . $_POST["txtFacturacionCodigoPostal"] . "','" . $_POST["txtFacturacionCiudad"] . "','" . $_POST["txtFacturacionProvincia"] . "','" . $_POST["txtFacturacionPais"] . "')");
 
     //Get expiry date of last registration
     $resultadoInscripcionPrevia = $db->callProcedure("CALL ed_sp_web_inscripcion_previa(" . $idUsuarioWeb . ")");

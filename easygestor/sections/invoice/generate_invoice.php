@@ -3,9 +3,13 @@
      * Create invoice using HTML template,
      * convert HTML to PDF, then
      * output PDF to screen and to file
-     */	
+     */
+
+    // Suppress deprecation and warning messages from Html2Pdf/TCPDF libraries (PHP 8.2+ compatibility)
+    error_reporting(0);
 
 	require_once('../vendor/autoload.php');
+	require_once(dirname(__FILE__) . '/../../../includes/VerifactiService.php');
 
     use \Spipu\Html2Pdf\Html2Pdf;
     use \Spipu\Html2Pdf\Exception\Html2PdfException;
@@ -13,10 +17,27 @@
 
     //Get HTML invoice template
 	$plantillaPdf=new XTemplate("html/sections/invoice/generate_invoice.html");
-	
+
+	//Initialize VerifactiService for Verifactu compliance
+	$verifactiService = new VerifactiService($db);
+
 	//Get invoice details
 	$resultadoFactura=$db->callProcedure("CALL ".OBJECT_DB_ACRONYM."_sp_factura_obtener_concreto_pdf(".$_GET["id_factura"].")");
 	$datoFactura=$db->getData($resultadoFactura);
+
+	//Check if invoice already has Verifactu registration (previously submitted)
+	//Note: We do NOT submit to Verifacti here - that happens at send time for compliance
+	$verifactuEnabled = false;
+	$verifactuShowPlaceholder = false;
+	if ($verifactiService->isEnabled() && $datoFactura["proforma"] != 1) {
+		if (!empty($datoFactura["verifactu_uuid"])) {
+			//Already registered - show QR
+			$verifactuEnabled = true;
+		} else {
+			//Not yet registered - show placeholder
+			$verifactuShowPlaceholder = true;
+		}
+	}
 
 	//Assign invoice details to placeholders in template
     $plantillaPdf->assign("INVOICE_PDF_DATE_VALUE",generalUtils::conversionFechaFormato($datoFactura["fecha_factura"],"-","/"));
@@ -28,7 +49,19 @@
       	$plantillaPdf->assign("INVOICE_PROFORMA","INVOICE");
     	}
 	$plantillaPdf->assign("INVOICE_PDF_INVOICE_NUMBER_VALUE",$datoFactura["numero_factura"]);
-    $plantillaPdf->assign("INVOICE_PDF_CUSTOMER_CIF_VALUE",$datoFactura["nif_cliente_factura"]);
+
+    //Display Spanish NIF if available, otherwise show foreign tax ID
+    $customerTaxId = "";
+    if (!empty($datoFactura["nif_cliente_factura"])) {
+        $customerTaxId = $datoFactura["nif_cliente_factura"];
+    } elseif (!empty($datoFactura["tax_id_number"])) {
+        //Format: Country code + Tax ID number (e.g., "GB - GB123456789")
+        $customerTaxId = $datoFactura["tax_id_number"];
+        if (!empty($datoFactura["tax_id_country"])) {
+            $customerTaxId = $datoFactura["tax_id_country"] . " - " . $customerTaxId;
+        }
+    }
+    $plantillaPdf->assign("INVOICE_PDF_CUSTOMER_CIF_VALUE", $customerTaxId);
     if ($datoFactura["fecha_pago_factura"] != "") {
         $plantillaPdf->assign("INVOICE_PDF_PAYMENT_RECEIVED_VALUE", generalUtils::conversionFechaFormato($datoFactura["fecha_pago_factura"], "-", "/"));
     }
@@ -100,7 +133,27 @@
 	}
 	
 	$plantillaPdf->assign("INVOICE_PDF_AMOUNT_TITLE_VALUE","&euro; ".sprintf("%.2f",$total));
-	
+
+	//Add Verifactu QR code section if already registered (only for real invoices, not proformas)
+	if ($verifactuEnabled && !empty($datoFactura["verifactu_qr"])) {
+		$plantillaPdf->assign("VERIFACTU_UUID", $datoFactura["verifactu_uuid"]);
+		$plantillaPdf->assign("VERIFACTU_HUELLA", $datoFactura["verifactu_huella"]);
+
+		//QR code can be base64 data or URL
+		$qrCode = $datoFactura["verifactu_qr"];
+		if (strpos($qrCode, "data:image") === 0 || strpos($qrCode, "http") === 0) {
+			$plantillaPdf->assign("VERIFACTU_QR_IMAGE", $qrCode);
+		} else {
+			//Assume it's base64 data without the data URI prefix
+			$plantillaPdf->assign("VERIFACTU_QR_IMAGE", "data:image/png;base64," . $qrCode);
+		}
+
+		$plantillaPdf->parse("contenido_principal.verifactu_qr_section");
+	} elseif ($verifactuShowPlaceholder) {
+		//Show placeholder for invoices not yet registered with Verifactu
+		$plantillaPdf->parse("contenido_principal.verifactu_placeholder_section");
+	}
+
 	$plantillaPdf->parse("contenido_principal");
 
 	//Convert HTML to PDF, else output error message
@@ -108,14 +161,16 @@
         $html2pdf = new Html2Pdf('P', 'A4', 'en');
         $html2pdf->setDefaultFont('freesans');
         $html2pdf->writeHTML($plantillaPdf->text("contenido_principal"));
-        $hashGenerado=md5(uniqid(time()) . $datoFactura["numero_factura"]);
 
-        //Update invoice
-        $db->callProcedure("CALL ".OBJECT_DB_ACRONYM."_sp_factura_actualizar_hash(".$_GET["id_factura"].",'".$hashGenerado."')");
+        //Only generate new hash if one doesn't exist (preserve hash for QR regeneration)
+        if (empty($datoFactura["hash_generado"])) {
+            $hashGenerado=md5(uniqid(time()) . $datoFactura["numero_factura"]);
+            $db->callProcedure("CALL ".OBJECT_DB_ACRONYM."_sp_factura_actualizar_hash(".$_GET["id_factura"].",'".$hashGenerado."')");
+        }
 
         //Output PDF to file (F) and screen (I), then move to /easygestor/files/customers/invoice/pdf folder
       
-      	if ($_GET["ioutput"]) {
+      	if (isset($_GET["ioutput"]) && $_GET["ioutput"]) {
           $invoiceOutput = "F";
         } else {
           $invoiceOutput = "FI";

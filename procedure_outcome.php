@@ -8,37 +8,81 @@
 
 require "includes/load_main_components.inc.php";
 
-//$environment = require('/home/metmeetings/private/environment_variables.php');
-// $stripeEnv = $environment['STRIPE_ENV'];
-// $stripeEnv = (isset($_SESSION['test']) && $_SESSION['test'] == '1') ? 'test' : 'live';
 require_once('vendor/autoload.php');
-$keys = require('/home/metmeetings/private/stripe_keys.php');
+if (defined('MET_ENV') && constant('MET_ENV') == 'LOCAL') {
+    require(__DIR__ . '/private/webhook_secret.php');
+    $keys = require(__DIR__ . '/private/stripe_keys.php');
+} else {
+    require('/home/metmeetings/private/webhook_secret.php');
+    $keys = require('/home/metmeetings/private/stripe_keys.php');
+}
 
-\Stripe\Stripe::setApiKey($keys['secret_key']);
+try {
+    $stripe = new \Stripe\StripeClient([
+        'api_key' => $keys['secret_key'],
+        'stripe_version' => '2025-02-24.acacia',
+    ]);
 
-//Set API version (IMPORTANT: this needs to be updated if we switch to a newer API version)
-\Stripe\Stripe::setApiVersion("2020-08-27");
+} catch (\Stripe\Exception\ApiErrorException $e) {
+    http_response_code(400);
+    error_log("Stripe API error:
+      http_status=" . $e->getHttpStatus() . "
+      type=" . ($e->getError()->type ?? '') . "
+      code=" . ($e->getError()->code ?? '') . "
+      param=" . ($e->getError()->param ?? '') . "
+      message=" . ($e->getError()->message ?? '') . "
+      request_id=" . ($e->getRequestId() ?? '') . "
+    ");
+    exit;
+
+} catch (\Throwable $e) {
+    http_response_code(500);
+    error_log('Unexpected: '.$e->getMessage());
+    exit;
+}
 
 //Variable used in load_send_mail_inscription(_xxx).php
 $metodoPago = INSCRIPCION_TIPO_PAGO_PAYPAL;
 
 //Retrieve the PaymentIntent object from the Stripe server (with intent ID from session)
 //Use the "expand" parameter to simultaneously retrieve the BalanceTransaction object
-$intent = \Stripe\PaymentIntent::retrieve([
-    'id' => $_SESSION["payment_intent"],
-    'expand' => ['charges.data.balance_transaction']
-]);
+try {
+    $intent = $stripe->paymentIntents->retrieve(
+        $_SESSION["payment_intent"],
+        ['expand' => ['latest_charge.balance_transaction']]
+    );
+
+    // Debug: log the intent structure
+    error_log('PaymentIntent status: ' . $intent->status);
+    error_log('PaymentIntent has latest_charge: ' . (isset($intent->latest_charge) ? 'yes' : 'no'));
+
+} catch (\Stripe\Exception\ApiErrorException $e) {
+    http_response_code(500);
+    error_log('Stripe retrieve error: '.$e->getMessage());
+    echo 'Could not load your payment summary. Please contact support.';
+    exit;
+}
 
 //Get the transaction ID (used in last_step(_xxx).php) from the PaymentIntent object
-$txnId = $intent->charges->data[0]->id;
+// Use latest_charge instead of charges->data[0] (modern API approach)
+if (!empty($intent->latest_charge)) {
+    $charge = is_string($intent->latest_charge)
+        ? $stripe->charges->retrieve($intent->latest_charge, ['expand' => ['balance_transaction']])
+        : $intent->latest_charge;
 
-//Get the Stripe fee from the BalanceTransaction object
-$fee = $intent->charges->data[0]->balance_transaction->fee_details[0]->amount;
+    $txnId = $charge->id;
 
-//Convert fee in cents to fee in euros ($stripeFee is used in load_send_mail_inscription(_xxx).php)
-if ($fee != "") {
-    $stripeFee = $fee / 100;
+    //Get the Stripe fee from the BalanceTransaction object
+    if (!empty($charge->balance_transaction->fee_details[0])) {
+        $fee = $charge->balance_transaction->fee_details[0]->amount;
+        $stripeFee = $fee / 100;
+    } else {
+        $stripeFee = 0;
+    }
 } else {
+    // Fallback: use the payment intent ID if charge isn't available yet
+    error_log('Payment Intent latest_charge not available: ' . $_SESSION["payment_intent"]);
+    $txnId = $_SESSION["payment_intent"];
     $stripeFee = 0;
 }
 

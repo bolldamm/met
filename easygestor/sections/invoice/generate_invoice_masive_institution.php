@@ -62,7 +62,17 @@ while ($numFactura = $db->getData($facturasPDF)) {
     $plantillaPdf->assign("INVOICE_PDF_INVOICE_NUMBER_VALUE", $datoFactura["numero_factura"]);
     //echo $datoFactura["numero_factura"];
 
-    $plantillaPdf->assign("INVOICE_PDF_CUSTOMER_CIF_VALUE", $datoFactura["nif_cliente_factura"]);
+    //Display Spanish NIF if available, otherwise show foreign tax ID
+    $customerTaxId = "";
+    if (!empty($datoFactura["nif_cliente_factura"])) {
+        $customerTaxId = $datoFactura["nif_cliente_factura"];
+    } elseif (!empty($datoFactura["tax_id_number"])) {
+        $customerTaxId = $datoFactura["tax_id_number"];
+        if (!empty($datoFactura["tax_id_country"])) {
+            $customerTaxId = $datoFactura["tax_id_country"] . " - " . $customerTaxId;
+        }
+    }
+    $plantillaPdf->assign("INVOICE_PDF_CUSTOMER_CIF_VALUE", $customerTaxId);
     $plantillaPdf->assign("INVOICE_PDF_PAYMENT_RECEIVED_VALUE", generalUtils::conversionFechaFormato($datoFactura["fecha_pago_factura"], "-", "/"));
 
     //Get billing details

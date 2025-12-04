@@ -26,9 +26,9 @@ while($datox=$db->getData($resultadox)){
   // Invoice sending routine
 
 		$i++;
-		$curlopturl = "https://www.metmeetings.org/easygestor/main_app.php?section=invoice&action=send&send=1&id_factura=" . $datox['id_factura'];
+		$curlopturl = CURRENT_DOMAIN_EASYGESTOR . "main_app.php?section=invoice&action=send&send=1&id_factura=" . $datox['id_factura'];
    
-            echo "<script type='text/javascript'>var element = document.createElement('iframe'); element.setAttribute('id', '" . $vectorItem[$i]  . "'); element.setAttribute('src', '" . $curlopturl . "'); element.style.display = 'none'; document.body.appendChild(element);</script>";
+            echo "<script type='text/javascript'>var element = document.createElement('iframe'); element.setAttribute('id', 'invoice_" . $datox['id_factura']  . "'); element.setAttribute('src', '" . $curlopturl . "'); element.style.display = 'none'; document.body.appendChild(element);</script>";
 
   // end of invoice sending routine
   
@@ -36,6 +36,6 @@ while($datox=$db->getData($resultadox)){
 
 $i = $i * 1000;
 
-echo "<script type='text/javascript'>setTimeout(function(){window.location = 'https://www.metmeetings.org/easygestor/main_app.php?section=invoice&action=view&reload=" . rand() . "';}, " . $i . ");</script>"; 
+echo "<script type='text/javascript'>setTimeout(function(){window.location = '" . CURRENT_DOMAIN_EASYGESTOR . "main_app.php?section=invoice&action=view&reload=" . rand() . "';}, " . $i . ");</script>"; 
 echo "</body></html>";
 ?>

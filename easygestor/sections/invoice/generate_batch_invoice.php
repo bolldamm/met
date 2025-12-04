@@ -68,7 +68,13 @@
         }
          
           	//Guardamos factura...
-		$resultadoFactura2=$db->callProcedure("CALL ".OBJECT_DB_ACRONYM."_sp_factura_editar(".$vectorItem[$i]. ",'" . $fechaFactura . "','" . $fechaPagoFactura . "','".generalUtils::escaparCadena($fatnum)."','".generalUtils::escaparCadena($datoFactura['nif_cliente_factura'])."','".generalUtils::escaparCadena($datoFactura['nombre_cliente_factura'])."','1','".generalUtils::escaparCadena($datoFactura['nombre_empresa_factura'])."',".$datoFactura['visible_nombre_empresa_factura'].",'".generalUtils::escaparCadena($datoFactura['direccion_factura'])."','".generalUtils::escaparCadena($datoFactura['codigo_postal_factura'])."','".generalUtils::escaparCadena($datoFactura['ciudad_factura'])."','".generalUtils::escaparCadena($datoFactura['provincia_factura'])."','".generalUtils::escaparCadena($datoFactura['pais_factura'])."','".$datoFactura['proforma']."')");
+		//Get Verifactu fields (may be empty for existing invoices)
+		$taxIdCountry = isset($datoFactura['tax_id_country']) ? generalUtils::escaparCadena($datoFactura['tax_id_country']) : "";
+		$taxIdType = isset($datoFactura['tax_id_type']) ? generalUtils::escaparCadena($datoFactura['tax_id_type']) : "";
+		$taxIdNumber = isset($datoFactura['tax_id_number']) ? generalUtils::escaparCadena($datoFactura['tax_id_number']) : "";
+		$tipoFacturaVerifactu = isset($datoFactura['tipo_factura_verifactu']) ? generalUtils::escaparCadena($datoFactura['tipo_factura_verifactu']) : "F1";
+
+		$resultadoFactura2=$db->callProcedure("CALL ".OBJECT_DB_ACRONYM."_sp_factura_editar(".$vectorItem[$i]. ",'" . $fechaFactura . "','" . $fechaPagoFactura . "','".generalUtils::escaparCadena($fatnum)."','".generalUtils::escaparCadena($datoFactura['nif_cliente_factura'])."','".generalUtils::escaparCadena($datoFactura['nombre_cliente_factura'])."','1','".generalUtils::escaparCadena($datoFactura['nombre_empresa_factura'])."',".$datoFactura['visible_nombre_empresa_factura'].",'".generalUtils::escaparCadena($datoFactura['direccion_factura'])."','".generalUtils::escaparCadena($datoFactura['codigo_postal_factura'])."','".generalUtils::escaparCadena($datoFactura['ciudad_factura'])."','".generalUtils::escaparCadena($datoFactura['provincia_factura'])."','".generalUtils::escaparCadena($datoFactura['pais_factura'])."','".$datoFactura['proforma']."','".$taxIdCountry."','".$taxIdType."','".$taxIdNumber."','".$tipoFacturaVerifactu."')");
 		// require "line_invoice.php";
 
 

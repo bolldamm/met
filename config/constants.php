@@ -1,7 +1,7 @@
 <?php
 
     if (defined('MET_ENV') && constant('MET_ENV') == 'LOCAL') {
-        define("CURRENT_DOMAIN","https://metmeetings.local");
+        define("CURRENT_DOMAIN","https://localhost");
     }else{
         define("CURRENT_DOMAIN","https://www.metmeetings.org");
     }

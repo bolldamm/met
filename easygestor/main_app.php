@@ -5,7 +5,7 @@
 	require "config/dictionary/en_EN.php";
 
 if (empty($_SESSION['user']['language_dictio'])) {
-    generalUtils::redirigir("https://www.metmeetings.org/easygestor/logout.php");
+    generalUtils::redirigir(CURRENT_DOMAIN_EASYGESTOR . "logout.php");
     exit(); // Always exit after redirect
 }
 

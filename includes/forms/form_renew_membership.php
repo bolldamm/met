@@ -8,11 +8,19 @@
 	 */
 
 	if($_SESSION["met_user"]["id_modalidad"]==MODALIDAD_USUARIO_INDIVIDUAL){
-		
+
 	//Combo situacion adicional
 	$plantillaFormulario->assign("COMBO_SITUACION_ADICIONAL", generalUtils::construirCombo($db, "CALL ed_sp_web_situacion_adicional_obtener_combo(".$_SESSION["id_idioma"].")", "cmbSituacionAdicional", "cmbSituacionAdicional", $_SESSION["met_user"]["id_situacion_adicional"], "nombre", "id_situacion_adicional", "Standard", -1, 'class="form-control"' ));
-		
-		
+
+	//Combo billing country
+	$plantillaFormulario->assign("COMBO_BILLING_COUNTRY", generalUtils::construirCombo($db, "CALL ed_sp_web_pais_obtener_combo()", "billing_country", "billing_country", -1, "nombre_original", "id_pais", STATIC_FORM_PROFILE_BILLING_COUNTRY, -1, 'class="required form-control" style="width:100%; color:lightslategray;" '));
+
+	//Combo tax ID country - uses iso2 as value for Verifactu, displays country name only
+	$plantillaFormulario->assign("COMBO_TAX_ID_COUNTRY", generalUtils::construirCombo($db, "CALL ed_sp_web_pais_iso_obtener_combo()", "tax_id_country", "tax_id_country", -1, "nombre_original", "iso2", STATIC_FORM_PROFILE_BILLING_TAX_ID_COUNTRY, -1, 'class="required form-control" style="width:100%; color:lightslategray;" '));
+
+	//Combo tax ID type - uses tax_id_type code as value for Verifactu
+	$plantillaFormulario->assign("COMBO_TAX_ID_TYPE", generalUtils::construirCombo($db, "CALL ed_sp_web_tax_id_type_obtener_combo()", "tax_id_type", "tax_id_type", -1, "description", "tax_id_type", STATIC_FORM_PROFILE_BILLING_TAX_ID_TYPE, -1, 'class="required form-control" style="width:100%; color:lightslategray;" '));
+
 		$plantillaFormulario->parse("contenido_principal.bloque_formulario.bloque_individual");
 
 		/*$plantillaFormulario->assign("LITERAL_PRECIO_RENOVACION",STATIC_FORM_MEMBERSHIP_MEMBERSHIP_COSTS_30_RENEW);
@@ -22,6 +30,15 @@
 		
 		
 	}else if($_SESSION["met_user"]["id_modalidad"]==MODALIDAD_USUARIO_INSTITUTIONAL){
+		//Combo billing country
+		$plantillaFormulario->assign("COMBO_BILLING_COUNTRY", generalUtils::construirCombo($db, "CALL ed_sp_web_pais_obtener_combo()", "billing_country", "billing_country", -1, "nombre_original", "id_pais", STATIC_FORM_PROFILE_BILLING_COUNTRY, -1, 'class="required form-control" style="width:100%; color:lightslategray;" '));
+
+		//Combo tax ID country (with ISO codes) - uses iso2 as value for Verifactu
+		$plantillaFormulario->assign("COMBO_TAX_ID_COUNTRY", generalUtils::construirCombo($db, "CALL ed_sp_web_pais_iso_obtener_combo()", "tax_id_country", "tax_id_country", -1, "nombre_con_iso", "iso2", STATIC_FORM_PROFILE_BILLING_TAX_ID_COUNTRY, -1, 'class="required form-control" style="width:100%; color:lightslategray;" '));
+
+		//Combo tax ID type - uses tax_id_type code as value for Verifactu
+		$plantillaFormulario->assign("COMBO_TAX_ID_TYPE", generalUtils::construirCombo($db, "CALL ed_sp_web_tax_id_type_obtener_combo()", "tax_id_type", "tax_id_type", -1, "description", "tax_id_type", STATIC_FORM_PROFILE_BILLING_TAX_ID_TYPE, -1, 'class="required form-control" style="width:100%; color:lightslategray;" '));
+
 		$plantillaFormulario->assign("LITERAL_PRECIO_RENOVACION",STATIC_FORM_MEMBERSHIP_INSTIT_COST_100);
 		$plantillaFormulario->parse("contenido_principal.bloque_formulario.bloque_institucion");
 	}
@@ -76,8 +93,24 @@
 	if($datoUsuarioConcreto["pais_factura"]!=""){
 		$plantillaFormulario->assign("FORM_PROFILE_BILLING_COUNTRY",$datoUsuarioConcreto["pais_factura"]);
 	}
-	
 
+	// Determine invoice type pre-selection based on last invoice
+	// Query for the user's last invoice type (F2 = simplified/individual, F1 or null = business)
+	$lastInvoiceType = "";
+	$resultadoUltimoTipoFactura = $db->callProcedure("CALL ed_sp_web_usuario_ultimo_tipo_factura_obtener(".$_SESSION["met_user"]["id"].")");
+	$datoUltimoTipoFactura = $db->getData($resultadoUltimoTipoFactura);
+	if ($datoUltimoTipoFactura && isset($datoUltimoTipoFactura["tipo_factura_verifactu"])) {
+		$lastInvoiceType = $datoUltimoTipoFactura["tipo_factura_verifactu"];
+	}
+
+	// Set radio button checked attributes based on last invoice type
+	if ($lastInvoiceType === "F2") {
+		$plantillaFormulario->assign("INVOICE_TYPE_INDIVIDUAL_CHECKED", "checked");
+		$plantillaFormulario->assign("INVOICE_TYPE_BUSINESS_CHECKED", "");
+	} else {
+		$plantillaFormulario->assign("INVOICE_TYPE_INDIVIDUAL_CHECKED", "");
+		$plantillaFormulario->assign("INVOICE_TYPE_BUSINESS_CHECKED", "checked");
+	}
 
 
 	/**

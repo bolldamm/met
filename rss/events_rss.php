@@ -20,7 +20,7 @@
 	$plantilla=new XTemplate("../html/rss/events_rss.xml");
 	
 	//Sacamos de base de datos las noticias
-	$resultadoEvento=$db->callProcedure("CALL ed_sp_web_agenda_obtener_listado(".$_SESSION["id_idioma"].",'',0,-1,'')");
+	$resultadoEvento=$db->callProcedure("CALL ed_sp_web_agenda_obtener_listado(0,".$_SESSION["id_idioma"].",'',-1,'','DESC','')");
 	
 	
 	while($datoEvento=$db->getData($resultadoEvento)){

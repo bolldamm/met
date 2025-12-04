@@ -20,4 +20,5 @@
 	define("ACTION_DELETE_PDF","deletepdfs");
 	define("ACTION_BADGES","badges");
 	define("ACTION_DINNER","dinner");
+	define("ACTION_VERIFACTI_LOG","verifacti_log");
 ?>

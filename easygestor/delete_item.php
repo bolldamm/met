@@ -164,8 +164,28 @@
 				break;
 			case SECTION_INVOICE:
 				//Recorremos array
+				$skippedInvoices = array();
+				$deletedCount = 0;
 				for($i=0;$i<$totalItem;$i++){
-					$db->callProcedure("CALL ".OBJECT_DB_ACRONYM."_sp_factura_eliminar(".$vectorItem[$i].")");	
+					$idFactura = intval($vectorItem[$i]);
+
+					//Check if invoice is registered with Verifactu
+					$resultadoCheck = $db->callProcedure("CALL ".OBJECT_DB_ACRONYM."_sp_factura_obtener_concreto(".$idFactura.")");
+					$datoCheck = $db->getData($resultadoCheck);
+
+					if (!empty($datoCheck["verifactu_uuid"])) {
+						//Invoice is registered with Verifactu - cannot delete
+						$skippedInvoices[] = $datoCheck["numero_factura"];
+					} else {
+						//Safe to delete
+						$db->callProcedure("CALL ".OBJECT_DB_ACRONYM."_sp_factura_eliminar(".$idFactura.")");
+						$deletedCount++;
+					}
+				}
+
+				//If any invoices were skipped, store message in session
+				if (count($skippedInvoices) > 0) {
+					$_SESSION["verifactu_warning"] = "Cannot delete Verifactu-registered invoices: " . implode(", ", $skippedInvoices) . ". These invoices have been submitted to AEAT and must be preserved. Use 'Anular Verifacti' to cancel them instead. Deleted " . $deletedCount . " other invoice(s).";
 				}
 				break;					
 		}
