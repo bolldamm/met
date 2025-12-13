@@ -46,7 +46,6 @@ vendor/*
 composer.json
 composer.phar
 composer.lock
-connection.php
 environment_config.php
 nul
 ajax/last_step_inscription_paypal.php
