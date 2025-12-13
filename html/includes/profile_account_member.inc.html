@@ -1,0 +1,32 @@
+<!-- BEGIN: contenido_principal -->
+<div class="form-row">
+    <div class="col-12 col-md-4" id="viewProfileButton">
+        <a class="specialTarget" href="{ENLACE_PERFIL}">{STATIC_FORM_PROFILE_VIEW_PROFILE}</a>
+    </div>
+    <div class="col-12 col-md-8 form-group">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="chkPublico" id="chkPublico" {PERFIL_VALOR_PUBLICO}>
+            <label class="form-check-label small" for="chkPublico">
+                {STATIC_FORM_PROFILE_PUBLIC_PROFILE}
+            </label>
+        </div>
+    </div>
+</div>
+
+<fieldset>
+    <legend>{STATIC_FORM_PROFILE_CHANGE_PASSWORD}</legend>
+    <div class="form-row">
+        <div class="col-12 col-md-4">
+            <input type="hidden" name="username" id="username" autocomplete="username">
+            <input type="password" class="form-control" name="txtCurrentPassword" id="txtCurrentPassword"  placeholder="{STATIC_FORM_PROFILE_CHANGE_OLD_PASSWORD}" autocomplete="current-password">
+        </div>
+        <div class="col-12 col-md-4">
+            <input type="password" class="form-control" name="txtNewPassword" id="txtNewPassword"  placeholder="{STATIC_FORM_PROFILE_CHANGE_NEW_PASSWORD}" onkeyup="checkPwds(); return false;" autocomplete="new-password">
+        </div>
+        <div class="col-12 col-md-4">
+            <input type="password" class="form-control" name="txtConfirmNewPassword" id="txtConfirmNewPassword"  placeholder="{STATIC_RE_PASSWORD}*" onkeyup="checkPwds(); return false;" autocomplete="confirm-new-password">
+            <span id="pwdMessage" class="validationMessage"></span>
+        </div>
+    </div>
+</fieldset>
+<!-- END: contenido_principal -->

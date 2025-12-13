@@ -1,0 +1,9 @@
+# ================================
+# Block direct access to ALL PHP files
+# (Apache 2.2 style, works in .htaccess)
+# ================================
+
+<FilesMatch "\.php$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>

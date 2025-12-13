@@ -1,0 +1,20 @@
+<!-- BEGIN: contenido_principal -->
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" version="2.0" > 
+	<channel>
+		<title>MET - Mediterranean Editors &amp; Translators</title>
+		<link>http://www.edatasoft.com/projectes/met</link>
+		<language>en</language>
+		<description>events of MET - Mediterranean Editors &amp; Translators</description>
+		<generator>http://www.edatasoft.com/projectes/met</generator>
+		<!-- BEGIN: item_evento -->
+		<item>
+	    	<title>{EVENTO_TITULO}</title>
+	        <link>{EVENTO_ENLACE}</link>
+	        <pubDate>{EVENTO_FECHA}</pubDate>
+	        <description><![CDATA[{EVENTO_DESCRIPCION}]]></description>
+	     </item>
+		<!-- END: item_evento -->
+	</channel>
+</rss>
+<!-- END: contenido_principal -->

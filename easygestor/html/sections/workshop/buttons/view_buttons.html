@@ -1,0 +1,85 @@
+<!-- BEGIN: contenido_principal -->
+<div id="textExplication">
+	<h2>{STATIC_GLOBAL_WELCOME_EASYGESTOR}</h2>
+</div>
+<ul id="controlModButtons">
+	<li>
+		<a href="main_app.php?section=workshop&action=view" class="OptionEdit cufon">{STATIC_GLOBAL_BUTTON_RETURN} </a>
+		<img src="images/pictures/icons/news.icon.png" />
+	</li>
+</ul>
+
+	<div class="boxFormEasyNotify"><div id="containerEasyNotify" class="layoutFormEasyNotify"></div></div>
+
+<!-- SECTION HEADER -->
+
+    <div class="headerSectionForm" onclick="expandirSeccion('generalIcon','generalContent');">
+        <div class="leftBorder"></div>
+        <div class="titleSectionForm">Workshop buttons</div>
+    <div id="generalIcon" class="iconExpand"></div>
+        <div class="rightBorder"></div>
+    </div>
+
+<!-- SECTION CONTENTS -->
+
+    <div class="containerSection" id="generalContent">
+        <div class="contentSectionForm">
+          <fieldset>
+                            <legend>Move an attendee into a specific workshop</legend>
+              <table border="0" cellspacing="0" cellpadding="0">
+                
+                <tr>                        <td colspan="2">
+                  Take note of the Reg. No. of the attendee <strong>in the attendee list</strong> of the workshop you are moving the attendee <strong>from</strong>. Take note of the workshop number of the workshop you are moving the attendee <strong>from</strong> (see screenshot below). Take note of the workshop number of the workshop you are moving the attendee <strong>to</strong> (see screenshot below).<br /><img src="https://www.metmeetings.org/images/image_2021-03-19_164828.png" style="width:100%;"><br /> Type in the three numbers and press <i>Update</i>. Note that you do not need to change the workshop cap.<br /></td></tr>
+                <tr>
+                  <td style="vertical-align:bottom;width:50%;">
+
+                          <form action="https://www.metmeetings.org/metCustom/change_workshop.php" method="get"><label>Reg. no.</label><input name="id" placeholder="00000" type="text" /><label>From workshop no.</label><input name="fromws" placeholder="000" type="text" ><label>To workshop no.</label><input name="regid" placeholder="000" type="text" ><button>Update</button></form>
+                          
+                  </td>
+                </tr>
+                  
+              </table>
+            </fieldset>
+                    <fieldset>
+                            <legend>Get a list of current workshops</legend>
+              <table border="0" cellspacing="0" cellpadding="0">
+                
+                <tr>
+                  <td style="vertical-align:bottom;width:50%;">
+
+                          <form action="http://www.metmeetings.org/metCustom/get_list_of_current_workshops.php" method="get"><button>Send</button></form>
+                          
+                  </td>
+                </tr>
+                  
+              </table>
+            </fieldset>
+                    <fieldset>
+                            <legend>Get a list of workshop day attendees</legend>
+              <table border="0" cellspacing="0" cellpadding="0">
+                
+                <tr>                        <td colspan="2">
+                  Choose the workshop day you are interested in and press Send to download a text file with names of the attendees on that workshop day.</td></tr>
+                <tr>
+                  <td style="vertical-align:bottom;width:50%;">
+
+                          <form action="http://www.metmeetings.org/metCustom/get_workshop_day_attendees.php" method="get"><select name="enumber"><option value="0">First Workshop Day</option><option value="1">Second Workshop Day</option> </select><br />
+<br />
+<button>Send</button></form>
+                          
+                  </td>
+                </tr>
+                  
+              </table>
+            </fieldset>
+          </div>
+</div>
+
+<!-- FOOTER -->
+
+  	<div class="footerSection">
+		<div class="footerSectionLeft">
+			<div class="footerSectionRight"></div>
+		</div>
+	</div>
+<!-- END: contenido_principal -->

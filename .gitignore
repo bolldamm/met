@@ -1,0 +1,118 @@
+# ============================================
+# MET Project .gitignore
+# ============================================
+
+# ============================================
+#Folders in project
+# ============================================
+audio/*
+backup/*
+cgi-bin/*
+ckfinder/
+classes/*
+!classes/databaseConnection.php
+!classes/gestorGeneralUtils.php
+!classes/generalUtils.php
+!classes/xtemplate.class.php
+css/*
+!css/style.css
+db_backups/
+dictionary/*
+!dictionary/en_EN.php
+documentacion/*
+editor/
+excel/*
+files/*
+html2pdf/
+juicebox_gallery/*
+jobs/*
+images/
+metCustom/*
+paypal/
+phpmailer/
+phpThumb/
+private/*
+rss/*.xml
+scripts/*
+securimage/
+userfiles/*
+vendor/*
+
+# ============================================
+# Individual files
+# ============================================
+.my_remote.cnf
+404.php
+composer.json
+composer.phar
+composer.lock
+connection.php
+environment_config.php
+nul
+ajax/last_step_inscription_paypal.php
+ajax/last_step_inscription_workshop_paypal.php
+ajax/send_accommodation.php
+ajax/send_metm_transport.php
+
+# Globally negate ignoring of all .htaccess files
+!.htaccess
+!**/.htaccess
+
+# ============================================
+# Test, disabled, renamed  and .htaccess files
+# ============================================
+#
+/*_test.php
+/_*
+/*_OLD.php
+
+# ============================================
+# IDE & Editor Files
+# ============================================
+# PhpStorm / IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# ============================================
+# Temporary files
+# ============================================
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+logs/
+error_log
+debug.log
+
+# Cache files
+cache/
+*.cache
+
+# ============================================
+# Generated & Compiled Files
+# ============================================
+# Thumbnails
+**/thumb_*
+
+# PDF generated files
+*.pdf
+
+# ============================================
+# SQL files
+# ============================================
+*.sql
+*.sqlite
+*.db
+
+# Git
+.git/
+*.orig

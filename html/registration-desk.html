@@ -1,0 +1,85 @@
+<!-- BEGIN: contenido_principal -->
+<h2 class="titleSection">Registration stats</h2>
+<table style="font-size:100%;width:100%;table-layout:fixed;text-align:center;">
+  <tr>
+    <td><form method="post" action="https://www.metmeetings.org/en/registration:1408"><button type="submit">Registration</button></form></td>
+    <td><form method="post" action="https://www.metmeetings.org/en/their-metm:1410"><button type="submit">Their METM</button></form></td>
+    <td><form method="post" action="https://www.metmeetings.org/en/last-minute-news:1416"><button type="submit">Last minute news</button></form></td>
+    <td><form method="post" action="https://www.metmeetings.org/en/metm-registration-desk-manual:1749"><button type="submit">Desk manual</button></form></td>
+  </tr>
+</table> 
+<table style="font-size:100%;width:100%;table-layout:fixed;text-align:center;">
+  <tr>
+    <td style="vertical-align: top;"><h3 class="subTitleSection">Attendee dietary preferences</h3>
+    <p><em>Only attendees who have expressed a preference (not a mandatory field).</em><br />
+      {DIET_1}<br />
+      {DIET_2}<br />
+      {DIET_3}<br />
+      {DIET_4}</p></td>
+    <td style="vertical-align: top;"><h3 class="subTitleSection">Off-METMs, tech clinics and dinner</h3>
+      <p>Press one of the buttons to download an Excel file with the relevant list of attendees.</p><table style="width:100%;text-align:center;">
+  <tr>
+    <td><form action="https://www.metmeetings.org/metCustom/get_off_metms_file.php" method="get"><button>Off-METMs</button></form></td>
+<!--    <td><form action="https://www.metmeetings.org/metCustom/get_clinic_attendees.php" method="get"><button>Clinics</button></form></td> -->
+    <td><form action="https://www.metmeetings.org/metCustom/get_notes.php" method="get"><button>Notes</button></form></td>
+    <td><form action="https://www.metmeetings.org/metCustom/get_closing_dinner_file.php" method="get"><button>Closing dinner</button></form></td>
+<!--        <td><form action="https://www.metmeetings.org/metCustom/get_allergic_people.php" method="get"><button>Allergic people</button></form></td> -->
+  </tr>
+</table>
+      </td>
+  </tr>
+  <tr>
+    <td style="vertical-align: top;"><h3 class="subTitleSection">Closing dinner figures</h3>
+      <p>{DINNER_DATA}</p>
+   <h3 class="subTitleSection">Reception figures</h3>
+       <p>Attendees: {C_ATTENDEE_CB}<br />
+      Guests: {TOT_RG}</p>
+    <h3 class="subTitleSection">Coffee break figures</h3>
+    <p>
+      <em>Note that attendees and facilitators at two consecutive minisessions are counted twice. Adjust figures accordingly.</em><br />
+      <strong>{CB_1}</strong><br />
+      Attendees: {TOT_WS1_A}<br />
+      Facilitators: {TOT_WS1_F}<br />
+      Extras: {TOT_WS1_E}<br />
+      <em>Total: {TOT_WS1}</em><br />
+      <strong>{CB_2}</strong><br />
+      Attendees: {TOT_WS2_A}<br />
+      Facilitators: {TOT_WS2_F}<br />
+      Extras: {TOT_WS2_E}<br />
+      <em>Total: {TOT_WS2}</em><br />
+      <strong>{CB_3}</strong><br />
+      Attendees: {C_ATTENDEE_CB}<br />
+      Extras: {TOT_FA_E}<br />
+      <em>Total: {TOT_FA}</em><br />
+      <strong>{CB_4}</strong><br />
+      Attendees: {C_ATTENDEE_CB}<br />
+      Extras: {TOT_SM_E}<br />
+      <em>Total: {TOT_SM}</em><br />
+      <strong>{CB_5}</strong><br />
+      Attendees: {C_ATTENDEE_CB}<br />
+      Extras: {TOT_SA_E}<br />
+      <em>Total: {TOT_SA}</em><br />
+      </p> 
+    </td>
+    <td style="vertical-align: top;"><h3 class="subTitleSection">Registration progress</h3>
+      <p>{REG_DATA}</p></td>
+  </tr>
+  <tr>
+    <td style="vertical-align: top;"><h3 class="subTitleSection">Attendee country totals</h3>
+      <p>{COUNTRY_DATA}</p></td>
+    <td style="vertical-align: top;"><h3 class="subTitleSection">Attendee type totals</h3>
+      <p>First timer: {TOT_FT}<br />
+      Helper: {TOT_HELP}<br />
+      Key helper: {TOT_K_HELP}<br />
+      Speaker: {TOT_SPEAKER}<br />
+      Student: {TOT_STUDENT}<br />
+      Keynote: {TOT_KEYNOTE}<br />
+      {TYPE_DATA}</p>
+   <h3 class="subTitleSection">QR code usage</h3>
+      <p>The badge QR code has been used {CLICK_TOTAL} times.</p> 
+      <form action="https://www.metmeetings.org/metCustom/delete_clicks.php" method="get"><button>Reset QR code usage</button></form>
+    </td>
+  </tr>
+</table>
+
+<!-- END: contenido_principal -->

@@ -1,0 +1,239 @@
+<!-- BEGIN: contenido_principal -->
+<p id='msgAlert' class='msgKO' style='display:none;'></p>
+<form {IFNOTMEMBER} class='needs-validation frmWorkshopRegister' novalidate name='frmWorkshopRegister' id='frmWorkshopRegister' action='' method='post'>
+<!-- <form class='needs-validation frmWorkshopRegister' novalidate name='frmWorkshopRegister' id='frmWorkshopRegister' action='' method='post'>  -->
+    <input type='hidden' name='hdnIdTaller' id='hdnIdTaller'>
+    <!-- BEGIN: input_logueado -->
+    <input type='hidden' name='hdnIdLogin' id='hdnIdLogin'>
+    <!-- END: input_logueado -->
+    <fieldset>
+        <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_PERSONAL_DETAILS}</legend>
+        <div class='form-row'>
+            <div class='col-12 col-md-6'>
+                <input type='text' class='form-control required' name='txtNombre' id='txtNombre'
+                       value='{FORM_MEMBERSHIP_FIRST_NAME}'
+                       autocomplete='given-name'
+                       placeholder='{STATIC_FORM_MEMBERSHIP_FIRST_NAME}'>
+                <span id='firstNameMessage' class='validationMessage'></span>
+            </div>
+            <div class='col-12 col-md-6'>
+                <input type='text' class='form-control required' name='txtApellidos' id='txtApellidos'
+                       value='{FORM_MEMBERSHIP_LAST_NAMES}'
+                       autocomplete='family-name'
+                       placeholder='{STATIC_FORM_MEMBERSHIP_LAST_NAMES}'>
+                <span id='lastNameMessage' class='validationMessage'></span>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_CONTACT_DETAILS}</legend>
+            <div class='form-row'>
+                <div class='col-12- col-md-6'>
+                    <input type='email' class='form-control required' name='txtEmail' id='txtEmail' value='{FORM_MEMBERSHIP_EMAIL}' autocomplete='email' placeholder='{STATIC_FORM_MEMBERSHIP_EMAIL}'>
+                    <span id='emailMessage' class='validationMessage'></span>
+                </div>
+                <div class='col-12- col-md-6'>
+                    <input type='text' class='form-control' name='txtTelefono' value='{FORM_WORKSHOP_REGISTER_CONTACT_PHONE_NO}' autocomplete='tel' placeholder='{STATIC_FORM_WORKSHOP_REGISTER_CONTACT_PHONE_NO}'>
+                </div>
+            </div>
+    </fieldset>
+
+    <fieldset style='{IFMEMBER}'>
+        <legend>{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_SISTER_ASSOCIATION_MEMBERSHIP}</legend>
+
+                    {SISTER_ASSOCIATION_TEXT}
+
+                    {COMBO_ASOCIACIONES}
+
+    </fieldset>
+    <fieldset style='padding-left:12px;' id='containerWorkshop'>
+        <legend>{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_WORKSHOPS}</legend>
+        <table class='table table-responsive-sm'>
+            <thead>
+                <tr>
+                    <th scope='col'>{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_WORKSHOPS_NAME}</th>
+                    <th scope='col'>{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_WORKSHOPS_DATE}</th>
+                    <th scope='col'>{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_WORKSHOPS_PRICE_SHORT}</th>
+                    <th scope='col'>{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_WORKSHOPS_PRICE_SISTER_SHORT}</th>
+                    <th scope='col'>{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_WORKSHOPS_PRICE_NON_MEMBER_SHORT}</th>
+                </tr>
+            </thead>
+            <tbody>
+            <!-- BEGIN: item_taller -->
+                <tr>
+                    <td style='padding-left:2em;'>
+                        <input class='form-check-input workshopChoice' type='checkbox' name='chkWorkshop_{ITEM_TALLER_ID}' id='chkWorkshop_{ITEM_TALLER_ID}' value='{ITEM_TALLER_ID}' {ITEM_TALLER_DISABLED}>
+                        <label class='form-check-label' for='chkWorkshop_{ITEM_TALLER_ID}'>{ITEM_TALLER_DESCRIPCION}</label>
+                    </td>
+                    <td>
+                        {ITEM_TALLER_FECHA}
+                    </td>
+                    <td>
+                        &euro;<span id='priceMember_{ITEM_TALLER_ID}'>{ITEM_TALLER_PRECIO}</span>
+                    </td>
+                    <td>
+                        &euro;<span id='priceSister_{ITEM_TALLER_ID}'>{ITEM_TALLER_PRECIO_SISTER}</span>
+                    </td>
+                    <td>
+                        &euro;<span id='priceNonMember_{ITEM_TALLER_ID}'>{ITEM_TALLER_PRECIO_NON_MEMBER}</span>
+                    </td>
+                </tr>
+            <!-- END: item_taller -->
+            </tbody>
+        </table>
+        <span id='workshopMessage' class='validationMessage'></span>
+    </fieldset>
+
+    <div id='total-payable'>
+        <p style='font-weight:bold;font-size:1.2em; text-align:right;'>
+            <span style='float:left'>{STATIC_FORM_WORKSHOP_REGISTER_TOTAL_AMOUNT}</span>
+            &euro;<span id='totalPayable'>0</span></p>
+    </div>
+
+    <fieldset>
+        <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_BILLING_INFORMATION}</legend>
+        <div class='form-row'>
+            <div class='col-12- col-md-6'>
+                <label class='sr-only' for='txtFacturacionNifCliente'></label>
+                <input type='text' class='form-control required' name='txtFacturacionNifCliente' id='txtFacturacionNifCliente' value='{FORM_PROFILE_BILLING_CUSTOMER_NIF}' placeholder='{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}'>
+                <span id='nifMessage' class='validationMessage'></span>
+            </div>
+            <div class='col-12- col-md-6'>
+                <label class='sr-only' for='txtFacturacionNombreCliente'></label>
+                <input type='text' class='form-control required' name='txtFacturacionNombreCliente' id='txtFacturacionNombreCliente' value='{FORM_PROFILE_BILLING_NAME_CUSTOMER}' autocomplete='name' placeholder='{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}'>
+                <span id='billingNameMessage' class='validationMessage'></span>
+            </div>
+        </div>
+        <div class='form-row'>
+            <div class='col-12- col-md-6'>
+                <label class='sr-only' for='txtFacturacionNombreEmpresa'></label>
+                <input type='text' class='form-control' name='txtFacturacionNombreEmpresa' id='txtFacturacionNombreEmpresa' value='{FORM_PROFILE_BILLING_NAME_COMPANY}' autocomplete='organization' placeholder='{STATIC_FORM_PROFILE_BILLING_NAME_COMPANY}'>
+            </div>
+            <div class='col-12- col-md-6'>
+                <label class='sr-only' for='txtFacturacionDireccion'></label>
+                <input type='text' class='form-control required' name='txtFacturacionDireccion' id='txtFacturacionDireccion' value='{FORM_PROFILE_BILLING_ADDRESS}' autocomplete='address-line1' placeholder='{STATIC_FORM_PROFILE_BILLING_ADDRESS}'>
+                <span id='addressMessage' class='validationMessage'></span>
+            </div>
+        </div>
+        <div class='form-row'>
+            <div class='col-12- col-md-6'>
+                <label class='sr-only' for='txtFacturacionCodigoPostal'></label>
+                <input type='text' class='form-control required' name='txtFacturacionCodigoPostal' id='txtFacturacionCodigoPostal' value='{FORM_PROFILE_BILLING_ZIPCODE}' autocomplete='postal-code' placeholder='{STATIC_FORM_PROFILE_BILLING_ZIPCODE}'>
+                <span id='postcodeMessage' class='validationMessage'></span>
+            </div>
+            <div class='col-12- col-md-6'>
+                <label class='sr-only' for='txtFacturacionCiudad'></label>
+                <input type='text' class='form-control required' name='txtFacturacionCiudad' id='txtFacturacionCiudad' value='{FORM_PROFILE_BILLING_CITY}' autocomplete='address-level2' placeholder='{STATIC_FORM_PROFILE_BILLING_CITY}'>
+                <span id='cityMessage' class='validationMessage'></span>
+            </div>
+        </div>
+        <div class='form-row'>
+            <div class='col-12- col-md-6'>
+                <label class='sr-only' for='txtFacturacionProvincia'></label>
+                <input type='text' class='form-control' name='txtFacturacionProvincia' id='txtFacturacionProvincia' value='{FORM_PROFILE_BILLING_PROVINCE}' autocomplete='address-level1' placeholder='{STATIC_FORM_PROFILE_BILLING_PROVINCE}'>
+            </div>
+            <div class='col-12- col-md-6'>
+                <label class='sr-only' for='txtFacturacionPais'></label>
+                <input type='text' class='form-control required' name='txtFacturacionPais' id='txtFacturacionPais' value='{FORM_PROFILE_BILLING_COUNTRY}' autocomplete='country-name' placeholder='{STATIC_FORM_PROFILE_BILLING_COUNTRY}'>
+                <span id='billingCountryMessage' class='validationMessage'></span>
+            </div>
+        </div>
+
+    </fieldset>
+
+    <fieldset>
+        <legend>{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_COMMENTS}</legend>
+        <textarea class='form-control' name='txtaComentarios' id='txtaComentarios'
+                  rows='3'
+                  placeholder='{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_COMMENTS}'></textarea>
+    </fieldset>
+  
+      <fieldset>
+        <legend>{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_METHOD_OF_PAYMENT}</legend>
+        {STATIC_FORM_MEMBERSHIP_PAYMENT_METHOD_TXT_1}
+        <!-- {STATIC_FORM_MEMBERSHIP_PAYMENT_METHOD} -->
+        <div style='display:none;'>
+        <div class='form-row' id='containerPaymentMethod'>
+            <div class='form-check form-check-inline'>
+                <input class='form-check-input paymentMethod' type='radio' name='rdMetodoPago' id='transfer' value='1'>
+                <label class='form-check-label' for='transfer'>
+                    {STATIC_FORM_MEMBERSHIP_BANK_TRANSFER}
+                </label>
+            </div>
+            <div class='form-check form-check-inline'>
+                <input class='form-check-input paymentMethod' checked type='radio' name='rdMetodoPago' id='paypal' value='2'>
+                <label class='form-check-label' for='paypal'>
+                    {STATIC_FORM_MEMBERSHIP_PAYPAL}
+                </label>
+            </div>
+        </div>
+        <p class='form-text'><br />{STATIC_FORM_WORKSHOP_REGISTER_METHOD_OF_PAYMENT_TEXT_2}</p>
+        <span id='paymentMethodMessage' class='validationMessage'></span>
+      </div><p> </p>
+        <div class='form-row'>
+            <div class='col-12 col-md-6'>
+			Payment code (for office use only):
+            </div>
+            <div class='col-12 col-md-6'>
+                <input type='text' class='form-control' name='paymentCode' id='paymentCode'
+                       value='AX3619G'
+                       placeholder='Payment code'>
+            </div>
+        </div>
+    </fieldset>
+        
+    <fieldset>
+        <legend>{STATIC_FORM_MEMBERSHIP_LEGEND_PRIVACY}</legend>
+        <div id='containerPrivacyCheck'>
+            <div class='form-check'>
+                <input class='form-check-input' type='checkbox' value='' name='chkPrivacy' id='chkPrivacy'>
+                <label class='form-check-label' for='chkPrivacy'>
+                    {FORM_GDPR_NOTE}
+                </label>
+            </div>
+        </div>
+        <span id='privacyMessage' class='validationMessage'></span>
+    </fieldset>
+
+        <div class='form-row'>
+<!--
+        <div class='col-12 captchaText'>
+            {STATIC_CAPTCHA_ENTER_LETTERS_NUMBERS_IMAGE}
+        </div>
+        <div class='col-12 col-lg-9' id='captchaBox'>
+            <div class='form-row captchaImage'>
+                <div class='col-7'>
+                    <img id='imageCaptcha' src='../../classes/securimage/securimage_show.php?sid={SESSION_ID}'>
+                </div>
+                <div class='col-1'>
+                    <img id='reloadCaptcha'
+                         src='images/pictures/icons/icon.reloadCaptcha.png'
+                         title='{STATIC_CAPTCHA_RELOAD}'>&nbsp;
+                </div>
+                <div class='col-4'>
+                    <input type='text' class='form-control' id='txtCaptcha' name='txtCaptcha' maxlength='6'>
+                    <span id='captchaMessage' class='validationMessage'></span>
+                </div>
+            </div>
+        </div>
+
+        <div class='col-12 col-lg-3'>
+-->
+        <div class='col-12'>
+            <button class='btn btn-primary float-right' type='submit' id='btnSendForm'>{STATIC_GLOBAL_REGISTER}</button>
+        </div>
+    </div>
+
+</form>
+<br><br><br>
+
+<div id='resultadoInscripcion' style='display:none;'></div>
+  <script>
+    
+setTimeout(function(){
+  document.getElementById('chkWorkshop_372').click();
+  document.getElementById('chkWorkshop_372').disabled = true;
+},500);
+    </script>
+<!-- END: contenido_principal -->

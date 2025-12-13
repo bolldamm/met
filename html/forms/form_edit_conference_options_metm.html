@@ -1,0 +1,409 @@
+<!-- BEGIN: contenido_principal -->
+<script>
+window.onload = function() {
+    window.location.reload(true);
+};
+</script>
+<script>
+  window.onload = function(){
+    offmetmerror();
+    disableExclusive();
+document.querySelectorAll("INPUT[type='radio']").forEach(function(rd){rd.addEventListener("mousedown",
+	function(){
+		if (this.checked) {this.onclick=function(){this.checked=false}} else{this.onclick=null}
+	})})
+     // disableExclusive();
+  }
+</script>
+<script>
+  var cw = true;
+  function choirwarning() {
+  if(cw)
+  	{
+    	alert('{STATIC_CHOIR_WARNING}');
+    	cw = false;
+  	}
+  }
+</script>
+<script>
+function offmetmerror() {
+if ({OFFMETM_ERROR})
+ {
+    alert('{STATIC_OFFMETM_ERROR}');
+ }
+}
+</script>
+<script>  
+function disableSection(inputname,idprefix,tot){
+var radios = document.getElementsByName(inputname);
+for (j = 1; j < tot; j++) {
+document.getElementById(idprefix + j).disabled = false;
+ }
+for (var i = 0, length = radios.length; i < length; i++)
+{
+ if (radios[i].checked)
+ {
+for (j = 1; j < tot; j++) {
+document.getElementById(idprefix + j).disabled = true;
+	}
+}
+}
+}
+</script>
+<script>
+function processEList(eList) {
+  let selected = false;
+
+  // First loop to check the checkboxes and enable them
+  for (let j = 1; j < eList.length; j++) {
+    if(document.getElementById('cmbOffMetms' + eList[j]).checked) {
+      selected = true;
+    }
+    document.getElementById('cmbOffMetms' + eList[j]).disabled = false;
+  }
+
+  // If any checkbox was selected, disable unchecked checkboxes in the second loop
+  if (selected) {
+    for (let j = 1; j < eList.length; j++) {
+      if(!document.getElementById('cmbOffMetms' + eList[j]).checked) {
+        document.getElementById('cmbOffMetms' + eList[j]).disabled = true;
+      } 
+    }
+  }
+}
+function disableExclusive(){
+    {EXCLUSIVE_LIST3}
+  
+//  if ({WS_CLASH1} && document.getElementById('cmbOffMetms' + eList[2]).checked) {
+//       document.getElementById('cmbOffMetms' + eList[2]).checked = false;
+    // Submiting a frozen form loses email and allergies
+//       document.getElementById("frmEditConfOptions").submit();
+//    }
+//  if ({WS_CLASH2} && document.getElementById('cmbOffMetms' + eList[3]).checked) {
+//       document.getElementById('cmbOffMetms' + eList[3]).checked = false;
+//        // Submiting a frozen form loses email and allergies
+//       document.getElementById("frmEditConfOptions").submit();
+//    }  
+  
+//  if ({WS_CLASH1}) {
+//       document.getElementById('cmbOffMetms' + eList[2]).disabled = true;
+//  }
+//  if ({WS_CLASH2}) {
+//       document.getElementById('cmbOffMetms' + eList[3]).disabled = true;
+//  }  
+  
+ }
+</script>
+<script>  
+window.addEventListener("resize", function() {
+    $('.chosen-container').innerWidth($('#frmEditConfOptions').innerWidth()-50);
+    $('.chosen-search input').innerWidth($('#frmEditConfOptions').innerWidth()-62);
+    $('.chosen-drop').innerWidth($('#frmEditConfOptions').innerWidth()-52);  
+}, false);
+  
+</script>
+<!-- Temporarily disabled for METM21 -->
+<script src="https://www.metmeetings.org/scripts/js/jquery.are-you-sure.js"></script>
+<script>
+    $(function() {
+    $('form').areYouSure();
+});
+</script>
+<script>
+    function pickRaffleTicket() {
+        document.getElementById("txtRaffle").value = 1;
+        document.getElementById("frmEditConfOptions").submit();
+    }
+</script>
+<script>
+    var RateArray = {DYNAMIC_SRATE};
+    var ColourArray = {DYNAMIC_COLOUR};
+    var CouncilArray = {DYNAMIC_COUNCIL_MEMBER};
+    var CouncilColourArray = {DYNAMIC_COUNCIL_COLOUR};
+  
+  {DYNAMIC_BADGE_JAVASCRIPT}
+</script>
+<script>
+function checkFunction() {
+  var mpart = '';
+  var mvalue = 0;
+  var message ='';
+  var mresult = 0;
+  
+  if (!{DINNER_CLOSED}) {
+     for (let j = 0; j < {TOTAL_GUESTS} + 1; j++) {
+      for (let i = 1; i <= {MAX_COURSES}; i++) {
+		 mpart = 'cmbClosingDinner' + i + j;
+         mvalue = document.getElementById(mpart).value;
+         if (mvalue == -1) {
+           mresult = 1;
+         }
+       }
+     }
+
+  dvalue = document.getElementById('cmbDiet').value;
+  if (dvalue == -1) {
+       mresult = 1;
+  }    
+
+    if (mresult) {
+//  return !(confirm('{STATIC_DINNER_REMINDER}'));
+  alert('{STATIC_DINNER_REMINDER}');
+  }
+return true;    
+ }
+
+}
+</script>
+<script>
+var inpoMess = "{STATIC_PRESS_SAVE}";
+const myTimeout = setTimeout(myGreeting, 4000);
+
+function myGreeting() {
+  document.getElementById("p1").innerHTML = inpoMess;
+}
+</script>
+<h2 class="titleSection">{STATIC_CONFERENCE_OPTIONS_PAGE_TITLE}</h2>
+
+<table {FORM_EVENT4} style="font-size:100%;width:100%;table-layout:fixed;text-align:center;">
+  <tr>
+    <td><form method="post" action="https://www.metmeetings.org/en/their-metm:1410"><button type="submit">&lt;&lt; Back</button></form></td>
+    <td><form method="post" action="https://www.metmeetings.org/metCustom/unset_conference_registered.php"><input type="hidden" id="regid" name="regid" value="{ID_ATTENDEE}"><button type="submit">Unregister</button></form></td>
+    <td><form method="post" action="https://www.metmeetings.org/their-metm.php?attendee={ID_ATTENDEE}&edit=1"><button type="submit">Unfreeze</button></form></td>
+    <td><form method="post" action="https://www.metmeetings.org/print-pdf.php?id_conferencia={CONFERENCE_NO}&id_attendee={ID_ATTENDEE}"><button type="submit">Print badge + insert</button></form></td>
+    <tr><td>&nbsp;</td></tr>
+</table>   
+<!--   <form class='needs-validation' name='frmEditConfOptions' id='frmEditConfOptions' autocomplete='off'
+          action='upload2.php' method='post' enctype='multipart/form-data' onsubmit='return checkFunction()'>  -->
+<form class='needs-validation' name='frmEditConfOptions' id='frmEditConfOptions' autocomplete='off'
+          action='conference_options.php' method='post' enctype='multipart/form-data' onsubmit='return checkFunction()'>
+      <input type='hidden' name='OldPhoto' id='OldPhoto'
+           value='{OLD_CONFERENCE_PICTURE}'>
+      <input type='hidden' name='TotalGuests' id='TotalGuests'
+           value='{TOTAL_GUESTS}'>
+      <input type='hidden' name='HostName' id='HostName'
+           value='{CONFERENCE_NAME} {CONFERENCE_SURNAME}'>
+      <input type='hidden' name='DinnerClosed' id='DinnerClosed'
+           value='{DINNER_CLOSED}'>
+  
+    <fieldset {FORM_EVENT3} {FORM_EVENT6}>
+        <legend>{STATIC_CONFERENCE_BREAKING_NEWS_TITLE}</legend>
+    <style type="text/css"></style>
+    {STATIC_METM_LATEST}
+    </fieldset>
+  
+    <fieldset {FORM_EVENT3} {FORM_EVENT7}>
+        <legend>{STATIC_CONFERENCE_LAST_MINUTE_TITLE}</legend>
+    <style type="text/css"></style>
+    {LAST_MINUTE_NEWS}
+    </fieldset>
+  
+    <fieldset {FORM_EVENT2}>
+        <legend>{STATIC_CONFERENCE_OPTIONS_IMPORTANT}</legend>
+      <div class='form-text' id='p1'>{FIRST_IMPORTANT}</div>
+    </fieldset>
+  
+    <fieldset>
+        <legend>{STATIC_CONFERENCE_DETAILS_TITLE}</legend>
+      {CONFERENCE_PASSWORD}
+      <div class='form-text' {FORM_EVENT2}>{MET_PROFILE_WARNING}</div>
+        <div class='form-row'>
+            <div class='col-12 col-md-6'>
+                <input type='text' class='form-control' name='txtNombre' id='txtNombre' disabled
+                       value='{CONFERENCE_NAME}'
+                       autocomplete='given-name'
+                       placeholder='{STATIC_FORM_MEMBERSHIP_FIRST_NAME}'>
+                <span id='firstNameMessage' class='validationMessage'></span>
+            </div>
+            <div class='col-12 col-md-6'>
+                <input type='text' class='form-control' name='txtApellidos' id='txtApellidos' disabled
+                       value='{CONFERENCE_SURNAME}'
+                       autocomplete='family-name'
+                       placeholder='{STATIC_FORM_MEMBERSHIP_LAST_NAMES}'>
+                <span id='lastNameMessage' class='validationMessage'></span>
+            </div>
+        </div>
+        <div class='form-row'>
+            <div class='col-12 col-md-6'>
+                <input type='email' class='form-control required' name='txtEmail' id='txtEmail' required {FORM_EVENT}
+                       value='{CONFERENCE_EMAIL}'
+                       autocomplete='email'
+                       placeholder='{STATIC_FORM_MEMBERSHIP_EMAIL}'>
+                <span id='emailMessage' class='validationMessage'></span>
+            </div>
+            <div class='col-12 col-md-6'>
+                <input type='text' class='form-control' name='txtTelefono' id='txtTelefono' {FORM_EVENT}
+                       value='{CONFERENCE_TELEPHONE}'
+                       autocomplete='tel-national'
+                       placeholder='{STATIC_FORM_WORKSHOP_REGISTER_CONTACT_PHONE_NO}'>
+            </div>
+          <div class='form-text' {FORM_EVENT2}>{STATIC_INDICATE_FREQUENT_EMAIL}</div>
+          <div class='form-text' {FORM_EVENT2}>{STATIC_FORM_CONFERENCE_REGISTER_CONTACT_DETAILS_TEXT}</div>
+        </div>
+    </fieldset>
+  
+    <fieldset {FORM_EVENT4}>
+        <legend>NOTES</legend>
+      <div class='form-text' >Staff note</div>
+      <textarea {SUPER_FREEZE3} class='form-control' id='attendeeNote' name='txtContenido'>{ATTENDEE_NOTE}</textarea>
+      <div class='form-text' >Attendee note</div>
+      <textarea readonly class='form-control' id='attendeeComment' name='txtComment'>{ATTENDEE_COMMENT}</textarea>
+      <input type='hidden' name='attendeeAsistido' id='attendeeAsistido' value='{ATTENDEE_ASISTIDO}'>
+    </fieldset>
+  
+    <fieldset {SUPER_FREEZE}>
+        <legend>{STATIC_WORKSHOPS_SECTION_TITLE}</legend>
+        <p class='form-text'>{STATIC_CONFERENCE_WORKSHOPS_SIGNUPS}</p>
+        <p class='form-text'><strong>{CONFERENCE_WORKSHOP_1}</strong></p>
+        <textarea {FORM_EVENT5} {FORM_EVENT} class='form-control' name='txtQuestion' id='txtQuestion'
+                  rows='3'
+                  placeholder='{STATIC_CLINIC_QUESTION_PROMPT}'>{CLINIC_QUESTION}</textarea>
+        <input type='hidden' id='clinicUPD' name='clinicUPD' value='{CLINIC_UPD}'>
+        <input type='hidden' id='clinicTime' name='clinicTime' value='{CLINIC_TIME}'>
+        <p class='form-text'>{PROGRAMME_W}</p> 
+        <p class='form-text'>{WORKSHOP_CHANGE}</p>
+    </fieldset>
+  
+    <fieldset {SUPER_FREEZE2}>
+        <legend>{STATIC_DIET}</legend>
+        {COMBO_DIET}<br />
+        <p class='form-text'>{STATIC_DIET2}</p>
+        <div class='form-row'>
+        	<div class='col-12 col-md-12'>{COMBO_ALLERGIES}</div> 
+        </div>
+    </fieldset>
+  
+    <fieldset {SUPER_FREEZE2}>
+        <legend>{STATIC_FORM_CONFERENCE_REGISTER_DINNER_TITLE}</legend>
+        <p class='form-text'>{CONFERENCE_DINNER_OPT_OUT}</p>
+        <p class='form-text'>{CONFERENCE_DINNER_COMING_SOON}</p>
+        {COMBO_DISHES}
+        <p class='form-text'>{DINNER_CHANGE}</p>
+    </fieldset>
+
+    <fieldset {SUPER_FREEZE}>
+        <legend>{STATIC_FORM_CONFERENCE_REGISTER_WINE_RECEPTION_TITLE}</legend>
+        <p class='form-text'>{RECEPTION_GUESTS}</p>
+        {RECEPTION_GUEST_NAMES}
+        <p class='form-text'>{RECEPTION_CHANGE}</p>
+    </fieldset>
+  
+    <fieldset>
+        <legend>{STATIC_CONFERENCE_OFFMETM_TITLE}</legend>
+        <p class='form-text'>{LIMITATION_INSTRUCTION}{PROGRAMME}</p>
+        <p class='form-text'>{COMING_SOON}</p>
+        {OFFMETM_SECTION}
+        <p class='form-text'>{OFFMETM_FOOTNOTE}</p>
+        <input type='hidden' name='NofBands' id='NofBands' value='{N_OFFMETM_BANDS}'>
+    </fieldset>
+ 
+    <fieldset {FORM_EVENT2}>
+        <legend>{STATIC_FORM_CONFERENCE_REGISTER_BADGE_TITLE}</legend>
+        <p class='form-text'>{STATIC_BADGE_INSTRUCTIONS}</p>
+        <div class='form-row'>
+            <div class='col-12 col-md-6'>
+              <!--     value='{CONFERENCE_BADGE0}'                  value='{CONFERENCE_NAME}' -->
+                <input type='text' class='form-control' name='txtBadgeNombre' id='fname' onkeyup="annotate('fname','name')"
+                       value='{CONFERENCE_BADGE0}'
+                       autocomplete='given-name'
+                       placeholder='{STATIC_FORM_MEMBERSHIP_FIRST_NAME}'>
+            </div>
+            <div class='col-12 col-md-6'>
+              <!--      '{CONFERENCE_BADGE1}'                 value='{CONFERENCE_SURNAME}' -->
+                <input type='text' class='form-control' name='txtBadgeApellidos' id='fsurname' onkeyup="annotate('fsurname','surname')"
+                       value='{CONFERENCE_BADGE1}'
+                       autocomplete='family-name'
+                       placeholder='{STATIC_FORM_MEMBERSHIP_LAST_NAMES}'>
+            </div>
+        </div>
+         <div class='form-row'>
+            <div class='col-12 col-md-12'>
+              <!--     value='{CONFERENCE_BADGE2}'                  value='{CONFERENCE_BADGE1}' -->
+                <input type='text' class='form-control' maxlength='{STATIC_CONFERENCE_BADGE_LENGTH}' name='txtBadgeFirst' id='fline' onkeyup="annotate('fline','line1')"
+                       value='{CONFERENCE_BADGE2}'
+                       placeholder='{STATIC_FORM_CONFERENCE_REGISTER_BADGE_BODY}'>
+            </div></div>
+            <div class='form-row'>
+            <div class='col-12 col-md-12'>
+              <!--   value='{CONFERENCE_BADGE3}'                    value='{CONFERENCE_BADGE2}' -->
+                <input type='text' class='form-control' maxlength='{STATIC_CONFERENCE_BADGE_LENGTH}' name='txtBadgeSecond' id='sline' onkeyup="annotate('sline','line2')"
+                       value='{CONFERENCE_BADGE3}'
+                       placeholder='{STATIC_FORM_CONFERENCE_REGISTER_BADGE_BODY_EXAMPLE_1}'>
+            </div>
+        </div>
+        <div class='form-row'>
+            <div class='col-12 col-md-12'>
+              <!--   value='{CONFERENCE_BADGE4}'                    value='{CONFERENCE_BADGE3}' -->
+                <input type='text' class='form-control' maxlength='{STATIC_CONFERENCE_BADGE_LENGTH}' name='txtBadgePronouns' id='pline' onkeyup="annotate('pline','line4')"
+                       value='{CONFERENCE_BADGE4}'
+                       placeholder='{STATIC_FORM_CONFERENCE_REGISTER_BADGE_PRONOUNS}'>
+            </div>
+        </div>
+
+              <!-- BEGIN: bloque_special_rate -->
+      <div>{COMBO_SPECIAL_RATE}</div>
+              <!-- END: bloque_special_rate --> 
+<div style='{PERHAPSFIRSTTIMER}' class='form-check'><br />
+        <input {FIRST_TIMER} class='form-check-input' type='checkbox' name='chkFirsttimer' id='chkFirsttimer' onchange="firsttimer()">
+                <label class='form-check-label' for='chkFirsttimer'>
+                    {STATIC_CONFERENCE_FIRST_TIMER}
+                </label>
+        </div>
+        <!-- BEGIN: bloque_council -->
+            <div {FORM_EVENT8}>{COMBO_COUNCIL}
+            {COMBO_COUNCIL2}</div>
+        <!-- END: bloque_council -->     
+      <br />{DYNAMIC_BADGE_TEMPLATE}
+    </fieldset>
+  
+    <fieldset class='form-group' {FORM_EVENT2}>
+        <legend>{STATIC_FORM_CONFERENCE_REGISTER_ATTENDEE_LIST_PICTURE}</legend>
+        <p class='form-text'>{STATIC_FORM_CONFERENCE_REGISTER_ATTENDEE_TEXT1}</p>
+        <div class='form-check'>
+            <input class='form-check-input' type='checkbox' {ATTENDEE_LIST} class='form-check-input' name='chkAttendeeList' id='chkAttendeeList'>
+            <label class='form-check-label' for='chkAttendeeList'>
+                {STATIC_FORM_CONFERENCE_REGISTER_ATTENDEE_LIST_PERMISSION}
+            </label>
+        </div>
+        <p class='form-text'>{STATIC_FORM_CONFERENCE_REGISTER_ATTENDEE_TEXT3}</p>
+        <div class='form-row'>
+            <div class='col-12 col-md-6'>
+                <input type='file' class='form-control-file' id='fileimagen' name='fileImagen'>
+                <div class='info1'>{STATIC_GLOBAL_IMAGE_ALLOW_EXTENSION}</div>
+                <div class='info2'>{STATIC_GLOBAL_IMAGE_ALLOW_SIZE}</div>
+                <div class='info3'>{STATIC_GLOBAL_IMAGE_UPLOAD}</div>
+            </div>
+            <div class='col-12 col-md-6 imgUpload'>
+                <img id='img_destino' src='{CONFERENCE_PICTURE}' alt='Your photo'>
+                <!--div para visualizar en el caso de imagen-->
+                <div class='showImage'></div>
+<!--                <input type='button' style='display:none;' class='btn btn-primary' value='Upload' name='subirimagen'
+                       id='subirimagen'> -->
+                <input type='hidden' name='valorimagen' id='valorimagen'>
+            </div>
+        </div>
+    </fieldset>
+  
+    <fieldset id="ticket">
+        <legend>{STATIC_CONFERENCE_RAFFLE_TITLE}</legend>
+        <p class='form-text'>{RAFFLE_TICKET_NUMBER}</p>
+    </fieldset>
+  
+    <input type="hidden" id="conference_user" name="conference_user" value="{ID_ATTENDEE}">
+    <input type="hidden" id="txtRaffle" name="txtRaffle" value="0">
+	<div class='clearfix' {FORM_EVENT2}>
+            <button id='btnSendForm' type='submit' class='btn btn-primary float-right'>
+                {STATIC_CONFERENCE_OPTIONS_FORM_SAVE}
+            </button>
+    </div>
+</form>
+<script>
+annotate('fname','name');
+annotate('fsurname','surname');
+annotate('fline','line1');
+annotate('sline','line2');
+annotate('pline','line4');
+firsttimer();
+speaker();
+</script>
+<!-- END: contenido_principal -->

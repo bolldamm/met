@@ -1,0 +1,37 @@
+<!-- BEGIN: contenido_principal -->
+<div id="form">
+	<p id="msgAlert" class="{MENSAJE_ACCION_CLASS}" style="{MENSAJE_ACCION_DISPLAY}">{MENSAJE_ACCION_PERFIL}</p>
+	<a name="anclaExito"></a>
+	<form name="frmExpense" id="frmExpense" action="" method="post">
+		<div class="form-row">
+			<div class="col-12 col-sm-6">
+				<input type="text" class="form-control required" name="txtNombre" value="{EXPENSE_FORM_NAME}" placeholder="{STATIC_EXPENSE_FORM_NAME}" required>
+			</div>
+			<div class="col-12 col-sm-6">
+				<input type="text" class="form-control datetimepicker" placeholder="{STATIC_EXPENSE_FORM_DATE_INCURRED}" name="txtFecha" autocomplete="off">
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="col-12 col-sm-6">
+				{COMBO_CONCEPTO}
+			</div>
+			<div class="col-qw col-sm-6">
+				<span id="comboConcepto" style="{DISPLAY_SUBCONCEPTO}">{COMBO_SUBCONCEPTO}</span>
+			</div>
+		</div>
+		<div>
+			<textarea class="form-control required" name="txtContenido" placeholder="{STATIC_EXPENSE_FORM_DESCRIPTION}" required></textarea>
+		</div>
+		<div class="form-row">
+			<div class="col-12 col-sm-6">
+				<input type="text" class="form-control required" name="txtImporte" placeholder="{STATIC_EXPENSE_FORM_AMOUNT}" required pattern="^[0-9]+([\.,][0-9]{1,2})?$" title="Please use only numbers and up to two decimals">
+			</div>
+			<div class="col-12 col-sm-6">
+				{COMBO_TIPO_PAGO}
+			</div>
+		</div>
+
+		<button type="submit" id="btnSendForm" class="btn btn-primary float-right">{STATIC_EXPENSE_FORM_SUBMIT}</button>
+	</form>
+</div>
+<!-- END: contenido_principal -->

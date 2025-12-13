@@ -1,0 +1,60 @@
+<!-- BEGIN: contenido_principal -->
+<div class='form-row'>
+	<div class='col-12 col-md-6'>
+		<label class='sr-only' for='txtFacturacionNifCliente'></label>
+		<input type='text' class='form-control' name='txtFacturacionNifCliente' id='txtFacturacionNifCliente' value='{PERFIL_NIF_CLIENTE}' placeholder='{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}*' required>
+		<div class='invalid-feedback'>
+			Please enter your tax ID or VAT number
+		</div>
+	</div>
+	<div class='col-12 col-md-6'>
+		<label class='sr-only' for='txtFacturacionNombreCliente'></label>
+		<input type='text' class='form-control' name='txtFacturacionNombreCliente' id='txtFacturacionNombreCliente' value='{PERFIL_NOMBRE_CLIENTE}' autocomplete='name' placeholder='{STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER}*' required>
+		<div class='invalid-feedback'>
+			Please enter your name for billing purposes
+		</div>
+	</div>
+</div>
+<div class='form-row'>
+	<div class='col-12 col-md-6'>
+		<label class='sr-only' for='txtFacturacionNombreEmpresa'></label>
+		<input type='text' class='form-control' name='txtFacturacionNombreEmpresa' id='txtFacturacionNombreEmpresa' value='{PERFIL_NOMBRE_EMPRESA}' autocomplete='organization' placeholder='{STATIC_FORM_PROFILE_BILLING_NAME_COMPANY}'>
+	</div>
+	<div class='col-12 col-md-6'>
+		<label class='sr-only' for='txtFacturacionDireccion'></label>
+		<input type='text' class='form-control' name='txtFacturacionDireccion' id='txtFacturacionDireccion' value='{PERFIL_DIRECCION}' autocomplete='address-line1' placeholder='{STATIC_FORM_PROFILE_BILLING_ADDRESS}*' required>
+		<div class='invalid-feedback'>
+			Please enter your address
+		</div>
+	</div>
+</div>
+<div class='form-row'>
+	<div class='col-12 col-md-6'>
+		<label class='sr-only' for='txtFacturacionCodigoPostal'></label>
+		<input type='text' class='form-control' name='txtFacturacionCodigoPostal' id='txtFacturacionCodigoPostal' value='{PERFIL_CODIGO_POSTAL}' autocomplete='postal-code' placeholder='{STATIC_FORM_PROFILE_BILLING_ZIPCODE}*' required>
+		<div class='invalid-feedback'>
+			Please enter your postal code
+		</div>
+	</div>
+	<div class='col-12 col-md-6'>
+		<label class='sr-only' for='txtFacturacionCiudad'></label>
+		<input type='text' class='form-control' name='txtFacturacionCiudad' id='txtFacturacionCiudad' value='{PERFIL_CIUDAD}' autocomplete='address-level2' placeholder='{STATIC_FORM_PROFILE_BILLING_CITY}*' required>
+		<div class='invalid-feedback'>
+			Please enter your town or city
+		</div>
+	</div>
+</div>
+<div class='form-row'>
+	<div class='col-12 col-md-6'>
+		<label class='sr-only' for='txtFacturacionProvincia'></label>
+		<input type='text' class='form-control' name='txtFacturacionProvincia' id='txtFacturacionProvincia' value='{PERFIL_PROVINCIA}' autocomplete='address-level1' placeholder='{STATIC_FORM_PROFILE_BILLING_PROVINCE}'>
+	</div>
+	<div class='col-12 col-md-6'>
+		<label class='sr-only' for='billing_country'></label>
+		{COMBO_BILLING_COUNTRY}
+		<div class='invalid-feedback'>
+			Please select your country
+		</div>
+	</div>
+</div>
+<!-- END: contenido_principal -->

@@ -1,0 +1,133 @@
+# Redirect 500 errors to a custom page with query string
+# ErrorDocument 500 "https://www.metmeetings.org/en/access-denied:1343?v=12345"
+
+# ================================
+# BASIC SECURITY .htaccess TEMPLATE
+# ================================
+
+# Turn on Rewrite Engine
+RewriteEngine On
+
+# ----------------------------
+# Force HTTPS (secure connection)
+# ----------------------------
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+#alternative rewrite rule supplied by ICDSoft
+#RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
+
+# ----------------------------
+# Maintenance Mode
+# ----------------------------
+# If maintenance.html exists, redirect all requests to it
+# (except requests for maintenance.html itself and static assets)
+RewriteCond %{DOCUMENT_ROOT}/maintenance.html -f
+RewriteCond %{REQUEST_URI} !^/maintenance\.html$
+RewriteCond %{REQUEST_URI} !\.(css|js|png|jpg|gif|ico)$
+RewriteRule ^.*$ /maintenance.html [R=503,L]
+
+# ----------------------------
+# Block specific IP block
+# ----------------------------
+Order Allow,Deny
+Allow from all
+Deny from 156.226.16.0/21
+
+# ----------------------------
+# 301 redirect for spurious queries
+# ----------------------------
+# If the request is for the homepage with any query string 
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/(\?.*)?\sHTTP [NC] 
+RewriteCond %{QUERY_STRING} . 
+RewriteRule ^$ /? [R=301,L]
+
+# === Redirect requests for potentially malicious PHP files to 404.php ===
+
+# List of sensitive PHP files to monitor
+RewriteCond %{REQUEST_URI} /(atomlib|blocklog|g3|click|lock360|fw|error|db|v|gmo|wp-|as|file2|elp|f35|akc|chosen|classsmtps|classwithtostring|dropdown|cong|about|admin|file|k|browse|wp-signup|al|autoload_classmap).*\.php$ [NC]
+
+# Route to blocklog.php
+RewriteRule ^.*$ /404.php [L]
+
+# ----------------------------
+# Block specific bots from accessing /en/my-metm:1415
+# ----------------------------
+# RewriteCond %{REQUEST_URI} ^/en/my-metm:1415$ [NC]
+RewriteCond %{REQUEST_URI} ^/en/my-metm:1415 [NC]
+
+RewriteCond %{HTTP_USER_AGENT} AhrefsBot [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} Barkrowler [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} SemrushBot [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} DotBot [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} MJ12bot [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} PetalBot [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} YandexBot [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} Googlebot [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} bingbot [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} Slurp [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} DuckDuckBot [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} facebookexternalhit [NC]
+
+RewriteRule .* - [F,L]
+
+# ----------------------------
+# Hide PHP extensions
+# Example: /about -> /about.php
+# ----------------------------
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+?)/?$ $1.php [L]
+
+# ----------------------------
+# Block direct access to sensitive PHP files
+# ----------------------------
+<FilesMatch "^(config|db|secret|hello)\.php$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+# ----------------------------
+# Block access to .ht* files
+# ----------------------------
+<FilesMatch "^\.ht">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+# ----------------------------
+# Protect against common attack patterns in query strings
+# ----------------------------
+RewriteCond %{QUERY_STRING} (\.\./|\.\.\\) [NC,OR]
+RewriteCond %{QUERY_STRING} (union|select|insert|delete|drop|update|benchmark|sleep) [NC]
+RewriteRule .* - [F]
+
+# ----------------------------
+# Limit file types that can be accessed directly
+# (allow only common safe files)
+# ----------------------------
+<FilesMatch "\.(jpg|jpeg|png|gif|css|js|pdf|html|htm)$">
+  Order allow,deny
+  Allow from all
+</FilesMatch>
+<FilesMatch "\.(pl|py|cgi|sh)$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+# php files are not mentioned so that the site does not crash
+
+#menu
+RewriteRule ^(.*)/detail/.*:([0-9]+)-([0-9]+)$ controller_menu.php?idioma=$1&menu=$2&elemento=$3&detalle=1 [NC,L,QSA]
+RewriteRule ^(.*)/.*:([0-9]+)-?([0-9]+)?-?q?=?(.*)?$ controller_menu.php?idioma=$1&menu=$2&pagina=$3&filtro=$4&detalle=0 [NC,L,QSA]
+
+#idiomas
+RewriteRule ^(es|en|ca)/$ index.php?idioma=$1 [NC,L]
+  
+#image tracking
+RewriteRule ^(.*)/detail/.*:([0-9]+)-([0-9]+)$ tracker.php?idioma=$1&menu=$2&elemento=$3&detalle=1 [NC,L]
+
+ErrorDocument 404 /error404.php
+
+# ----------------------------
+# Prevent directory browsing
+# ----------------------------
+Options -Indexes

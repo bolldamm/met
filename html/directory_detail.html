@@ -1,0 +1,123 @@
+<!-- BEGIN: contenido_principal -->
+<div class="row">
+	<div class="col-12 col-sm-4" id="headshot_container">
+				<img src="{ITEM_MIEMBRO_IMAGEN}" id="headshot" class="left img-fluid">
+	</div>
+	<div class="col-12 col-sm-8" id="contactDetails">
+		<h2 class="profileName">{ITEM_MIEMBRO_NOMBRE}</h2>
+		<div class="profileSectionTitle">{STATIC_MEMBER_CONTACT_DETAILS}</div>
+		<div class="row contactDetailsSection">
+			<div class="col-12 col-sm-6">
+				<!-- BEGIN: telefono -->
+				<div class="contactDetails telephone">
+						<!-- BEGIN: telefono1 -->
+						{ITEM_MIEMBRO_TELEFONO1}
+						<!-- END: telefono1 -->
+						<!-- BEGIN: telefono2 -->
+						{ITEM_MIEMBRO_TELEFONO2}
+						<!-- END: telefono2 -->
+						<!-- BEGIN: fax -->
+						{STATIC_FORM_MEMBERSHIP_FAX}: {ITEM_MIEMBRO_FAX}
+						<!-- END: fax -->
+				</div>
+				<!-- END: telefono -->
+				<!-- BEGIN: mail -->
+				<div class="contactDetails mail">
+					<!-- BEGIN: mail1 -->
+					<a href="mailto:{ITEM_MIEMBRO_MAIL}">{ITEM_MIEMBRO_MAIL}</a>
+					<!-- END: mail1 -->
+					<!-- BEGIN: mail2 -->
+					<a href="mailto:{ITEM_MIEMBRO_MAIL}">{ITEM_MIEMBRO_MAIL}</a>
+					<!-- END: mail2 -->
+				</div>
+				<!-- END: mail -->
+				<!-- BEGIN: web -->
+				<div class="contactDetails web">
+					<a href="{ITEM_MIEMBRO_WEB}" target="_blank" >{ITEM_MIEMBRO_WEB}</a>
+				</div>
+				<!-- END: web -->
+			</div>
+			<div class="col-12 col-sm-6">
+
+				<div class="contactDetails address">
+					{ITEM_MIEMBRO_DIRECCION}
+					<!-- BEGIN: direccion2 -->
+					{ITEM_MIEMBRO_DIRECCION2} 
+					<!-- END: direccion2 --> 
+					<!-- BEGIN: ciudad -->
+					{ITEM_MIEMBRO_CIUDAD}
+					<!-- END: ciudad -->
+					<!-- BEGIN: provincia -->
+					{ITEM_MIEMBRO_PROVINCIA}
+					<!-- END: provincia -->
+					<!-- BEGIN: codigo_postal -->
+					{ITEM_MIEMBRO_CODIGO_POSTAL}
+					<!-- END: codigo_postal -->
+					<!-- BEGIN: pais -->
+					{ITEM_MIEMBRO_PAIS}
+					<!-- END: pais -->
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-12 profileSectionTitle">{STATIC_MEMBER_PREFESSIONAL_DETAIL}</div>
+</div>
+<div class="row">
+	<div class="col-12 col-sm-4">
+		<div class="profileSectionSubtitle">{STATIC_MEMBER_ACTIVITIES}</div>
+		<div>{ITEM_MIEMBRO_ACTIVIDAD_PROFESIONAL}</div>
+	</div>
+	<!-- BEGIN: language_pairs -->
+	<div class="col-12 col-sm-4">
+		<div class="profileSectionSubtitle">{STATIC_MEMBER_LANGUAGE_PAIRS}</div>
+		<div>{ITEM_MIEMBRO_LANGUAGE_PAIRS}</div>
+	</div>
+	<!-- END: language_pairs -->
+	<!-- BEGIN: areas_of_expertise -->
+	<div class="col-12 col-sm-4">
+		<div class="profileSectionSubtitle">{STATIC_MEMBER_AREAS_OF_EXPERTISE}</div>
+		<div>{ITEM_MIEMBRO_AREAS_OF_EXPERTISE}</div>
+	</div>
+	<!-- END: areas_of_expertise -->
+</div>
+<div class="row">
+	<div class="col">
+		<!-- BEGIN: descripcion -->
+		<div class="profileSectionSubtitle">{STATIC_MEMBER_DESCRIPTION}</div>
+		<div class="w-100"></div>
+		<div class="profileText">{ITEM_MIEMBRO_DESCRIPCION}</div>
+		<!-- END: descripcion -->
+		<!-- BEGIN: publicacion -->
+		<div class="profileSectionSubtitle">{STATIC_MEMBER_PUBLICATIONS}</div>
+		<div class="w-100"></div>
+		<div class="profileText">{ITEM_MIEMBRO_PUBLICACION}</div>
+		<!-- END: publicacion -->
+		<!-- BEGIN: bloque_formacion_continua -->
+		<div class="profileSectionTitle">{STATIC_MEMBER_CONTINUING_PROFESSIONAL_DEVELOPMENT}</div>
+		<div class="w-100"></div>
+		<!-- END: bloque_formacion_continua -->
+		<!-- BEGIN: conferencias -->
+		<div class="profileSectionSubtitle">METMs</div>
+		<div>{ITEM_MIEMBRO_CONFERENCIA}</div>
+		<!-- END: conferencias -->
+		<!-- BEGIN: talleres -->
+		<div class="profileSectionSubtitle">{STATIC_MEMBER_WORKSHOPS}</div>
+		<ul class="lstList">
+		<!-- BEGIN: item_taller -->
+		<li>{ITEM_MIEMBRO_TALLER}</li>
+		<!-- END: item_taller -->
+		</ul>
+		<!-- END: talleres -->
+		<!-- BEGIN: otros -->
+		<div class="profileSectionSubtitle">{STATIC_FORM_MEMBERSHIP_OTHER}</div>
+		<div>{ITEM_MIEMBRO_OTROS}</div>
+		<!-- END: otros -->
+	</div>
+</div>
+
+
+<!-- END: contenido_principal -->

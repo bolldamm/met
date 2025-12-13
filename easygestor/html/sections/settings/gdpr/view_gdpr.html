@@ -1,0 +1,261 @@
+<!-- BEGIN: contenido_principal -->
+<div id="textExplication">
+	<h2>{STATIC_GLOBAL_WELCOME_EASYGESTOR}</h2>
+</div>
+<ul id="controlModButtons">
+	<li>
+		<a href="main_app.php?section=settings&action=view" class="OptionEdit cufon">{STATIC_GLOBAL_BUTTON_RETURN} </a>
+		<img src="images/pictures/icons/news.icon.png" />
+	</li>
+</ul>
+
+	<div class="boxFormEasyNotify"><div id="containerEasyNotify" class="layoutFormEasyNotify"></div></div>
+
+<!-- SECTION HEADER -->
+
+    <div class="headerSectionForm" onclick="expandirSeccion('generalIcon','generalContent3');">
+        <div class="leftBorder"></div>
+        <div class="titleSectionForm">Action log</div>
+    <div id="generalIcon" class="iconExpand"></div>
+        <div class="rightBorder"></div>
+    </div>
+
+<!-- SECTION CONTENTS -->
+
+    <div class="containerSection" id="generalContent3">
+        <div class="contentSectionForm">
+          <fieldset>
+            <legend>Every time a GDPR task is done the action log needs updating</legend>
+              <table border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td style="vertical-align:bottom;width:50%;">
+                                              It is on the  <a target="_blank" style="text-decoration: underline;" href="https://docs.google.com/spreadsheets/d/1KOBRRMKk2CcoTWNfRPVOyDM0KItSTMKoQv-qLNiUxMM/edit">Google drive</a> (login needed).
+                          
+                  </td>
+                </tr>
+                  
+              </table>
+            </fieldset>
+          </div>
+</div>
+
+<!-- SECTION HEADER -->
+
+    <div class="headerSectionForm" onclick="expandirSeccion('generalIcon','generalContent2');">
+        <div class="leftBorder"></div>
+        <div class="titleSectionForm">Delete single members</div>
+    <div id="generalIcon" class="iconExpand"></div>
+        <div class="rightBorder"></div>
+    </div>
+
+<!-- SECTION CONTENTS -->
+
+    <div class="containerSection" id="generalContent2">
+        <div class="contentSectionForm">
+          <fieldset>
+                            <legend>Delete single member for GDPR purposes</legend>
+              <table border="0" cellspacing="0" cellpadding="0">
+                
+                <tr>                        <td colspan="2">
+                  Note that changes to the database made using this form are irreversible!</td></tr>
+                <tr>
+                  <td style="vertical-align:bottom;width:50%;">
+
+                          <form action="https://www.metmeetings.org/metCustom/delete_member_gdpr.php" method="get"><label for="regid">Membership number</label>&nbsp;&nbsp;<input maxlength="5" name="regid" placeholder="0000" type="text" />&nbsp;&nbsp;<button>Update</button></form>
+                          
+                  </td>
+                </tr>
+                  
+              </table>
+            </fieldset>
+          </div>
+</div>
+
+<!-- SECTION HEADER -->
+
+    <div class="headerSectionForm" onclick="expandirSeccion('generalIcon','generalContent');">
+        <div class="leftBorder"></div>
+        <div class="titleSectionForm">Periodic GDPR tasks</div>
+    <div id="generalIcon" class="iconExpand"></div>
+        <div class="rightBorder"></div>
+    </div>
+
+<!-- SECTION CONTENTS -->
+
+    <div class="containerSection" id="generalContent">
+        <div class="contentSectionForm">          
+          <fieldset>
+                            <legend>In early January each year</legend>
+            
+              <table border="0" cellspacing="0" cellpadding="0">                
+                <tr>                        <td colspan="2">
+                  <strong>Delete five-year-old attendance certificates (both conference and workshop)</strong></td></tr>
+                <tr>
+                  <td style="vertical-align:bottom;width:50%;">
+
+                          <form action="https://www.metmeetings.org/metCustom/delete_old_attendance_certificates.php"><button>Delete</button></form>
+                          
+                  </td>
+                </tr>
+                
+                <tr><td>&nbsp;</td></tr>
+                
+                <tr><td colspan="2">
+                  <strong>Delete non-member conference registrations</strong></td></tr>
+                <tr>
+                  <td style="vertical-align:bottom;width:50%;">
+
+                          <form action="https://www.metmeetings.org/metCustom/delete_non_member_conference_registrations.php"><button>Delete</button></form>
+                          
+                  </td>
+                </tr>     
+                
+                <tr><td>&nbsp;</td></tr>
+                
+                <tr><td colspan="2">
+                  <strong>Delete non-member workshop registrations</strong></td></tr>
+                <tr>
+                  <td style="vertical-align:bottom;width:50%;">
+
+                          <form action="https://www.metmeetings.org/metCustom/delete_non_member_workshop_registrations.php"><button>Delete</button></form>
+                          
+                  </td>
+                </tr>       
+                
+                <tr><td>&nbsp;</td></tr>
+                
+                <tr><td colspan="2">
+                  <strong>Delete invoices that are more than five years old</strong></td></tr>
+                <tr>
+                  <td style="vertical-align:bottom;width:50%;">
+
+                          <form action="https://www.metmeetings.org/metCustom/delete_old_invoices.php"><button>Delete</button></form>
+                          
+                  </td>
+                </tr>
+                 <tr><td>&nbsp;</td></tr>
+                
+                <tr><td colspan="2">
+                  <strong>Delete lapsed member data</strong></td></tr>
+                <tr>
+                  <td style="vertical-align:bottom;width:50%;">
+
+                          <form action="https://www.metmeetings.org/metCustom/delete_lapsed_member_data.php"><button>Delete</button></form>
+                          
+                  </td>
+                </tr>   
+                
+                <tr><td>&nbsp;</td></tr>
+                
+                <tr><td colspan="2">
+                  <strong>Delete relevant lapsed member records</strong></td></tr>
+                <tr>
+                  <td style="vertical-align:bottom;width:50%;">
+
+                          <form action="https://www.metmeetings.org/metCustom/delete_lapsed_member_records.php"><button>Delete</button></form>
+                          
+                  </td>
+                </tr>
+                
+                <tr><td>&nbsp;</td></tr>
+                
+                <tr><td colspan="2">
+                  <strong>Delete lapsed member profile images</strong></td></tr>
+                <tr>
+                  <td style="vertical-align:bottom;width:50%;">
+
+                          <form action="https://www.metmeetings.org/metCustom/delete_lapsed_member_images.php"><button>Delete</button></form>
+                          
+                  </td>
+                </tr>                
+              </table>
+            
+            </fieldset>
+          
+                    <fieldset>
+                            <legend>In early February each year</legend>
+              <p>Strictly speaking these are not GDPR routines, but ones designed to prevent lapsed members from continuing to use membership benefits. Consequently they do not need to be recorded on the GDPR action log.</p>
+              <table border="0" cellspacing="0" cellpadding="0">                
+                <tr><td colspan="2">
+                  <strong>Hide lapsed member profiles from search engines during the year their data is retained</strong></td></tr>
+                <tr>
+                  <td style="vertical-align:bottom;width:50%;">
+
+                          <form action="https://www.metmeetings.org/metCustom/set_profiles_not_public.php"><button>Hide</button></form>
+                          
+                  </td>
+                </tr>
+                <tr><td>&nbsp;</td></tr>
+                
+                <tr><td colspan="2">
+                  <strong>Hive cleanout</strong></td></tr>
+                <tr>
+                  <td style="vertical-align:bottom;width:50%;">
+
+                          <form action="https://www.metmeetings.org/metCustom/hive_cleanout.php"><button>Cleanout</button></form>
+                          
+                  </td>
+                </tr> 
+              </table>
+            
+            </fieldset>
+          
+                    <fieldset>
+                            <legend>Immediately after the conference</legend>
+            
+              <table border="0" cellspacing="0" cellpadding="0">                
+                <tr>                        <td colspan="2">
+                  <strong>Delete all dietary preferences and allergies</strong></td></tr>
+                <tr>
+                  <td style="vertical-align:bottom;width:50%;">
+
+                          <form action="https://www.metmeetings.org/metCustom/delete_dietary_preferences_and_allergies.php"><button>Delete</button></form>
+                          
+                  </td>
+                </tr>
+              </table>
+            
+            </fieldset>
+          
+            <fieldset>
+                            <legend>Three months after the conference</legend>
+            
+              <table border="0" cellspacing="0" cellpadding="0">                
+                <tr>                        <td colspan="2">
+                  <strong>Delete all closing dinner and offMETM signups</strong></td></tr>
+                <tr>
+                  <td style="vertical-align:bottom;width:50%;">
+
+                          <form action="https://www.metmeetings.org/metCustom/delete_dinner_and_offmetm_signups.php"><button>Delete</button></form>
+                          
+                  </td>
+                </tr>
+                
+                <tr><td>&nbsp;</td></tr>
+                
+                <tr>                        <td colspan="2">
+                  <strong>Delete all conference profile image files</strong></td></tr>
+                <tr>
+                  <td style="vertical-align:bottom;width:50%;">
+
+                          <form action="https://www.metmeetings.org/metCustom/delete_conference_profile_image_files.php"><button>Delete</button></form>
+                          
+                  </td>
+                </tr>
+                
+                
+              </table>
+            
+            </fieldset>
+          </div>
+</div>
+
+
+<!-- FOOTER -->
+
+  	<div class="footerSection">
+		<div class="footerSectionLeft">
+			<div class="footerSectionRight"></div>
+		</div>
+	</div>
+<!-- END: contenido_principal -->

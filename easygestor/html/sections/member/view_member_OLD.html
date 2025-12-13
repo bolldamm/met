@@ -1,0 +1,174 @@
+<!-- BEGIN: contenido_principal -->
+<script type="text/javascript">
+	function buscarMiembros(excel){
+		document.frmListaMiembro.excel.value=excel;
+		document.frmListaMiembro.submit();
+	}
+	
+	/*function exportaExcelMiembros(invocador){
+		var valor=invocador.value;
+		switch(valor){
+			case "1":
+				window.location="export_excel.php?section=member";
+				break;
+		}
+	}*/
+	
+</script>
+
+<div id="textExplication">
+	<h2>{STATIC_GLOBAL_WELCOME_EASYGESTOR}</h2>
+</div>
+
+<ul id="controlModButtons">
+	<li>
+		<a href="main_app.php?section=member&action=create" class="OptionAdd cufon">{STATIC_GLOBAL_BUTTON_CREATE} </a>
+		<img src="images/pictures/icons/news.icon.png" />
+	</li>
+	<li><a href="javascript:editarElemento('member')" class="OptionEdit cufon">{STATIC_GLOBAL_BUTTON_EDIT} </a><img src="images/pictures/icons/news.icon.png" /></li>
+	<li><a href="javascript:eliminarElemento('{STATIC_DELETE_MEMBER_TITLE}','{STATIC_DELETE_MEMBER_BODY}','{STATIC_GLOBAL_BUTTON_YES}','{STATIC_GLOBAL_BUTTON_NO}','frmListaMiembro','tblListItem')" class="OptionDelete cufon">{STATIC_GLOBAL_BUTTON_DELETE} </a><img src="images/pictures/icons/news.icon.png" /></li>
+</ul>
+
+<form name="frmListaMiembro" id="frmListaMiembro">
+	<input type="hidden" name="section" id="section" value="member">
+	<input type="hidden" name="action" id="action" value="view">
+	<input type="hidden" name="pagina" id="pagina" value="{PAGINA_ACTUAL}">
+	<input type="hidden" name="hdnOrden" id="hdnOrden" value="{ORDEN_SELECCIONADO}">
+	<input type="hidden" name="hdnRegistros" id="hdnRegistros" value="{NUMERO_REGISTROS_SELECCIONADOS}">
+	<input type="hidden" name="hdnId" id="hdnId">
+	<input type="hidden" name="excel" id="excel">
+	<div class="headerSectionForm">
+		<div class="leftBorder"></div>
+		<div class="titleSectionForm">{STATIC_VIEW_MOVEMENT_SEARCH}</div>
+		<div class="rightBorder"></div>
+	</div>
+	<div class="containerSection" id="generalContent">
+		<div class="contentSectionForm">
+			<table border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td>{STATIC_VIEW_MEMBER_TYPE_MEMBER_SEARCH}</td>
+					<td>{COMBO_TIPO_USUARIO}</td>
+					<td style="padding-left:10px;">{STATIC_VIEW_MEMBER_MODALITY_SEARCH}</td>
+					<td>{COMBO_MODALIDAD_USUARIO}</td>	
+				</tr>
+				<tr>
+					<td>{STATIC_VIEW_MEMBER_EMAIL_ADDRESS_SEARCH}</td>
+					<td><input type="text" name="txtEmail" value="{VIEW_MEMBER_EMAIL_ADDRESS_SEARCH_VALUE}"></td>
+					<td style="padding-left:10px;">{STATIC_VIEW_MEMBER_NAME_SEARCH}</td>
+					<td><input type="text" name="txtNombre" value="{VIEW_MEMBER_NAME_SEARCH_VALUE}"></td>
+				</tr>
+				<tr>
+					<td>{STATIC_VIEW_MEMBER_DUES_STATUS_SEARCH}</td>
+					<td>{COMBO_PAGADO}</td>
+					<td>{STATIC_VIEW_MEMBER_ADDITIONAL_SITUATION}</td>
+					<td>{COMBO_SITUACION_ADICIONAL}</td>
+				</tr>
+				<tr>
+					<td style="padding-top:8px;">{STATIC_VIEW_MEMBER_NOMINEE}</td>
+					<td style="padding-top:8px;"><input type="checkbox" name="chkNominee" value="" style="width:auto;"></td>
+					<td class="yearPaid" {DISPLAY_YEAR}>{STATIC_VIEW_MEMBER_YEAR_SEARCH}</td>
+                    <td class="yearPaid" {DISPLAY_YEAR}>{COMBO_ANYO}</td>
+				</tr>
+				<tr>
+					<td colspan="4" style="padding-top:10px;text-align:right;">
+						<button type="submit" onclick="buscarMiembros(0);" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"><span class="ui-button-text">{STATIC_GLOBAL_BUTTON_SEARCH}</span></button>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4" style="vertical-align:bottom;">
+						<fieldset>
+							<legend>{STATIC_GLOBAL_EXPORT_EXCEL}</legend>
+							<button type="button" onclick="buscarMiembros(1)" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"><span class="ui-button-text">Selected members</span></button>
+<!--							
+							<button type="button" onclick="buscarMiembros(2)" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"><span class="ui-button-text">Emails for newsletter</span></button>
+							<button type="button" onclick="buscarMiembros(3)" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"><span class="ui-button-text">Direct debits</span></button>
+-->
+						</fieldset>
+					</td>
+				</tr>
+			</table>
+			<div style="text-align:right;"><strong>{STATIC_VIEW_MEMBER_MEMBERS_FOUND}</strong>: {MEMBERS_FOUND_VALUE}</div>
+		</div>
+	</div>
+</form>
+<form action="https://www.metmeetings.org/metCustom/get_members_for_newsletter.php" method="get" style="position:absolute; margin:-98px 0 0 190px;">
+  <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"><span class="ui-button-text">Get members for newsletter</span></button>
+</form>
+<form action="https://www.metmeetings.org/metCustom/get_direct_debits.php" method="get" style="position:absolute; margin:-98px 0 0 420px;">
+  <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-hover"><span class="ui-button-text">Direct debits 2018</span></button>
+</form>                  
+<div class="catbox">
+	<div class="leftBorder"></div>
+	{PAGINADOR_INFORMACION}
+	<div class="left">
+	<span class="Nbuoyancy">{STATIC_FILTER_SHOW}:</span>
+	{COMBO_NUMERO_REGISTROS}
+	</div>
+	<div class="left">
+	<span class="Nbuoyancy">{STATIC_FILTER_ORDER_BY_FIELD}:</span>
+	{COMBO_ORDEN}
+	</div>
+   	{PAGINADOR_NAVEGACION_SUPERIOR}
+   	{PAGINADOR}
+</div>
+<div class="streamsbox" style="display:block; height:auto; width:637px;">
+	<div class="resultscontainer">
+		<table border="0" cellspacing="0" cellpadding="0" style="width:100%;" id="tblList" class="streamsbox-results">
+			<thead>
+				<tr class="streamsbox-header nodrag">
+					<td id="checkAll" class="unCheckAll" onclick="seleccionarTodo(this)"></td>
+					<td></td>
+					<td><h2><strong>{STATIC_VIEW_MEMBER_ID}</strong></h2></td>
+					<td><h2><strong>{STATIC_VIEW_MEMBER_TYPE_MEMBER}</strong></h2></td>
+					<td><h2><strong>{STATIC_VIEW_MEMBER_MODALITY_MEMBER}</strong></h2></td>
+					<td><h2><strong>{STATIC_VIEW_MEMBER_EMAIL_ADDRESS}</strong></h2></td>
+					<td><h2><strong>{STATIC_VIEW_MEMBER_NAME}</strong></h2></td>
+				</tr>
+			</thead>
+			<tbody class="real-results" id="tblListItem">
+			<!-- BEGIN: item_miembro -->
+				<tr id="fila_{MEMBER.ID}" {TR_STYLE} onclick="seleccionarFila(this)" ondblclick="window.location='main_app.php?section=member&action=edit&id_miembro={MEMBER.ID}'">
+					<td id="icon_{MEMBER.ID}" class="unChecked"></td>
+					<td class="containerToolTip" style="padding-right:2px;padding-left:2px;">{MEMBER.COMMENT}</td>
+					<td style="vertical-align:top;">
+						{MEMBER.ID}
+					</td>
+					<td style="vertical-align:top;">
+						{MEMBER.TYPE}
+					</td>
+					<td style="vertical-align:top;">
+						{MEMBER.MODALITY}
+					</td>
+					<td style="vertical-align:top;">
+						{MEMBER.EMAIL_ADDRESS}
+					</td>
+					<td style="vertical-align:top;">
+						{MEMBER.NAME}
+					</td>
+					<td style="display:none;"><input type="hidden" name="hdnSeleccionado_{MEMBER.ID}" id="hdnSeleccionado_{MEMBER.ID}" value="0"></td>
+				</tr>
+			<!-- END: item_miembro -->
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="combar">
+	<div class="cb1">
+    	<div class="cb2">
+    		<span>{PAGINADOR_INFORMACION}</span>
+      		<div class="left">
+				<span class="Nbuoyancy">{STATIC_FILTER_SHOW}:</span>
+				{COMBO_NUMERO_REGISTROS}
+			</div>
+			<div class="left">
+				<span class="Nbuoyancy">{STATIC_FILTER_ORDER_BY_FIELD}:</span>
+				{COMBO_ORDEN}
+			</div>
+			
+			{PAGINADOR_NAVEGACION_INFERIOR}
+			{PAGINADOR}
+	      	<span class="streams-up"></span>
+    	</div>
+  	</div>
+</div>
+<!-- END: contenido_principal -->

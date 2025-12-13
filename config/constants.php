@@ -1,0 +1,120 @@
+<?php
+
+    if (defined('MET_ENV') && constant('MET_ENV') == 'LOCAL') {
+        define("CURRENT_DOMAIN","https://localhost");
+    }else{
+        define("CURRENT_DOMAIN","https://www.metmeetings.org");
+    }
+	
+	//IMAGEN PERFIL
+	define("WIDTH_SIZE_PROFILE_INDIVIDUAL", 200);
+	define("HEIGHT_SIZE_PROFILE_INDIVIDUAL", 200);
+	
+	define("WIDTH_SIZE_PROFILE_THUMB_INDIVIDUAL", 83);
+	define("HEIGHT_SIZE_PROFILE_THUMB_INDIVIDUAL", 83);
+	
+	define("WIDTH_SIZE_PROFILE_INSTITUTIONAL", 250);
+	define("HEIGHT_SIZE_PROFILE_INSTITUTIONAL", 143);
+
+	//Tipos usuario
+	define("TIPO_USUARIO_SOCIO",1);
+    define("TIPO_USUARIO_EDITOR",2);
+    define("TIPO_USUARIO_CONSEJO",3);
+	define("TIPO_USUARIO_ADMIN",4);
+	define("TIPO_USUARIO_INVITADO",5);
+	
+	//Modalidad usuario
+	define("MODALIDAD_USUARIO_INDIVIDUAL",1);
+	define("MODALIDAD_USUARIO_INSTITUTIONAL",2);
+	
+	//Precio modalidad usuario
+	//define("PRECIO_MODALIDAD_USUARIO_INDIVIDUAL",38);
+	//define("PRECIO_MODALIDAD_USUARIO_INSTITUTIONAL",100);
+	
+	//Es para jubilados y para estudiantes, en caso de que en el futuro tengan cada uno su precio, ya se modificara.
+	//define("PRECIO_MODALIDAD_USUARIO_INDIVIDUAL_DESCUENTO",19);
+	
+	//Estado de la inscripcion
+	define("INSCRIPCION_ESTADO_INSCRIPCION_PENDIENTE",1);
+	define("INSCRIPCION_ESTADO_INSCRIPCION_CONFIRMADA",2);
+	define("INSCRIPCION_ESTADO_INSCRIPCION_DESCARTADA",3);
+	
+	//Tipos de pago
+	define("INSCRIPCION_TIPO_PAGO_TRANSFERENCIA",1);
+	define("INSCRIPCION_TIPO_PAGO_PAYPAL",2);
+	define("INSCRIPCION_TIPO_PAGO_DEBIT",4);
+	define("INSCRIPCION_TIPO_PAGO_TRANSFERENCIA_DESCRIPTION","Bank transfer");
+	define("INSCRIPCION_TIPO_PAGO_PAYPAL_DESCRIPTION","Debit/credit card");
+
+	
+	//Situacion adicional
+	define("SITUACION_ADICIONAL_JUBILADO",1);
+	define("SITUACION_ADICIONAL_ESTUDIANTE",2);
+	
+	//Menu home
+	define("MENU_HOME","50");
+	
+	//Movimiento tipo(entrada,salida)
+	define("MOVIMIENTO_TIPO_ENTRADA",1);
+	define("MOVIMIENTO_TIPO_SALIDA",2);
+	
+	//Movimientos conceptos
+	define("MOVIMIENTO_CONCEPTO_NEW_MEMBERSHIP",2);
+	define("MOVIMIENTO_CONCEPTO_NEW_MEMBERSHIP_INSTITUTIONAL",70);
+	define("MOVIMIENTO_CONCEPTO_NEW_MEMBERSHIP_RETIRED",72);
+	define("MOVIMIENTO_CONCEPTO_NEW_MEMBERSHIP_STUDENT",71);
+	define("MOVIMIENTO_CONCEPTO_NEW_MEMBERSHIP_PREPAID",77);
+	define("MOVIMIENTO_CONCEPTO_NEW_WORKSHOP",55);
+	define("MOVIMIENTO_CONCEPTO_NEW_CONFERENCE",46);
+	define("MOVIMIENTO_CONCEPTO_FEE_GENERAL_BANKING",39);
+	
+	
+	//Movimientos tipo pago
+	define("MOVIMIENTO_TIPO_PAGO_DEBIT",18);
+	define("MOVIMIENTO_TIPO_PAGO_TRANSFERENCIA",13);
+	define("MOVIMIENTO_TIPO_PAGO_PAYPAL",10);
+	
+	//Form tipo
+	define("FORM_TYPE_RENEW_MEMBERSHIP_ID",3);
+	
+	
+	//Modulo directory member
+	define("MODULE_MEMBER_DIRECTORY_ID",8);
+	define("MODULE_MEMBER_INSTITUTIONAL_ID",7);
+	
+	
+	//Tipo correo electronico
+	define("EMAIL_TYPE_CONTACT_FORM",1);
+	define("EMAIL_TYPE_REMEMBER_PASSWORD_FORM",2);
+	define("EMAIL_TYPE_EXPENSE_FORM",3);
+	define("EMAIL_TYPE_EVENT_FORM",4);
+	define("EMAIL_TYPE_JOB_FORM",5);
+	define("EMAIL_TYPE_NEW_FORM",6);
+	define("EMAIL_TYPE_INSCRIPTION_FORM",7);
+	define("EMAIL_TYPE_JOB_FORM_REQUEST",8);
+	define("EMAIL_TYPE_INSCRIPTION_RENEW_FORM",9);
+	define("EMAIL_TYPE_INSCRIPTION_ACTIVATED",10);
+	define("EMAIL_TYPE_NOMINEE_ACTIVATION",11);
+	define("EMAIL_TYPE_FORM_METM_TRANSPORT",12);
+	define("EMAIL_TYPE_ACCOMMODATION_FORM_USER",13);
+	define("EMAIL_TYPE_ACCOMMODATION_FORM",14);
+	define("EMAIL_TYPE_WORKSHOP_FORM_TO_MET",15);
+	define("EMAIL_TYPE_WORKSHOP_FORM_TO_USER",16);
+	define("EMAIL_TYPE_WORKSHOP_FORM_TO_USER_ACTIVATION",17);
+	define("EMAIL_TYPE_INVOICE_SENT",18);
+	define("EMAIL_TYPE_CONFERENCE_FORM_TO_MET",19);
+	define("EMAIL_TYPE_CONFERENCE_FORM_TO_USER",20);
+	define("EMAIL_TYPE_CONFERENCE_FORM_TO_USER_ACTIVATION",21);
+
+    // Verifactu - MET Issuer Information
+    define("MET_LEGAL_NAME", "Mediterranean Editors and Translators Association");
+    define("MET_NIF","G64088438");
+    define("MET_FISCAL_ADDRESS_STREET","Sant Valentí, 1-3, entresòl 2a");
+    define("MET_FISCAL_ADDRESS_CITY","Manresa");
+    define("MET_FISCAL_ADDRESS_PROVINCE","Barcelona");
+    define("MET_FISCAL_ADDRESS_POSTAL_CODE","08242");
+    define("MET_FISCAL_ADDRESS_COUNTRY","Spain");
+    define("MET_VAT_RATE", 0);
+    define("MET_VAT_EXEMPTION_ARTICLE", "Exempt under article…");
+
+?>

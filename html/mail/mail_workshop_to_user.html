@@ -1,0 +1,42 @@
+<!-- BEGIN: contenido_principal -->
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%;min-width: 900px;background-color:#ffffff;font-size:14px;" align="center">
+	<tr>
+		<td style="padding:10px 10px 10px 110px;"><a href="https://www.metmeetings.org"><img src="https://www.metmeetings.org/images/pictures/logos/MET_color_transparent_180x92.png" border="0" alt="MET logo"/></a></td>
+	</tr>
+	<tr>
+		<td style="border:0; padding:10px 100px 10px 100px; color:#58595B;">
+			<br>
+			{STATIC_MAIL_INSCRIPTION_TO_USER_DEAR} {MAIL_INSCRIPTION_TO_USER_NAME_VALUE},<br><br>
+<!-- 			{STATIC_MAIL_INSCRIPTION_TO_USER_BODY_1}<br><br> -->
+ 			{EMAIL_OPENING}<br><br>        
+
+			<table border="0" cellspacing="0" cellpadding="0" style="width:100%;padding:10px;border:1px solid #858585;color:#58595B;">
+				<tr>
+					<td style="width:70%;color:#000000;padding-left:10px;">{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_WORKSHOPS_NAME}</td>
+					<td style="color:#000000;">{STATIC_FORM_WORKSHOP_REGISTER_LEGEND_WORKSHOPS_DATE}</td>
+					<td style="text-align:right;color:#000000;padding-right:10px;">{FORM_WORKSHOP_REGISTER_LEGEND_WORKSHOPS_PRICE}</td>
+				</tr>
+				<!-- BEGIN: item_workshop -->
+				<tr>
+					<td style="padding-left:10px;">{WORKSHOP_NOMBRE}</td>
+					<td>{WORKSHOP_FECHA}</td>
+					<td style="text-align:right;padding-right:10px;">&euro; {WORKSHOP_PRECIO}</td>
+				</tr>
+				<!-- END: item_workshop -->
+			</table>
+			<br>
+<!--			{STATIC_MAIL_INSCRIPTION_TO_USER_BODY_2} -->
+			{EMAIL_CLOSING}{STATIC_MAIL_INSCRIPTION_SIG}       
+		</td>
+	</tr>
+	<tr>
+		<td style="border:0; padding:10px 100px 10px 100px; color:#58595B; font-size:90%">
+			{STATIC_MAIL_PRIVACY_NOTICE}
+		</td>
+	</tr>
+	<tr>
+		<td style="text-align:center;padding:10px;"><a href="https://www.metmeetings.org">© Mediterranean Editors and Translators</a></td>
+	</tr>
+</table>
+<!-- END: contenido_principal -->
+
