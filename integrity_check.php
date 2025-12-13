@@ -1,5 +1,0 @@
-<?php
-
-// Do nothing
-
-?>

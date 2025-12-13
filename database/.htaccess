@@ -1,2 +1,0 @@
-# Optional: prevent directory listing (in case there’s no index file)
-Options -Indexes
