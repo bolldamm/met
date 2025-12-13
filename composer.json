@@ -1,7 +1,0 @@
-{
-  "require": {
-    "stripe/stripe-php": "^7.0",
-    "phpoffice/phpspreadsheet": "^1.10.0",
-    "spipu/html2pdf": "^5.2"
-  }
-}
