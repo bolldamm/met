@@ -76,20 +76,24 @@ if ($_POST["hdnIdModalidad"] == MODALIDAD_USUARIO_INDIVIDUAL) {
 }
 
 //Get billing details
-// Handle tax ID: either Spanish NIF or foreign tax ID
-if (isset($_POST["hasSpanishNif"]) && $_POST["hasSpanishNif"] == 1 && !empty($_POST["spanishNifNumber"])) {
-    $_POST["txtFacturacionNifCliente"] = generalUtils::escaparCadena($_POST["spanishNifNumber"]);
-} else {
-    $_POST["txtFacturacionNifCliente"] = isset($_POST["tax_id_number"]) ? generalUtils::escaparCadena($_POST["tax_id_number"]) : "";
-}
+$_POST["txtFacturacionNifCliente"] = isset($_POST["tax_id_number"]) ? generalUtils::escaparCadena($_POST["tax_id_number"]) : "";
 $_POST["txtFacturacionNombreCliente"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER, $_POST["txtFacturacionNombreCliente"]));
 $_POST["txtFacturacionNombreEmpresa"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_NAME_COMPANY, $_POST["txtFacturacionNombreEmpresa"]));
 $_POST["txtFacturacionDireccion"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_ADDRESS, $_POST["txtFacturacionDireccion"]));
 $_POST["txtFacturacionCodigoPostal"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_ZIPCODE, $_POST["txtFacturacionCodigoPostal"]));
 $_POST["txtFacturacionCiudad"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_CITY, $_POST["txtFacturacionCiudad"]));
 $_POST["txtFacturacionProvincia"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_PROVINCE, $_POST["txtFacturacionProvincia"]));
-// Billing country comes from combo as billing_country
-$_POST["txtFacturacionPais"] = isset($_POST["billing_country"]) ? generalUtils::escaparCadena($_POST["billing_country"]) : "";
+
+// Billing country comes from combo as billing_country (ISO-2 code)
+// Convert ISO-2 to full country name for storage
+$billingCountryIso = isset($_POST["billing_country"]) ? generalUtils::escaparCadena($_POST["billing_country"]) : "";
+$paisFactura = "";
+if (!empty($billingCountryIso) && $billingCountryIso !== "-1") {
+    $resultPais = $db->callProcedure("CALL ed_sp_web_pais_get_name_from_iso('" . $billingCountryIso . "')");
+    if ($rowPais = $db->getData($resultPais)) {
+        $paisFactura = $rowPais["nombre_original"];
+    }
+}
 
 //Assign billing details to variables for sending to database
 $nifFactura = $_POST["txtFacturacionNifCliente"];
@@ -99,10 +103,9 @@ $direccionFactura = $_POST["txtFacturacionDireccion"];
 $codigoPostalFactura = $_POST["txtFacturacionCodigoPostal"];
 $ciudadFactura = $_POST["txtFacturacionCiudad"];
 $provinciaFactura = $_POST["txtFacturacionProvincia"];
-$paisFactura = $_POST["txtFacturacionPais"];
 
-//Tax ID fields for Verifactu (non-Spanish customers)
-$taxIdCountry = isset($_POST["tax_id_country"]) ? generalUtils::escaparCadena($_POST["tax_id_country"]) : "";
+//Tax ID fields for Verifactu - billing_country ISO-2 is used as tax_id_country
+$taxIdCountry = $billingCountryIso;
 $taxIdType = isset($_POST["tax_id_type"]) ? generalUtils::escaparCadena($_POST["tax_id_type"]) : "";
 $taxIdNumber = isset($_POST["tax_id_number"]) ? generalUtils::escaparCadena($_POST["tax_id_number"]) : "";
 
@@ -214,7 +217,7 @@ if ($esValido) {
     }
 
     //Insert new member in ed_tb_usuario_web
-    $resultadoUsuarioWeb = $db->callProcedure("CALL ed_sp_web_usuario_web_insertar(" . TIPO_USUARIO_SOCIO . "," . $_POST["hdnIdModalidad"] . ",'" . $_POST["txtEmailUser"] . "','" . $_POST["txtPasswd"] . "'," . $publico . ",'" . $_POST["txtFacturacionNifCliente"] . "','" . $_POST["txtFacturacionNombreCliente"] . "','" . $_POST["txtFacturacionNombreEmpresa"] . "','" . $_POST["txtFacturacionDireccion"] . "','" . $_POST["txtFacturacionCodigoPostal"] . "','" . $_POST["txtFacturacionCiudad"] . "','" . $_POST["txtFacturacionProvincia"] . "','" . $_POST["txtFacturacionPais"] . "'," . $privacy . "," . $newsletterPermission . "," . $activo . "," . $borrado . ")");
+    $resultadoUsuarioWeb = $db->callProcedure("CALL ed_sp_web_usuario_web_insertar(" . TIPO_USUARIO_SOCIO . "," . $_POST["hdnIdModalidad"] . ",'" . $_POST["txtEmailUser"] . "','" . $_POST["txtPasswd"] . "'," . $publico . ",'" . $_POST["txtFacturacionNifCliente"] . "','" . $_POST["txtFacturacionNombreCliente"] . "','" . $_POST["txtFacturacionNombreEmpresa"] . "','" . $_POST["txtFacturacionDireccion"] . "','" . $_POST["txtFacturacionCodigoPostal"] . "','" . $_POST["txtFacturacionCiudad"] . "','" . $_POST["txtFacturacionProvincia"] . "','" . $paisFactura . "'," . $privacy . "," . $newsletterPermission . "," . $activo . "," . $borrado . ")");
     $datoUsuarioWeb = $db->getData($resultadoUsuarioWeb);
     $idUsuarioWeb = $datoUsuarioWeb["id_usuario_web"];
 

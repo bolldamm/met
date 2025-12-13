@@ -63,14 +63,46 @@ while ($numFactura = $db->getData($facturasPDF)) {
     $plantillaPdf->assign("INVOICE_PDF_INVOICE_NUMBER_VALUE", $datoFactura["numero_factura"]);
     //echo $datoFactura["numero_factura"];
 
-    //Display Spanish NIF if available, otherwise show foreign tax ID
+    //Display tax ID with appropriate country prefix
+    //Spanish/EU: show with country prefix (ES-12345678A, BE-0404621642)
+    //Non-EU: show without prefix
+    //F2 simplified invoices: show N/A (no tax ID required)
     $customerTaxId = "";
-    if (!empty($datoFactura["nif_cliente_factura"])) {
-        $customerTaxId = $datoFactura["nif_cliente_factura"];
-    } elseif (!empty($datoFactura["tax_id_number"])) {
-        $customerTaxId = $datoFactura["tax_id_number"];
-        if (!empty($datoFactura["tax_id_country"])) {
-            $customerTaxId = $datoFactura["tax_id_country"] . " - " . $customerTaxId;
+
+    //For F2 simplified invoices, just show N/A - no tax ID processing needed
+    if (!empty($datoFactura["tipo_factura_verifactu"]) && $datoFactura["tipo_factura_verifactu"] === "F2") {
+        $customerTaxId = "N/A";
+    } else {
+        $taxIdNumber = !empty($datoFactura["tax_id_number"])
+            ? $datoFactura["tax_id_number"]
+            : ($datoFactura["nif_cliente_factura"] ?? "");
+        $taxIdCountry = strtoupper($datoFactura["tax_id_country"] ?? "");
+
+        //EU VIES countries (excluding Spain which uses ES)
+        $viesCountries = ['AT', 'BE', 'BG', 'CY', 'CZ', 'DE', 'DK', 'EE', 'EL', 'FI', 'FR',
+            'HR', 'HU', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PL', 'PT',
+            'RO', 'SE', 'SI', 'SK'];
+
+        if (!empty($taxIdNumber)) {
+            $isSpanish = empty($taxIdCountry) || $taxIdCountry === "ES";
+            $isEu = in_array($taxIdCountry, $viesCountries);
+
+            if ($isSpanish) {
+                //Spanish NIF: always show with ES- prefix
+                $customerTaxId = "ES-" . $taxIdNumber;
+            } elseif ($isEu) {
+                //EU VAT: show with country prefix, avoiding duplication
+                //Strip country code from number if already present
+                if (strpos(strtoupper($taxIdNumber), $taxIdCountry) === 0) {
+                    $taxIdNumber = substr($taxIdNumber, strlen($taxIdCountry));
+                }
+                $customerTaxId = $taxIdCountry . "-" . $taxIdNumber;
+            } else {
+                //Non-EU: show without prefix
+                $customerTaxId = $taxIdNumber;
+            }
+        } else {
+            $customerTaxId = "N/A";
         }
     }
     $plantillaPdf->assign("INVOICE_PDF_CUSTOMER_CIF_VALUE", $customerTaxId);
@@ -93,7 +125,15 @@ while ($numFactura = $db->getData($facturasPDF)) {
 
     $direccion .= $datoFactura["direccion_factura"] . "<br>";
     $direccion .= $datoFactura["codigo_postal_factura"] . "<br>";
-    $direccion .= $datoFactura["ciudad_factura"] . $provincia . " <br>" . $datoFactura["pais_factura"] . "<br>";
+    // Use pais_factura if available, otherwise try to get country name from tax_id_country
+    $displayCountry = $datoFactura["pais_factura"];
+    if (empty($displayCountry) && !empty($datoFactura["tax_id_country"])) {
+        $countryResult = $db->callProcedure("CALL ed_sp_web_pais_get_name_from_iso('" . $datoFactura["tax_id_country"] . "')");
+        if ($countryRow = $db->getData($countryResult)) {
+            $displayCountry = $countryRow["nombre_original"];
+        }
+    }
+    $direccion .= $datoFactura["ciudad_factura"] . $provincia . " <br>" . $displayCountry . "<br>";
 
     //echo $direccion;
     //die();

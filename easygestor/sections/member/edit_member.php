@@ -250,7 +250,11 @@ $subPlantilla->assign("MIEMBRO_OTRAS_ACTIVIDADES", $datoUsuarioWeb["otros"]);
 $subPlantilla->assign("MIEMBRO_OTRAS_DESCRIPCION", $datoUsuarioWeb["descripcion"]);
 $subPlantilla->assign("MIEMBRO_OTRAS_PUBLICACIONES", $datoUsuarioWeb["publicaciones"]);
 $subPlantilla->assign("MIEMBRO_WEB", $datoUsuarioWeb["web"]);
-$subPlantilla->assign("MIEMBRO_FACTURA_NIF_CLIENTE", $datoUsuarioWeb["nif_cliente_factura"]);
+// Display tax ID with fallback: prefer tax_id_number, fallback to nif_cliente_factura for old records
+$displayTaxId = !empty($datoUsuarioWeb["tax_id_number"])
+	? $datoUsuarioWeb["tax_id_number"]
+	: ($datoUsuarioWeb["nif_cliente_factura"] ?? "");
+$subPlantilla->assign("MIEMBRO_FACTURA_NIF_CLIENTE", $displayTaxId);
 $subPlantilla->assign("MIEMBRO_FACTURA_NOMBRE_EMPRESA", $datoUsuarioWeb["nombre_empresa_factura"]);
 $subPlantilla->assign("MIEMBRO_FACTURA_NOMBRE_CLIENTE", $datoUsuarioWeb["nombre_cliente_factura"]);
 $subPlantilla->assign("MIEMBRO_FACTURA_DIRECCION", $datoUsuarioWeb["direccion_factura"]);

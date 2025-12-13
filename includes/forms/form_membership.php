@@ -11,13 +11,11 @@
 $plantillaFormulario->assign("COMBO_TITULOS", generalUtils::construirCombo($db, "CALL ed_sp_web_tratamiento_usuario_web_obtener_combo(".$_SESSION["id_idioma"].")", "cmbTitulo", "cmbTitulo", -1, "nombre", "id_tratamiento_usuario_web", STATIC_FORM_MEMBERSHIP_TITLE, -1, 'class="form-control" style="color:lightslategray;"'));
 
 //Combo paises
-$plantillaFormulario->assign("COMBO_PAIS", generalUtils::construirCombo($db, "CALL ed_sp_web_pais_obtener_combo()", "cmbPais", "cmbPais", -1, "nombre_original", "id_pais", STATIC_FORM_MEMBERSHIP_COUNTRY_OF_RESIDENCE."*", -1, 'class="form-control" style="width:100%; color:lightslategray;" autocomplete="country-name" '));
+$plantillaFormulario->assign("COMBO_PAIS", generalUtils::construirCombo($db, "CALL ed_sp_web_pais_obtener_combo()", "cmbPais", "cmbPais", -1, "nombre_original", "id_pais", STATIC_FORM_MEMBERSHIP_COUNTRY_OF_RESIDENCE, -1, 'class="required form-control" style="width:100%; color:lightslategray;" autocomplete="country-name" '));
 
-//Combo billing country
-$plantillaFormulario->assign("COMBO_BILLING_COUNTRY", generalUtils::construirCombo($db, "CALL ed_sp_web_pais_obtener_combo()", "billing_country", "billing_country", -1, "nombre_original", "id_pais",STATIC_FORM_PROFILE_BILLING_COUNTRY, -1, 'class="required form-control" style="width:100%; color:lightslategray;" '));
-
-//Combo tax ID country - uses iso2 as value for Verifactu, displays country name only
-$plantillaFormulario->assign("COMBO_TAX_ID_COUNTRY", generalUtils::construirCombo($db, "CALL ed_sp_web_pais_iso_obtener_combo()", "tax_id_country", "tax_id_country", -1, "nombre_original", "iso2",STATIC_FORM_PROFILE_BILLING_TAX_ID_COUNTRY, -1, 'class="required form-control" style="width:100%; color:lightslategray;" '));
+//Combo billing country - uses iso2 as value for Verifactu, includes is_eu data attribute
+//EU countries are sorted first (alphabetically), then non-EU countries
+$plantillaFormulario->assign("COMBO_BILLING_COUNTRY", generalUtils::construirComboConDataAttr($db, "CALL ed_sp_web_pais_obtener_combo()", "billing_country", "billing_country", -1, "nombre_original", "iso2", STATIC_FORM_PROFILE_BILLING_COUNTRY, -1, 'class="required form-control" style="width:100%; color:lightslategray;"', ['is_eu']));
 
 //Combo tax ID type - uses tax_id_type code as value for Verifactu
 $plantillaFormulario->assign("COMBO_TAX_ID_TYPE", generalUtils::construirCombo($db, "CALL ed_sp_web_tax_id_type_obtener_combo()", "tax_id_type", "tax_id_type", -1, "description", "tax_id_type", STATIC_FORM_PROFILE_BILLING_TAX_ID_TYPE, -1, 'class="required form-control" style="width:100%; color:lightslategray;" '));
@@ -56,4 +54,3 @@ $plantillaFormulario->assign("USUARIO_MODALIDAD",MODALIDAD_USUARIO_INDIVIDUAL);
  * Realizamos todos los parse relacionados con este apartado
  */
 $plantilla->parse("contenido_principal.validate_membership_form");
-?>

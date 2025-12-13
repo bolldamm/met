@@ -50,10 +50,10 @@
 		<input type='text' class='form-control' name='txtFacturacionProvincia' id='txtFacturacionProvincia' value='{PERFIL_PROVINCIA}' autocomplete='address-level1' placeholder='{STATIC_FORM_PROFILE_BILLING_PROVINCE}'>
 	</div>
 	<div class='col-12 col-md-6'>
-		<label class='sr-only' for='txtFacturacionPais'></label>
-		<input type='text' class='form-control' name='txtFacturacionPais' id='txtFacturacionPais' value='{PERFIL_PAIS}' autocomplete='country-name' placeholder='{STATIC_FORM_PROFILE_BILLING_COUNTRY}*' required>
+		<label class='sr-only' for='billing_country'></label>
+		{COMBO_BILLING_COUNTRY}
 		<div class='invalid-feedback'>
-			Please enter your country
+			Please select your country
 		</div>
 	</div>
 </div>

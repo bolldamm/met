@@ -1,26 +1,20 @@
 {
   "permissions": {
     "allow": [
-      "Bash(test:*)",
-      "Bash(find:*)",
+      "Bash(\"F:\\laragon\\bin\\mysql\\mysql-8.0.40-winx64\\bin\\mysql.exe\" -u root met -e \"CALL ed_sp_web_tax_id_type_obtener_combo();\")",
       "Bash(git add:*)",
-      "WebFetch(domain:www.verifacti.com)",
       "WebSearch",
+      "Bash(php -v:*)",
+      "Bash(php -i:*)",
+      "Bash(curl:*)",
+      "Bash(powershell -Command \"Invoke-WebRequest -Uri ''''http://localhost/phpinfo_test.php'''' -UseBasicParsing | Select-Object -ExpandProperty Content\")",
+      "Bash(powershell -Command \"[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12; (New-Object System.Net.WebClient).DownloadString(''''http://localhost/phpinfo_test.php'''')\")",
+      "Bash(findstr:*)",
       "Bash(dir:*)",
-      "Bash(php -l:*)",
-      "Bash(F:\\laragon\\bin\\mysql\\mysql-8.0.30-winx64\\bin\\mysql.exe:*)",
-      "Bash(cmd /c \"F:\\laragon\\bin\\mysql\\mysql-8.0.30-winx64\\bin\\mysql.exe -u root met < F:\\laragon\\www\\Database_migration_scripts_v2.sql\")",
-      "Bash(cmd /c \"F:\\laragon\\bin\\mysql\\mysql-8.0.30-winx64\\bin\\mysql.exe -u root -e \"\"SELECT 1\"\"\")",
-      "Bash(cmd /c \"tasklist | findstr mysql\")",
-      "Bash(F:laragonbinmysqlmysql-8.0.30-winx64binmysql.exe -u root met -e \"DESCRIBE ed_tb_factura;\")",
-      "Bash(F:laragonbinmysqlmysql-8.0.30-winx64binmysql.exe -u root met -e \"SHOW INDEX FROM ed_tb_factura WHERE Key_name=''idx_factura_rectificada'';\")",
-      "Bash(cmd /c \"F:\\laragon\\bin\\mysql\\mysql-8.0.30-winx64\\bin\\mysql.exe -u root met -e \"\"DESCRIBE ed_tb_factura;\"\"\")",
-      "Bash(cmd /c \"F:\\laragon\\bin\\mysql\\mysql-8.0.30-winx64\\bin\\mysql.exe -u root met -e \"\"SHOW PROCEDURE STATUS WHERE Db=''met'' AND Name LIKE ''ed_sp_factura%'';\"\"\")",
-      "Bash(cmd:*)",
-      "Bash(powershell -Command \"& ''F:\\laragon\\bin\\mysql\\mysql-8.0.30-winx64\\bin\\mysql.exe'' -u root met -e ''DESCRIBE ed_tb_factura;''\")",
-      "Bash(/f/laragon/bin/mysql/mysql-8.0.40-winx64/bin/mysql.exe:*)",
-      "WebFetch(domain:www.metmeetings.org)",
-      "WebFetch(domain:metmeetings.org)"
+      "Bash(del \"F:\\laragon\\www\\phpinfo_test.php\")",
+      "Bash(dir /o-d:*)",
+      "Bash(ls -la \"F:\\laragon\\www\\private\"\" 2>&1 || echo \"Directory not found or no access \")",
+      "Bash(ls -la \"F:\\laragon\\www\\private\"\" 2>&1 | grep -v \"Cannot access|No such \")"
     ],
     "deny": [],
     "ask": []

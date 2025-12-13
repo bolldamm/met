@@ -17,6 +17,15 @@ class VerifactiService
     private $lastError;
     private $logFile;
 
+    // VIES countries (EU member states for VAT purposes, excluding Spain)
+    // These require country code prefix on tax ID and operacion_exenta for intra-EU supplies
+    // Note: XI (Northern Ireland) excluded as it only applies to goods, not services
+    private static $viesCountries = [
+        'AT', 'BE', 'BG', 'CY', 'CZ', 'DE', 'DK', 'EE', 'EL', 'FI', 'FR',
+        'HR', 'HU', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PL', 'PT',
+        'RO', 'SE', 'SI', 'SK'
+    ];
+
     /**
      * Constructor
      *
@@ -324,8 +333,9 @@ class VerifactiService
         // Add recipient details (not required for F2 simplified invoices)
         if (!$isSimplified) {
             // Determine if Spanish or foreign customer
-            $isSpanish = empty($invoiceData["tax_id_country"]) ||
-                         strtoupper($invoiceData["tax_id_country"]) === "ES";
+            $countryCode = strtoupper($invoiceData["tax_id_country"] ?? "");
+            $isSpanish = empty($countryCode) || $countryCode === "ES";
+            $isVies = !$isSpanish && $this->isViesCountry($countryCode);
 
             // Customer name (required for F1)
             $customerName = !empty($invoiceData["nombre_empresa_factura"])
@@ -336,15 +346,41 @@ class VerifactiService
 
             if ($isSpanish) {
                 // Spanish customer - use NIF
-                $payload["nif"] = $invoiceData["nif_cliente_factura"] ?? "";
+                // Prefer tax_id_number, fallback to nif_cliente_factura for old invoices
+                $payload["nif"] = !empty($invoiceData["tax_id_number"])
+                    ? $invoiceData["tax_id_number"]
+                    : ($invoiceData["nif_cliente_factura"] ?? "");
             } else {
                 // Foreign customer - use id_otro structure
                 // API expects: id_type, id, codigo_pais
+                $taxIdNumber = $invoiceData["tax_id_number"] ?? "";
+
+                // For VIES countries, prefix country code to tax ID for VIES validation
+                // e.g., "0404621642" becomes "BE0404621642" for Belgium
+                if ($isVies && !empty($countryCode) && !empty($taxIdNumber)) {
+                    // Only add prefix if not already present
+                    if (strpos(strtoupper($taxIdNumber), $countryCode) !== 0) {
+                        $taxIdNumber = $countryCode . $taxIdNumber;
+                    }
+                }
+
                 $payload["id_otro"] = [
                     "id_type" => $this->mapTaxIdType($invoiceData["tax_id_type"] ?? "04"),
-                    "id" => $invoiceData["tax_id_number"] ?? "",
-                    "codigo_pais" => strtoupper($invoiceData["tax_id_country"] ?? "")
+                    "id" => $taxIdNumber,
+                    "codigo_pais" => $countryCode
                 ];
+            }
+
+            // For VIES countries (intra-EU B2B), add operacion_exenta to lines
+            // E5 = Exempt under Article 25 LIVA (intra-EU supply of services)
+            if ($isVies) {
+                foreach ($payload["lineas"] as &$linea) {
+                    $linea["operacion_exenta"] = "E5";
+                    // Remove VAT fields as they're not applicable for exempt operations
+                    unset($linea["tipo_impositivo"]);
+                    unset($linea["cuota_repercutida"]);
+                }
+                unset($linea); // Break reference
             }
         }
 
@@ -413,6 +449,17 @@ class VerifactiService
     }
 
     /**
+     * Check if a country code is a VIES country (EU member state for VAT purposes)
+     *
+     * @param string $countryCode Two-letter country code
+     * @return bool True if VIES country
+     */
+    private function isViesCountry($countryCode)
+    {
+        return in_array(strtoupper($countryCode), self::$viesCountries);
+    }
+
+    /**
      * Map tax ID type to Verifacti codes
      *
      * @param string $type Tax ID type from form
@@ -428,6 +475,13 @@ class VerifactiService
         // 06 = Other supporting document
         // 07 = Not registered
 
+        // If already a valid numeric code, return it directly
+        $validCodes = ["02", "03", "04", "05", "06", "07"];
+        if (in_array($type, $validCodes)) {
+            return $type;
+        }
+
+        // Otherwise map text values to codes (for backwards compatibility)
         $typeMap = [
             "VAT" => "02",
             "NIF-IVA" => "02",

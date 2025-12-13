@@ -43,6 +43,13 @@
 		$taxIdNumber = isset($_POST["txtTaxIdNumber"]) ? generalUtils::escaparCadena($_POST["txtTaxIdNumber"]) : "";
 		$tipoFacturaVerifactu = isset($_POST["cmbTipoFacturaVerifactu"]) ? generalUtils::escaparCadena($_POST["cmbTipoFacturaVerifactu"]) : "";
 
+		// Consolidate tax ID: if txtTaxIdNumber is empty but txtNif has a value, use txtNif
+		// This ensures tax_id_number is always populated for edited invoices
+		$legacyNif = isset($_POST["txtNif"]) ? generalUtils::escaparCadena($_POST["txtNif"]) : "";
+		if (empty($taxIdNumber) && !empty($legacyNif)) {
+			$taxIdNumber = $legacyNif;
+		}
+
 		//Guardamos factura...
 		$resultadoFactura=$db->callProcedure("CALL ".OBJECT_DB_ACRONYM."_sp_factura_editar(".$idFactura.",".$fechaFactura.",".$fechaPagoFactura.",'".generalUtils::escaparCadena($_POST["txtNumeroFactura"])."','".generalUtils::escaparCadena($_POST["txtNif"])."','".generalUtils::escaparCadena($_POST["txtNombreCliente"])."',".$visibleNombreCliente.",'".generalUtils::escaparCadena($_POST["txtNombreEmpresa"])."',".$visibleNombreEmpresa.",'".generalUtils::escaparCadena($_POST["txtDireccion"])."','".generalUtils::escaparCadena($_POST["txtCodigoPostal"])."','".generalUtils::escaparCadena($_POST["txtCiudad"])."','".generalUtils::escaparCadena($_POST["txtProvincia"])."','".generalUtils::escaparCadena($_POST["txtPais"])."','".$_POST["checkProformaFactura"]."','".$taxIdCountry."','".$taxIdType."','".$taxIdNumber."','".$tipoFacturaVerifactu."')");
 		require "line_invoice.php";
@@ -86,7 +93,11 @@
 	$subPlantilla->assign("FACTURA_FECHA",$datoFactura["fecha_factura"]);
 	$subPlantilla->assign("FACTURA_FECHA_PAGO",$datoFactura["fecha_pago_factura"]);
 	$subPlantilla->assign("FACTURA_NUMERO_FACTURA",$datoFactura["numero_factura"]);
-	$subPlantilla->assign("FACTURA_NIF_CLIENTE",$datoFactura["nif_cliente_factura"]);
+	// Display tax ID with fallback: prefer tax_id_number, fallback to nif_cliente_factura for old invoices
+	$displayNif = !empty($datoFactura["tax_id_number"])
+		? $datoFactura["tax_id_number"]
+		: ($datoFactura["nif_cliente_factura"] ?? "");
+	$subPlantilla->assign("FACTURA_NIF_CLIENTE", $displayNif);
 	$subPlantilla->assign("FACTURA_NOMBRE_EMPRESA",$datoFactura["nombre_empresa_factura"]);
 	$subPlantilla->assign("FACTURA_NOMBRE_CLIENTE",$datoFactura["nombre_cliente_factura"]);
 	$subPlantilla->assign("FACTURA_DIRECCION",$datoFactura["direccion_factura"]);
@@ -102,7 +113,7 @@
 
 	//Combo tax ID country - uses ISO2 code as value
 	$selectedCountry = isset($datoFactura["tax_id_country"]) ? $datoFactura["tax_id_country"] : "";
-	$subPlantilla->assign("COMBO_TAX_ID_COUNTRY", generalUtils::construirCombo($db, "CALL ed_sp_web_pais_iso_obtener_combo()", "cmbTaxIdCountry", "cmbTaxIdCountry", $selectedCountry, "nombre_original", "iso2", "-- Country --", -1, 'style="width:150px;"'));
+	$subPlantilla->assign("COMBO_TAX_ID_COUNTRY", generalUtils::construirCombo($db, "CALL ed_sp_web_pais_obtener_combo()", "cmbTaxIdCountry", "cmbTaxIdCountry", $selectedCountry, "nombre_original", "iso2", "-- Country --", -1, 'style="width:150px;"'));
 
 	//Combo tax ID type
 	$selectedType = isset($datoFactura["tax_id_type"]) ? $datoFactura["tax_id_type"] : "";

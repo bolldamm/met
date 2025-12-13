@@ -54,6 +54,7 @@ if (!in_array($metodoPago, $vectorMetodoPago)) {
     $esValido = false;
 }
 
+/*
 //Check whether captcha text matches captcha image
 include("../classes/securimage/securimage.php");
 $img = new Securimage();
@@ -62,6 +63,7 @@ $valid = $img->check($_POST["txtCaptcha"], false);
 
 //If captcha is valid (i.e., text matches image and check returns "true"
 if ($valid) {
+*/
     //Assign selected workshop IDs to $vectorTalleres array (stripping out commas between IDs)
     $vectorTalleres = array_filter(explode(",", $_POST["hdnIdTaller"]));
     $totalVectorTalleres = count($vectorTalleres);
@@ -135,11 +137,13 @@ if ($valid) {
         $mensajeError = STATIC_FORM_WORKSHOP_REGISTER_NO_SELECTED;
         $esValido = false;
     }
+/*
 } else {
     //If captcha is not valid, assign specific error message
     $esValido = false;
     $mensajeError = STATIC_CAPTCHA_ENTER_LETTERS_NUMBERS_IMAGE;
 }
+*/
 
 //If form data is valid, process the signup
 if ($esValido) {

@@ -410,10 +410,14 @@ $subPlantillaMail->assign("MAIL_INSCRIPCION_CONFERENCE_BILLING_BILLING_COUNTRY_V
 $subPlantillaMail->parse("contenido_principal.bloque_invoice");
 
 //Insert invoice into database (with tax ID fields for Verifactu - conferences are always F1)
-// Get tax ID from session if available, otherwise empty
+// Get tax ID from session if available, fallback to nifFactura for consolidation
 $taxIdCountry = isset($_SESSION["taxIdCountry"]) ? $_SESSION["taxIdCountry"] : "";
 $taxIdType = isset($_SESSION["taxIdType"]) ? $_SESSION["taxIdType"] : "";
 $taxIdNumber = isset($_SESSION["taxIdNumber"]) ? $_SESSION["taxIdNumber"] : "";
+// Ensure taxIdNumber is populated (fallback to nifFactura if session is empty)
+if (empty($taxIdNumber) && !empty($nifFactura)) {
+    $taxIdNumber = $nifFactura;
+}
 $tipoFacturaVerifactu = "F1"; // Conferences are always standard invoices
 
 $resultadoFactura = $db->callProcedure("CALL ed_sp_web_factura_insertar('" . $nifFactura . "','" . $nombreClienteFactura . "','" . $nombreEmpresaFactura . "','" . $direccionFactura . "','" . $codigoPostalFactura . "','" . $ciudadFactura . "','" . $provinciaFactura . "','" . $paisFactura . "','" . $emailClienteFactura . "','" . $firstName . "','" . $taxIdCountry . "','" . $taxIdType . "','" . $taxIdNumber . "','" . $tipoFacturaVerifactu . "')");

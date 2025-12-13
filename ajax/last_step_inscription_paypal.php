@@ -75,7 +75,13 @@
 				$ciudadFactura=generalUtils::escaparCadena($datosInscripcion["ciudad_factura"]);
 				$provinciaFactura=generalUtils::escaparCadena($datosInscripcion["provincia_factura"]);
 				$paisFactura=generalUtils::escaparCadena($datosInscripcion["pais_factura"]);
-				
+
+				// Tax ID fields for Verifactu
+				// Note: PayPal IPN doesn't have session, so we get tax ID from inscription data
+				// The tax_id_number is stored in nif_cliente_factura in the inscription
+				$taxIdCountry = isset($datosInscripcion["tax_id_country"]) ? $datosInscripcion["tax_id_country"] : "";
+				$taxIdType = isset($datosInscripcion["tax_id_type"]) ? $datosInscripcion["tax_id_type"] : "";
+				$taxIdNumber = !empty($nifFactura) ? $nifFactura : "";
 
 				if($datosInscripcion["id_modalidad_usuario_web"]==MODALIDAD_USUARIO_INDIVIDUAL){
 					$nombreUsuario=$datosInscripcion["nombre"];

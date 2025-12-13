@@ -83,8 +83,12 @@
 		$resultadoUsuarioConcreto=$db->callProcedure("CALL ed_sp_web_usuario_web_datos_factura_obtener(".$_SESSION["met_user"]["id"].")");
 		$datoUsuarioConcreto=$db->getData($resultadoUsuarioConcreto);
 		
-		if($datoUsuarioConcreto["nif_cliente_factura"]!=""){
-			$plantillaFormulario->assign("FORM_PROFILE_BILLING_CUSTOMER_NIF",$datoUsuarioConcreto["nif_cliente_factura"]);
+		// Pre-populate tax ID with fallback: prefer tax_id_number, fallback to nif_cliente_factura
+		$preFillTaxId = !empty($datoUsuarioConcreto["tax_id_number"])
+			? $datoUsuarioConcreto["tax_id_number"]
+			: ($datoUsuarioConcreto["nif_cliente_factura"] ?? "");
+		if($preFillTaxId!=""){
+			$plantillaFormulario->assign("FORM_PROFILE_BILLING_CUSTOMER_NIF",$preFillTaxId);
 		}
 		
 		if($datoUsuarioConcreto["nombre_cliente_factura"]!=""){

@@ -58,14 +58,8 @@ if (in_array($_POST["cmbSituacionAdicional"], $vectorSituacionAdicional)) {
 $invoiceType = isset($_POST["invoiceType"]) ? $_POST["invoiceType"] : "business";
 
 //Get billing details from form
-// Handle tax ID: either Spanish NIF or foreign tax ID
-if (isset($_POST["hasSpanishNif"]) && $_POST["hasSpanishNif"] == 1 && !empty($_POST["spanishNifNumber"])) {
-    // Spanish NIF/NIE selected
-    $nifFactura = generalUtils::escaparCadena($_POST["spanishNifNumber"]);
-} else {
-    // Foreign tax ID selected
-    $nifFactura = generalUtils::escaparCadena($_POST["tax_id_number"]);
-}
+// Tax ID number is now always from the tax_id_number field
+$nifFactura = isset($_POST["tax_id_number"]) ? generalUtils::escaparCadena($_POST["tax_id_number"]) : "";
 
 // Validate required billing fields (only for business invoices)
 if ($invoiceType !== "individual") {
@@ -102,20 +96,29 @@ $_POST["txtFacturacionDireccion"] = generalUtils::escaparCadena(generalUtils::sk
 $_POST["txtFacturacionCodigoPostal"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_ZIPCODE, $_POST["txtFacturacionCodigoPostal"]));
 $_POST["txtFacturacionCiudad"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_CITY, $_POST["txtFacturacionCiudad"]));
 $_POST["txtFacturacionProvincia"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_PROVINCE, $_POST["txtFacturacionProvincia"]));
-$_POST["txtFacturacionPais"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_COUNTRY, $_POST["txtFacturacionPais"]));
+
+// billing_country now contains ISO-2 code - look up country name for storage
+$billingCountryIso = isset($_POST["billing_country"]) ? generalUtils::escaparCadena($_POST["billing_country"]) : "";
+$paisFactura = "";
+if (!empty($billingCountryIso) && $billingCountryIso !== "-1") {
+    $resultPais = $db->callProcedure("CALL ed_sp_web_pais_get_name_from_iso('" . $billingCountryIso . "')");
+    if ($rowPais = $db->getData($resultPais)) {
+        $paisFactura = $rowPais["nombre_original"];
+    }
+}
 
 //Store billing details in variables to be stored in DB later
-// $nifFactura already set above based on Spanish NIF or foreign tax ID
 $nombreClienteFactura = $_POST["txtFacturacionNombreCliente"];
 $nombreEmpresaFactura = $_POST["txtFacturacionNombreEmpresa"];
 $direccionFactura = $_POST["txtFacturacionDireccion"];
 $codigoPostalFactura = $_POST["txtFacturacionCodigoPostal"];
 $ciudadFactura = $_POST["txtFacturacionCiudad"];
 $provinciaFactura = $_POST["txtFacturacionProvincia"];
-$paisFactura = $_POST["txtFacturacionPais"];
+// $paisFactura already set above from ISO-2 lookup
 
-//Tax ID fields for Verifactu (non-Spanish customers)
-$taxIdCountry = isset($_POST["tax_id_country"]) ? generalUtils::escaparCadena($_POST["tax_id_country"]) : "";
+//Tax ID fields for Verifactu
+// billing_country ISO-2 code is used as tax_id_country for Verifactu
+$taxIdCountry = $billingCountryIso;
 $taxIdType = isset($_POST["tax_id_type"]) ? generalUtils::escaparCadena($_POST["tax_id_type"]) : "";
 $taxIdNumber = isset($_POST["tax_id_number"]) ? generalUtils::escaparCadena($_POST["tax_id_number"]) : "";
 
@@ -173,8 +176,10 @@ if ($esValido) {
     $fechaDesglosada = explode("-", $fechaHoraDesglosada[0]);
     $idUsuarioWeb = $_SESSION["met_user"]["id"];
 
-    //Update billing details
-    $db->callProcedure("CALL ed_sp_web_usuario_web_actualizar(" . $idUsuarioWeb . ",'" . $nifFactura . "','" . $_POST["txtFacturacionNombreCliente"] . "','" . $_POST["txtFacturacionNombreEmpresa"] . "','" . $_POST["txtFacturacionDireccion"] . "','" . $_POST["txtFacturacionCodigoPostal"] . "','" . $_POST["txtFacturacionCiudad"] . "','" . $_POST["txtFacturacionProvincia"] . "','" . $_POST["txtFacturacionPais"] . "')");
+    //Update billing details (only for business invoices - don't wipe out profile data for individual invoices)
+    if ($invoiceType !== "individual") {
+        $db->callProcedure("CALL ed_sp_web_usuario_web_actualizar(" . $idUsuarioWeb . ",'" . $nifFactura . "','" . $nombreClienteFactura . "','" . $nombreEmpresaFactura . "','" . $direccionFactura . "','" . $codigoPostalFactura . "','" . $ciudadFactura . "','" . $provinciaFactura . "','" . $paisFactura . "')");
+    }
 
     //Get expiry date of last registration
     $resultadoInscripcionPrevia = $db->callProcedure("CALL ed_sp_web_inscripcion_previa(" . $idUsuarioWeb . ")");

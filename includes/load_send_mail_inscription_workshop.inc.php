@@ -150,10 +150,14 @@ if (isset($stripeFee)) {
 }
 
 //Insert invoice (with tax ID fields for Verifactu - workshops are always F1)
-// Get tax ID from session if available, otherwise empty (workshop forms may not collect this)
+// Get tax ID from session if available, fallback to nifFactura for consolidation
 $taxIdCountry = isset($_SESSION["taxIdCountry"]) ? $_SESSION["taxIdCountry"] : "";
 $taxIdType = isset($_SESSION["taxIdType"]) ? $_SESSION["taxIdType"] : "";
 $taxIdNumber = isset($_SESSION["taxIdNumber"]) ? $_SESSION["taxIdNumber"] : "";
+// Ensure taxIdNumber is populated (fallback to nifFactura if session is empty)
+if (empty($taxIdNumber) && !empty($nifFactura)) {
+    $taxIdNumber = $nifFactura;
+}
 $tipoFacturaVerifactu = "F1"; // Workshops are always standard invoices
 
 $resultadoFactura = $db->callProcedure("CALL ed_sp_web_factura_insertar('" . $nifFactura . "','" . $nombreClienteFactura . "','" . $nombreEmpresaFactura . "','" . $direccionFactura . "','" . $codigoPostalFactura . "','" . $ciudadFactura . "','" . $provinciaFactura . "','" . $paisFactura . "','" . $emailClienteFactura . "','" . $firstName . "','" . $taxIdCountry . "','" . $taxIdType . "','" . $taxIdNumber . "','" . $tipoFacturaVerifactu . "')");

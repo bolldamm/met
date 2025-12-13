@@ -127,7 +127,7 @@
     <!-- END: script_calendar -->
 
     <!-- BEGIN: script_datetimepicker -->
-    <link rel="stylesheet" type="text/css" href="css/datetimepicker/jquery.datetimepicker.min.css"/ >
+    <link rel="stylesheet" href="css/datetimepicker/jquery.datetimepicker.min.css">
     <script src="scripts/js/jquery.datetimepicker.full.min.js"></script>
     <!-- END: script_datetimepicker -->
 
@@ -432,14 +432,6 @@
             });
         }
 
-        function removeNifAlert() {
-            $("#txtFacturacionNifCliente").on("keyup", function () {
-                if ($(this).val() !== "") {
-                    $(this).removeClass("errorBorderColor error");
-                    $("#nifMessage").html("");
-                }
-            });
-        }
 
         function removeBillingNameAlert() {
             $("#txtFacturacionNombreCliente").on("keyup", function () {
@@ -477,32 +469,6 @@
             });
         }
 
-        function removeBillingCountryAlert() {
-            $("#txtFacturacionPais").on("keyup", function () {
-                if ($(this).val() !== "") {
-                    $(this).removeClass("errorBorderColor error");
-                    $("#billingCountryMessage").html("");
-                }
-            });
-        }
-
-        function removeSpanishNifAlert() {
-            $("#spanishNifNumber").on("keyup", function () {
-                if ($(this).val() !== "") {
-                    $(this).removeClass("errorBorderColor error");
-                    $("#spanishNifMessage").html("");
-                }
-            });
-        }
-
-        function removeTaxIdCountryAlert() {
-            $("#tax_id_country").on("change", function () {
-                if ($(this).val() !== "-1") {
-                    $(this).removeClass("errorBorderColor error");
-                    $("#billingTaxIdCountryMessage").html("");
-                }
-            });
-        }
 
         function removeTaxIdTypeAlert() {
             $("#tax_id_type").on("change", function () {
@@ -611,18 +577,12 @@
                 // Only validate billing fields if invoice type is "business"
                 let invoiceType = $('input[name="invoiceType"]:checked').val();
 
-                // Declare tax ID variables outside the if block so they're accessible later
-                let hasSpanishNif = $("#hasSpanishNif");
-                let spanishNifNumber = $("#spanishNifNumber");
-                let taxIdCountry = $("#tax_id_country");
+                // Tax ID field variables
+                let billingCountrySelect = $("#billing_country");
                 let taxIdType = $("#tax_id_type");
                 let taxIdNumber = $("#tax_id_number");
 
                 if (invoiceType !== 'individual') {
-                    if (billingNif.val() === "") {
-                        billingNif.addClass("errorBorderColor error");
-                        $("#nifMessage").html("Please enter your tax ID or VAT number");
-                    }
                     if (billingName.val() === "") {
                         billingName.addClass("errorBorderColor error");
                         $("#billingNameMessage").html("Please enter your name for billing purposes");
@@ -639,32 +599,21 @@
                         billingCity.addClass("errorBorderColor error");
                         $("#cityMessage").html("Please enter your town or city");
                     }
-                    if (billingCountry.val() === "") {
-                        billingCountry.addClass("errorBorderColor error");
-                        $("#billingCountryMessage").html("Please enter your country");
-                    }
 
-                    // Conditional validation for Tax ID fields
-                    if (hasSpanishNif.is(':checked')) {
-                        // Validate Spanish NIF/NIE field
-                        if (spanishNifNumber.val() === "") {
-                            spanishNifNumber.addClass("errorBorderColor error");
-                            $("#spanishNifMessage").html("Please enter your Spanish NIF/NIE number");
-                        }
-                    } else {
-                        // Validate Foreign Tax ID fields
-                        if (taxIdCountry.val() === "-1" || taxIdCountry.val() === null) {
-                            taxIdCountry.addClass("errorBorderColor error");
-                            $("#billingTaxIdCountryMessage").html("Please select your tax ID country");
-                        }
-                        if (taxIdType.val() === "-1" || taxIdType.val() === null) {
-                            taxIdType.addClass("errorBorderColor error");
-                            $("#billingTaxIdTypeMessage").html("Please select your tax ID type");
-                        }
-                        if (taxIdNumber.val() === "") {
-                            taxIdNumber.addClass("errorBorderColor error");
-                            $("#billingTaxIdNumberMessage").html("Please enter your tax ID number");
-                        }
+                    // Validate billing country dropdown
+                    if (billingCountrySelect.val() === "-1" || billingCountrySelect.val() === null || billingCountrySelect.val() === "") {
+                        billingCountrySelect.addClass("errorBorderColor error");
+                        $("#billingCountryMessage").html("Please select your billing country");
+                    }
+                    // Validate tax ID type
+                    if (taxIdType.val() === "-1" || taxIdType.val() === null || taxIdType.val() === "") {
+                        taxIdType.addClass("errorBorderColor error");
+                        $("#billingTaxIdTypeMessage").html("Please select your tax ID type");
+                    }
+                    // Validate tax ID number
+                    if (taxIdNumber.val() === "") {
+                        taxIdNumber.addClass("errorBorderColor error");
+                        $("#billingTaxIdNumberMessage").html("Please enter your tax ID number");
                     }
                 }
 
@@ -700,15 +649,6 @@
                     cadenaSituacionesLaborales = cadenaSituacionesLaborales.substring(0, cadenaSituacionesLaborales.length - 1);
                     document.frmMembership.hdnIdSituacionLaboral.value = cadenaSituacionesLaborales;
 
-                    // If Spanish NIF/NIE is selected, copy it to tax_id_number field for backend processing
-                    if (hasSpanishNif.is(':checked')) {
-                        taxIdNumber.val(spanishNifNumber.val());
-                        // Set tax_id_country to Spain (id_pais = 209)
-                        taxIdCountry.val('209');
-                        // Set tax_id_type to a default Spanish type (you may need to adjust this)
-                        // For now, we'll leave it as is since the backend will handle Spanish NIFs specially
-                    }
-
                     //Run function to block user interface via blockUI.js and display Sending… message
                     mensajeCargando("{STATIC_GLOBAL_SENDING}...");
 
@@ -730,122 +670,90 @@
             removeLastNameameAlert();
             removeCountryAlert();
             removeProfActsAlert();
-            removeNifAlert();
             removeBillingNameAlert();
             removeBillingAddressAlert();
             removeBillingPostcodeAlert();
             removeBillingCityAlert();
             removeBillingCountryAlert();
-            removeSpanishNifAlert();
-            removeTaxIdCountryAlert();
             removeTaxIdTypeAlert();
             removeTaxIdNumberAlert();
             removePaymentAlert();
             removePrivacyAlert();
             validateMembershipForm();
             supports_input_placeholder();
-            syncValueFromBilling()
         });
 
-      // Global variables and functions for billing/tax country sync
-var taxTouched = false;
-      
-// Sync Tax-ID value from Billing unless user already changed it
-// Note: Disabled - billing_country uses id_pais values while tax_id_country uses iso2 codes
-function syncValueFromBilling() {
-    // Disabled - different value systems between dropdowns
-    return;
-}
-
+// EU detection and tax_id_type filtering for membership form
 $(function () {
-    var $billing = $('#billing_country');
-    var $tax     = $('#tax_id_country');
+    var $billingCountry = $('#billing_country');
+    var $taxType = $('#tax_id_type');
 
-    if (!$billing || !$billing.length || !$tax || !$tax.length) {
-        console.warn('Missing billing country or tax ID country');
+    if (!$billingCountry.length || !$taxType.length) {
         return;
     }
-  
-    // Track if the user has manually changed the Tax-ID country
-    $tax.on('change', function () { taxTouched = true; });
 
-    // Initialize - sync value from billing (both dropdowns have their own options from backend)
-    syncValueFromBilling();
+    // Store all tax_id_type options for filtering
+    var allTaxTypeOptions = $taxType.find('option').clone();
 
-    // Keep default aligned on Billing changes (without overriding manual edits)
-    $billing.on('change', function () {
-        syncValueFromBilling();
-    });
-});
+    // Handle country change - adjust tax_id_type options based on EU status
+    // Tax ID type codes: 02 = EU VAT, 06 = Other
+    function handleCountryChange() {
+        var $selected = $billingCountry.find(':selected');
+        var countryVal = $billingCountry.val();
+        var isEU = $selected.data('is-eu') == 1;
+        var noCountrySelected = (countryVal === '-1' || countryVal === null || countryVal === '');
 
-// Spanish NIF/NIE checkbox toggle functionality
-$(function () {
-    var $checkbox = $('#hasSpanishNif');
-    var $spanishField = $('#spanishNifField');
-    var $foreignFields = $('#foreignTaxIdFields');
-    var $spanishInput = $('#spanishNifNumber');
-    var $taxCountry = $('#tax_id_country');
-    var $taxType = $('#tax_id_type');
-    var $taxNumber = $('#tax_id_number');
+        // Clear current options and rebuild
+        $taxType.empty();
 
-    function toggleTaxIdFields() {
-        if ($checkbox.is(':checked')) {
-            // Show Spanish NIF/NIE field, hide foreign tax ID fields
-            $spanishField.show();
-            $foreignFields.hide();
-
-            // Make Spanish field required, remove required from foreign fields
-            $spanishInput.addClass('required');
-            $taxCountry.removeClass('required');
-            $taxType.removeClass('required');
-            $taxNumber.removeClass('required');
-
-            // Clear foreign field values
-            $taxCountry.val('-1');
-            $taxType.val('-1');
-            $taxNumber.val('');
+        if (noCountrySelected) {
+            // No country selected: show only placeholder
+            allTaxTypeOptions.each(function() {
+                var $opt = $(this);
+                var optVal = $opt.val();
+                if (optVal === '-1' || optVal === '') {
+                    $taxType.append($opt.clone());
+                }
+            });
+        } else if (isEU) {
+            // EU countries: show "EU VAT number" (02) and "Other" (06), pre-select EU VAT
+            allTaxTypeOptions.each(function() {
+                var $opt = $(this);
+                var optVal = $opt.val();
+                if (optVal === '02' || optVal === '06') {
+                    $taxType.append($opt.clone());
+                }
+            });
+            $taxType.val('02');
         } else {
-            // Hide Spanish NIF/NIE field, show foreign tax ID fields
-            $spanishField.hide();
-            $foreignFields.show();
-
-            // Remove required from Spanish field, make foreign fields required
-            $spanishInput.removeClass('required');
-            $taxCountry.addClass('required');
-            $taxType.addClass('required');
-            $taxNumber.addClass('required');
-
-            // Clear Spanish field value
-            $spanishInput.val('');
+            // Non-EU country selected: show only "Other" (06), pre-selected
+            allTaxTypeOptions.each(function() {
+                var $opt = $(this);
+                var optVal = $opt.val();
+                if (optVal === '06') {
+                    $taxType.append($opt.clone());
+                }
+            });
+            $taxType.val('06');
         }
     }
 
     // Initialize on page load
-    toggleTaxIdFields();
+    handleCountryChange();
 
-    // Toggle on checkbox change
-    $checkbox.on('change', toggleTaxIdFields);
+    // Update on country change
+    $billingCountry.on('change', handleCountryChange);
 });
 
-$(function () {
-  var $billing = $('#billing_country');
-  var $tax = $('#tax_id_country');
-
-  function syncOnce() {
-    const v = $billing.val();
-    if (v && !$tax.val() && $tax.find('option[value="' + v + '"]').length) {
-      $tax.val(v).trigger('change');
-    }
-  }
-
-  // Sync now if possible
-  syncOnce();
-
-  // Otherwise, do it on the first change only
-  if (!$tax.val()) {
-    $billing.one('change', syncOnce);
-  }
-});
+// Clear billing country alert
+function removeBillingCountryAlert() {
+    $("#billing_country").on("change", function () {
+        if ($(this).val() !== "-1" && $(this).val() !== null && $(this).val() !== "") {
+            $(this).removeClass("errorBorderColor error");
+            $("#billingCountryMessage").html("");
+        }
+    });
+}
 
 // Invoice type toggle (individual vs business) functionality
 $(function () {
@@ -928,55 +836,15 @@ $(function () {
 
 $(function () {
   // 1) Globals and cached nodes
-  var taxTouched = false;
-
   var $form           = $('#frmMembership');
-  var $billing        = $('#billing_country');
-  var $tax            = $('#tax_id_country');
+  var $billingCountry = $('#billing_country');
   var $taxType        = $('#tax_id_type');
   var $taxNumber      = $('#tax_id_number');
-  var $hasSpanishNif  = $('#hasSpanishNif');
-  var $spanishField   = $('#spanishNifField');
-  var $foreignFields  = $('#foreignTaxIdFields');
-  var $spanishInput   = $('#spanishNifNumber');
+
+  // Store all tax_id_type options for filtering
+  var allTaxTypeOptions = $taxType.find('option').clone();
 
   // 2) Helpers
-  // Note: syncValueFromBilling disabled - billing_country uses id_pais values
-  // while tax_id_country uses iso2 codes, so they can't be synced directly
-  function syncValueFromBilling() {
-    // Disabled - different value systems between dropdowns
-    return;
-  }
-
-  function toggleTaxIdFields() {
-    if ($hasSpanishNif.is(':checked')) {
-      // Show Spanish NIF/NIE field, hide foreign tax ID fields
-      $spanishField.show();
-      $foreignFields.hide();
-
-      // Required flags (your CSS/validation logic uses these classes)
-      $spanishInput.addClass('required');
-      $tax.removeClass('required');
-      $taxType.removeClass('required');
-      $taxNumber.removeClass('required');
-
-      // Clear foreign values
-      $tax.val('-1');
-      $taxType.val('-1');
-      $taxNumber.val('');
-    } else {
-      $spanishField.hide();
-      $foreignFields.show();
-
-      $spanishInput.removeClass('required');
-      $tax.addClass('required');
-      $taxType.addClass('required');
-      $taxNumber.addClass('required');
-
-      $spanishInput.val('');
-    }
-  }
-
   function clearPaymentMethodWarning() {
     $('.paymentMethod').on('click', function () {
       if ($(this).prop('checked')) {
@@ -986,13 +854,48 @@ $(function () {
     });
   }
 
-  // 3) Initialize state
-  if (!$billing.length || !$tax.length) {
-    console.warn('Missing #billing_country or #tax_id_country');
-  } else {
-    syncValueFromBilling();
+  // Handle country change - adjust tax_id_type options based on EU status
+  // Tax ID type codes: 02 = EU VAT, 06 = Other
+  function handleCountryChange() {
+    var $selected = $billingCountry.find(':selected');
+    var countryVal = $billingCountry.val();
+    var isEU = $selected.data('is-eu') == 1;
+    var noCountrySelected = (countryVal === '-1' || countryVal === null || countryVal === '');
+
+    // Clear current options and rebuild
+    $taxType.empty();
+
+    if (noCountrySelected) {
+      // No country selected: show only placeholder
+      allTaxTypeOptions.each(function() {
+        var $opt = $(this);
+        var optVal = $opt.val();
+        if (optVal === '-1' || optVal === '') {
+          $taxType.append($opt.clone());
+        }
+      });
+    } else if (isEU) {
+      // EU countries: show "EU VAT number" (02) and "Other" (06), pre-select EU VAT
+      allTaxTypeOptions.each(function() {
+        var $opt = $(this);
+        var optVal = $opt.val();
+        if (optVal === '02' || optVal === '06') {
+          $taxType.append($opt.clone());
+        }
+      });
+      $taxType.val('02');
+    } else {
+      // Non-EU country selected: show only "Other" (06), pre-selected
+      allTaxTypeOptions.each(function() {
+        var $opt = $(this);
+        var optVal = $opt.val();
+        if (optVal === '06') {
+          $taxType.append($opt.clone());
+        }
+      });
+      $taxType.val('06');
+    }
   }
-  toggleTaxIdFields();
 
   // Invoice type toggle (individual vs business)
   var $invoiceTypeRadios = $('input[name="invoiceType"]');
@@ -1020,28 +923,17 @@ $(function () {
       // Restore required attribute to billing fields
       $billingContainer.find('.was-required-attr').attr('required', true).removeClass('was-required-attr');
       $billingContainer.find('.was-required').addClass('required').removeClass('was-required');
-      // Note: Don't show .invalid-feedback here - Bootstrap handles that based on validation state
     }
   }
 
-  // Initialize and bind
+  // 3) Initialize state
   toggleBillingDetails();
-  $invoiceTypeRadios.on('change', toggleBillingDetails);
+  handleCountryChange(); // Set initial tax_id_type options based on pre-selected country
 
   // 4) Event listeners
   clearPaymentMethodWarning();
-
-  $billing.on('change', function () {
-    syncValueFromBilling();
-  });
-
-  $tax.on('change', function () {
-    taxTouched = true;
-  });
-
-  $hasSpanishNif.on('change', function () {
-    toggleTaxIdFields();
-  });
+  $invoiceTypeRadios.on('change', toggleBillingDetails);
+  $billingCountry.on('change', handleCountryChange);
 
   // 5) Form submit handler
   $form.on('submit', function (event) {
@@ -1058,18 +950,15 @@ $(function () {
       $('#paypal').prop('checked', true);
     }
 
-    // Check at least one payment method (bug fix: use :checked)
+    // Check at least one payment method
     if ($('.paymentMethod:checked').length < 1) {
       $('#paymentMethodMessage').html('Please select a payment method');
       $('#containerPaymentMethod').addClass('errorBackgroundColor');
     }
 
     // Clear previous error styles/messages
-    $('#spanishNifMessage').html('');
-    $spanishInput.removeClass('errorBorderColor error');
-
-    $('#billingTaxIdCountryMessage').html('');
-    $tax.removeClass('errorBorderColor error');
+    $('#billingCountryMessage').html('');
+    $billingCountry.removeClass('errorBorderColor error');
 
     $('#billingTaxIdTypeMessage').html('');
     $taxType.removeClass('errorBorderColor error');
@@ -1077,37 +966,28 @@ $(function () {
     $('#billingTaxIdNumberMessage').html('');
     $taxNumber.removeClass('errorBorderColor error');
 
-    // Validate Tax ID (only if invoice type is not individual)
+    // Validate Tax ID fields (only if invoice type is not individual)
     var isValidTaxId = true;
     var selectedInvoiceType = $('input[name="invoiceType"]:checked').val();
 
     if (selectedInvoiceType !== 'individual') {
-      if ($hasSpanishNif.is(':checked')) {
-        if (!$spanishInput.val() || !$spanishInput.val().trim()) {
-          $spanishInput.addClass('errorBorderColor error');
-          $('#spanishNifMessage').html('Please enter your Spanish NIF/NIE number');
-          isValidTaxId = false;
-        } else {
-          // Copy to generic field for backend and set country = Spain (209)
-          $taxNumber.val($spanishInput.val());
-          $tax.val('209');
-        }
-      } else {
-        if ($tax.val() === '-1' || $tax.val() === null || $tax.val() === '') {
-          $tax.addClass('errorBorderColor error');
-          $('#billingTaxIdCountryMessage').html('Please select your tax ID country');
-          isValidTaxId = false;
-        }
-        if ($taxType.val() === '-1' || $taxType.val() === null || $taxType.val() === '') {
-          $taxType.addClass('errorBorderColor error');
-          $('#billingTaxIdTypeMessage').html('Please select your tax ID type');
-          isValidTaxId = false;
-        }
-        if (!$taxNumber.val() || !$taxNumber.val().trim()) {
-          $taxNumber.addClass('errorBorderColor error');
-          $('#billingTaxIdNumberMessage').html('Please enter your tax ID number');
-          isValidTaxId = false;
-        }
+      // Validate billing country
+      if ($billingCountry.val() === '-1' || $billingCountry.val() === null || $billingCountry.val() === '') {
+        $billingCountry.addClass('errorBorderColor error');
+        $('#billingCountryMessage').html('Please select your billing country');
+        isValidTaxId = false;
+      }
+      // Validate tax ID type
+      if ($taxType.val() === '-1' || $taxType.val() === null || $taxType.val() === '') {
+        $taxType.addClass('errorBorderColor error');
+        $('#billingTaxIdTypeMessage').html('Please select your tax ID type');
+        isValidTaxId = false;
+      }
+      // Validate tax ID number
+      if (!$taxNumber.val() || !$taxNumber.val().trim()) {
+        $taxNumber.addClass('errorBorderColor error');
+        $('#billingTaxIdNumberMessage').html('Please enter your tax ID number');
+        isValidTaxId = false;
       }
     }
 
@@ -1158,8 +1038,6 @@ $(function () {
     });
   }
 });
-</script>
-
         <!-- END: validate_renew_membership_form -->
         <!-- BEGIN: validate_workshop_registration_form -->
 
@@ -1214,12 +1092,14 @@ $(function () {
             });
         }
 
+        /*
         function refreshCaptchaWorkshop() {
             document.getElementById("reloadCaptcha").addEventListener("click", function () {
                 document.getElementById("imageCaptcha").src = "classes/securimage/securimage_show?sid=" + Math.random();
                 document.getElementById("imageCaptcha").value = "";
             });
         }
+        */
 
         function clearEmailAlert() {
             $("#txtEmail").on("keyup", function () {
@@ -1340,6 +1220,7 @@ $(function () {
             });
         }
       
+        /*
         function clearCaptchaAlert() {
             $("#txtCaptcha").on("keyup", function () {
                 if ($(this).val() !== "") {
@@ -1348,6 +1229,7 @@ $(function () {
                 }
             });
         }
+        */
 
         function validateWorkshopForm() {
             $("#frmWorkshopRegister").on("submit", function (event) {
@@ -1371,7 +1253,7 @@ $(function () {
                 let paymentMethod = $(".paymentMethod:checked");
                 let privacy = $("#chkPrivacy");
               	let privacy2 = $("#chkEmailPermission");
-                let captchaText = $("#txtCaptcha");
+                //let captchaText = $("#txtCaptcha");
               	let payCode = $("#paymentCode");
               
               	if (payCode.val().toLowerCase().trim() === "{STATIC_DISCOUNT_WORKSHOP}") {                  
@@ -1443,10 +1325,12 @@ $(function () {
                     $("#privacyMessage2").html("To submit the form, you must allow use of your name and image");
                     $("#containerPrivacyCheck2").addClass("errorBackgroundColor error");
                 }
+                /*
                 if (captchaText.val() === "") {
                     captchaText.addClass("errorBorderColor error");
                     $("#captchaMessage").html("Please enter the characters from the image");
                 }
+                */
 
                 //If no. of inputs with class "error" > 0, scroll to first invalid input, with animation
                 let invalidInput = $(".error");
@@ -1489,7 +1373,7 @@ $(function () {
         $(document).ready(function () {
             calculatePriceWorkshops();
             updatePriceSisterAssoc();
-            refreshCaptchaWorkshop();
+            //refreshCaptchaWorkshop();
             clearEmailAlert();
             clearFirstNameAlert();
             clearLastNameAlert();
@@ -1502,7 +1386,7 @@ $(function () {
             clearBillingCountryAlert();
             clearPaymentAlert();
             clearPrivacyAlert();
-            clearCaptchaAlert();
+            //clearCaptchaAlert();
           	clearPrivacyAlert2();
             validateWorkshopForm();
             supports_input_placeholder();
@@ -2513,6 +2397,7 @@ function unsetTelNoAlert() {
     <!-- Cookie consent -->
     <link rel="stylesheet" type="text/css"
           href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
     <script>
         window.addEventListener("load", function () {

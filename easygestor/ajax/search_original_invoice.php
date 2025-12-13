@@ -51,6 +51,7 @@ try {
         OR f.nombre_cliente_factura LIKE '%" . $searchText . "%'
         OR f.nombre_empresa_factura LIKE '%" . $searchText . "%'
         OR f.nif_cliente_factura LIKE '%" . $searchText . "%'
+        OR f.tax_id_number LIKE '%" . $searchText . "%'
       )
     ORDER BY f.id_factura DESC
     LIMIT 20";
@@ -63,12 +64,17 @@ try {
             ? $row["nombre_empresa_factura"]
             : $row["nombre_cliente_factura"];
 
+        // Use tax_id_number with fallback to nif_cliente_factura
+        $displayNif = !empty($row["tax_id_number"])
+            ? $row["tax_id_number"]
+            : ($row["nif_cliente_factura"] ?? "");
+
         $invoices[] = [
             "id" => $row["id_factura"],
             "numero" => $row["numero_factura"],
             "fecha" => $row["fecha_factura"] ?? "",
             "customer" => $customerName ?? "",
-            "nif" => $row["nif_cliente_factura"] ?? "",
+            "nif" => $displayNif,
             "total" => number_format(floatval($row["total"] ?? 0), 2, ".", ","),
             // Include all customer details for auto-population
             "nombre_cliente" => $row["nombre_cliente_factura"] ?? "",

@@ -38,6 +38,13 @@
 		$taxIdNumber = isset($_POST["txtTaxIdNumber"]) ? generalUtils::escaparCadena($_POST["txtTaxIdNumber"]) : "";
 		$tipoFacturaVerifactu = isset($_POST["cmbTipoFacturaVerifactu"]) ? generalUtils::escaparCadena($_POST["cmbTipoFacturaVerifactu"]) : "";
 
+		// Consolidate tax ID: if txtTaxIdNumber is empty but txtNif has a value, use txtNif
+		// This ensures tax_id_number is always populated for new invoices
+		$legacyNif = isset($_POST["txtNif"]) ? generalUtils::escaparCadena($_POST["txtNif"]) : "";
+		if (empty($taxIdNumber) && !empty($legacyNif)) {
+			$taxIdNumber = $legacyNif;
+		}
+
 		//Get Rectificativa fields from form
 		$tipoRectificativa = isset($_POST["cmbTipoRectificativa"]) ? generalUtils::escaparCadena($_POST["cmbTipoRectificativa"]) : "";
 		$idFacturaRectificada = isset($_POST["hdnIdFacturaRectificada"]) && !empty($_POST["hdnIdFacturaRectificada"]) ? intval($_POST["hdnIdFacturaRectificada"]) : null;
@@ -164,7 +171,7 @@
 	$subPlantilla->assign("FACTURA_TAX_ID_NUMBER", "");
 
 	//Combo tax ID country - uses ISO2 code as value
-	$subPlantilla->assign("COMBO_TAX_ID_COUNTRY", generalUtils::construirCombo($db, "CALL ed_sp_web_pais_iso_obtener_combo()", "cmbTaxIdCountry", "cmbTaxIdCountry", "", "nombre_original", "iso2", "-- Country --", -1, 'style="width:150px;"'));
+	$subPlantilla->assign("COMBO_TAX_ID_COUNTRY", generalUtils::construirCombo($db, "CALL ed_sp_web_pais_obtener_combo()", "cmbTaxIdCountry", "cmbTaxIdCountry", "", "nombre_original", "iso2", "-- Country --", -1, 'style="width:150px;"'));
 
 	//Combo tax ID type
 	$subPlantilla->assign("COMBO_TAX_ID_TYPE", generalUtils::construirCombo($db, "CALL ed_sp_web_tax_id_type_obtener_combo()", "cmbTaxIdType", "cmbTaxIdType", "", "description", "tax_id_type", "-- ID Type --", -1, 'style="width:150px;"'));

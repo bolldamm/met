@@ -66,7 +66,16 @@ if (count($_POST) > 0) {
         $_POST["txtFacturacionCodigoPostal"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_ZIPCODE, $_POST["txtFacturacionCodigoPostal"]));
         $_POST["txtFacturacionCiudad"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_CITY, $_POST["txtFacturacionCiudad"]));
         $_POST["txtFacturacionProvincia"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_PROVINCE, $_POST["txtFacturacionProvincia"]));
-        $_POST["txtFacturacionPais"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_COUNTRY, $_POST["txtFacturacionPais"]));
+
+        // billing_country now contains ISO-2 code - look up country name for storage
+        $billingCountryIso = isset($_POST["billing_country"]) ? generalUtils::escaparCadena($_POST["billing_country"]) : "";
+        $_POST["txtFacturacionPais"] = "";
+        if (!empty($billingCountryIso) && $billingCountryIso !== "-1") {
+            $resultPais = $db->callProcedure("CALL ed_sp_web_pais_get_name_from_iso('" . $billingCountryIso . "')");
+            if ($rowPais = $db->getData($resultPais)) {
+                $_POST["txtFacturacionPais"] = $rowPais["nombre_original"];
+            }
+        }
 
         //Insert new values into member's profile
         $resultadoUsuario = $db->callProcedure("CALL ed_sp_web_usuario_web_editar(" . $_SESSION["met_user"]["id"] . "," . $publico . ",'" . $_POST["txtOtherCPD"] . "','" . $_POST["txtOtrasDescripciones"] . "','" . $_POST["txtOtrasPublicaciones"] . "','" . $_POST["txtWeb"] . "','" . $_POST["txtFacturacionNifCliente"] . "','" . $_POST["txtFacturacionNombreCliente"] . "','" . $_POST["txtFacturacionNombreEmpresa"] . "','" . $_POST["txtFacturacionDireccion"] . "','" . $_POST["txtFacturacionCodigoPostal"] . "','" . $_POST["txtFacturacionCiudad"] . "','" . $_POST["txtFacturacionProvincia"] . "','" . $_POST["txtFacturacionPais"] . "')");
@@ -129,34 +138,33 @@ if (count($_POST) > 0) {
         $esHombre = "null";
 
 
-        if ($_POST["cmbAnyos"] == -1) {
+        if (isset($_POST["cmbAnyos"]) && $_POST["cmbAnyos"] == -1) {
+            $_POST["cmbAnyos"] = "null";
+        } elseif (!isset($_POST["cmbAnyos"])) {
             $_POST["cmbAnyos"] = "null";
         }
 
 
-        $_POST["txtNombre"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_FIRST_NAME, $_POST["txtNombre"]));
-        $_POST["txtApellidos"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_LAST_NAMES, $_POST["txtApellidos"]));
-        $_POST["txtNacionalidad"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_NATIONALITY, $_POST["txtNacionalidad"]));
-        $_POST["txtDireccion1"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_STREET_1, $_POST["txtDireccion1"]));
-        $_POST["txtDireccion2"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_STREET_2, $_POST["txtDireccion2"]));
-        $_POST["txtCiudad"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_TOWN_CITY, $_POST["txtCiudad"]));
-        $_POST["txtProvincia"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_PROVINCE, $_POST["txtProvincia"]));
-        $_POST["txtCp"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_POSTCODE, $_POST["txtCp"]));
-        $_POST["txtEmail"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_EMAIL, $_POST["txtEmail"]));
-        $_POST["txtTelefonoCasa"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_HOME_PHONE, $_POST["txtTelefonoCasa"]));
-        $_POST["txtEmailAlternativo"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_ALTERNATIVE_EMAIL, $_POST["txtEmailAlternativo"]));
-        $_POST["txtTelefonoTrabajo"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_WORK_PHONE, $_POST["txtTelefonoTrabajo"]));
-        $_POST["txtFax"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_FAX, $_POST["txtFax"]));
-        $_POST["txtTelefonoMobil"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_MOBILE_PHONE, $_POST["txtTelefonoMobil"]));
-        //$_POST["txtSpecifyOther"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_IF_OTHER_SPECIFY, $_POST["txtSpecifyOther"]));
-        //$_POST["txtSpecifyStudy"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_IF_STUDENT_SUBJECT, $_POST["txtSpecifyStudy"]));
-        $_POST["txtProfesionQualificacion"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_DEGREES_QUALIFICATIONS, $_POST["txtProfesionQualificacion"]));
-        //$_POST["txtSobreMet"]=generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_HOW_DID_YOU_HEAR_ABOUT_MET,$_POST["txtSobreMet"]));
-        $_POST["txtOtherSpecification"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_IF_OTHER_SPECIFY, $_POST["txtOtherSpecification"]));
-        $_POST["txtStudySpecification"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_IF_STUDENT_SUBJECT, $_POST["txtStudySpecification"]));
+        $_POST["txtNombre"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_FIRST_NAME, isset($_POST["txtNombre"]) ? $_POST["txtNombre"] : ""));
+        $_POST["txtApellidos"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_LAST_NAMES, isset($_POST["txtApellidos"]) ? $_POST["txtApellidos"] : ""));
+        $_POST["txtNacionalidad"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_NATIONALITY, isset($_POST["txtNacionalidad"]) ? $_POST["txtNacionalidad"] : ""));
+        $_POST["txtDireccion1"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_STREET_1, isset($_POST["txtDireccion1"]) ? $_POST["txtDireccion1"] : ""));
+        $_POST["txtDireccion2"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_STREET_2, isset($_POST["txtDireccion2"]) ? $_POST["txtDireccion2"] : ""));
+        $_POST["txtCiudad"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_TOWN_CITY, isset($_POST["txtCiudad"]) ? $_POST["txtCiudad"] : ""));
+        $_POST["txtProvincia"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_PROVINCE, isset($_POST["txtProvincia"]) ? $_POST["txtProvincia"] : ""));
+        $_POST["txtCp"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_POSTCODE, isset($_POST["txtCp"]) ? $_POST["txtCp"] : ""));
+        $_POST["txtEmail"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_EMAIL, isset($_POST["txtEmail"]) ? $_POST["txtEmail"] : ""));
+        $_POST["txtTelefonoCasa"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_HOME_PHONE, isset($_POST["txtTelefonoCasa"]) ? $_POST["txtTelefonoCasa"] : ""));
+        $_POST["txtEmailAlternativo"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_ALTERNATIVE_EMAIL, isset($_POST["txtEmailAlternativo"]) ? $_POST["txtEmailAlternativo"] : ""));
+        $_POST["txtTelefonoTrabajo"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_WORK_PHONE, isset($_POST["txtTelefonoTrabajo"]) ? $_POST["txtTelefonoTrabajo"] : ""));
+        $_POST["txtFax"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_FAX, isset($_POST["txtFax"]) ? $_POST["txtFax"] : ""));
+        $_POST["txtTelefonoMobil"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_MOBILE_PHONE, isset($_POST["txtTelefonoMobil"]) ? $_POST["txtTelefonoMobil"] : ""));
+        $_POST["txtProfesionQualificacion"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_DEGREES_QUALIFICATIONS, isset($_POST["txtProfesionQualificacion"]) ? $_POST["txtProfesionQualificacion"] : ""));
+        $_POST["txtOtherSpecification"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_IF_OTHER_SPECIFY, isset($_POST["txtOtherSpecification"]) ? $_POST["txtOtherSpecification"] : ""));
+        $_POST["txtStudySpecification"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_MEMBERSHIP_IF_STUDENT_SUBJECT, isset($_POST["txtStudySpecification"]) ? $_POST["txtStudySpecification"] : ""));
 
         //Editamos datos usuario individual
-        $resultadoUsuarioWebIndividual = $db->callProcedure("CALL ed_sp_web_usuario_web_individual_editar(" . $_SESSION["met_user"]["id"] . "," . $_POST["cmbTitulo"] . "," . $_POST["cmbAnyos"] . "," . $_POST["cmbPais"] . ",'" . $_POST["txtNombre"] . "','" . $_POST["txtApellidos"] . "','" . $_POST["txtNacionalidad"] . "','" . $_POST["txtDireccion1"] . "','" . $_POST["txtDireccion2"] . "','" . $_POST["txtCiudad"] . "','" . $_POST["txtProvincia"] . "','" . $_POST["txtCp"] . "','" . $_POST["txtEmail"] . "','" . $_POST["txtEmailAlternativo"] . "','" . $_POST["txtTelefonoCasa"] . "','" . $_POST["txtTelefonoTrabajo"] . "','" . $_POST["txtFax"] . "','" . $_POST["txtTelefonoMobil"] . "','" . $esHombre . "','" . $_POST["txtProfesionQualificacion"] . "')");
+        $resultadoUsuarioWebIndividual = $db->callProcedure("CALL ed_sp_web_usuario_web_individual_editar(" . $_SESSION["met_user"]["id"] . "," . $_POST["cmbTitulo"] . "," . $_POST["cmbAnyos"] . "," . $_POST["cmbPais"] . ",'" . $_POST["txtNombre"] . "','" . $_POST["txtApellidos"] . "','" . $_POST["txtNacionalidad"] . "','" . $_POST["txtDireccion1"] . "','" . $_POST["txtDireccion2"] . "','" . $_POST["txtCiudad"] . "','" . $_POST["txtProvincia"] . "','" . $_POST["txtCp"] . "','" . $_POST["txtEmail"] . "','" . $_POST["txtEmailAlternativo"] . "','" . $_POST["txtTelefonoCasa"] . "','" . $_POST["txtTelefonoTrabajo"] . "','" . $_POST["txtFax"] . "','" . $_POST["txtTelefonoMobil"] . "'," . $esHombre . ",'" . $_POST["txtProfesionQualificacion"] . "')");
 
         //Delete existing professional activities
         $db->callProcedure("CALL ed_sp_web_usuario_web_actividad_profesional_eliminar(" . $_SESSION["met_user"]["id"] . ")");
@@ -530,11 +538,26 @@ $plantillaPerfilFacturacionUsuario->assign("PERFIL_DIRECCION", "");
 $plantillaPerfilFacturacionUsuario->assign("PERFIL_CODIGO_POSTAL", "");
 $plantillaPerfilFacturacionUsuario->assign("PERFIL_CIUDAD", "");
 $plantillaPerfilFacturacionUsuario->assign("PERFIL_PROVINCIA", "");
-$plantillaPerfilFacturacionUsuario->assign("PERFIL_PAIS", "");
+
+// Look up ISO-2 code from stored country name for billing country dropdown
+$iso2PaisFactura = "";
+if (!empty($datoUsuarioWeb["pais_factura"])) {
+    $resultIso = $db->callProcedure("CALL ed_sp_web_pais_get_iso_from_name('" . generalUtils::escaparCadena($datoUsuarioWeb["pais_factura"]) . "')");
+    if ($rowIso = $db->getData($resultIso)) {
+        $iso2PaisFactura = $rowIso["iso2"];
+    }
+}
+
+// Generate billing country dropdown (EU countries first, then others alphabetically)
+$plantillaPerfilFacturacionUsuario->assign("COMBO_BILLING_COUNTRY", generalUtils::construirCombo($db, "CALL ed_sp_web_pais_obtener_combo()", "billing_country", "billing_country", $iso2PaisFactura, "nombre_original", "iso2", STATIC_FORM_PROFILE_BILLING_COUNTRY, -1, 'class="form-control" style="width:100%; color:lightslategray;" autocomplete="country-name"'));
 
 //If the member has billing details in the database, insert them into the placeholders
-if ($datoUsuarioWeb["nif_cliente_factura"] != "") {
-    $plantillaPerfilFacturacionUsuario->assign("PERFIL_NIF_CLIENTE", $datoUsuarioWeb["nif_cliente_factura"]);
+// Display tax ID with fallback: prefer tax_id_number, fallback to nif_cliente_factura for old records
+$displayTaxId = !empty($datoUsuarioWeb["tax_id_number"])
+    ? $datoUsuarioWeb["tax_id_number"]
+    : ($datoUsuarioWeb["nif_cliente_factura"] ?? "");
+if ($displayTaxId != "") {
+    $plantillaPerfilFacturacionUsuario->assign("PERFIL_NIF_CLIENTE", $displayTaxId);
 }
 if ($datoUsuarioWeb["nombre_cliente_factura"] != "") {
     $plantillaPerfilFacturacionUsuario->assign("PERFIL_NOMBRE_CLIENTE", $datoUsuarioWeb["nombre_cliente_factura"]);
@@ -554,9 +577,7 @@ if ($datoUsuarioWeb["ciudad_factura"] != "") {
 if ($datoUsuarioWeb["provincia_factura"] != "") {
     $plantillaPerfilFacturacionUsuario->assign("PERFIL_PROVINCIA", $datoUsuarioWeb["provincia_factura"]);
 }
-if ($datoUsuarioWeb["pais_factura"] != "") {
-    $plantillaPerfilFacturacionUsuario->assign("PERFIL_PAIS", $datoUsuarioWeb["pais_factura"]);
-}
+// Country is now handled via dropdown above, no need to assign PERFIL_PAIS
 
 //Parse the billing details template
 $plantillaPerfilFacturacionUsuario->parse("contenido_principal");

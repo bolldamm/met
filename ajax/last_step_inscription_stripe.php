@@ -37,6 +37,13 @@ $paisFactura=generalUtils::escaparCadena($datosInscripcion["pais_factura"]);
 $taxIdCountry = isset($_SESSION["taxIdCountry"]) ? $_SESSION["taxIdCountry"] : "";
 $taxIdType = isset($_SESSION["taxIdType"]) ? $_SESSION["taxIdType"] : "";
 $taxIdNumber = isset($_SESSION["taxIdNumber"]) ? $_SESSION["taxIdNumber"] : "";
+$tipoFacturaVerifactu = isset($_SESSION["tipoFacturaVerifactu"]) ? $_SESSION["tipoFacturaVerifactu"] : "F1";
+
+// Ensure taxIdNumber is populated (fallback to nifFactura if session is empty)
+// But NOT for F2 simplified invoices - those intentionally have no tax ID
+if (empty($taxIdNumber) && !empty($nifFactura) && $tipoFacturaVerifactu !== "F2") {
+    $taxIdNumber = $nifFactura;
+}
 
 //Store name in variables
 $nombreUsuario=$datosInscripcion["nombre"];

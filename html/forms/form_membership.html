@@ -172,8 +172,6 @@
             </div>
         </div>
 
-        <!-- Billing Details Container (hidden when individual is selected) -->
-        <div id='billingDetailsContainer'>
         <!-- Address Section -->
         <div class='form-row'>
             <div class='col-12 col-md-6'>
@@ -204,43 +202,25 @@
             </div>
             <div class='col-12 col-md-6'>
                 {COMBO_BILLING_COUNTRY}
+                <span id='billingCountryMessage' class='validationMessage'></span>
             </div>
         </div>
+
+        <!-- Billing Details Container (hidden when individual is selected) -->
+        <div id='billingDetailsContainer'>
 
         <!-- Tax Identification Section -->
         <div class='form-row' style='margin-top: 1em;'>
-            <div class='col-12'>
-                <label>
-                    <input type='checkbox' id='hasSpanishNif' name='hasSpanishNif' value='1'>
-                    I have a Spanish NIF/NIE
-                </label>
-            </div>
-        </div>
-
-        <!-- Spanish NIF/NIE Field (shown when checkbox is checked) -->
-        <div class='form-row' id='spanishNifField' style='display: none;'>
             <div class='col-12 col-md-6'>
-                <input type='text' class='form-control' name='spanishNifNumber' id='spanishNifNumber'
-                       placeholder='Spanish NIF/NIE number'>
-                <span id='spanishNifMessage' class='validationMessage'></span>
-            </div>
-        </div>
-
-            <!-- Foreign Tax ID Fields (shown when checkbox is NOT checked) -->
-            <!-- <div id='foreignTaxIdFields'> -->
-        <div class='form-row' id='foreignTaxIdFields'>
-            <div class='col-12 col-md-4'>
-                {COMBO_TAX_ID_COUNTRY}
-                <span id='billingTaxIdCountryMessage' class='validationMessage'></span>
-            </div>
-            <div class='col-12 col-md-4'>
+                <label class='control-label small text-muted mb-0' for='tax_id_type'>Tax ID type</label>
                 {COMBO_TAX_ID_TYPE}
                 <span id='billingTaxIdTypeMessage' class='validationMessage'></span>
             </div>
-            <div class='col-12 col-md-4'>
+            <div class='col-12 col-md-6'>
+                <label class='control-label small text-muted mb-0' for='tax_id_number'>Number without country prefix</label>
                 <input type='text' class='form-control required' name='tax_id_number' id='tax_id_number'
-                       autocomplete='tax-id-number' placeholder='{STATIC_FORM_PROFILE_BILLING_TAX_ID_NUMBER}'>
-                    <span id='billingTaxIdNumberMessage' class='validationMessage'></span>
+                       autocomplete='tax-id-number' placeholder='{STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF}'>
+                <span id='billingTaxIdNumberMessage' class='validationMessage'></span>
             </div>
         </div>
         </div><!-- /billingDetailsContainer -->

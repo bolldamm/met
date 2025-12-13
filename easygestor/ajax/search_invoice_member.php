@@ -38,7 +38,10 @@
 		
 		$vectorMiembro["CONTADOR"]=$i;
 		$vectorMiembro["EMAIL"]=$datoUsuario["correo_electronico"];
-		$vectorMiembro["NIF"]=$datoUsuario["nif_cliente_factura"];
+		// Use tax_id_number with fallback to nif_cliente_factura
+		$vectorMiembro["NIF"]=!empty($datoUsuario["tax_id_number"])
+			? $datoUsuario["tax_id_number"]
+			: ($datoUsuario["nif_cliente_factura"] ?? "");
 		$vectorMiembro["COMPANY"]=$datoUsuario["nombre_empresa_factura"];
 		
 		

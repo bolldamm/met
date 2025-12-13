@@ -73,11 +73,56 @@ if (!empty($intent->latest_charge)) {
     $txnId = $charge->id;
 
     //Get the Stripe fee from the BalanceTransaction object
-    if (!empty($charge->balance_transaction->fee_details[0])) {
-        $fee = $charge->balance_transaction->fee_details[0]->amount;
-        $stripeFee = $fee / 100;
-    } else {
-        $stripeFee = 0;
+    // Note: Since Stripe API 2024-04-10, balance transactions are created asynchronously
+    // so we need to handle the case where it's not yet available or is just a string ID
+    $stripeFee = 0;
+    $maxRetries = 3;
+    $retryDelay = 1; // seconds
+
+    for ($attempt = 1; $attempt <= $maxRetries; $attempt++) {
+        // Refresh the charge to get the latest balance_transaction status
+        if ($attempt > 1) {
+            sleep($retryDelay);
+            try {
+                $charge = $stripe->charges->retrieve($txnId, ['expand' => ['balance_transaction']]);
+            } catch (\Stripe\Exception\ApiErrorException $e) {
+                error_log('Retry ' . $attempt . ' - Could not retrieve charge: ' . $e->getMessage());
+                continue;
+            }
+        }
+
+        $balanceTxn = $charge->balance_transaction ?? null;
+
+        // If balance_transaction is a string (ID), retrieve the full object
+        if (is_string($balanceTxn) && !empty($balanceTxn)) {
+            try {
+                $balanceTxn = $stripe->balanceTransactions->retrieve($balanceTxn);
+            } catch (\Stripe\Exception\ApiErrorException $e) {
+                error_log('Attempt ' . $attempt . ' - Could not retrieve balance transaction: ' . $e->getMessage());
+                $balanceTxn = null;
+            }
+        }
+
+        // Check if we have the fee details
+        if (is_object($balanceTxn) && !empty($balanceTxn->fee_details)) {
+            // Sum all fee components (Stripe fee, application fee, etc.)
+            $totalFee = 0;
+            foreach ($balanceTxn->fee_details as $feeDetail) {
+                $totalFee += $feeDetail->amount;
+            }
+            $stripeFee = $totalFee / 100;
+            error_log('Stripe fee retrieved on attempt ' . $attempt . ': ' . $stripeFee . ' EUR');
+            break; // Success - exit the retry loop
+        }
+
+        if ($attempt < $maxRetries) {
+            error_log('Balance transaction not yet available (attempt ' . $attempt . '), retrying in ' . $retryDelay . 's...');
+        }
+    }
+
+    // If still no fee after all retries, log a warning
+    if ($stripeFee == 0) {
+        error_log('WARNING: Could not retrieve Stripe fee for charge ' . $txnId . ' after ' . $maxRetries . ' attempts. Fee recorded as 0.');
     }
 } else {
     // Fallback: use the payment intent ID if charge isn't available yet

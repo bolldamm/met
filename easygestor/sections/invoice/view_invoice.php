@@ -50,7 +50,7 @@
 	$matrizOrden[1]["descripcion"]=STATIC_ORDER_INVOICE_NUMBER;
 	$matrizOrden[1]["valor"]="numero_factura";
 	$matrizOrden[2]["descripcion"]=STATIC_ORDER_INVOICE_NIF;
-	$matrizOrden[2]["valor"]="nif_cliente_factura";
+	$matrizOrden[2]["valor"]="tax_id_number";
 	$matrizOrden[3]["descripcion"]=STATIC_ORDER_INVOICE_NAME;
 	$matrizOrden[3]["valor"]="nombre_cliente_factura";
 	$matrizOrden[4]["descripcion"]=STATIC_ORDER_INVOICE_LAST_INSERTED_FIELD;
@@ -132,7 +132,10 @@
 		$vectorFactura["ID"]=$dato["id_factura"];
 		$vectorFactura["DATE"]=generalUtils::conversionFechaFormato($dato["fecha_factura"],"-","-");;
 		$vectorFactura["NUMBER"]=$dato["numero_factura"];
-		$vectorFactura["NIF"]=$dato["nif_cliente_factura"];
+		// Use tax_id_number with fallback to nif_cliente_factura
+		$vectorFactura["NIF"]=!empty($dato["tax_id_number"])
+			? $dato["tax_id_number"]
+			: ($dato["nif_cliente_factura"] ?? "");
 		$vectorFactura["NAME"]=$dato["nombre_cliente_factura"];
         $vectorFactura["PAID"] = ($dato["es_pagado"]==1 ? STATIC_VIEW_MOVEMENT_PAYED_YES : STATIC_VIEW_MOVEMENT_PAYED_NO);
         $vectorFactura["SENT"] = ($dato["hash_generado"] ? ($dato["enviado"]==1 ? STATIC_VIEW_MOVEMENT_PAYED_YES : STATIC_VIEW_MOVEMENT_PAYED_NO) : "");

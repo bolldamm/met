@@ -131,8 +131,53 @@
 			
 			return $combo;
 		}//end function
-		
-		
+
+		/**
+		 * Generate a combo with data attributes on each option
+		 * Similar to construirCombo but supports adding data-* attributes from result columns
+		 *
+		 * @param object $db Database connection
+		 * @param string $procedure Stored procedure to call
+		 * @param string $nombreCombo Name attribute for select
+		 * @param string $idCombo ID attribute for select
+		 * @param mixed $valorActual Currently selected value
+		 * @param string $opcionTexto Column name for option display text
+		 * @param string $opcionValor Column name for option value
+		 * @param string $opcionDefectoTexto Default option text (placeholder)
+		 * @param mixed $opcionDefectoValor Default option value
+		 * @param string $evento Event attributes
+		 * @param array $dataAttributes Array of column names to add as data-* attributes (e.g., ['is_eu'] becomes data-is-eu)
+		 * @param string $clase Class attribute
+		 * @return string Generated HTML select element
+		 */
+		static function construirComboConDataAttr($db,$procedure,$nombreCombo,$idCombo,$valorActual,$opcionTexto,$opcionValor,$opcionDefectoTexto,$opcionDefectoValor,$evento,$dataAttributes=[],$clase=""){
+			$combo="<select name='".$nombreCombo."' id='".$idCombo."' ".$evento." ".$clase.">";
+			if($opcionDefectoTexto!=""){
+				$combo.="<option selected value='".$opcionDefectoValor."'>".$opcionDefectoTexto."</option>";
+			}
+			$resultado=$db->callProcedure($procedure);
+			while($dato=$db->getData($resultado)){
+				if($dato[$opcionValor]==$valorActual){
+					$seleccionado="SELECTED";
+				}else{
+					$seleccionado="";
+				}
+				// Build data attributes string
+				$dataAttrStr = "";
+				foreach($dataAttributes as $attr){
+					if(isset($dato[$attr])){
+						// Convert underscore to hyphen for HTML data attribute convention
+						$htmlAttr = str_replace('_', '-', $attr);
+						$dataAttrStr .= " data-".$htmlAttr."='".$dato[$attr]."'";
+					}
+				}
+				$combo.="<option value='".$dato[$opcionValor]."' ".$seleccionado.$dataAttrStr.">".$dato[$opcionTexto]."</option>";
+			}
+			$combo.="</select>";
+
+			return $combo;
+		}
+
 		 /**
                  * Generate a multi-select combo
 		 */
@@ -414,4 +459,3 @@
 		
 	}//end class
 	
-?>

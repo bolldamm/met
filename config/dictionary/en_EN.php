@@ -202,8 +202,8 @@ define("STATIC_FORM_MEMBERSHIP_LEGEND_CONTACT_DETAILS", "Contact details visible
 define("STATIC_FORM_PICTURE", "Attendee list");
 define("STATIC_FORM_MEMBERSHIP_LEGEND_BILLING_INFORMATION", "Billing information");
 define("STATIC_FORM_MEMBERSHIP_SIGNING_UP_AS", "I am signing up as...");
-define("STATIC_FORM_MEMBERSHIP_PRIVATE_INDIVIDUAL", "A private individual (unrelated to any business or professional activity)");
-define("STATIC_FORM_MEMBERSHIP_BUSINESS_PROFESSIONAL", "A business or professional");
+define("STATIC_FORM_MEMBERSHIP_PRIVATE_INDIVIDUAL", "A private individual without a tax/VAT number");
+define("STATIC_FORM_MEMBERSHIP_BUSINESS_PROFESSIONAL", "A business or professional with a tax/VAT number");
 define("STATIC_FORM_MEMBERSHIP_LEGEND_PROFESSIONAL_INFORMATION", "Professional information");
 define("STATIC_FORM_MEMBERSHIP_LEGEND_ADDITIONAL_INFORMATION", "Other personal information (optional)");
 define("STATIC_FORM_MEMBERSHIP_LEGEND_OTHER_CPD", "Other CPD");
@@ -469,7 +469,7 @@ define("STATIC_FORM_PROFILE_CPD", "Continuing professional development");
 
 
 /*************** INICIO: PROFILE_BILLING_INFORMATION  ***************/
-define("STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF", "Tax ID (or N/A)");
+define("STATIC_FORM_PROFILE_BILLING_CUSTOMER_NIF", "Tax ID number");
 define("STATIC_FORM_PROFILE_BILLING_NAME_CUSTOMER", "Name");
 define("STATIC_FORM_PROFILE_BILLING_NAME_COMPANY", "Company name");
 define("STATIC_FORM_PROFILE_BILLING_ADDRESS", "Address");
@@ -478,8 +478,7 @@ define("STATIC_FORM_PROFILE_BILLING_CITY", "City");
 define("STATIC_FORM_PROFILE_BILLING_PROVINCE", "Province");
 define("STATIC_FORM_PROFILE_BILLING_COUNTRY", "Billing country");
 define("STATIC_FORM_PROFILE_BILLING_TAX_ID_TYPE", "Tax ID type");
-define("STATIC_FORM_PROFILE_BILLING_TAX_ID_COUNTRY", "Country of residence");
-define("STATIC_FORM_PROFILE_BILLING_TAX_ID_NUMBER", "Tax ID number");
+define("STATIC_FORM_PROFILE_BILLING_TAX_ID_COUNTRY", "Billing country");
 /*************** FIN: PROFILE_BILLING_INFORMATION  ***************/
 
 
