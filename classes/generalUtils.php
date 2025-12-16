@@ -387,7 +387,7 @@
 		 * 
 		 * Dadas una fecha pasadada como el tipo de datos string y formato dd/mm/aaaa
 		 * @param $fechaAConvertir 
-		 * @return date
+		 * @return int
 		 */
 		static function formatearFechaComparacion($fechaAConvertir) {
 			$fechaAConvertirTrozeada = explode ( "/", $fechaAConvertir );
@@ -404,8 +404,8 @@
 		/**
 		 * 
 		 * Dadas dos fechas en el formato dd/mm/aaaa nos devuelve su diferencia en dias
-		 * @param date $fecha1
-		 * @param date $fecha2
+		 * @param string $fecha1
+		 * @param string $fecha2
 		 * @param boolean $abs
 		 * @return int
 		 */
