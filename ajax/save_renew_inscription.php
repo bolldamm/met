@@ -97,15 +97,10 @@ $_POST["txtFacturacionCodigoPostal"] = generalUtils::escaparCadena(generalUtils:
 $_POST["txtFacturacionCiudad"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_CITY, $_POST["txtFacturacionCiudad"]));
 $_POST["txtFacturacionProvincia"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_PROVINCE, $_POST["txtFacturacionProvincia"]));
 
-// billing_country now contains ISO-2 code - look up country name for storage
+// Billing country comes from combo as billing_country (ISO-2 code)
+// Store ISO-2 code directly - no conversion to country name needed
 $billingCountryIso = isset($_POST["billing_country"]) ? generalUtils::escaparCadena($_POST["billing_country"]) : "";
-$paisFactura = "";
-if (!empty($billingCountryIso) && $billingCountryIso !== "-1") {
-    $resultPais = $db->callProcedure("CALL ed_sp_web_pais_get_name_from_iso('" . $billingCountryIso . "')");
-    if ($rowPais = $db->getData($resultPais)) {
-        $paisFactura = $rowPais["nombre_original"];
-    }
-}
+$paisFactura = ($billingCountryIso !== "-1") ? $billingCountryIso : "";
 
 //Store billing details in variables to be stored in DB later
 $nombreClienteFactura = $_POST["txtFacturacionNombreCliente"];

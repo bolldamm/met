@@ -113,14 +113,18 @@ if ($datoFactura["provincia_factura"] != "") {
 }
 $direccion .= $datoFactura["direccion_factura"] . "<br>";
 $direccion .= $datoFactura["codigo_postal_factura"] . "<br>";
-// Use pais_factura if available, otherwise try to get country name from tax_id_country
-$displayCountry = $datoFactura["pais_factura"];
-if (empty($displayCountry) && !empty($datoFactura["tax_id_country"])) {
+// Get country name from tax_id_country (ISO-2 code) - the authoritative source
+$displayCountry = "";
+if (!empty($datoFactura["tax_id_country"])) {
     // Convert ISO-2 code to full country name
     $countryResult = $db->callProcedure("CALL ed_sp_web_pais_get_name_from_iso('" . $datoFactura["tax_id_country"] . "')");
     if ($countryRow = $db->getData($countryResult)) {
         $displayCountry = $countryRow["nombre_original"];
     }
+}
+// Fallback to pais_factura for legacy invoices that haven't been migrated
+if (empty($displayCountry) && !empty($datoFactura["pais_factura"])) {
+    $displayCountry = $datoFactura["pais_factura"];
 }
 $direccion .= $datoFactura["ciudad_factura"] . $provincia . " <br>" . $displayCountry . "<br>";
 

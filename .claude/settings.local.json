@@ -14,7 +14,8 @@
       "Bash(del \"F:\\laragon\\www\\phpinfo_test.php\")",
       "Bash(dir /o-d:*)",
       "Bash(ls -la \"F:\\laragon\\www\\private\"\" 2>&1 || echo \"Directory not found or no access \")",
-      "Bash(ls -la \"F:\\laragon\\www\\private\"\" 2>&1 | grep -v \"Cannot access|No such \")"
+      "Bash(ls -la \"F:\\laragon\\www\\private\"\" 2>&1 | grep -v \"Cannot access|No such \")",
+      "Bash(git checkout:*)"
     ],
     "deny": [],
     "ask": []

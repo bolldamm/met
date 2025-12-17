@@ -67,15 +67,10 @@ if (count($_POST) > 0) {
         $_POST["txtFacturacionCiudad"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_CITY, $_POST["txtFacturacionCiudad"]));
         $_POST["txtFacturacionProvincia"] = generalUtils::escaparCadena(generalUtils::skipPlaceHolder(STATIC_FORM_PROFILE_BILLING_PROVINCE, $_POST["txtFacturacionProvincia"]));
 
-        // billing_country now contains ISO-2 code - look up country name for storage
+        // Billing country comes from combo as billing_country (ISO-2 code)
+        // Store ISO-2 code directly - no conversion to country name needed
         $billingCountryIso = isset($_POST["billing_country"]) ? generalUtils::escaparCadena($_POST["billing_country"]) : "";
-        $_POST["txtFacturacionPais"] = "";
-        if (!empty($billingCountryIso) && $billingCountryIso !== "-1") {
-            $resultPais = $db->callProcedure("CALL ed_sp_web_pais_get_name_from_iso('" . $billingCountryIso . "')");
-            if ($rowPais = $db->getData($resultPais)) {
-                $_POST["txtFacturacionPais"] = $rowPais["nombre_original"];
-            }
-        }
+        $_POST["txtFacturacionPais"] = ($billingCountryIso !== "-1") ? $billingCountryIso : "";
 
         //Insert new values into member's profile
         $resultadoUsuario = $db->callProcedure("CALL ed_sp_web_usuario_web_editar(" . $_SESSION["met_user"]["id"] . "," . $publico . ",'" . $_POST["txtOtherCPD"] . "','" . $_POST["txtOtrasDescripciones"] . "','" . $_POST["txtOtrasPublicaciones"] . "','" . $_POST["txtWeb"] . "','" . $_POST["txtFacturacionNifCliente"] . "','" . $_POST["txtFacturacionNombreCliente"] . "','" . $_POST["txtFacturacionNombreEmpresa"] . "','" . $_POST["txtFacturacionDireccion"] . "','" . $_POST["txtFacturacionCodigoPostal"] . "','" . $_POST["txtFacturacionCiudad"] . "','" . $_POST["txtFacturacionProvincia"] . "','" . $_POST["txtFacturacionPais"] . "')");
@@ -539,14 +534,8 @@ $plantillaPerfilFacturacionUsuario->assign("PERFIL_CODIGO_POSTAL", "");
 $plantillaPerfilFacturacionUsuario->assign("PERFIL_CIUDAD", "");
 $plantillaPerfilFacturacionUsuario->assign("PERFIL_PROVINCIA", "");
 
-// Look up ISO-2 code from stored country name for billing country dropdown
-$iso2PaisFactura = "";
-if (!empty($datoUsuarioWeb["pais_factura"])) {
-    $resultIso = $db->callProcedure("CALL ed_sp_web_pais_get_iso_from_name('" . generalUtils::escaparCadena($datoUsuarioWeb["pais_factura"]) . "')");
-    if ($rowIso = $db->getData($resultIso)) {
-        $iso2PaisFactura = $rowIso["iso2"];
-    }
-}
+// pais_factura now stores ISO-2 code directly - no lookup needed
+$iso2PaisFactura = !empty($datoUsuarioWeb["pais_factura"]) ? $datoUsuarioWeb["pais_factura"] : "";
 
 // Generate billing country dropdown (EU countries first, then others alphabetically)
 $plantillaPerfilFacturacionUsuario->assign("COMBO_BILLING_COUNTRY", generalUtils::construirCombo($db, "CALL ed_sp_web_pais_obtener_combo()", "billing_country", "billing_country", $iso2PaisFactura, "nombre_original", "iso2", STATIC_FORM_PROFILE_BILLING_COUNTRY, -1, 'class="form-control" style="width:100%; color:lightslategray;" autocomplete="country-name"'));

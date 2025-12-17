@@ -13,14 +13,8 @@ if ($_SESSION["met_user"]["id_modalidad"] == MODALIDAD_USUARIO_INDIVIDUAL) {
     $resultadoUsuarioConcreto = $db->callProcedure("CALL ed_sp_web_usuario_web_datos_factura_obtener(" . $_SESSION["met_user"]["id"] . ")");
     $datoUsuarioConcreto = $db->getData($resultadoUsuarioConcreto);
 
-    // Profile data for country select - look up iso2 from stored procedure
-    $iso2PaisFactura = "";
-    if(!empty($datoUsuarioConcreto["pais_factura"])){
-        $resultIso = $db->callProcedure("CALL ed_sp_web_pais_get_iso_from_name('" . generalUtils::escaparCadena($datoUsuarioConcreto["pais_factura"]) . "')");
-        if($rowIso = $db->getData($resultIso)){
-            $iso2PaisFactura = $rowIso["iso2"];
-        }
-    }
+    // pais_factura now stores ISO-2 code directly - no lookup needed
+    $iso2PaisFactura = !empty($datoUsuarioConcreto["pais_factura"]) ? $datoUsuarioConcreto["pais_factura"] : "";
 
     //Combo situacion adicional
     $plantillaFormulario->assign("COMBO_SITUACION_ADICIONAL", generalUtils::construirCombo($db, "CALL ed_sp_web_situacion_adicional_obtener_combo(" . $_SESSION["id_idioma"] . ")", "cmbSituacionAdicional", "cmbSituacionAdicional", $_SESSION["met_user"]["id_situacion_adicional"], "nombre", "id_situacion_adicional", "Standard", -1, 'class="form-control"'));

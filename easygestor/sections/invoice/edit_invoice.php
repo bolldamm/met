@@ -37,8 +37,11 @@
 //		}
 		
 
-		//Get Verifactu tax ID fields from form
-		$taxIdCountry = isset($_POST["cmbTaxIdCountry"]) ? generalUtils::escaparCadena($_POST["cmbTaxIdCountry"]) : "";
+		//Get billing country from dropdown (ISO-2 code) - this is the authoritative country field
+		$billingCountry = isset($_POST["billing_country"]) ? generalUtils::escaparCadena($_POST["billing_country"]) : "";
+		$taxIdCountry = ($billingCountry !== "-1") ? $billingCountry : "";
+
+		//Get tax ID fields from form
 		$taxIdType = isset($_POST["cmbTaxIdType"]) ? generalUtils::escaparCadena($_POST["cmbTaxIdType"]) : "";
 		$taxIdNumber = isset($_POST["txtTaxIdNumber"]) ? generalUtils::escaparCadena($_POST["txtTaxIdNumber"]) : "";
 		$tipoFacturaVerifactu = isset($_POST["cmbTipoFacturaVerifactu"]) ? generalUtils::escaparCadena($_POST["cmbTipoFacturaVerifactu"]) : "";
@@ -51,7 +54,8 @@
 		}
 
 		//Guardamos factura...
-		$resultadoFactura=$db->callProcedure("CALL ".OBJECT_DB_ACRONYM."_sp_factura_editar(".$idFactura.",".$fechaFactura.",".$fechaPagoFactura.",'".generalUtils::escaparCadena($_POST["txtNumeroFactura"])."','".generalUtils::escaparCadena($_POST["txtNif"])."','".generalUtils::escaparCadena($_POST["txtNombreCliente"])."',".$visibleNombreCliente.",'".generalUtils::escaparCadena($_POST["txtNombreEmpresa"])."',".$visibleNombreEmpresa.",'".generalUtils::escaparCadena($_POST["txtDireccion"])."','".generalUtils::escaparCadena($_POST["txtCodigoPostal"])."','".generalUtils::escaparCadena($_POST["txtCiudad"])."','".generalUtils::escaparCadena($_POST["txtProvincia"])."','".generalUtils::escaparCadena($_POST["txtPais"])."','".$_POST["checkProformaFactura"]."','".$taxIdCountry."','".$taxIdType."','".$taxIdNumber."','".$tipoFacturaVerifactu."')");
+		// Note: pais_factura parameter is deprecated - pass empty string; tax_id_country is the authoritative country field
+		$resultadoFactura=$db->callProcedure("CALL ".OBJECT_DB_ACRONYM."_sp_factura_editar(".$idFactura.",".$fechaFactura.",".$fechaPagoFactura.",'".generalUtils::escaparCadena($_POST["txtNumeroFactura"])."','".generalUtils::escaparCadena($_POST["txtNif"])."','".generalUtils::escaparCadena($_POST["txtNombreCliente"])."',".$visibleNombreCliente.",'".generalUtils::escaparCadena($_POST["txtNombreEmpresa"])."',".$visibleNombreEmpresa.",'".generalUtils::escaparCadena($_POST["txtDireccion"])."','".generalUtils::escaparCadena($_POST["txtCodigoPostal"])."','".generalUtils::escaparCadena($_POST["txtCiudad"])."','".generalUtils::escaparCadena($_POST["txtProvincia"])."','','".$_POST["checkProformaFactura"]."','".$taxIdCountry."','".$taxIdType."','".$taxIdNumber."','".$tipoFacturaVerifactu."')");
 		require "line_invoice.php";
 
 
@@ -104,20 +108,19 @@
 	$subPlantilla->assign("FACTURA_CODIGO_POSTAL",$datoFactura["codigo_postal_factura"]);
 	$subPlantilla->assign("FACTURA_CIUDAD",$datoFactura["ciudad_factura"]);
 	$subPlantilla->assign("FACTURA_PROVINCIA",$datoFactura["provincia_factura"]);
-	$subPlantilla->assign("FACTURA_PAIS",$datoFactura["pais_factura"]);
 	$subPlantilla->assign("FACTURA_IMPORTE",isset($datoFactura["precio"]) ? $datoFactura["precio"] : "");
 	$subPlantilla->assign("ID_INVOICE",$datoFactura["id_factura"]);
 
-	//Verifactu tax ID fields - dropdown selects
-	$subPlantilla->assign("FACTURA_TAX_ID_NUMBER", isset($datoFactura["tax_id_number"]) ? $datoFactura["tax_id_number"] : "");
-
-	//Combo tax ID country - uses ISO2 code as value
+	//Billing country dropdown - uses ISO2 code as value, tax_id_country is the authoritative field
 	$selectedCountry = isset($datoFactura["tax_id_country"]) ? $datoFactura["tax_id_country"] : "";
-	$subPlantilla->assign("COMBO_TAX_ID_COUNTRY", generalUtils::construirCombo($db, "CALL ed_sp_web_pais_obtener_combo()", "cmbTaxIdCountry", "cmbTaxIdCountry", $selectedCountry, "nombre_original", "iso2", "-- Country --", -1, 'style="width:150px;"'));
+	$subPlantilla->assign("COMBO_BILLING_COUNTRY", generalUtils::construirCombo($db, "CALL ed_sp_web_pais_obtener_combo()", "billing_country", "billing_country", $selectedCountry, "nombre_original", "iso2", "-- Country --", -1, 'style="width:100%;"'));
+
+	//Tax ID fields
+	$subPlantilla->assign("FACTURA_TAX_ID_NUMBER", isset($datoFactura["tax_id_number"]) ? $datoFactura["tax_id_number"] : "");
 
 	//Combo tax ID type
 	$selectedType = isset($datoFactura["tax_id_type"]) ? $datoFactura["tax_id_type"] : "";
-	$subPlantilla->assign("COMBO_TAX_ID_TYPE", generalUtils::construirCombo($db, "CALL ed_sp_web_tax_id_type_obtener_combo()", "cmbTaxIdType", "cmbTaxIdType", $selectedType, "description", "tax_id_type", "-- ID Type --", -1, 'style="width:150px;"'));
+	$subPlantilla->assign("COMBO_TAX_ID_TYPE", generalUtils::construirCombo($db, "CALL ed_sp_web_tax_id_type_obtener_combo()", "cmbTaxIdType", "cmbTaxIdType", $selectedType, "description", "tax_id_type", "-- ID Type --", -1, 'style="width:100%;"'));
 
 	//Combo Verifactu invoice type - full list matching create_invoice.php
 	$tipoFacturaValue = isset($datoFactura["tipo_factura_verifactu"]) ? $datoFactura["tipo_factura_verifactu"] : "F1";
