@@ -37,7 +37,7 @@ define("STATIC_GLOBAL_PAYPAL_FEE", "Processing fee");
 
 define("STATIC_TITLE_WEB_HOME", "Mediterranean Editors & Translators");
 define("STATIC_ADVANCED_SEARCH", "search");
-define("STATIC_LEGAL_TEXT_FOOTER", "Mediterranean Editors and Translators (MET) is a forum for translators and editors who work mainly into or with English. Through MET we exchange views and experiences on promising practices and keep up with relevant research. Read our mission statement. MET is a member of the Spanish Network of the Anna Lindh Euro-Mediterranean Foundation for Dialogue Between Cultures.");
+define("STATIC_LEGAL_TEXT_FOOTER", "MET is a volunteer-run association for editors, translators and other language professionals who have English as a primary working language.");
 define("STATIC_DISCLAIMER", "Disclaimer");
 define("STATIC_MEMBERS", "Members and METM attendees");
 define("STATIC_DISCONNECT", "Sign out");
@@ -96,9 +96,9 @@ define("STATIC_CONTACT_COMMENTS", "Comments");
 define("STATIC_CONTACT_ERROR_FIRST_NAME", "Please enter your first name");
 define("STATIC_CONTACT_ERROR_EMAIL", "Please enter a valid email address");
 define("STATIC_CONTACT_SENDED", "Email sent successfully.");
-define("STATIC_CONTACT_NO_SENDED", "Sorry, due to technical problems the email could not be sent. Please try again later.");
+define("STATIC_CONTACT_NO_SENDED", "Sorry, due to technical problems the form could not be sent. Please try again later.");
 define("STATIC_CONTACT_MAIL_SUBJECT", "MET - contact form submitted");
-define("STATIC_CONTACT_MET_ADDRESS", "Mediterranean Editors and Translators<br>Carrer Major 17<br>43422 Barberà de la Conca<br>Tarragona<br>Spain<br><a href='mailto:contact@metmeetings.org'>contact@metmeetings.org</a>");
+define("STATIC_CONTACT_MET_ADDRESS", "Mediterranean Editors and Translators<br>Sant Valentí, 1-3, entresòl 2a<br>08242 Manresa<br>Spain<br><a href='mailto:contact@metmeetings.org'>contact@metmeetings.org</a>");
 define("STATIC_CONTACT_PRIVACY", "MET processes your data in accordance with the GDPR. Please see our <a href='https://www.metmeetings.org/en/met-privacy-policy:30' target='_blank'>Privacy notice</a> for more details.");
 
 
@@ -117,7 +117,8 @@ define("STATIC_MEMBER_AREAS_OF_EXPERTISE", "Areas of expertise");
 define("STATIC_MEMBER_DESCRIPTION", "Qualifications and experience");
 define("STATIC_MEMBER_PUBLICATIONS", "Publications");
 define("STATIC_MEMBER_CONTINUING_PROFESSIONAL_DEVELOPMENT", "Continuing professional development");
-define("STATIC_MEMBER_WORKSHOPS", "Workshops");
+define("STATIC_MEMBER_WORKSHOPS", "MET workshops attended");
+define("STATIC_MEMBER_METMS", "METMs");
 
 /* ## JOB OPPORTUNITIES ## */
 define("STATIC_JOBS_LIST_OPPORTUNITIES", "Job opportunities");
@@ -179,7 +180,7 @@ define("STATIC_DIRECTORY_MEMBER_WHOLE_WORD", "Whole word only");
 define("STATIC_DIRECTORY_DETAIL_METMS", "MET Meetings");
 define("STATIC_DIRECTORY_DETAIL_WORKSHOPS", "MET workshops");
 define("STATIC_DIRECTORY_DETAIL_OTHER_CPD", "Other CPD");
-
+define("STATIC_DIRECTORY_DETAIL_PRESENTER_FACILITATOR", "METM presentations given and MET workshops facilitated");
 
 /**** STRIPE ****/
 define("STATIC_FORM_STRIPE_BUTTON_INTRO_TEXT", "<h3>Pay by debit or credit card</h3>
@@ -207,6 +208,7 @@ define("STATIC_FORM_MEMBERSHIP_BUSINESS_PROFESSIONAL", "A business or profession
 define("STATIC_FORM_MEMBERSHIP_LEGEND_PROFESSIONAL_INFORMATION", "Professional information");
 define("STATIC_FORM_MEMBERSHIP_LEGEND_ADDITIONAL_INFORMATION", "Other personal information (optional)");
 define("STATIC_FORM_MEMBERSHIP_LEGEND_OTHER_CPD", "Other CPD");
+define("STATIC_FORM_MEMBERSHIP_PRESENTER_FACILITATOR", "METM presentations given and MET workshops facilitated");
 define("STATIC_FORM_MEMBERSHIP_LEGEND_PREFERRED_METHOD_OF_PAYMENT", "Annual fee and payment method");
 define("STATIC_FORM_MEMBERSHIP_LEGEND_PRIVACY", "Privacy");
 define("STATIC_FORM_MEMBERSHIP_LEGEND_PHOTO", "Photo");

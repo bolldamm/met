@@ -1,23 +1,26 @@
 {
   "permissions": {
     "allow": [
-      "Bash(\"F:\\laragon\\bin\\mysql\\mysql-8.0.40-winx64\\bin\\mysql.exe\" -u root met -e \"CALL ed_sp_web_tax_id_type_obtener_combo();\")",
-      "Bash(git add:*)",
-      "WebSearch",
-      "Bash(php -v:*)",
-      "Bash(php -i:*)",
-      "Bash(curl:*)",
-      "Bash(powershell -Command \"Invoke-WebRequest -Uri ''''http://localhost/phpinfo_test.php'''' -UseBasicParsing | Select-Object -ExpandProperty Content\")",
-      "Bash(powershell -Command \"[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12; (New-Object System.Net.WebClient).DownloadString(''''http://localhost/phpinfo_test.php'''')\")",
-      "Bash(findstr:*)",
+      "Bash(dir /b \"F:\\\\laragon\\\\www\")",
       "Bash(dir:*)",
-      "Bash(del \"F:\\laragon\\www\\phpinfo_test.php\")",
-      "Bash(dir /o-d:*)",
-      "Bash(ls -la \"F:\\laragon\\www\\private\"\" 2>&1 || echo \"Directory not found or no access \")",
-      "Bash(ls -la \"F:\\laragon\\www\\private\"\" 2>&1 | grep -v \"Cannot access|No such \")",
-      "Bash(git checkout:*)"
-    ],
-    "deny": [],
-    "ask": []
+      "Bash(if not exist \"F:\\\\laragon\\\\www\\\\uploads\" mkdir \"F:\\\\laragon\\\\www\\\\uploads\")",
+      "Bash(findstr:*)",
+      "Bash(if not exist \"F:\\\\laragon\\\\www\\\\easygestor\\\\uploads\" mkdir \"F:\\\\laragon\\\\www\\\\easygestor\\\\uploads\")",
+      "Bash(if not exist \"F:\\\\laragon\\\\www\\\\easygestor\\\\uploads\\\\files\" mkdir \"F:\\\\laragon\\\\www\\\\easygestor\\\\uploads\\\\files\")",
+      "Bash(if not exist \"F:\\\\laragon\\\\www\\\\easygestor\\\\uploads\\\\images\" mkdir \"F:\\\\laragon\\\\www\\\\easygestor\\\\uploads\\\\images\")",
+      "Bash(if not exist \"F:\\\\laragon\\\\www\\\\easygestor\\\\uploads\\\\.trash\" mkdir \"F:\\\\laragon\\\\www\\\\easygestor\\\\uploads\\\\.trash\")",
+      "Bash(if not exist \"F:\\\\laragon\\\\www\\\\easygestor\\\\elfinder\" mkdir \"F:\\\\laragon\\\\www\\\\easygestor\\\\elfinder\")",
+      "Bash(cat:*)",
+      "Bash(git config:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(attrib:*)",
+      "Bash(test:*)",
+      "Bash(GIT_DIR=\"F:/laragon/www/old_git\" git log:*)",
+      "Bash(GIT_DIR=\"F:/laragon/www/old_git\" git branch:*)",
+      "Bash(GIT_DIR=\"F:/laragon/www/old_git\" git remote:*)",
+      "Bash(git remote add:*)",
+      "Bash(git push:*)",
+      "Bash(git add:*)"
+    ]
   }
 }

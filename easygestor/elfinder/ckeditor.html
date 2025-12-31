@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>elFinder - File Browser</title>
+
+    <!-- jQuery and jQuery UI from CDN -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+    <!-- elFinder CSS from CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/elfinder/2.1.65/css/elfinder.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/elfinder/2.1.65/css/theme.css">
+
+    <!-- elFinder JS from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elfinder/2.1.65/js/elfinder.min.js"></script>
+
+    <!-- elFinder Spanish translation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elfinder/2.1.65/js/i18n/elfinder.es.js"></script>
+
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        #elfinder {
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="elfinder"></div>
+
+    <script>
+    $(document).ready(function() {
+        // Get CKEditor callback function number from URL
+        var defined = function(obj) {
+            return typeof obj !== 'undefined';
+        };
+
+        var getUrlParam = function(paramName) {
+            var reParam = new RegExp('(?:[\?&]|&)' + paramName + '=([^&]+)', 'i');
+            var match = window.location.search.match(reParam);
+            return (match && match.length > 1) ? match[1] : null;
+        };
+
+        var funcNum = getUrlParam('CKEditorFuncNum');
+        var type = getUrlParam('type');
+
+        // Configure starting path based on type parameter
+        var startPath = '';
+        if (type === 'images' || type === 'Images') {
+            startPath = 'Images';
+        }
+
+        // Initialize elFinder
+        var elf = $('#elfinder').elfinder({
+            url: 'connector.php',
+            lang: 'es', // Spanish language (change to 'en' for English)
+            height: '100%',
+            resizable: false,
+
+            // Start in specific folder based on type
+            startPathHash: startPath ? undefined : undefined,
+
+            // Custom command binding for CKEditor integration
+            commandsOptions: {
+                getfile: {
+                    oncomplete: 'close',
+                    folders: false
+                }
+            },
+
+            // Callback when file is selected
+            getFileCallback: function(file, fm) {
+                if (defined(funcNum)) {
+                    // Send file URL back to CKEditor
+                    window.opener.CKEDITOR.tools.callFunction(funcNum, file.url);
+                    window.close();
+                } else {
+                    // For use outside CKEditor - just log the selection
+                    console.log('Selected file:', file);
+                }
+            },
+
+            // Handler for UI (optional customizations)
+            handlers: {
+                dblclick: function(event, elfinderInstance) {
+                    event.preventDefault();
+                    elfinderInstance.exec('getfile').fail(function() {
+                        elfinderInstance.exec('open');
+                    });
+                },
+                select: function(event, elfinderInstance) {
+                    // Enable "Choose" button on file selection
+                }
+            },
+
+            // UI configurations
+            uiOptions: {
+                toolbar: [
+                    ['back', 'forward'],
+                    ['reload'],
+                    ['home', 'up'],
+                    ['mkdir', 'mkfile', 'upload'],
+                    ['open', 'download', 'getfile'],
+                    ['info'],
+                    ['quicklook'],
+                    ['copy', 'cut', 'paste'],
+                    ['rm'],
+                    ['duplicate', 'rename', 'edit'],
+                    ['selectall', 'selectnone', 'selectinvert'],
+                    ['view', 'sort']
+                ]
+            },
+
+            // Context menu configuration
+            contextmenu: {
+                files: ['getfile', '|', 'open', 'quicklook', '|', 'download', '|',
+                        'copy', 'cut', 'paste', 'duplicate', '|',
+                        'rm', '|', 'rename', '|', 'info']
+            }
+        }).elfinder('instance');
+    });
+    </script>
+</body>
+</html>

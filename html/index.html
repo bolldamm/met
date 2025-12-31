@@ -253,10 +253,10 @@
             mensajeCargando("{STATIC_GLOBAL_SENDING}...");
 
 
-            if (!validarEmail(document.frmRecordarClave.txtEmail.value)) {
-                txtErrors = "{STATIC_REMEMBER_PASSWORD_ERROR_EMAIL}";
-                blError = true;
-            }
+            // if (!validarEmail(document.frmRecordarClave.txtEmail.value)) {
+            //    txtErrors = "{STATIC_REMEMBER_PASSWORD_ERROR_EMAIL}";
+            //    blError = true;
+            // }
 
             if (blError) {
                 panelErrorLogin.innerHTML = txtErrors;
@@ -267,7 +267,8 @@
                 panelErrorLogin.style.display = "none";
                 let ajax = nuevoAjax();
                 let respuesta;
-                ajax.open("GET", "ajax/send_remember_password?mail=" + document.frmRecordarClave.txtEmail.value + "&captcha=" + document.frmRecordarClave.txtCaptcha.value);
+                ajax.open("GET", "ajax/send_remember_password?mail=" + document.frmRecordarClave.txtEmail.value);
+                // ajax.open("GET", "ajax/send_remember_password?mail=" + document.frmRecordarClave.txtEmail.value + "&captcha=" + document.frmRecordarClave.txtCaptcha.value);
                 ajax.onreadystatechange = function () {
                     if (ajax.readyState === 4) {
                         respuesta = parseInt(ajax.responseText);
@@ -276,7 +277,7 @@
                             case 1:
                                 panelErrorLogin.className = "msgOK";
                                 txtErrors += "{STATIC_REMEMBER_PASSWORD_OK}";
-                                refreshCaptcha();
+                                // refreshCaptcha();
                                 break;
                             case 2:
                                 txtErrors += "{STATIC_REMEMBER_PASSWORD_NO_SENDED}";
@@ -2368,7 +2369,7 @@ function unsetTelNoAlert() {
 
         //ON PAGE LOAD, add event listeners
         $(document).ready(function () {
-            refreshCaptchaContact();
+            // refreshCaptchaContact();
             validateContactForm();
         });
 

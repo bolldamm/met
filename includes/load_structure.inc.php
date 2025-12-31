@@ -21,7 +21,7 @@ $idMenuHome = $datoHome["id_menu"];
 $inscripcionActiva = true;
 
 //Assign "Remember password" link to placeholder (main template is index.html)
-$plantilla->assign("URL_REMEMBER_PASSWORD", "remember_password.php");
+$plantilla->assign("URL_REMEMBER_PASSWORD", "remember_password");
 
 if (isset($esHome) && isset($_SESSION["registration_desk"])) {
     generalUtils::redirigir("https://www.metmeetings.org/en/registration:1408");
@@ -36,7 +36,7 @@ if (isset($esHome)) {
 
     $plantilla->assign('OG_TITLE', 'Mediterranean Editors and Translators');
     $plantilla->assign('OG_TYPE', 'website');
-    $plantilla->assign('OG_DESCRIPTION', 'MET is an association that acts as a forum for translators and editors who work mainly into or with English');
+    $plantilla->assign('OG_DESCRIPTION', STATIC_LEGAL_TEXT_FOOTER);
     $plantilla->assign('OG_URL', "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
     $plantilla->assign('OG_IMAGE', 'https://www.metmeetings.org/images/pictures/logos/MET_logo_color_SQUARE_256x256.png');
     $plantilla->assign('OG_IMAGE_TYPE', 'image/png');

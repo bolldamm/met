@@ -10,9 +10,9 @@
 
 
 	//Si el usuario no existe, entonces redirigimos a la pagina principal
-	if(isset($_SESSION["user"])){
-		generalUtils::redirigir(CURRENT_DOMAIN);
-	}
+	// if(isset($_SESSION["user"])){
+	//	generalUtils::redirigir(CURRENT_DOMAIN);
+	//}
 	
 	require "config/dictionary/default.php";
 	

@@ -15,10 +15,11 @@
 	if(isset($_GET["mail"]) && trim($_GET["mail"])!="" && generalUtils::validarEmail($_GET["mail"])){
 		
 		//Comprobamos que ha introducido bien el captcha
-		include("../classes/securimage/securimage.php");
-	  	$img = new Securimage();
+		//include("../classes/securimage/securimage.php");
+	  	// $img = new Securimage();
 	
-	  	$valid = $img->check($_GET["captcha"],false);
+	  	// $valid = $img->check($_GET["captcha"],false);
+        $valid = true;
 		if($valid){
 			//Comprobamos que exista el email introducido en el sistema
 			$resultado=$db->callProcedure("CALL ed_sp_web_usuario_web_existe ('".$_GET["mail"]."')");

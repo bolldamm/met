@@ -6,7 +6,11 @@
 	 * 
 	 */
 
-// require('/home/metmeetings/private/essential_string.php');
+if (defined('MET_ENV') && constant('MET_ENV') == 'LOCAL') {
+    require('../private/essential_string.php');
+}else {
+    require('/home/metmeetings/private/essential_string.php');
+}
 
 if (defined('MET_ENV') && constant('MET_ENV') == 'LOCAL') {
     $db = new DatabaseConnection("localhost", "root", "", "met");

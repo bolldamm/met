@@ -8,6 +8,7 @@
 	 */
 
 	require "includes/load_main_components.inc.php";
+    require "includes/spam_form_init.php";
 
 	// Instanciamos la clase Xtemplate con la plantilla base
 	$plantilla = new XTemplate("html/index.html");

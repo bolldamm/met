@@ -130,7 +130,13 @@ $subPlantilla->parse("contenido_principal.pais");
 					$subPlantilla->parse("contenido_principal.otros");
 				}
 				
-				if($dataMiembro["publicaciones"] != "") {
+				// $dataMiembro["presentaciones"] = "Feature not yet available";			
+				if($dataMiembro["presentaciones"] != "") {
+					$subPlantilla->assign("ITEM_MIEMBRO_PRESENTER_FACILITATOR", $dataMiembro["presentaciones"]);
+					$subPlantilla->parse("contenido_principal.presentations");
+				}
+
+                if($dataMiembro["publicaciones"] != "") {
 					$subPlantilla->assign("ITEM_MIEMBRO_PUBLICACION", $dataMiembro["publicaciones"]);
 					$subPlantilla->parse("contenido_principal.publicacion");
 				}

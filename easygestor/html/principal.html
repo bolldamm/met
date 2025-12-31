@@ -41,7 +41,18 @@
 <!-- Ckeditor -->
 		<!-- BEGIN: editor_script -->
 		<script src="editor/ckeditor.js"></script>
-		<script src="ckfinder/ckfinder.js"></script>
+		<!-- elFinder integration (replacing CKFinder) -->
+		<script>
+		// Configure elFinder as file browser for CKEditor
+		CKEDITOR.on('dialogDefinition', function(ev) {
+			var dialogName = ev.data.name;
+			var dialogDefinition = ev.data.definition;
+
+			if (dialogName == 'image' || dialogName == 'image2' || dialogName == 'link') {
+				// Set elFinder as file browser
+			}
+		});
+		</script>
 		<!-- END: editor_script -->
 		
 		<!-- BEGIN: script_table_drag_and_drop -->
@@ -150,7 +161,7 @@
 			<!-- END: bloque_orden_tabla -->
               
 			<!-- BEGIN: editor_finder -->
-			CKFinder.setupCKEditor( null, 'ckfinder/' );
+			// elFinder is now configured via CKEDITOR.editorConfig in editor/config.js
 			<!-- END: editor_finder -->
               
 			<!-- BEGIN: inicializar_ckeditor -->

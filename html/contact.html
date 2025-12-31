@@ -31,22 +31,11 @@
 			</div>
 			<textarea class="form-control txtaComentarios" name="txtaComentarios" placeholder="{STATIC_CONTACT_COMMENTS}*" required></textarea><p>{STATIC_CONTACT_PRIVACY}</p>
 			<div class="form-row">
-				<div class="col-12 col-sm-6 captchaText">
-					{STATIC_CAPTCHA_ENTER_LETTERS_NUMBERS_IMAGE}
-				</div>
-				<div class="col-12 col-sm-6" id="captchaBox">
-					<div class="form-row captchaImage">
-						<div class="col-xs-6">
-							<img id="imageCaptcha" src="classes/securimage/securimage_show.php?sid={SESSION_ID}" alt="CAPTCHA Image" /><img id="reloadCaptcha"
-								 src="images/pictures/icons/icon.reloadCaptcha.png"
-								 title="{STATIC_CAPTCHA_RELOAD}"
-								 style="margin-left:1em;">&nbsp;
-						</div>
-						<div class="col-xs-6">
-							<input type="text" class="form-control float-right" name="txtCaptcha" size="7" maxlength="6" />
-						</div>
-					</div>
-				</div>
+			<input type="hidden" name="spam_form_token" value="{SPAM_FORM_TOKEN}">
+			<div style="display:none">
+			    <label>Company website</label>
+			    <input type="text" name="company_website" autocomplete="off">
+			</div>
 			</div>
 			<button class="btn btn-primary float-right" type="submit" id="btnSendForm">{STATIC_SEND}</button>
 		</form>

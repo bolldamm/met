@@ -6,13 +6,10 @@
 	  */
 
 	$noGuardar=true;
+    $valid = true;
 	require "../includes/load_main_components.inc.php";
+    require "../includes/spam_form_check.php";
 
-	//Comprobamos que ha introducido bien el captcha
-	include("../classes/securimage/securimage.php");
-  	$img = new Securimage();
-
-  	$valid = $img->check($_POST["txtCaptcha"],false);
 	if($valid){
 	  	require "../includes/load_mailer.inc.php";
 		$mailPlantilla=new XTemplate("../html/mail/mail_contact.html");

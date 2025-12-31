@@ -9,10 +9,6 @@
  */
 require "includes/load_main_components.inc.php";
 
-//Obsolete
-//$validarIntegridad = true;
-//require "includes/load_validate_user_web.inc.php";
-
 // Instanciamos la clase Xtemplate con la plantilla base
 $plantilla = new XTemplate("html/index.html");
 $subPlantilla = new XTemplate("html/profile_individual_member.html");

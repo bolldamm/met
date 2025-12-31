@@ -1,11 +1,5 @@
 <!-- BEGIN: contenido_principal -->
-<!-- <script>
-window.addEventListener("resize", function() {
-    $('.chosen-container').innerWidth($('#frmMembership').innerWidth());
-    $('.chosen-search input').innerWidth($('#frmMembership').innerWidth()-12);
-    $('.chosen-drop').innerWidth($('#frmMembership').innerWidth()-2);  
-}, false);
-</script> -->
+
 <div id='openbox'>
     <p id="msgAlert" class="{MENSAJE_ACCION_CLASS}" style="{MENSAJE_ACCION_DISPLAY}">{MENSAJE_ACCION_PERFIL}</p>
     {CONTENIDO_DESCRIPCION}
@@ -232,6 +226,12 @@ window.addEventListener("resize", function() {
             <b>{STATIC_MEMBER_PUBLICATIONS}</b>
             <textarea class='form-control' name='txtOtrasPublicaciones' id='txtOtrasPublicaciones' rows='6'
                       placeholder='Publications'>{PERFIL_VALOR_OTRAS_PUBLICACIONES}</textarea>
+        </fieldset>
+
+        <fieldset style="display:none;">
+            <legend>              {STATIC_FORM_MEMBERSHIP_PRESENTER_FACILITATOR}
+            </legend>
+            {PROFILE_MET_PRESENTER_FACILITATOR}
         </fieldset>
 
         <fieldset>
