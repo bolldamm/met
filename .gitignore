@@ -23,6 +23,8 @@ documentacion/*
 editor/
 excel/*
 files/*
+uploads/
+easygestor/uploads/
 html2pdf/
 juicebox_gallery/*
 jobs/*
