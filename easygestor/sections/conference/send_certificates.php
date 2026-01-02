@@ -30,7 +30,7 @@ $direccionOrden = "ASC";
         
 	 	$plantilla=new XTemplate("../html/mail/mail_invoice.html");
       
-         $enlace=CURRENT_DOMAIN."get_metm_certificate.php?hash=".$dato['hash_generado'];
+         $enlace=CURRENT_DOMAIN."/get_metm_certificate.php?hash=".$dato['hash_generado'];
       
 	    	$feedback =$datoConferencia['feedback'];
         

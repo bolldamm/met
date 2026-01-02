@@ -16,8 +16,9 @@
     <!-- elFinder JS from CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/elfinder/2.1.65/js/elfinder.min.js"></script>
 
-    <!-- elFinder Spanish translation -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/elfinder/2.1.65/js/i18n/elfinder.es.js"></script>
+    <!-- elFinder language (English is built-in, no separate file needed) -->
+    <!-- for the Spanish translation use:
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elfinder/2.1.65/js/i18n/elfinder.es.js"></script>  -->
 
     <style>
         html, body {
@@ -60,7 +61,7 @@
         // Initialize elFinder
         var elf = $('#elfinder').elfinder({
             url: 'connector.php',
-            lang: 'es', // Spanish language (change to 'en' for English)
+            lang: 'en', // English language
             height: '100%',
             resizable: false,
 

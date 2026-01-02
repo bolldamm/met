@@ -5,6 +5,15 @@
 	 *
 	 */
 	if (session_status() === PHP_SESSION_NONE) {
+		// Extend session lifetime to 4 hours (14400 seconds)
+		ini_set('session.gc_maxlifetime', 14400);
+		session_set_cookie_params([
+			'lifetime' => 14400,
+			'path' => '/',
+			'secure' => true,
+			'httponly' => true,
+			'samesite' => 'Lax'
+		]);
 		session_start();
 	}
 	header("Content-Type: text/html; charset=utf-8");

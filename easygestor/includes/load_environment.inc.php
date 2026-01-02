@@ -20,10 +20,10 @@ if (isset($_GET['test'])) {
 if (!defined('CURRENT_DOMAIN')) {
     if (MET_ENV === 'LOCAL') {
         define("CURRENT_DOMAIN", "https://localhost");
-        define("CURRENT_DOMAIN_EASYGESTOR", "https://localhost/easygestor");
+        define("CURRENT_DOMAIN_EASYGESTOR", "https://localhost/easygestor/");
     } else {
         define("CURRENT_DOMAIN", "https://www.metmeetings.org");
-        define("CURRENT_DOMAIN_EASYGESTOR", "https://www.metmeetings.org/easygestor");
+        define("CURRENT_DOMAIN_EASYGESTOR", "https://www.metmeetings.org/easygestor/");
     }
 }
 ?>

@@ -38,23 +38,12 @@
 <!-- EasyNotify -->
 		<link rel="stylesheet" href="css/easynotify/easynotify.css" type="text/css" media="screen" />
 		<script type="text/javascript" src="scripts/js/easynotify/easynotify.js"></script>
-<!-- Ckeditor -->
-		<!-- BEGIN: editor_script -->
-		<script src="editor/ckeditor.js"></script>
-		<!-- elFinder integration (replacing CKFinder) -->
-		<script>
-		// Configure elFinder as file browser for CKEditor
-		CKEDITOR.on('dialogDefinition', function(ev) {
-			var dialogName = ev.data.name;
-			var dialogDefinition = ev.data.definition;
 
-			if (dialogName == 'image' || dialogName == 'image2' || dialogName == 'link') {
-				// Set elFinder as file browser
-			}
-		});
-		</script>
-		<!-- END: editor_script -->
-		
+<!-- CKEditor (the elFinder integration is configured in /editor/config.js) -->
+        <!-- BEGIN: editor_script -->
+        <script src="../editor/ckeditor.js"></script>
+        <!-- END: editor_script -->
+
 		<!-- BEGIN: script_table_drag_and_drop -->
 		<script type="text/javascript" src="scripts/js/table_drag_drop/jquery.tablednd.js"></script>
 		<!-- END: script_table_drag_and_drop -->
@@ -160,10 +149,7 @@
 		    });
 			<!-- END: bloque_orden_tabla -->
               
-			<!-- BEGIN: editor_finder -->
-			// elFinder is now configured via CKEDITOR.editorConfig in editor/config.js
-			<!-- END: editor_finder -->
-              
+	              
 			<!-- BEGIN: inicializar_ckeditor -->
 			var editor=CKEDITOR.replace('{TEXTAREA_ID}',{ toolbar : '{TEXTAREA_TOOLBAR}' });
         	width="100%";

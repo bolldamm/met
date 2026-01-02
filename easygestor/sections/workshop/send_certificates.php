@@ -21,7 +21,7 @@
 
 		$plantilla=new XTemplate("../html/mail/mail_invoice.html");
       
-        $enlace=CURRENT_DOMAIN."get_certificate.php?hash=".$dato['hash_generado'];
+        $enlace=CURRENT_DOMAIN."/get_certificate.php?hash=".$dato['hash_generado'];
       
 	   	$plantilla->assign("WORKSHOP_NAME", $dato['nombre_largo']);
         // $plantilla->assign("WORKSHOP_FEEDBACK", $dato['feedback']);
