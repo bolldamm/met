@@ -62,7 +62,7 @@
       $Username = generalUtils::escaparCadena($_POST["txtUsername"]);
       $Deskpw = generalUtils::escaparCadena($_POST["txtDeskpw"]);
       $Password = generalUtils::escaparCadena($_POST["txtPassword"]);
-	  $conferenceFormtest = generalUtils::escaparCadena($_POST["txtconferenceFormtest"]);
+	  $conferenceFormtest = isset($_POST["txtconferenceFormtest"]) ? 1 : 0;
       
 //      $db->callProcedure("CALL ".OBJECT_DB_ACRONYM."_pr_save_settings('".$Chair."','".$Vicechair."','".$Secretary."','".$Treasurer."','".$Membership."','".$Development."','".$Promotion."','".$Webmaster."','".$fileName."','".$membershipForms."','".$Newmember."','".$Renewmember."','".$Workshopform."','".$Conferenceform."',".$Individual.",".$Discount.",".$Institution.")");
       

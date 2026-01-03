@@ -192,19 +192,19 @@ while($dato=$db->getData($resultado)){
                 case 77:
                     $resultadoInscripcion=$db->callProcedure("CALL ed_sp_movimiento_inscripcion_obtener_concreta(".$dato["id_movimiento"].")");
                     $datoInscripcion = $db->getData($resultadoInscripcion);
-                    $idInscripcion=$datoInscripcion["id_inscripcion"];
+                    $idInscripcion = $datoInscripcion ? $datoInscripcion["id_inscripcion"] : null;
                     break;
                 /* METM REGISTRATION*/
                 case 46:
                     $resultadoInscripcion=$db->callProcedure("CALL ed_sp_movimiento_inscripcion_conferencia_obtener_concreta(".$dato["id_movimiento"].",".$_SESSION["user"]["language_id"].")");
                     $datoInscripcion=$db->getData($resultadoInscripcion);
-                    $idInscripcion=$datoInscripcion["id_inscripcion_conferencia"];
+                    $idInscripcion = $datoInscripcion ? $datoInscripcion["id_inscripcion_conferencia"] : null;
                     break;
                 /* WORKSHOP REGISTRATION*/
                 case 55:
                     $resultadoInscripcion=$db->callProcedure("CALL ed_sp_movimiento_inscripcion_taller_obtener_concreta(".$dato["id_movimiento"].",".$_SESSION["user"]["language_id"].")");
                     $datoInscripcion=$db->getData($resultadoInscripcion);
-                    $idInscripcion=$datoInscripcion["id_inscripcion_taller"];
+                    $idInscripcion = $datoInscripcion ? $datoInscripcion["id_inscripcion_taller"] : null;
                     break;
             }
         }

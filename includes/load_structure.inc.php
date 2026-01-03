@@ -310,8 +310,10 @@ if ($db->getNumberRows($resultadoMenuConcreto) == 0) {
         if ($datoMenuConcreto["id_tipo_usuario_web"] == TIPO_USUARIO_ADMIN && $_SESSION["met_user"]["tipoUsuario"] != TIPO_USUARIO_ADMIN) {
             generalUtils::redirigir(CURRENT_DOMAIN);
         }
+        $lapsed = generalUtils::esMiembroCaducado($_SESSION["met_user"]["fecha_finalizacion"]);
+		// $lapsed = true;
 		// if membership has lapsed and the page is not the renewal form, lapsed-member access-denied page, renewal form unavailable or payment confirmation page, redirect to lapsed-member access-denied page
-		if (generalUtils::esMiembroCaducado($_SESSION["met_user"]["fecha_finalizacion"]) && $idMenu != 1359 && $idMenu != 1165 && $idMenu != 1 && $idMenu != 1237) { 
+		if ($lapsed && $idMenu != 1359 && $idMenu != 1165 && $idMenu != 1 && $idMenu != 1237) { 
 			generalUtils::redirigir(CURRENT_DOMAIN . "/en/access-denied:1359");
 		}
         //if page is NOT the membership renewal form and user is expired or pending, redirect to home page (I don't think this works)
@@ -322,10 +324,15 @@ if ($db->getNumberRows($resultadoMenuConcreto) == 0) {
 //        if ($datoMenuConcreto["id_formulario"] == 3 && $_SESSION["met_user"]["tipoPago"] == INSCRIPCION_TIPO_PAGO_DEBIT) {
 //            generalUtils::redirigir(CURRENT_DOMAIN . "/en/direct-debit-error-message:821");
 //        }
+        $lapsed = generalUtils::esMiembroCaducado($_SESSION["met_user"]["fecha_finalizacion"]);
+		//$lapsed = true;
          // if user has NOT expired and page IS the membership renewal form and it is NOT October yet, redirect to too-early page
-        if (!generalUtils::esMiembroCaducado($_SESSION["met_user"]["fecha_finalizacion"]) && $datoMenuConcreto["id_formulario"] == 3 && date('m') < 10) {
+        if (!$lapsed && $datoMenuConcreto["id_formulario"] == 3 && date('m') < 10) {
             generalUtils::redirigir(CURRENT_DOMAIN . "/en/renew-membership:1400");
         }
+ //       if (!generalUtils::esMiembroCaducado($_SESSION["met_user"]["fecha_finalizacion"]) && $idMenu == 1165 && date('m') < 10) {
+//            generalUtils::redirigir(CURRENT_DOMAIN . "/en/renew-membership:1400");
+//        }
         //if page is the "How to register" page, redirect to the METM registration form
         if ($idMenu == 953 && !isset($_SESSION["met_user"])) {
             generalUtils::redirigir(CURRENT_DOMAIN . "/en/are-you-a-member:955");

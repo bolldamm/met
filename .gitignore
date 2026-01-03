@@ -50,23 +50,26 @@ composer.phar
 composer.lock
 environment_config.php
 nul
+session_variables.php
+test_stripe_mode.php
 ajax/last_step_inscription_paypal.php
 ajax/last_step_inscription_workshop_paypal.php
 ajax/send_accommodation.php
 ajax/send_metm_transport.php
-
+includes/settings.local.php
+#
 # Globally negate ignoring of all .htaccess files
 !.htaccess
 !**/.htaccess
-
+#
 # ============================================
-# Test, disabled, renamed  and .htaccess files
+# Test, disabled and renamed files
 # ============================================
 #
 /*_test.php
 /_*
 /*_OLD.php
-
+#
 # ============================================
 # IDE & Editor Files
 # ============================================
@@ -75,6 +78,7 @@ ajax/send_metm_transport.php
 *.iml
 *.ipr
 *.iws
+*.md
 
 # ============================================
 # Temporary files
@@ -117,3 +121,4 @@ cache/
 # Git
 .git/
 *.orig
+

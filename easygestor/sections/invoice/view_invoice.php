@@ -69,7 +69,7 @@
 		$direccionOrden="ASC";
 	}
 	
-	$fechaDesde=date("Y")."-01-01";
+	$fechaDesde=(date("Y")-1)."-01-01";
 	$fechaHasta=date("Y")."-12-31";
 	$persona="";
 	$filtroPaginador="";
@@ -88,13 +88,12 @@
     		$persona = $_GET["txtPersona"];
     		$subPlantilla->assign("VIEW_INVOICE_PERSON_SEARCH_VALUE", "checked");
     		$filtroPaginador .= "&txtPersona=" . $_GET["txtPersona"];
-		
+		}
 		$filtroPaginador.="&";
 	}else{
-		$subPlantilla->assign("VIEW_INVOICE_DATE_FROM_SEARCH_VALUE","01-01-".date("Y"));
+		$subPlantilla->assign("VIEW_INVOICE_DATE_FROM_SEARCH_VALUE","01-01-".(date("Y")-1));
 		$subPlantilla->assign("VIEW_INVOICE_DATE_TO_SEARCH_VALUE","31-12-".date("Y"));
 	}
-}
 
 /**
 	 * 

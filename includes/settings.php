@@ -36,6 +36,12 @@ require_once $absolutePath."/../database/connection.php";
 	  $txtNoreplypassword=$dato['no_reply_password'];
 	  $txtConferencetestmode=$dato['conference_test_mode'];
 
+// Initialize radio button variables to avoid warnings
+$txtmembershipForms = '';
+$txtmembershipForms2 = '';
+$txtmembershipForms0 = '';
+
+// Set the correct radio button as "checked" based on database value
 if ($dato['membership_forms']==1) {
   $txtmembershipForms="checked";
 } else if ($dato['membership_forms']==2) {
@@ -46,22 +52,8 @@ if ($dato['membership_forms']==1) {
 
 if ($dato['conference_test_mode']==1) {
   $txtStatictest="checked";
-//  $txtConferencetestmode="test";
 } else {
   $txtStatictest="";
-//  $txtConferencetestmode="live";
-}
-
-
-//	  $txtmembershipForms=$dato['membership_forms'];
-// Added by SW to avoid warnings while testing locally
-$txtmembershipForms = '';
-$txtmembershipForms2 = '';
-$txtmembershipForms0 = '';
-if (isset($dato['membership_forms'])) {
-    $txtmembershipForms = $dato['membership_forms'];
-    $txtmembershipForms2 = $dato['membership_forms'];
-    $txtmembershipForms0 = $dato['membership_forms'];
 }
 
  define("STATIC_CHAIR", $txtChair);
@@ -91,4 +83,7 @@ if (isset($dato['membership_forms'])) {
  define("STATIC_CONFERENCE_FORM_TEST", $txtStatictest);
  define("STATIC_CONFERENCE_TEST", $txtConferencetestmode);
 
-?>
+// For local testing
+if (file_exists(__DIR__ . '/settings.local.php')) {
+    require __DIR__ . '/settings.local.php';
+}

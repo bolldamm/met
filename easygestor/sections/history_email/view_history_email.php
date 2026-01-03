@@ -97,8 +97,8 @@
 			$subPlantilla->assign("TR_STYLE","class='light'");
 		}
 		$vectorHistoryEmail["ID"]=$dato["id_correo_electronico"];
-        $encodedTo = rawurlencode($dato["correo_electronico"]);
-        $subject = rawurlencode($dato["asunto"]);
+        $encodedTo = rawurlencode($dato["correo_electronico"] ?? '');
+        $subject = rawurlencode($dato["asunto"] ?? '');
         //$body = rawurlencode(strip_tags($dato["cuerpo"])); //Not used (can't pass HTML formatted body in mailto link)
         $vectorHistoryEmail["SUBJECT"]="<a href='mailto:".$encodedTo."?subject=".$subject."' target='_blank'>".$dato["asunto"]."</a>";
 		$vectorHistoryEmail["NAME"]=$dato["nombre_completo"];
